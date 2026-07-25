@@ -28,18 +28,32 @@ export const AddResourceModal: React.FC<AddResourceModalProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!title.trim()) {
-      setError('Please enter a resource title');
+    const trimmedTitle = title.trim();
+    let trimmedUrl = url.trim();
+
+    if (!trimmedTitle || trimmedTitle.length < 2) {
+      setError('Please enter a valid title (at least 2 characters)');
       return;
     }
-    if (!url.trim()) {
-      setError('Please enter a valid URL');
+    if (!trimmedUrl) {
+      setError('Please enter a valid URL link');
+      return;
+    }
+
+    if (!/^https?:\/\//i.test(trimmedUrl)) {
+      trimmedUrl = 'https://' + trimmedUrl;
+    }
+
+    try {
+      new URL(trimmedUrl);
+    } catch {
+      setError('Invalid URL format. Please enter a valid web URL (e.g., https://example.com)');
       return;
     }
 
     addCustomResource({
-      title: title.trim(),
-      url: url.trim(),
+      title: trimmedTitle,
+      url: trimmedUrl,
       type,
       weekId,
       notes: notes.trim() || undefined,

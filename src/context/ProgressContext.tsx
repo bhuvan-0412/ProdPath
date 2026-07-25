@@ -1,8 +1,9 @@
 'use client';
 
 import React, { createContext, useContext, useEffect, useState, useMemo } from 'react';
-import { Resource, Week } from '@/types/curriculum';
+import { Resource, Week, LiveSession } from '@/types/curriculum';
 import weeksData from '@/data/weeks.json';
+import liveSessionsData from '@/data/liveSessions.json';
 import confetti from 'canvas-confetti';
 
 interface ProgressContextType {
@@ -14,6 +15,7 @@ interface ProgressContextType {
   deleteCustomResource: (id: string) => void;
   getAllResources: () => Resource[];
   getWeekStats: (weekId: string) => { total: number; completed: number; percentage: number };
+  getLiveSessionStats: () => { total: number; completed: number; percentage: number };
   getOverallStats: () => { total: number; completed: number; percentage: number };
   getNextIncompleteResource: () => Resource | null;
   resetProgress: () => void;
@@ -47,6 +49,19 @@ const flattenCurriculum = (): Resource[] => {
   return list;
 };
 
+// Helper to flatten liveSessions.json into resources
+const flattenLiveSessions = (): Resource[] => {
+  return (liveSessionsData.liveSessions as LiveSession[]).map((session) => ({
+    id: `live-session-${session.sessionNumber}`,
+    title: `Session ${session.sessionNumber}: ${session.topic}`,
+    url: session.videoUrl,
+    type: 'video' as const,
+    notes: `Speaker: ${session.speaker}`,
+    isCustom: false,
+    taskLabel: `Live Session ${session.sessionNumber}`,
+  }));
+};
+
 export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [completedIds, setCompletedIds] = useState<Set<string>>(new Set());
   const [customResources, setCustomResources] = useState<Resource[]>([]);
@@ -55,14 +70,16 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   // Load from localStorage on client mount
   useEffect(() => {
     try {
-      const savedCompleted = localStorage.getItem(STORAGE_KEY_COMPLETED) || localStorage.getItem(LEGACY_STORAGE_KEY_COMPLETED);
-      if (savedCompleted) {
-        setCompletedIds(new Set(JSON.parse(savedCompleted)));
-      }
+      if (typeof window !== 'undefined') {
+        const savedCompleted = localStorage.getItem(STORAGE_KEY_COMPLETED) || localStorage.getItem(LEGACY_STORAGE_KEY_COMPLETED);
+        if (savedCompleted) {
+          setCompletedIds(new Set(JSON.parse(savedCompleted)));
+        }
 
-      const savedCustom = localStorage.getItem(STORAGE_KEY_CUSTOM) || localStorage.getItem(LEGACY_STORAGE_KEY_CUSTOM);
-      if (savedCustom) {
-        setCustomResources(JSON.parse(savedCustom));
+        const savedCustom = localStorage.getItem(STORAGE_KEY_CUSTOM) || localStorage.getItem(LEGACY_STORAGE_KEY_CUSTOM);
+        if (savedCustom) {
+          setCustomResources(JSON.parse(savedCustom));
+        }
       }
     } catch (e) {
       console.error('Failed to parse localStorage data:', e);
@@ -73,7 +90,7 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   // Save to localStorage when state changes
   useEffect(() => {
-    if (!isLoaded) return;
+    if (!isLoaded || typeof window === 'undefined') return;
     try {
       localStorage.setItem(STORAGE_KEY_COMPLETED, JSON.stringify(Array.from(completedIds)));
     } catch (e) {
@@ -82,7 +99,7 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   }, [completedIds, isLoaded]);
 
   useEffect(() => {
-    if (!isLoaded) return;
+    if (!isLoaded || typeof window === 'undefined') return;
     try {
       localStorage.setItem(STORAGE_KEY_CUSTOM, JSON.stringify(customResources));
     } catch (e) {
@@ -91,10 +108,11 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   }, [customResources, isLoaded]);
 
   const curriculumResources = useMemo(() => flattenCurriculum(), []);
+  const liveSessionResources = useMemo(() => flattenLiveSessions(), []);
 
   const getAllResources = useMemo(() => {
-    return () => [...curriculumResources, ...customResources];
-  }, [curriculumResources, customResources]);
+    return () => [...curriculumResources, ...liveSessionResources, ...customResources];
+  }, [curriculumResources, liveSessionResources, customResources]);
 
   const toggleCompleted = (id: string) => {
     setCompletedIds((prev) => {
@@ -164,6 +182,16 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     return { total, completed, percentage };
   };
 
+  const getLiveSessionStats = () => {
+    const total = liveSessionsData.liveSessions.length;
+    if (total === 0) return { total: 0, completed: 0, percentage: 0 };
+    const completed = liveSessionsData.liveSessions.filter((s) =>
+      completedIds.has(`live-session-${s.sessionNumber}`)
+    ).length;
+    const percentage = Math.round((completed / total) * 100);
+    return { total, completed, percentage };
+  };
+
   const getOverallStats = () => {
     const all = getAllResources();
     const total = all.length;
@@ -195,6 +223,7 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         deleteCustomResource,
         getAllResources,
         getWeekStats,
+        getLiveSessionStats,
         getOverallStats,
         getNextIncompleteResource,
         resetProgress,

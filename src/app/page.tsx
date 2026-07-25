@@ -12,6 +12,7 @@ import {
   BookOpen,
   Calendar,
   Library,
+  Video,
   PlayCircle,
   CheckCircle2,
   TrendingUp,
@@ -19,8 +20,9 @@ import {
 } from 'lucide-react';
 
 export default function DashboardPage() {
-  const { getOverallStats, getWeekStats, getNextIncompleteResource, resetProgress } = useProgress();
+  const { getOverallStats, getWeekStats, getLiveSessionStats, getNextIncompleteResource, resetProgress } = useProgress();
   const overall = getOverallStats();
+  const liveStats = getLiveSessionStats();
   const nextUp = getNextIncompleteResource();
 
   return (
@@ -114,11 +116,11 @@ export default function DashboardPage() {
         </div>
       )}
 
-      {/* Per-Week Mini Cards Section */}
+      {/* Breakdown Section with Weeks + Live Sessions */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100">
-            Weekly Breakdown
+            Progress Breakdown
           </h2>
           <Link
             href="/course"
@@ -129,7 +131,7 @@ export default function DashboardPage() {
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
           {weeksData.weeks.map((week) => {
             const stats = getWeekStats(week.id);
             return (
@@ -167,11 +169,44 @@ export default function DashboardPage() {
               </Link>
             );
           })}
+
+          {/* Live Sessions Progress Card */}
+          <Link
+            href="/live-sessions"
+            className="group bg-white dark:bg-slate-900 rounded-2xl p-5 border border-slate-200/80 dark:border-slate-800 hover:border-rose-400 dark:hover:border-rose-600 shadow-xs hover:shadow-lg transition-all duration-200 flex flex-col justify-between"
+          >
+            <div className="space-y-2 mb-4">
+              <div className="flex items-center justify-between">
+                <span className="text-[11px] uppercase font-bold tracking-wider text-rose-600 dark:text-rose-400 px-2 py-0.5 rounded-md bg-rose-50 dark:bg-rose-950/60 border border-rose-100 dark:border-rose-900/50">
+                  Live Sessions
+                </span>
+                <span className="text-xs font-bold text-slate-500 dark:text-slate-400">
+                  {liveStats.completed}/{liveStats.total}
+                </span>
+              </div>
+
+              <h3 className="font-bold text-sm text-slate-900 dark:text-slate-100 group-hover:text-rose-600 dark:group-hover:text-rose-400 transition-colors line-clamp-2">
+                Live Sessions watched: {liveStats.completed}/{liveStats.total}
+              </h3>
+            </div>
+
+            <div className="space-y-2">
+              <ProgressBar
+                percentage={liveStats.percentage}
+                showLabel={false}
+                size="sm"
+              />
+              <div className="flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400 pt-1">
+                <span>{liveStats.percentage}% complete</span>
+                <ArrowRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-rose-500 group-hover:translate-x-1 transition-all" />
+              </div>
+            </div>
+          </Link>
         </div>
       </div>
 
       {/* Quick Navigation Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-2">
         <Link
           href="/course"
           className="p-5 rounded-2xl bg-gradient-to-br from-indigo-500/10 to-indigo-600/5 dark:from-indigo-950/40 dark:to-slate-900 border border-indigo-200/60 dark:border-indigo-900/40 hover:border-indigo-400 transition-all flex items-center gap-4 group"
@@ -219,6 +254,23 @@ export default function DashboardPage() {
             </h3>
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
               Search, filter, and add your custom links
+            </p>
+          </div>
+        </Link>
+
+        <Link
+          href="/live-sessions"
+          className="p-5 rounded-2xl bg-gradient-to-br from-rose-500/10 to-rose-600/5 dark:from-rose-950/40 dark:to-slate-900 border border-rose-200/60 dark:border-rose-900/40 hover:border-rose-400 transition-all flex items-center gap-4 group"
+        >
+          <div className="w-12 h-12 rounded-xl bg-rose-600 text-white flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform shadow-md shadow-rose-600/20">
+            <Video className="w-6 h-6" />
+          </div>
+          <div>
+            <h3 className="font-bold text-slate-900 dark:text-slate-100 group-hover:text-rose-600 dark:group-hover:text-rose-400 transition-colors">
+              Live Sessions
+            </h3>
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+              Recorded masterclasses & speaker talks
             </p>
           </div>
         </Link>

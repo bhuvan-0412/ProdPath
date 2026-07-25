@@ -1,0 +1,11 @@
+{
+  "liveSessions": [
+    { "sessionNumber": 1, "speaker": "Niranjan Sureshkumar", "topic": "Breaking into PM with AI", "videoUrl": "https://youtu.be/EL85fwpq6GY" },
+    { "sessionNumber": 2, "speaker": "Analkumar Shahi", "topic": "Mastering Product Sense for Product Managers", "videoUrl": "https://youtu.be/xfeApQPG4b8" },
+    { "sessionNumber": 3, "speaker": "Akhil Yash Tiwari", "topic": "Understanding of Users and UI/UX for a PM", "videoUrl": "https://youtu.be/DyXbdYo1-r4" },
+    { "sessionNumber": 4, "speaker": "Akhil Sharma", "topic": "Measuring Success: From Metrics to PMF", "videoUrl": "https://youtu.be/WoKPs9usgo4" },
+    { "sessionNumber": 5, "speaker": "Palash Somani", "topic": "MVP & GTM - Building and launching products like a pro!", "videoUrl": "https://youtu.be/kcS8Rmd6YTk" },
+    { "sessionNumber": 6, "speaker": "Akhil Yash Tiwari", "topic": "AI Tools for PM", "videoUrl": "https://youtu.be/llTPPAiOrlE" },
+    { "sessionNumber": 7, "speaker": "Akhil Yash Tiwari", "topic": "Tech for PM", "videoUrl": "https://bit.ly/productspacetechmasterclass" }
+  ]
+}

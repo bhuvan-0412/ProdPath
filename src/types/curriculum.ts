@@ -12,6 +12,13 @@ export interface Resource {
   taskLabel?: string;
 }
 
+export interface LiveSession {
+  sessionNumber: number;
+  speaker: string;
+  topic: string;
+  videoUrl: string;
+}
+
 export interface Task {
   label: string;
   resources: Resource[];
@@ -37,3 +44,4 @@ export interface ScheduleItem {
   dayOfWeek: string;
   sessionType: 'Resources' | 'Assessment' | 'Capstone';
 }
+
