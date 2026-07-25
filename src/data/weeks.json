@@ -1,0 +1,553 @@
+{
+  "weeks": [
+    {
+      "id": "week-1",
+      "title": "Week 1: PM Foundations",
+      "days": [
+        {
+          "day": 1,
+          "brief": "Introduction to Product Management",
+          "tasks": [
+            {
+              "label": "Task 1",
+              "resources": [
+                { "id": "w1d1r1", "title": "What is Product Management", "url": "https://www.ibm.com/think/topics/product-management", "type": "article" }
+              ]
+            },
+            {
+              "label": "Task 2",
+              "resources": [
+                { "id": "w1d1r2", "title": "Roles of a PM", "url": "https://www.youtube.com/watch?v=2dczveSrsv8", "type": "video" },
+                { "id": "w1d1r3", "title": "Skills of a PM", "url": "https://www.youtube.com/watch?v=n530l09t8zY", "type": "video" }
+              ]
+            },
+            {
+              "label": "Task 3",
+              "resources": [
+                { "id": "w1d1r4", "title": "What companies want in a PM role", "url": "https://youtu.be/O4TReKaJx50", "type": "video" },
+                { "id": "w1d1r5", "title": "Day in the life of a PM", "url": "https://www.youtube.com/watch?v=U-lYLSlYU1o", "type": "video" }
+              ]
+            }
+          ]
+        },
+        {
+          "day": 2,
+          "brief": "Product sense and strategizing frameworks",
+          "tasks": [
+            {
+              "label": "Task 1",
+              "resources": [
+                { "id": "w1d2r1", "title": "What is Product Sense", "url": "https://www.productplan.com/glossary/product-sense/", "type": "article" },
+                { "id": "w1d2r2", "title": "How to build Product Sense over time", "url": "https://www.lennysnewsletter.com/p/product-sense", "type": "article" }
+              ]
+            },
+            {
+              "label": "Task 2",
+              "resources": [
+                { "id": "w1d2r3", "title": "How to do a Product Critique", "url": "https://medium.com/the-year-of-the-looking-glass/how-to-do-a-product-critique-98b657050638", "type": "article" },
+                { "id": "w1d2r4", "title": "Product Hunt (daily new products)", "url": "https://www.producthunt.com/", "type": "article" }
+              ]
+            },
+            {
+              "label": "Task 3",
+              "resources": [
+                { "id": "w1d2r5", "title": "First Principles Thinking", "url": "https://youtu.be/OwghcEhEdZg", "type": "video" },
+                { "id": "w1d2r6", "title": "Elon Musk on First Principles Thinking", "url": "https://youtu.be/NV3sBlRgzTI", "type": "video" },
+                { "id": "w1d2r7", "title": "First Principles Thinking for Business", "url": "https://youtu.be/f4NWT7omLVQ", "type": "video" },
+                { "id": "w1d2r8", "title": "MECE Framework by McKinsey", "url": "https://www.mbacrystalball.com/blog/strategy/mece-framework/", "type": "article" },
+                { "id": "w1d2r9", "title": "Example of MECE trees", "url": "https://youtu.be/_pCU0DOKZDw", "type": "video" }
+              ]
+            }
+          ]
+        },
+        {
+          "day": 3,
+          "brief": "Product Life Cycle",
+          "tasks": [
+            {
+              "label": "Task 1",
+              "resources": [
+                { "id": "w1d3r1", "title": "What is Product Life Cycle", "url": "https://www.investopedia.com/terms/p/product-life-cycle.asp", "type": "article" }
+              ]
+            },
+            {
+              "label": "Task 2",
+              "resources": [
+                { "id": "w1d3r2", "title": "Example of Product Cycle", "url": "https://youtu.be/ob5KWs3I3aY", "type": "video" }
+              ]
+            }
+          ]
+        },
+        {
+          "day": 4,
+          "brief": "User Persona, Flow and Journey",
+          "tasks": [
+            {
+              "label": "Task 1",
+              "resources": [
+                { "id": "w1d4r1", "title": "What is a User Persona and how to create one", "url": "https://www.figma.com/resource-library/how-to-create-a-persona/", "type": "article" },
+                { "id": "w1d4r2", "title": "How to Create a User Persona (video)", "url": "https://youtu.be/HkKf3Mhszww", "type": "video" }
+              ]
+            },
+            {
+              "label": "Task 2",
+              "resources": [
+                { "id": "w1d4r3", "title": "What is a User Flow and how to create one", "url": "https://medium.com/productpeople/become-a-user-flow-mapping-master-with-these-10-simple-tips-3ee303c053e7", "type": "article" },
+                { "id": "w1d4r4", "title": "UX user flows explained", "url": "https://youtu.be/Zt2GmDOEHM0", "type": "video" },
+                { "id": "w1d4r5", "title": "Example of a User Flow", "url": "https://youtu.be/74WDl_MhQj8", "type": "video" }
+              ]
+            },
+            {
+              "label": "Task 3",
+              "resources": [
+                { "id": "w1d4r6", "title": "What is a User Journey", "url": "https://youtu.be/6uYJdz-W1uM", "type": "video" },
+                { "id": "w1d4r7", "title": "Difference between User Flow and User Journey", "url": "https://youtu.be/IFnWMwEpes8", "type": "video" },
+                { "id": "w1d4r8", "title": "Tips on how to create a User Journey", "url": "https://youtu.be/ImxH9qZ0MQQ", "type": "video" }
+              ]
+            }
+          ]
+        },
+        {
+          "day": 5,
+          "brief": "UI/UX for PM",
+          "tasks": [
+            {
+              "label": "Task 1",
+              "resources": [
+                { "id": "w1d5r1", "title": "Wireframes and different types", "url": "https://productschool.com/blog/user-experience/product-manager-beginner-guide-wireframes", "type": "article" }
+              ]
+            },
+            {
+              "label": "Task 2",
+              "resources": [
+                { "id": "w1d5r2", "title": "Wireframing in detail for PMs", "url": "https://youtu.be/qJdDC5uRTd8", "type": "video" }
+              ]
+            },
+            {
+              "label": "Task 3",
+              "resources": [
+                { "id": "w1d5r3", "title": "Wireframing using Figma", "url": "https://youtu.be/iyrEStiTZh0", "type": "video" },
+                { "id": "w1d5r4", "title": "Wireframe vs Mock-up vs Prototype", "url": "https://youtu.be/_SCcl06wZZs", "type": "video" }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "week-2",
+      "title": "Week 2: Metrics, MVP & Strategy",
+      "days": [
+        {
+          "day": 1,
+          "brief": "Product success metrics",
+          "tasks": [
+            {
+              "label": "Task 1",
+              "resources": [
+                { "id": "w2d1r1", "title": "How to measure Product Success", "url": "https://youtu.be/wtDFgx41Rho", "type": "video" }
+              ]
+            },
+            {
+              "label": "Task 2",
+              "resources": [
+                { "id": "w2d1r2", "title": "HEART and AARRR frameworks", "url": "https://simran-pm.medium.com/heart-aarrr-frameworks-in-product-management-7596b6c717de", "type": "article" }
+              ]
+            },
+            {
+              "label": "Task 3",
+              "resources": [
+                { "id": "w2d1r3", "title": "Difference between Metrics and KPIs", "url": "https://youtu.be/dPJbytlqlsI", "type": "video" },
+                { "id": "w2d1r4", "title": "North Star Metrics, L1 and L2 metrics", "url": "https://www.linkedin.com/pulse/product-metrics-your-guide-building-better-products-varun-khanna-hyj7e/", "type": "article" },
+                { "id": "w2d1r5", "title": "The most overlooked metric", "url": "https://youtu.be/j6F6qhi5cRI", "type": "video" }
+              ]
+            }
+          ]
+        },
+        {
+          "day": 2,
+          "brief": "MVP and PMF",
+          "tasks": [
+            {
+              "label": "Task 1",
+              "resources": [
+                { "id": "w2d2r1", "title": "MVP", "url": "https://productschool.com/resources/glossary/mvp-minimum-viable-product", "type": "article" },
+                { "id": "w2d2r2", "title": "How to build an MVP", "url": "https://amplitude.com/blog/what-is-a-minimum-viable-product-mvp", "type": "article" },
+                { "id": "w2d2r3", "title": "How to plan an MVP", "url": "https://youtu.be/wGymH7b2kFE", "type": "video" },
+                { "id": "w2d2r4", "title": "15+ famous MVP examples", "url": "https://www.rst.software/blog/15-examples-of-successful-mvps", "type": "article" }
+              ]
+            },
+            {
+              "label": "Task 2",
+              "resources": [
+                { "id": "w2d2r5", "title": "Introduction to Product Market Fit", "url": "https://www.productplan.com/glossary/product-market-fit/", "type": "article" },
+                { "id": "w2d2r6", "title": "What is Product Market Fit", "url": "https://youtu.be/hEH6FseXT0U", "type": "video" }
+              ]
+            },
+            {
+              "label": "Task 3",
+              "resources": [
+                { "id": "w2d2r7", "title": "Products that couldn't find their fit", "url": "https://productschool.com/blog/product-fundamentals/understanding-product-market-fit", "type": "article" }
+              ]
+            }
+          ]
+        },
+        {
+          "day": 3,
+          "brief": "Strategizing frameworks",
+          "tasks": [
+            {
+              "label": "Task 1",
+              "resources": [
+                { "id": "w2d3r1", "title": "REAN Framework", "url": "https://www.mobiprep.com/post/rean-framework", "type": "article" },
+                { "id": "w2d3r2", "title": "SWOT Analysis Framework", "url": "https://productmanagement.world/Product+Frameworks/SWOT+Analysis+Framework", "type": "article" },
+                { "id": "w2d3r3", "title": "Porter's Five Forces", "url": "https://aakashgupta.medium.com/the-5-forces-every-product-manager-should-know-04de4b33f5c4", "type": "article" },
+                { "id": "w2d3r4", "title": "PESTEL Analysis", "url": "https://medium.com/@bastistraube/product-management-101-29-pestel-analysis-ddae5049fbc6", "type": "article" }
+              ]
+            },
+            {
+              "label": "Task 2",
+              "resources": [
+                { "id": "w2d3r5", "title": "Double Diamond", "url": "https://youtu.be/w0_-1RqBK_0", "type": "video" },
+                { "id": "w2d3r6", "title": "BCG Growth Share Matrix", "url": "https://www.bcg.com/about/overview/our-history/growth-share-matrix", "type": "article" },
+                { "id": "w2d3r7", "title": "Ansoff Growth Matrix", "url": "https://youtu.be/SKRWvGDRWfg", "type": "video" }
+              ]
+            }
+          ]
+        },
+        {
+          "day": 4,
+          "brief": "Prioritization frameworks and Methodologies",
+          "tasks": [
+            {
+              "label": "Task 1",
+              "resources": [
+                { "id": "w2d4r1", "title": "List of Prioritization Frameworks", "url": "https://roadmunk.com/guides/product-prioritization-techniques-product-managers/", "type": "article" },
+                { "id": "w2d4r2", "title": "WSJF using JIRA", "url": "https://youtu.be/-HCzJewpEkk", "type": "video" },
+                { "id": "w2d4r3", "title": "ICE using JIRA", "url": "https://youtu.be/b_iXDDCqX_w", "type": "video" }
+              ]
+            },
+            {
+              "label": "Task 2",
+              "resources": [
+                { "id": "w2d4r4", "title": "Agile vs Waterfall Methodologies", "url": "https://youtu.be/aKf0Qkp14qQ", "type": "video" },
+                { "id": "w2d4r5", "title": "Difference between Agile and Waterfall", "url": "https://intellipaat.com/blog/agile-vs-waterfall/", "type": "article" }
+              ]
+            },
+            {
+              "label": "Task 3",
+              "resources": [
+                { "id": "w2d4r6", "title": "Scrum vs Kanban", "url": "https://youtu.be/rIaz-l1Kf8w", "type": "video" }
+              ]
+            }
+          ]
+        },
+        {
+          "day": 5,
+          "brief": "GTM (Go-To-Market)",
+          "tasks": [
+            {
+              "label": "Task 1",
+              "resources": [
+                { "id": "w2d5r1", "title": "What is a GTM?", "url": "https://productschool.com/resources/glossary/go-to-market-gtm", "type": "article" },
+                { "id": "w2d5r2", "title": "GTM strategy", "url": "https://youtu.be/BMitoXT__wM", "type": "video" },
+                { "id": "w2d5r3", "title": "Customer Segmentation for GTM", "url": "https://youtu.be/o0ygMSNZrHY", "type": "video" }
+              ]
+            },
+            {
+              "label": "Task 2",
+              "resources": [
+                { "id": "w2d5r4", "title": "How to do GTM", "url": "https://youtu.be/0JtiB8hJY4U", "type": "video" },
+                { "id": "w2d5r5", "title": "Pre-Launch, Launch, Post-Launch example", "url": "https://youtu.be/eDVtBleIxag", "type": "video" }
+              ]
+            },
+            {
+              "label": "Task 3",
+              "resources": [
+                { "id": "w2d5r6", "title": "Important Pricing Strategies", "url": "https://youtu.be/YhnvZPVv9jc", "type": "video" },
+                { "id": "w2d5r7", "title": "Common Pricing Psychologies", "url": "https://youtu.be/KYqvqScg_j8", "type": "video" }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "week-3",
+      "title": "Week 3: Tech for PM + AI Tools",
+      "days": [
+        {
+          "day": 1,
+          "brief": "Introduction to Tech for PM",
+          "tasks": [
+            {
+              "label": "Task 1",
+              "resources": [
+                { "id": "w3d1r1", "title": "Why is Tech important for PM", "url": "https://youtu.be/MUPJZZd7Sm0", "type": "video" }
+              ]
+            },
+            {
+              "label": "Task 2",
+              "resources": [
+                { "id": "w3d1r2", "title": "What is an API?", "url": "https://youtu.be/T5y0WKmKenQ", "type": "video" },
+                { "id": "w3d1r3", "title": "Introduction to Databases", "url": "https://youtu.be/EEBgMBE8R70", "type": "video" }
+              ]
+            },
+            {
+              "label": "Task 3",
+              "resources": [
+                { "id": "w3d1r4", "title": "SQL Tutorial (Videos 1-5)", "url": "https://www.youtube.com/watch?v=yVcRQXLMzCE&list=PLrL_PSQ6q062H5CetdplYW7xQKeq8XaR0", "type": "playlist" }
+              ]
+            }
+          ]
+        },
+        {
+          "day": 2,
+          "brief": "Understanding Tech Basics: Webhooks, SDLC & Servers",
+          "tasks": [
+            {
+              "label": "Task 1",
+              "resources": [
+                { "id": "w3d2r1", "title": "How WebHooks work", "url": "https://youtu.be/oQaJn6RdA3g", "type": "video" },
+                { "id": "w3d2r2", "title": "What is SDLC?", "url": "https://youtu.be/Fi3_BjVzpqk", "type": "video" }
+              ]
+            },
+            {
+              "label": "Task 2",
+              "resources": [
+                { "id": "w3d2r3", "title": "What are Servers?", "url": "https://youtu.be/UjCDWCeHCzY", "type": "video" },
+                { "id": "w3d2r4", "title": "What is AWS?", "url": "https://youtu.be/3XFODda6YXo", "type": "video" }
+              ]
+            },
+            {
+              "label": "Task 3",
+              "resources": [
+                { "id": "w3d2r5", "title": "SQL Tutorial (Videos 6-9)", "url": "https://www.youtube.com/watch?v=yVcRQXLMzCE&list=PLrL_PSQ6q062H5CetdplYW7xQKeq8XaR0", "type": "playlist" }
+              ]
+            }
+          ]
+        },
+        {
+          "day": 3,
+          "brief": "AI Prototyping Tools",
+          "tasks": [
+            {
+              "label": "Task 1",
+              "resources": [
+                { "id": "w3d3r1", "title": "What is a PRD", "url": "https://youtu.be/W7ShrFjd5B4", "type": "video" },
+                { "id": "w3d3r2", "title": "PRD + Lovable", "url": "https://youtu.be/vai2hiA0btc", "type": "video" }
+              ]
+            },
+            {
+              "label": "Task 2",
+              "resources": [
+                { "id": "w3d3r3", "title": "SQL Tutorial (Videos 10-12)", "url": "https://www.youtube.com/watch?v=yVcRQXLMzCE&list=PLrL_PSQ6q062H5CetdplYW7xQKeq8XaR0", "type": "playlist" }
+              ]
+            }
+          ]
+        },
+        {
+          "day": 4,
+          "brief": "AI Wireframing Tools & Prompt Engineering Basics",
+          "tasks": [
+            {
+              "label": "Task 1",
+              "resources": [
+                { "id": "w3d4r1", "title": "Visily for Wireframing", "url": "https://youtu.be/9K97iPJTlSA", "type": "video" },
+                { "id": "w3d4r2", "title": "Text to Wireframe", "url": "https://youtu.be/ZtgFJHfeZOY", "type": "video" }
+              ]
+            },
+            {
+              "label": "Task 2",
+              "resources": [
+                { "id": "w3d4r3", "title": "Prompt Engineering Basics", "url": "https://youtu.be/p09yRj47kNM", "type": "video" }
+              ]
+            },
+            {
+              "label": "Task 3",
+              "resources": [
+                { "id": "w3d4r4", "title": "SQL Tutorial (Videos 13-18)", "url": "https://www.youtube.com/watch?v=yVcRQXLMzCE&list=PLrL_PSQ6q062H5CetdplYW7xQKeq8XaR0", "type": "playlist" }
+              ]
+            }
+          ]
+        },
+        {
+          "day": 5,
+          "brief": "AI Tools for Customer Insights & Data Analysis",
+          "tasks": [
+            {
+              "label": "Task 1",
+              "resources": [
+                { "id": "w3d5r1", "title": "Kraftful for Customer Reviews", "url": "https://youtu.be/jmmP8rjFWk0", "type": "video" }
+              ]
+            },
+            {
+              "label": "Task 2",
+              "resources": [
+                { "id": "w3d5r2", "title": "Mixpanel", "url": "https://www.youtube.com/watch?v=c7SfDNFhD0E", "type": "video" },
+                { "id": "w3d5r3", "title": "Mixpanel Spark", "url": "https://youtu.be/7UJUE3EfKQg", "type": "video" }
+              ]
+            },
+            {
+              "label": "Task 3",
+              "resources": [
+                { "id": "w3d5r4", "title": "SQL Tutorial (Videos 19-25)", "url": "https://www.youtube.com/watch?v=yVcRQXLMzCE&list=PLrL_PSQ6q062H5CetdplYW7xQKeq8XaR0", "type": "playlist" }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "week-4",
+      "title": "Week 4: PM Interview Prep",
+      "days": [
+        {
+          "day": 1,
+          "brief": "Product Strategy Questions",
+          "tasks": [
+            {
+              "label": "Task 1",
+              "resources": [
+                { "id": "w4d1r1", "title": "Basics of PM interviews", "url": "https://youtu.be/dNtks5NfUwc", "type": "video" },
+                { "id": "w4d1r2", "title": "How to answer strategy questions", "url": "https://youtu.be/keROPy1QUEE", "type": "video" }
+              ]
+            },
+            {
+              "label": "Task 2",
+              "resources": [
+                { "id": "w4d1r3", "title": "The 5C Framework", "url": "https://youtu.be/TG657u78MOQ", "type": "video" },
+                { "id": "w4d1r4", "title": "Mock: Imagine you are CEO of Uber", "url": "https://youtu.be/nrM6AwYOrBc", "type": "video" }
+              ]
+            },
+            {
+              "label": "Task 3",
+              "resources": [
+                { "id": "w4d1r5", "title": "SQL Tutorial (Videos 26-28)", "url": "https://www.youtube.com/watch?v=yVcRQXLMzCE&list=PLrL_PSQ6q062H5CetdplYW7xQKeq8XaR0", "type": "playlist" }
+              ]
+            }
+          ]
+        },
+        {
+          "day": 2,
+          "brief": "Root Cause Analysis Questions",
+          "tasks": [
+            {
+              "label": "Task 1",
+              "resources": [
+                { "id": "w4d2r1", "title": "RCA Framework", "url": "https://youtu.be/gHlrkUAwaEo", "type": "video" },
+                { "id": "w4d2r2", "title": "How to solve RCA questions", "url": "https://youtu.be/PA-Z__0G8Cs", "type": "video" }
+              ]
+            },
+            {
+              "label": "Task 2",
+              "resources": [
+                { "id": "w4d2r3", "title": "Flipkart RCA Mock", "url": "https://youtu.be/DSV-vuvmIro", "type": "video" },
+                { "id": "w4d2r4", "title": "RCA Mock on Urban Company", "url": "https://youtu.be/OiE5vvbnryI", "type": "video" },
+                { "id": "w4d2r5", "title": "RCA on Financial app", "url": "https://youtu.be/DWB6ikZ-P6M", "type": "video" },
+                { "id": "w4d2r6", "title": "Playlist for quick RCA practice", "url": "https://www.youtube.com/watch?v=5C8R8DnffSs&list=PL-q2MNxDekiQZNoAL_xGTT2h5jtu4-55c", "type": "playlist" }
+              ]
+            },
+            {
+              "label": "Task 3",
+              "resources": [
+                { "id": "w4d2r7", "title": "SQL Tutorial (Videos 29-32)", "url": "https://www.youtube.com/watch?v=yVcRQXLMzCE&list=PLrL_PSQ6q062H5CetdplYW7xQKeq8XaR0", "type": "playlist" }
+              ]
+            }
+          ]
+        },
+        {
+          "day": 3,
+          "brief": "Guesstimates",
+          "tasks": [
+            {
+              "label": "Task 1",
+              "resources": [
+                { "id": "w4d3r1", "title": "How to solve guesstimates", "url": "https://youtu.be/NBWFHLcA1wQ", "type": "video" },
+                { "id": "w4d3r2", "title": "Using issue trees", "url": "https://youtu.be/AKps74WLpmk", "type": "video" },
+                { "id": "w4d3r3", "title": "Kites flying guesstimate", "url": "https://youtu.be/JgMmb9yX2cQ", "type": "video" },
+                { "id": "w4d3r4", "title": "Market-Sizing Guesstimate 1", "url": "https://youtu.be/WODp2S7-Ghw", "type": "video" },
+                { "id": "w4d3r5", "title": "Market-Sizing Guesstimate 2", "url": "https://youtu.be/U7k4K1CLVj8", "type": "video" }
+              ]
+            },
+            {
+              "label": "Task 2",
+              "resources": [
+                { "id": "w4d3r6", "title": "Supply-side guesstimate", "url": "https://youtu.be/ILUWBewGes0", "type": "video" },
+                { "id": "w4d3r7", "title": "Revenue Guesstimate Mock", "url": "https://youtu.be/C5e02cUNj5g", "type": "video" },
+                { "id": "w4d3r8", "title": "Guesstimate + Product Strategy Mock", "url": "https://youtu.be/lRJU0rFRx9M", "type": "video" },
+                { "id": "w4d3r9", "title": "Playlist for quick Guesstimate practice", "url": "https://www.youtube.com/watch?v=g7nvHCYzXQE&list=PL-q2MNxDekiSFUNcwCI-Q4-QqHWe5K42p", "type": "playlist" },
+                { "id": "w4d3r10", "title": "Guesstimates Cheat Sheet", "url": "https://sites.google.com/xlri.ac.in/crux/guesstimates/guesstimate-cheat-sheet", "type": "article" }
+              ]
+            },
+            {
+              "label": "Task 3",
+              "resources": [
+                { "id": "w4d3r11", "title": "SQL Tutorial (Videos 33-35)", "url": "https://www.youtube.com/watch?v=yVcRQXLMzCE&list=PLrL_PSQ6q062H5CetdplYW7xQKeq8XaR0", "type": "playlist" }
+              ]
+            }
+          ]
+        },
+        {
+          "day": 4,
+          "brief": "Favourite Product and Improvement Questions",
+          "tasks": [
+            {
+              "label": "Task 1",
+              "resources": [
+                { "id": "w4d4r1", "title": "Favourite Product and Why?", "url": "https://youtu.be/2ecs8t5meBQ", "type": "video" },
+                { "id": "w4d4r2", "title": "Framework with an example", "url": "https://youtu.be/TsYpCng2Pfg", "type": "video" },
+                { "id": "w4d4r3", "title": "Example", "url": "https://youtu.be/Fhm0F240v9Y", "type": "video" }
+              ]
+            },
+            {
+              "label": "Task 2",
+              "resources": [
+                { "id": "w4d4r4", "title": "Product Improvement Mock 1", "url": "https://youtu.be/CXdaPETE7iE", "type": "video" },
+                { "id": "w4d4r5", "title": "Product Improvement Mock 2", "url": "https://youtu.be/BNuRsv_42jc", "type": "video" },
+                { "id": "w4d4r6", "title": "Product Improvement Mock 3", "url": "https://youtu.be/XAJeXlY6w-c", "type": "video" },
+                { "id": "w4d4r7", "title": "Product Improvement Mock 4", "url": "https://youtu.be/X4ohobzELAY", "type": "video" }
+              ]
+            },
+            {
+              "label": "Task 3",
+              "resources": [
+                { "id": "w4d4r8", "title": "SQL Tutorial (Videos 36-37)", "url": "https://www.youtube.com/watch?v=yVcRQXLMzCE&list=PLrL_PSQ6q062H5CetdplYW7xQKeq8XaR0", "type": "playlist" }
+              ]
+            }
+          ]
+        },
+        {
+          "day": 5,
+          "brief": "Product Design and Behavioural Questions",
+          "tasks": [
+            {
+              "label": "Task 1",
+              "resources": [
+                { "id": "w4d5r1", "title": "Circles method", "url": "https://youtu.be/tlpfb_VsogA", "type": "video" },
+                { "id": "w4d5r2", "title": "Product Design Mock 1", "url": "https://youtu.be/oGqz-TMQNR4", "type": "video" },
+                { "id": "w4d5r3", "title": "Product Design Mock 2", "url": "https://youtu.be/Axa7gx1lKqA", "type": "video" },
+                { "id": "w4d5r4", "title": "Product Design Mock 3", "url": "https://youtu.be/35mpatocpYI", "type": "video" }
+              ]
+            },
+            {
+              "label": "Task 2",
+              "resources": [
+                { "id": "w4d5r5", "title": "STAR framework + examples", "url": "https://youtu.be/WdyiUe7_3cA", "type": "video" },
+                { "id": "w4d5r6", "title": "Behavioural interview mock", "url": "https://youtu.be/sjTxmq68RXU", "type": "video" },
+                { "id": "w4d5r7", "title": "Questions to ask the interviewer", "url": "https://youtu.be/5-cba5niZs8", "type": "video" }
+              ]
+            },
+            {
+              "label": "Task 3",
+              "resources": [
+                { "id": "w4d5r8", "title": "SQL Tutorial (Videos 38-40)", "url": "https://www.youtube.com/watch?v=yVcRQXLMzCE&list=PLrL_PSQ6q062H5CetdplYW7xQKeq8XaR0", "type": "playlist" },
+                { "id": "w4d5r9", "title": "Leetcode SQL-50", "url": "https://leetcode.com/studyplan/top-sql-50/", "type": "article" }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

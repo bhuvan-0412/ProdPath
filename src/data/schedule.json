@@ -1,0 +1,29 @@
+{
+  "schedule": [
+    { "id": "s1", "date": "16 June", "week": "Week 1", "topic": "Introduction to Product Management", "dayOfWeek": "Monday", "sessionType": "Resources" },
+    { "id": "s2", "date": "17 June", "week": "Week 1", "topic": "Product sense and strategizing frameworks", "dayOfWeek": "Tuesday", "sessionType": "Resources" },
+    { "id": "s3", "date": "18 June", "week": "Week 1", "topic": "Product Life Cycle", "dayOfWeek": "Wednesday", "sessionType": "Resources" },
+    { "id": "s4", "date": "19 June", "week": "Week 1", "topic": "User Persona, Flow and Journey", "dayOfWeek": "Thursday", "sessionType": "Resources" },
+    { "id": "s5", "date": "20 June", "week": "Week 1", "topic": "UI/UX for PM", "dayOfWeek": "Friday", "sessionType": "Resources" },
+    { "id": "s6", "date": "21 June", "week": "Week 1", "topic": "Quiz + Assignment", "dayOfWeek": "Weekend", "sessionType": "Assessment" },
+    { "id": "s7", "date": "23 June", "week": "Week 2", "topic": "Product success metrics", "dayOfWeek": "Monday", "sessionType": "Resources" },
+    { "id": "s8", "date": "24 June", "week": "Week 2", "topic": "MVP and PMF", "dayOfWeek": "Tuesday", "sessionType": "Resources" },
+    { "id": "s9", "date": "25 June", "week": "Week 2", "topic": "Strategizing frameworks", "dayOfWeek": "Wednesday", "sessionType": "Resources" },
+    { "id": "s10", "date": "26 June", "week": "Week 2", "topic": "Prioritization frameworks and Methodologies", "dayOfWeek": "Thursday", "sessionType": "Resources" },
+    { "id": "s11", "date": "27 June", "week": "Week 2", "topic": "GTM", "dayOfWeek": "Friday", "sessionType": "Resources" },
+    { "id": "s12", "date": "28 June", "week": "Week 2", "topic": "Quiz + Assignment", "dayOfWeek": "Weekend", "sessionType": "Assessment" },
+    { "id": "s13", "date": "30 June", "week": "Week 3", "topic": "Introduction to Tech for PM", "dayOfWeek": "Monday", "sessionType": "Resources" },
+    { "id": "s14", "date": "1 July", "week": "Week 3", "topic": "Understanding Tech Basics: Webhooks, SDLC & Servers", "dayOfWeek": "Tuesday", "sessionType": "Resources" },
+    { "id": "s15", "date": "2 July", "week": "Week 3", "topic": "AI Prototyping Tools", "dayOfWeek": "Wednesday", "sessionType": "Resources" },
+    { "id": "s16", "date": "3 July", "week": "Week 3", "topic": "AI Wireframing Tools & Prompt Engineering Basics", "dayOfWeek": "Thursday", "sessionType": "Resources" },
+    { "id": "s17", "date": "4 July", "week": "Week 3", "topic": "AI Tools for Customer Insights & Data Analysis", "dayOfWeek": "Friday", "sessionType": "Resources" },
+    { "id": "s18", "date": "5 July", "week": "Week 3", "topic": "Quiz + Assignment", "dayOfWeek": "Weekend", "sessionType": "Assessment" },
+    { "id": "s19", "date": "7 July", "week": "Week 4", "topic": "Product Strategy Questions", "dayOfWeek": "Monday", "sessionType": "Resources" },
+    { "id": "s20", "date": "8 July", "week": "Week 4", "topic": "Root Cause Analysis Questions", "dayOfWeek": "Tuesday", "sessionType": "Resources" },
+    { "id": "s21", "date": "9 July", "week": "Week 4", "topic": "Guesstimates", "dayOfWeek": "Wednesday", "sessionType": "Resources" },
+    { "id": "s22", "date": "10 July", "week": "Week 4", "topic": "Favourite Product and Improvement Questions", "dayOfWeek": "Thursday", "sessionType": "Resources" },
+    { "id": "s23", "date": "11 July", "week": "Week 4", "topic": "Product Design and Behavioural Questions", "dayOfWeek": "Friday", "sessionType": "Resources" },
+    { "id": "s24", "date": "12 July", "week": "Week 4", "topic": "Quiz", "dayOfWeek": "Saturday", "sessionType": "Assessment" },
+    { "id": "s25", "date": "12 July", "week": "Week 4", "topic": "Capstone Project (Released)", "dayOfWeek": "Saturday", "sessionType": "Capstone" }
+  ]
+}
