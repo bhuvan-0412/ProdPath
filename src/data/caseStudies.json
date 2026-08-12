@@ -1,0 +1,44 @@
+{
+  "caseStudies": [
+    {
+      "id": "cs-1",
+      "title": "First Principles Thinking in Product Strategy",
+      "summary": "Why breakthrough products often come from questioning the underlying need behind a process, rather than improving the existing way of doing it.",
+      "takeaways": [
+        "Separating the underlying need from the traditional way of delivering it can unlock step-change innovation — e.g. separating 'matching supply and demand' from 'owning the assets involved'.",
+        "First-principles thinking isn't always a single flash of insight — some companies arrive at it gradually as supporting technology and infrastructure mature.",
+        "The same pattern — rebuilding a legacy system on new infrastructure — shows up across very different industries: communication moving off legacy telecom networks, payments becoming software infrastructure, manufacturing shifting to fundamentally different production methods."
+      ]
+    },
+    {
+      "id": "cs-2",
+      "title": "Product Life Cycle Renewal",
+      "summary": "Why some mature products keep growing after hitting saturation while others decline — and the different strategies behind renewal.",
+      "takeaways": [
+        "Long-lived products often expand from a single product into a broader platform, but that only works when the expansion is a natural extension of the trust customers already have — not just an ecosystem play for its own sake.",
+        "Some products renew without expanding at all, by doubling down on price, distribution, and operational reliability — there's more than one path to longevity.",
+        "Failure to renew is frequently a strategic choice, not a capability gap — companies sometimes have the technology to adapt early but choose not to disrupt their own core business."
+      ]
+    },
+    {
+      "id": "cs-3",
+      "title": "Product-Market Fit vs Market Readiness",
+      "summary": "Why some well-built products struggle to gain traction while others take off — separating 'the product is good' from 'the market is ready for it'.",
+      "takeaways": [
+        "A product can have genuine product-market fit within a narrow niche while still being blocked from wider growth by external factors like infrastructure, financing, or regulation — that's a market-readiness problem, not a product problem.",
+        "PMF benchmarks differ by category — habit-driven consumer products and trust-driven B2B products are validated differently, so outperforming your own category's baseline matters more than any single universal metric.",
+        "Being 'too early' is usually less about weak product-market fit and more about running out of time before the surrounding market catches up."
+      ]
+    },
+    {
+      "id": "cs-4",
+      "title": "Mapping Critical User Journeys",
+      "summary": "The gap between the user journey a product team designs and the journey users actually take — and how to decide which one to build for.",
+      "takeaways": [
+        "Users frequently repurpose products for jobs the original team never intended — strong teams notice and sometimes lean into these emergent behaviors instead of only optimizing the 'intended' flow.",
+        "The journey most correlated with long-term retention isn't always the most common one today — it can be worth prioritizing a less-popular but higher-retention path over the high-traffic default.",
+        "Removing friction isn't automatically the right move — a longer, higher-intent onboarding can filter for the right users and improve long-term engagement, even at the cost of short-term conversion."
+      ]
+    }
+  ]
+}

@@ -18,7 +18,6 @@ export const ThemeToggle: React.FC = () => {
         document.documentElement.classList.remove('dark');
       }
     } else {
-      // Default to dark mode as requested in specifications
       document.documentElement.classList.add('dark');
       setTheme('dark');
     }
@@ -41,14 +40,14 @@ export const ThemeToggle: React.FC = () => {
   return (
     <button
       onClick={toggleTheme}
-      className="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all duration-200 border border-slate-200 dark:border-slate-700/60 shadow-sm"
+      className="p-2.5 rounded-xl bg-zinc-100 dark:bg-zinc-900 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-all duration-200 border border-zinc-200 dark:border-zinc-800 shadow-xs"
       title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
       aria-label="Toggle Theme"
     >
       {theme === 'dark' ? (
         <Sun className="w-4 h-4 text-amber-400" />
       ) : (
-        <Moon className="w-4 h-4 text-indigo-600" />
+        <Moon className="w-4 h-4 text-violet-600" />
       )}
     </button>
   );

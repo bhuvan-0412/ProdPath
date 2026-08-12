@@ -1,4 +1,11 @@
-export type ResourceType = 'article' | 'video' | 'playlist';
+export type ResourceType = 'article' | 'video' | 'playlist' | 'case-study';
+
+export interface CaseStudy {
+  id: string;
+  title: string;
+  summary: string;
+  takeaways: string[];
+}
 
 export interface Resource {
   id: string;
@@ -6,6 +13,8 @@ export interface Resource {
   url: string;
   type: ResourceType;
   notes?: string;
+  summary?: string;
+  takeaways?: string[];
   isCustom?: boolean;
   weekId?: string;
   day?: number;

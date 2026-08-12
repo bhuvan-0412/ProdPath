@@ -22,14 +22,14 @@ export default function SchedulePage() {
     switch (type) {
       case 'Assessment':
         return (
-          <span className="inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-300 border border-emerald-200/60 dark:border-emerald-800/50">
+          <span className="inline-flex items-center gap-1 font-mono text-[10px] font-semibold px-2.5 py-0.5 rounded-md bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-300 border border-emerald-200/60 dark:border-emerald-800/50">
             <CheckSquare className="w-3 h-3" />
             Assessment
           </span>
         );
       case 'Capstone':
         return (
-          <span className="inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-300 border border-amber-200/60 dark:border-amber-800/50">
+          <span className="inline-flex items-center gap-1 font-mono text-[10px] font-semibold px-2.5 py-0.5 rounded-md bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 border border-amber-200/60 dark:border-amber-800/50">
             <Award className="w-3 h-3" />
             Capstone
           </span>
@@ -37,7 +37,7 @@ export default function SchedulePage() {
       case 'Resources':
       default:
         return (
-          <span className="inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-300 border border-indigo-200/60 dark:border-indigo-800/50">
+          <span className="inline-flex items-center gap-1 font-mono text-[10px] font-semibold px-2.5 py-0.5 rounded-md bg-violet-50 dark:bg-violet-950/60 text-violet-600 dark:text-violet-300 border border-violet-200/60 dark:border-violet-800/50">
             <BookOpen className="w-3 h-3" />
             Resources
           </span>
@@ -47,33 +47,33 @@ export default function SchedulePage() {
 
   return (
     <div className="space-y-8 animate-fade-in">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-6">
+      {/* Header & Filter Controls */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-200 dark:border-zinc-800/80 pb-6">
         <div>
-          <div className="inline-flex items-center gap-2 text-xs font-semibold text-emerald-600 dark:text-emerald-400 mb-1">
+          <div className="inline-flex items-center gap-2 text-xs font-mono font-semibold text-violet-600 dark:text-violet-400 mb-1">
             <Calendar className="w-3.5 h-3.5" />
-            <span>4-Week Timeline Roadmap</span>
+            <span>4-Week Program Roadmap</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-slate-100">
-            Curriculum Schedule
+          <h1 className="text-2xl sm:text-3xl font-display font-extrabold text-zinc-900 dark:text-zinc-100">
+            Curriculum Timeline
           </h1>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
-            Chronological overview of daily topics, quizzes, assignments, and capstone project.
+          <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">
+            Chronological roadmap of topics, quizzes, assignments, and capstone release.
           </p>
         </div>
 
-        {/* Filters */}
-        <div className="flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800/80 p-1.5 rounded-2xl border border-slate-200/80 dark:border-slate-700/60 self-start sm:self-center">
-          <div className="px-2 text-slate-400">
-            <Filter className="w-4 h-4" />
+        {/* Filter Buttons */}
+        <div className="flex items-center gap-1 bg-zinc-100 dark:bg-zinc-900/90 p-1.5 rounded-2xl border border-zinc-200 dark:border-zinc-800 self-start sm:self-center font-mono text-xs">
+          <div className="px-2 text-zinc-400">
+            <Filter className="w-3.5 h-3.5" />
           </div>
 
           <button
             onClick={() => setFilterType('all')}
-            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+            className={`px-3 py-1.5 rounded-xl font-bold transition-all ${
               filterType === 'all'
-                ? 'bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-xs'
-                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
+                ? 'bg-white dark:bg-[#12121a] text-violet-600 dark:text-violet-400 shadow-xs border border-zinc-200 dark:border-zinc-800'
+                : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
             }`}
           >
             All ({scheduleList.length})
@@ -81,10 +81,10 @@ export default function SchedulePage() {
 
           <button
             onClick={() => setFilterType('resources')}
-            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+            className={`px-3 py-1.5 rounded-xl font-bold transition-all ${
               filterType === 'resources'
-                ? 'bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-xs'
-                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
+                ? 'bg-white dark:bg-[#12121a] text-violet-600 dark:text-violet-400 shadow-xs border border-zinc-200 dark:border-zinc-800'
+                : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
             }`}
           >
             Resources
@@ -92,10 +92,10 @@ export default function SchedulePage() {
 
           <button
             onClick={() => setFilterType('assessment')}
-            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+            className={`px-3 py-1.5 rounded-xl font-bold transition-all ${
               filterType === 'assessment'
-                ? 'bg-white dark:bg-slate-900 text-emerald-600 dark:text-emerald-400 shadow-xs'
-                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
+                ? 'bg-white dark:bg-[#12121a] text-emerald-600 dark:text-emerald-400 shadow-xs border border-zinc-200 dark:border-zinc-800'
+                : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
             }`}
           >
             Assessments
@@ -103,10 +103,10 @@ export default function SchedulePage() {
 
           <button
             onClick={() => setFilterType('capstone')}
-            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+            className={`px-3 py-1.5 rounded-xl font-bold transition-all ${
               filterType === 'capstone'
-                ? 'bg-white dark:bg-slate-900 text-amber-600 dark:text-amber-400 shadow-xs'
-                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
+                ? 'bg-white dark:bg-[#12121a] text-amber-600 dark:text-amber-400 shadow-xs border border-zinc-200 dark:border-zinc-800'
+                : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
             }`}
           >
             Capstone
@@ -114,47 +114,35 @@ export default function SchedulePage() {
         </div>
       </div>
 
-      {/* Schedule Table */}
-      <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm border-collapse">
-            <thead>
-              <tr className="bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-800 text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                <th className="py-4 px-6">Date</th>
-                <th className="py-4 px-6">Day</th>
-                <th className="py-4 px-6">Week</th>
-                <th className="py-4 px-6">Topic / Milestone</th>
-                <th className="py-4 px-6 text-right">Type</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-100 dark:divide-slate-800/80">
-              {filteredItems.map((item) => (
-                <tr
-                  key={item.id}
-                  className="hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition-colors"
-                >
-                  <td className="py-4 px-6 font-bold text-slate-900 dark:text-slate-100 whitespace-nowrap">
-                    {item.date}
-                  </td>
-                  <td className="py-4 px-6 text-slate-600 dark:text-slate-300 font-medium whitespace-nowrap">
-                    {item.dayOfWeek}
-                  </td>
-                  <td className="py-4 px-6 whitespace-nowrap">
-                    <span className="text-xs font-bold px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200/60 dark:border-slate-700/60">
-                      {item.week}
-                    </span>
-                  </td>
-                  <td className="py-4 px-6 font-semibold text-slate-800 dark:text-slate-200">
-                    {item.topic}
-                  </td>
-                  <td className="py-4 px-6 text-right whitespace-nowrap">
-                    {getSessionBadge(item.sessionType)}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+      {/* Vertical Timeline Rail + Nodes */}
+      <div className="relative pl-6 sm:pl-8 space-y-6 before:absolute before:left-2.5 sm:before:left-3.5 before:top-3 before:bottom-3 before:w-0.5 before:bg-gradient-to-b before:from-violet-500/50 before:via-violet-500/25 before:to-zinc-300 dark:before:to-zinc-800">
+        {filteredItems.map((item) => (
+          <div key={item.id} className="relative flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-6 group">
+            {/* Timeline Node Point */}
+            <div className="absolute -left-[21px] sm:-left-[27px] mt-4 w-3.5 h-3.5 rounded-full border-2 border-white dark:border-[#0a0a0f] bg-violet-600 group-hover:scale-125 transition-transform shadow-xs z-10" />
+
+            {/* Date Pillar */}
+            <div className="w-24 sm:w-28 pt-3 flex-shrink-0 font-mono text-xs space-y-0.5">
+              <div className="font-bold text-zinc-900 dark:text-zinc-100">{item.date}</div>
+              <div className="text-[11px] text-zinc-500 dark:text-zinc-400">{item.dayOfWeek}</div>
+            </div>
+
+            {/* Timeline Node Content Card */}
+            <div className="flex-1 bg-white dark:bg-[#12121a] p-4 sm:p-5 rounded-2xl border border-zinc-200 dark:border-zinc-800/80 hover:border-violet-500/40 dark:hover:border-violet-500/40 transition-all duration-200 shadow-xs space-y-2">
+              <div className="flex items-center justify-between gap-2 flex-wrap">
+                <span className="font-mono text-[10px] font-semibold uppercase text-violet-600 dark:text-violet-400 px-2 py-0.5 rounded-md bg-violet-50 dark:bg-violet-950/60 border border-violet-200/50 dark:border-violet-800/40">
+                  {item.week}
+                </span>
+
+                {getSessionBadge(item.sessionType)}
+              </div>
+
+              <h3 className="font-display font-bold text-sm sm:text-base text-zinc-900 dark:text-zinc-100 group-hover:text-violet-600 dark:group-hover:text-violet-400 transition-colors">
+                {item.topic}
+              </h3>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );

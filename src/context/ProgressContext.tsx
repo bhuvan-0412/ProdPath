@@ -1,9 +1,10 @@
 'use client';
 
 import React, { createContext, useContext, useEffect, useState, useMemo } from 'react';
-import { Resource, Week, LiveSession } from '@/types/curriculum';
+import { Resource, Week, LiveSession, CaseStudy } from '@/types/curriculum';
 import weeksData from '@/data/weeks.json';
 import liveSessionsData from '@/data/liveSessions.json';
+import caseStudiesData from '@/data/caseStudies.json';
 import confetti from 'canvas-confetti';
 
 interface ProgressContextType {
@@ -16,6 +17,7 @@ interface ProgressContextType {
   getAllResources: () => Resource[];
   getWeekStats: (weekId: string) => { total: number; completed: number; percentage: number };
   getLiveSessionStats: () => { total: number; completed: number; percentage: number };
+  getCaseStudyStats: () => { total: number; completed: number; percentage: number };
   getOverallStats: () => { total: number; completed: number; percentage: number };
   getNextIncompleteResource: () => Resource | null;
   resetProgress: () => void;
@@ -59,6 +61,20 @@ const flattenLiveSessions = (): Resource[] => {
     notes: `Speaker: ${session.speaker}`,
     isCustom: false,
     taskLabel: `Live Session ${session.sessionNumber}`,
+  }));
+};
+
+// Helper to flatten caseStudies.json into resources
+const flattenCaseStudies = (): Resource[] => {
+  return (caseStudiesData.caseStudies as CaseStudy[]).map((cs) => ({
+    id: cs.id,
+    title: cs.title,
+    url: '#',
+    type: 'case-study' as const,
+    summary: cs.summary,
+    takeaways: cs.takeaways,
+    isCustom: false,
+    taskLabel: 'Case Study',
   }));
 };
 
@@ -109,10 +125,11 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   const curriculumResources = useMemo(() => flattenCurriculum(), []);
   const liveSessionResources = useMemo(() => flattenLiveSessions(), []);
+  const caseStudyResources = useMemo(() => flattenCaseStudies(), []);
 
   const getAllResources = useMemo(() => {
-    return () => [...curriculumResources, ...liveSessionResources, ...customResources];
-  }, [curriculumResources, liveSessionResources, customResources]);
+    return () => [...curriculumResources, ...liveSessionResources, ...caseStudyResources, ...customResources];
+  }, [curriculumResources, liveSessionResources, caseStudyResources, customResources]);
 
   const toggleCompleted = (id: string) => {
     setCompletedIds((prev) => {
@@ -150,7 +167,7 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     notes?: string;
   }) => {
     const newRes: Resource = {
-      id: `custom_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`,
+      id: `custom_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
       title,
       url,
       type,
@@ -192,6 +209,16 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     return { total, completed, percentage };
   };
 
+  const getCaseStudyStats = () => {
+    const total = caseStudiesData.caseStudies.length;
+    if (total === 0) return { total: 0, completed: 0, percentage: 0 };
+    const completed = caseStudiesData.caseStudies.filter((cs) =>
+      completedIds.has(cs.id)
+    ).length;
+    const percentage = Math.round((completed / total) * 100);
+    return { total, completed, percentage };
+  };
+
   const getOverallStats = () => {
     const all = getAllResources();
     const total = all.length;
@@ -224,6 +251,7 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         getAllResources,
         getWeekStats,
         getLiveSessionStats,
+        getCaseStudyStats,
         getOverallStats,
         getNextIncompleteResource,
         resetProgress,

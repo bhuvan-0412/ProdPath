@@ -5,7 +5,7 @@ import { useProgress } from '@/context/ProgressContext';
 import { ProgressBar } from '@/components/ProgressBar';
 import liveSessionsData from '@/data/liveSessions.json';
 import { LiveSession } from '@/types/curriculum';
-import { Video, Check, ExternalLink, User, Sparkles, Tv, CheckCircle2 } from 'lucide-react';
+import { Video, Check, ExternalLink, User, Tv, CheckCircle2 } from 'lucide-react';
 
 export default function LiveSessionsPage() {
   const { isCompleted, toggleCompleted, getLiveSessionStats } = useProgress();
@@ -15,33 +15,33 @@ export default function LiveSessionsPage() {
   return (
     <div className="space-y-8 animate-fade-in">
       {/* Header Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-200 dark:border-zinc-800/80 pb-6">
         <div>
-          <div className="inline-flex items-center gap-2 text-xs font-semibold text-rose-600 dark:text-rose-400 mb-1">
+          <div className="inline-flex items-center gap-2 text-xs font-mono font-semibold text-violet-600 dark:text-violet-400 mb-1">
             <Video className="w-3.5 h-3.5" />
-            <span>On-Demand Watch List</span>
+            <span>On-Demand Masterclass Library</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-slate-100">
+          <h1 className="text-2xl sm:text-3xl font-display font-extrabold text-zinc-900 dark:text-zinc-100">
             Live Sessions
           </h1>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
-            Watch recorded masterclasses and expert sessions from top Product Management leaders.
+          <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">
+            Watch recorded masterclasses and expert talks from leading Product Management practitioners.
           </p>
         </div>
 
         {/* Live Session Progress Counter Badge */}
-        <div className="bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs min-w-[240px] space-y-2">
-          <div className="flex items-center justify-between text-xs font-bold">
-            <span className="text-slate-600 dark:text-slate-300 flex items-center gap-1.5">
-              <Tv className="w-4 h-4 text-indigo-500" />
-              Live Sessions Progress
+        <div className="bg-white dark:bg-[#12121a] p-4 rounded-2xl border border-zinc-200 dark:border-zinc-800 shadow-xs min-w-[240px] space-y-2">
+          <div className="flex items-center justify-between text-xs font-semibold">
+            <span className="text-zinc-600 dark:text-zinc-300 flex items-center gap-1.5 font-mono text-[11px]">
+              <Tv className="w-3.5 h-3.5 text-violet-500" />
+              Live Sessions
             </span>
-            <span className="text-indigo-600 dark:text-indigo-400 font-extrabold">
-              {stats.completed}/{stats.total} Watched
+            <span className="text-violet-600 dark:text-violet-400 font-mono font-bold">
+              {stats.completed}/{stats.total}
             </span>
           </div>
           <ProgressBar percentage={stats.percentage} showLabel={false} size="sm" />
-          <div className="text-[11px] text-slate-500 dark:text-slate-400 text-right">
+          <div className="text-[11px] font-mono text-zinc-500 dark:text-zinc-400 text-right">
             {stats.percentage}% Complete
           </div>
         </div>
@@ -49,15 +49,15 @@ export default function LiveSessionsPage() {
 
       {/* Completion Banner */}
       {stats.completed === stats.total && stats.total > 0 && (
-        <div className="bg-emerald-50 dark:bg-emerald-950/40 rounded-2xl p-5 border border-emerald-200 dark:border-emerald-900/50 flex items-center gap-4">
-          <div className="w-10 h-10 rounded-xl bg-emerald-500 text-white flex items-center justify-center flex-shrink-0">
+        <div className="bg-violet-950/20 rounded-2xl p-5 border border-violet-500/30 flex items-center gap-4">
+          <div className="w-10 h-10 rounded-xl bg-violet-600 text-white flex items-center justify-center flex-shrink-0">
             <CheckCircle2 className="w-5 h-5" />
           </div>
           <div>
-            <h3 className="text-sm font-bold text-emerald-950 dark:text-emerald-200">
+            <h3 className="text-sm font-display font-bold text-violet-100">
               All Live Sessions Completed!
             </h3>
-            <p className="text-xs text-emerald-700 dark:text-emerald-400 mt-0.5">
+            <p className="text-xs text-violet-300/80 mt-0.5">
               Awesome job watching all {stats.total} masterclasses in the on-demand library.
             </p>
           </div>
@@ -75,42 +75,42 @@ export default function LiveSessionsPage() {
               key={session.sessionNumber}
               className={`group relative flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 sm:p-5 rounded-2xl border transition-all duration-200 ${
                 completed
-                  ? 'bg-slate-50/80 dark:bg-slate-900/40 border-slate-200 dark:border-slate-800/80'
-                  : 'bg-white dark:bg-slate-900 border-slate-200/80 dark:border-slate-800 hover:border-indigo-300 dark:hover:border-indigo-700/60 shadow-xs hover:shadow-md'
+                  ? 'bg-zinc-50/70 dark:bg-[#12121a]/50 border-zinc-200/80 dark:border-zinc-800/60'
+                  : 'bg-white dark:bg-[#12121a] border-zinc-200/90 dark:border-zinc-800 hover:border-violet-500/40 dark:hover:border-violet-500/40 shadow-xs'
               }`}
             >
               <div className="flex items-start sm:items-center gap-3.5 flex-1 min-w-0">
                 {/* Checkbox */}
                 <button
                   onClick={() => toggleCompleted(itemId)}
-                  className={`flex-shrink-0 mt-1 sm:mt-0 w-6 h-6 rounded-lg border transition-all duration-200 flex items-center justify-center ${
+                  className={`flex-shrink-0 mt-1 sm:mt-0 w-5 h-5 rounded-lg border transition-all duration-200 flex items-center justify-center ${
                     completed
-                      ? 'bg-emerald-500 border-emerald-500 text-white animate-pop shadow-xs'
-                      : 'border-slate-300 dark:border-slate-600 hover:border-indigo-500 dark:hover:border-indigo-400 bg-slate-50 dark:bg-slate-800'
+                      ? 'bg-violet-600 border-violet-600 text-white animate-pop shadow-xs'
+                      : 'border-zinc-300 dark:border-zinc-700 hover:border-violet-500 dark:hover:border-violet-400 bg-zinc-50 dark:bg-zinc-900'
                   }`}
                   aria-label={`Mark session ${session.sessionNumber} as ${completed ? 'unwatched' : 'watched'}`}
                 >
-                  {completed && <Check className="w-4 h-4 stroke-[3]" />}
+                  {completed && <Check className="w-3.5 h-3.5 stroke-[3]" />}
                 </button>
 
                 {/* Session Details */}
                 <div className="flex-1 min-w-0 space-y-1">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-md bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-300 border border-indigo-100 dark:border-indigo-900/50 uppercase tracking-wider">
+                  <div className="flex items-center gap-2 flex-wrap font-mono text-[10px]">
+                    <span className="font-semibold px-2.5 py-0.5 rounded-md bg-violet-50 dark:bg-violet-950/60 text-violet-600 dark:text-violet-300 border border-violet-200/60 dark:border-violet-800/50 uppercase">
                       Session {session.sessionNumber}
                     </span>
 
-                    <span className="inline-flex items-center gap-1 text-[11px] font-medium px-2.5 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200/60 dark:border-slate-700/50">
-                      <User className="w-3 h-3 text-slate-400" />
+                    <span className="inline-flex items-center gap-1 font-semibold px-2.5 py-0.5 rounded-md bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 border border-zinc-200/60 dark:border-zinc-700/50">
+                      <User className="w-3 h-3 text-zinc-400" />
                       <span>{session.speaker}</span>
                     </span>
                   </div>
 
                   <h3
-                    className={`font-bold text-base transition-colors ${
+                    className={`font-semibold text-base transition-colors ${
                       completed
-                        ? 'line-through text-slate-400 dark:text-slate-500 font-normal'
-                        : 'text-slate-900 dark:text-slate-100'
+                        ? 'line-through text-zinc-400 dark:text-zinc-500 font-normal'
+                        : 'text-zinc-900 dark:text-zinc-100'
                     }`}
                   >
                     {session.topic}
@@ -124,7 +124,7 @@ export default function LiveSessionsPage() {
                   href={session.videoUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-600 dark:hover:bg-indigo-500 text-white text-xs font-bold transition-all shadow-xs hover:shadow-md active:scale-95"
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-violet-600 hover:bg-violet-700 text-white text-xs font-bold transition-all shadow-xs active:scale-95"
                 >
                   <Video className="w-3.5 h-3.5" />
                   <span>Watch</span>
