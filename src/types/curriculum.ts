@@ -50,6 +50,6 @@ export interface ScheduleItem {
   week: string;
   day?: number;
   topic: string;
-  sessionType: 'Resources' | 'Assessment' | 'Capstone';
+  sessionType: 'Resources' | 'Assessment';
 }
 

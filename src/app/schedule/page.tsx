@@ -1,44 +1,15 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import scheduleData from '@/data/schedule.json';
 import { ScheduleItem } from '@/types/curriculum';
 import { useProgress } from '@/context/ProgressContext';
-import { Calendar, Filter, BookOpen, Award, CheckCircle2, Check } from 'lucide-react';
+import { Calendar, BookOpen, CheckCircle2, Check } from 'lucide-react';
 
 export default function SchedulePage() {
-  const [filterType, setFilterType] = useState<string>('all');
   const { isCompleted, toggleCompleted, completedDates, getAllResources } = useProgress();
-
   const scheduleList = scheduleData.schedule as ScheduleItem[];
   const allResources = getAllResources();
-
-  const filteredItems = scheduleList.filter((item) => {
-    if (filterType === 'all') return true;
-    if (filterType === 'resources') return item.sessionType === 'Resources';
-    if (filterType === 'capstone') return item.sessionType === 'Capstone';
-    return true;
-  });
-
-  const getSessionBadge = (type: ScheduleItem['sessionType']) => {
-    switch (type) {
-      case 'Capstone':
-        return (
-          <span className="inline-flex items-center gap-1 font-mono text-[10px] font-semibold px-2.5 py-0.5 rounded-md bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 border border-amber-200/60 dark:border-amber-800/50">
-            <Award className="w-3 h-3" />
-            Capstone
-          </span>
-        );
-      case 'Resources':
-      default:
-        return (
-          <span className="inline-flex items-center gap-1 font-mono text-[10px] font-semibold px-2.5 py-0.5 rounded-md bg-violet-50 dark:bg-violet-950/60 text-violet-600 dark:text-violet-300 border border-violet-200/60 dark:border-violet-800/50">
-            <BookOpen className="w-3 h-3" />
-            Resources
-          </span>
-        );
-    }
-  };
 
   // Helper to determine if a schedule item is completed and fetch its completion timestamp
   const getScheduleItemState = (item: ScheduleItem) => {
@@ -51,7 +22,6 @@ export default function SchedulePage() {
       const allDayCompleted = dayResources.length > 0 && dayResources.every((r) => isCompleted(r.id));
 
       if (allDayCompleted || directDone) {
-        // Find latest date among day resources or direct date
         const dates = dayResources.map((r) => completedDates[r.id]).filter(Boolean);
         if (directDate) dates.push(directDate);
 
@@ -69,7 +39,6 @@ export default function SchedulePage() {
 
   const handleToggleScheduleItem = (item: ScheduleItem) => {
     toggleCompleted(item.id);
-    // If it's a day item, also toggle its day resources if checking off
     if (item.day) {
       const weekId = item.week.toLowerCase().replace(' ', '-');
       const dayResources = allResources.filter((r) => r.weekId === weekId && r.day === item.day);
@@ -86,7 +55,7 @@ export default function SchedulePage() {
 
   return (
     <div className="space-y-8 animate-fade-in">
-      {/* Header & Filter Controls */}
+      {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-200 dark:border-zinc-800/80 pb-6">
         <div>
           <div className="inline-flex items-center gap-2 text-xs font-mono font-semibold text-violet-600 dark:text-violet-400 mb-1">
@@ -97,54 +66,14 @@ export default function SchedulePage() {
             Curriculum Timeline
           </h1>
           <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">
-            Track completion timestamps as you progress through daily topics and capstone milestones.
+            Track completion timestamps as you progress through your 4-week daily topics.
           </p>
-        </div>
-
-        {/* Filter Buttons */}
-        <div className="flex items-center gap-1 bg-zinc-100 dark:bg-zinc-900/90 p-1.5 rounded-2xl border border-zinc-200 dark:border-zinc-800 self-start sm:self-center font-mono text-xs">
-          <div className="px-2 text-zinc-400">
-            <Filter className="w-3.5 h-3.5" />
-          </div>
-
-          <button
-            onClick={() => setFilterType('all')}
-            className={`px-3 py-1.5 rounded-xl font-bold transition-all ${
-              filterType === 'all'
-                ? 'bg-white dark:bg-[#12121a] text-violet-600 dark:text-violet-400 shadow-xs border border-zinc-200 dark:border-zinc-800'
-                : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
-            }`}
-          >
-            All ({scheduleList.length})
-          </button>
-
-          <button
-            onClick={() => setFilterType('resources')}
-            className={`px-3 py-1.5 rounded-xl font-bold transition-all ${
-              filterType === 'resources'
-                ? 'bg-white dark:bg-[#12121a] text-violet-600 dark:text-violet-400 shadow-xs border border-zinc-200 dark:border-zinc-800'
-                : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
-            }`}
-          >
-            Resources
-          </button>
-
-          <button
-            onClick={() => setFilterType('capstone')}
-            className={`px-3 py-1.5 rounded-xl font-bold transition-all ${
-              filterType === 'capstone'
-                ? 'bg-white dark:bg-[#12121a] text-amber-600 dark:text-amber-400 shadow-xs border border-zinc-200 dark:border-zinc-800'
-                : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
-            }`}
-          >
-            Capstone
-          </button>
         </div>
       </div>
 
       {/* Vertical Timeline Rail + Nodes */}
       <div className="relative pl-6 sm:pl-8 space-y-6 before:absolute before:left-2.5 sm:before:left-3.5 before:top-3 before:bottom-3 before:w-0.5 before:bg-gradient-to-b before:from-violet-500/50 before:via-violet-500/25 before:to-zinc-300 dark:before:to-zinc-800">
-        {filteredItems.map((item) => {
+        {scheduleList.map((item) => {
           const { isDone, dateStr } = getScheduleItemState(item);
 
           return (
@@ -194,7 +123,10 @@ export default function SchedulePage() {
                     {item.week} {item.day ? `• Day ${item.day}` : ''}
                   </span>
 
-                  {getSessionBadge(item.sessionType)}
+                  <span className="inline-flex items-center gap-1 font-mono text-[10px] font-semibold px-2.5 py-0.5 rounded-md bg-violet-50 dark:bg-violet-950/60 text-violet-600 dark:text-violet-300 border border-violet-200/60 dark:border-violet-800/50">
+                    <BookOpen className="w-3 h-3" />
+                    Resources
+                  </span>
                 </div>
 
                 <h3
