@@ -9,9 +9,11 @@ import confetti from 'canvas-confetti';
 
 interface ProgressContextType {
   completedIds: Set<string>;
+  completedDates: Record<string, string>;
   customResources: Resource[];
   toggleCompleted: (id: string) => void;
   isCompleted: (id: string) => boolean;
+  getCompletionDate: (id: string) => string | null;
   addCustomResource: (res: { title: string; url: string; type: Resource['type']; weekId: string; notes?: string }) => void;
   deleteCustomResource: (id: string) => void;
   getAllResources: () => Resource[];
@@ -24,11 +26,16 @@ interface ProgressContextType {
 }
 
 const STORAGE_KEY_COMPLETED = 'prodpath_completed_ids_v1';
+const STORAGE_KEY_DATES = 'prodpath_completed_dates_v1';
 const STORAGE_KEY_CUSTOM = 'prodpath_custom_resources_v1';
 const LEGACY_STORAGE_KEY_COMPLETED = 'pm_hub_completed_ids_v1';
 const LEGACY_STORAGE_KEY_CUSTOM = 'pm_hub_custom_resources_v1';
 
 const ProgressContext = createContext<ProgressContextType | undefined>(undefined);
+
+const formatDateString = (date: Date = new Date()): string => {
+  return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+};
 
 // Helper to flatten standard weeks.json into a list of resources with metadata
 const flattenCurriculum = (): Resource[] => {
@@ -80,6 +87,7 @@ const flattenCaseStudies = (): Resource[] => {
 
 export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [completedIds, setCompletedIds] = useState<Set<string>>(new Set());
+  const [completedDates, setCompletedDates] = useState<Record<string, string>>({});
   const [customResources, setCustomResources] = useState<Resource[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -90,6 +98,11 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         const savedCompleted = localStorage.getItem(STORAGE_KEY_COMPLETED) || localStorage.getItem(LEGACY_STORAGE_KEY_COMPLETED);
         if (savedCompleted) {
           setCompletedIds(new Set(JSON.parse(savedCompleted)));
+        }
+
+        const savedDates = localStorage.getItem(STORAGE_KEY_DATES);
+        if (savedDates) {
+          setCompletedDates(JSON.parse(savedDates));
         }
 
         const savedCustom = localStorage.getItem(STORAGE_KEY_CUSTOM) || localStorage.getItem(LEGACY_STORAGE_KEY_CUSTOM);
@@ -104,7 +117,7 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     }
   }, []);
 
-  // Save to localStorage when state changes
+  // Save completedIds to localStorage
   useEffect(() => {
     if (!isLoaded || typeof window === 'undefined') return;
     try {
@@ -114,6 +127,17 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     }
   }, [completedIds, isLoaded]);
 
+  // Save completedDates to localStorage
+  useEffect(() => {
+    if (!isLoaded || typeof window === 'undefined') return;
+    try {
+      localStorage.setItem(STORAGE_KEY_DATES, JSON.stringify(completedDates));
+    } catch (e) {
+      console.error('Failed to save completed dates:', e);
+    }
+  }, [completedDates, isLoaded]);
+
+  // Save customResources to localStorage
   useEffect(() => {
     if (!isLoaded || typeof window === 'undefined') return;
     try {
@@ -132,6 +156,8 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   }, [curriculumResources, liveSessionResources, caseStudyResources, customResources]);
 
   const toggleCompleted = (id: string) => {
+    const todayStr = formatDateString();
+
     setCompletedIds((prev) => {
       const next = new Set(prev);
       const isNowCompleted = !next.has(id);
@@ -142,16 +168,31 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
           particleCount: 35,
           spread: 60,
           origin: { y: 0.8 },
-          colors: ['#6366f1', '#22c55e', '#a5b4fc']
+          colors: ['#8b5cf6', '#22c55e', '#a78bfa']
         });
       } else {
         next.delete(id);
       }
       return next;
     });
+
+    setCompletedDates((prev) => {
+      const next = { ...prev };
+      if (!completedIds.has(id)) {
+        next[id] = todayStr;
+      } else {
+        delete next[id];
+      }
+      return next;
+    });
   };
 
   const isCompleted = (id: string) => completedIds.has(id);
+
+  const getCompletionDate = (id: string): string | null => {
+    if (completedDates[id]) return completedDates[id];
+    return null;
+  };
 
   const addCustomResource = ({
     title,
@@ -174,7 +215,7 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       weekId,
       notes,
       isCustom: true,
-      day: 1, // Default day for user added
+      day: 1,
       taskLabel: 'Custom Addition'
     };
 
@@ -186,6 +227,11 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     setCompletedIds((prev) => {
       const next = new Set(prev);
       next.delete(id);
+      return next;
+    });
+    setCompletedDates((prev) => {
+      const next = { ...prev };
+      delete next[id];
       return next;
     });
   };
@@ -236,6 +282,11 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const resetProgress = () => {
     if (confirm('Are you sure you want to reset all completion progress? Custom resources will be preserved.')) {
       setCompletedIds(new Set());
+      setCompletedDates({});
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem(STORAGE_KEY_COMPLETED);
+        localStorage.removeItem(STORAGE_KEY_DATES);
+      }
     }
   };
 
@@ -243,9 +294,11 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     <ProgressContext.Provider
       value={{
         completedIds,
+        completedDates,
         customResources,
         toggleCompleted,
         isCompleted,
+        getCompletionDate,
         addCustomResource,
         deleteCustomResource,
         getAllResources,

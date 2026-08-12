@@ -47,10 +47,9 @@ export interface Week {
 
 export interface ScheduleItem {
   id: string;
-  date: string;
   week: string;
+  day?: number;
   topic: string;
-  dayOfWeek: string;
   sessionType: 'Resources' | 'Assessment' | 'Capstone';
 }
 
