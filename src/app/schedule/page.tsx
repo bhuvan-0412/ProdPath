@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import scheduleData from '@/data/schedule.json';
 import { ScheduleItem } from '@/types/curriculum';
 import { useProgress } from '@/context/ProgressContext';
-import { Calendar, Filter, BookOpen, CheckSquare, Award, CheckCircle2, Check } from 'lucide-react';
+import { Calendar, Filter, BookOpen, Award, CheckCircle2, Check } from 'lucide-react';
 
 export default function SchedulePage() {
   const [filterType, setFilterType] = useState<string>('all');
@@ -16,20 +16,12 @@ export default function SchedulePage() {
   const filteredItems = scheduleList.filter((item) => {
     if (filterType === 'all') return true;
     if (filterType === 'resources') return item.sessionType === 'Resources';
-    if (filterType === 'assessment') return item.sessionType === 'Assessment';
     if (filterType === 'capstone') return item.sessionType === 'Capstone';
     return true;
   });
 
   const getSessionBadge = (type: ScheduleItem['sessionType']) => {
     switch (type) {
-      case 'Assessment':
-        return (
-          <span className="inline-flex items-center gap-1 font-mono text-[10px] font-semibold px-2.5 py-0.5 rounded-md bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-300 border border-emerald-200/60 dark:border-emerald-800/50">
-            <CheckSquare className="w-3 h-3" />
-            Assessment
-          </span>
-        );
       case 'Capstone':
         return (
           <span className="inline-flex items-center gap-1 font-mono text-[10px] font-semibold px-2.5 py-0.5 rounded-md bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 border border-amber-200/60 dark:border-amber-800/50">
@@ -105,7 +97,7 @@ export default function SchedulePage() {
             Curriculum Timeline
           </h1>
           <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">
-            Track completion timestamps as you progress through topics, assessments, and capstone milestones.
+            Track completion timestamps as you progress through daily topics and capstone milestones.
           </p>
         </div>
 
@@ -135,17 +127,6 @@ export default function SchedulePage() {
             }`}
           >
             Resources
-          </button>
-
-          <button
-            onClick={() => setFilterType('assessment')}
-            className={`px-3 py-1.5 rounded-xl font-bold transition-all ${
-              filterType === 'assessment'
-                ? 'bg-white dark:bg-[#12121a] text-emerald-600 dark:text-emerald-400 shadow-xs border border-zinc-200 dark:border-zinc-800'
-                : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
-            }`}
-          >
-            Assessments
           </button>
 
           <button
