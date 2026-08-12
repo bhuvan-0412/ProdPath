@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ThemeToggle } from './ThemeToggle';
-import { Compass, LayoutDashboard, BookOpen, Calendar, Library, Video, Menu, X } from 'lucide-react';
+import { Compass, LayoutDashboard, BookOpen, Calendar, BookMarked, Video, Menu, X } from 'lucide-react';
 
 export const Navbar: React.FC = () => {
   const pathname = usePathname();
@@ -14,7 +14,7 @@ export const Navbar: React.FC = () => {
     { href: '/', label: 'Dashboard', icon: LayoutDashboard },
     { href: '/course', label: 'Curriculum', icon: BookOpen },
     { href: '/schedule', label: 'Schedule', icon: Calendar },
-    { href: '/resources', label: 'Resource Library', icon: Library },
+    { href: '/resources', label: 'Case Studies', icon: BookMarked },
     { href: '/live-sessions', label: 'Live Sessions', icon: Video },
   ];
 

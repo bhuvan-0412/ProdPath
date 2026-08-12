@@ -221,7 +221,7 @@ export default function DashboardPage() {
 
           {/* Case Studies Progress Card */}
           <Link
-            href="/resources?type=case-study"
+            href="/resources"
             className="group bg-white dark:bg-[#12121a] rounded-2xl p-5 border border-zinc-200 dark:border-zinc-800 hover:border-violet-500/40 dark:hover:border-violet-500/40 shadow-xs hover:shadow-md transition-all duration-200 flex flex-col justify-between"
           >
             <div className="space-y-2 mb-4">
@@ -295,14 +295,14 @@ export default function DashboardPage() {
           className="p-5 rounded-2xl bg-white dark:bg-[#12121a] border border-zinc-200 dark:border-zinc-800 hover:border-violet-500/40 transition-all flex items-center gap-4 group"
         >
           <div className="w-11 h-11 rounded-xl bg-violet-600 text-white flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform shadow-xs">
-            <Library className="w-5 h-5" />
+            <BookMarked className="w-5 h-5" />
           </div>
           <div>
             <h3 className="font-display font-bold text-sm text-zinc-900 dark:text-zinc-100 group-hover:text-violet-600 dark:group-hover:text-violet-400 transition-colors">
-              Resource Library
+              Case Studies
             </h3>
             <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">
-              Search, filter, and add your custom links
+              Real-world PM strategies & executive takeaways
             </p>
           </div>
         </Link>
