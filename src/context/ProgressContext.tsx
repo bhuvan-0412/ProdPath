@@ -6,7 +6,7 @@ import weeksData from '@/data/weeks.json';
 import liveSessionsData from '@/data/liveSessions.json';
 import caseStudiesData from '@/data/caseStudies.json';
 import confetti from 'canvas-confetti';
-import { createClient } from '@/lib/supabase/client';
+import { createClient, isSupabaseConfigured } from '@/lib/supabase/client';
 import { User } from '@supabase/supabase-js';
 import { OptInModal } from '@/components/OptInModal';
 import { ImportProgressModal } from '@/components/ImportProgressModal';
@@ -234,6 +234,15 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   // Listen to Supabase Auth state changes
   useEffect(() => {
     let mounted = true;
+
+    if (!isSupabaseConfigured()) {
+      setUser(null);
+      setProfile(null);
+      loadLocalStorage();
+      setIsLoadingAuth(false);
+      setIsLoaded(true);
+      return;
+    }
 
     const initAuth = async () => {
       try {

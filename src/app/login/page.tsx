@@ -1,21 +1,31 @@
 'use client';
 
-import React, { useState } from 'react';
-import { createClient } from '@/lib/supabase/client';
-import { Compass, LogIn, ArrowLeft } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { createClient, isSupabaseConfigured } from '@/lib/supabase/client';
+import { Compass, LogIn, ArrowLeft, AlertCircle } from 'lucide-react';
 import Link from 'next/link';
 
 export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [configured, setConfigured] = useState(true);
+
+  useEffect(() => {
+    setConfigured(isSupabaseConfigured());
+  }, []);
 
   const handleGoogleLogin = async () => {
+    if (!configured) {
+      setErrorMsg('Authentication is currently pending environment variable configuration.');
+      return;
+    }
+
     try {
       setLoading(true);
       setErrorMsg(null);
       const supabase = createClient();
       const origin = typeof window !== 'undefined' ? window.location.origin : '';
-      
+
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
@@ -56,9 +66,21 @@ export default function LoginPage() {
               Welcome to ProdPath
             </h1>
             <p className="text-xs text-zinc-500 dark:text-zinc-400 max-w-xs mx-auto">
-              Sign in to synchronize your learning progress, save custom resources, and access your personal roadmap anywhere.
+              Sign in to synchronize your learning progress across devices, save custom resources, and unlock your personal roadmap.
             </p>
           </div>
+
+          {!configured && (
+            <div className="mb-6 p-4 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/50 text-amber-700 dark:text-amber-300 text-xs flex items-start gap-3">
+              <AlertCircle className="w-5 h-5 shrink-0 mt-0.5 text-amber-500" />
+              <div>
+                <p className="font-bold mb-1">Login Temporarily Unavailable</p>
+                <p className="text-[11px] leading-relaxed text-amber-600 dark:text-amber-400">
+                  Supabase environment variables (<code className="font-mono">NEXT_PUBLIC_SUPABASE_URL</code>) are not configured yet. Guest mode remains 100% functional!
+                </p>
+              </div>
+            </div>
+          )}
 
           {errorMsg && (
             <div className="mb-6 p-3 rounded-xl bg-red-50 dark:bg-red-950/50 border border-red-200 dark:border-red-800/50 text-red-600 dark:text-red-400 text-xs font-medium text-center">
@@ -69,7 +91,7 @@ export default function LoginPage() {
           <div className="space-y-4">
             <button
               onClick={handleGoogleLogin}
-              disabled={loading}
+              disabled={loading || !configured}
               className="w-full py-3.5 px-4 bg-white dark:bg-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-700/80 text-zinc-800 dark:text-zinc-100 border border-zinc-300 dark:border-zinc-700 rounded-2xl font-semibold text-sm shadow-sm hover:shadow transition-all flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed group"
             >
               <svg className="w-5 h-5" viewBox="0 0 24 24">

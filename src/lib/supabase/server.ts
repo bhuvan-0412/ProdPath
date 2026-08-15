@@ -1,6 +1,18 @@
 import { createServerClient } from '@supabase/ssr';
 import { cookies } from 'next/headers';
 
+export function isSupabaseConfiguredServer(): boolean {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  return Boolean(
+    url &&
+      anonKey &&
+      !url.includes('your-supabase-project-id') &&
+      !url.includes('placeholder.supabase.co') &&
+      !anonKey.includes('your-supabase-anon-key')
+  );
+}
+
 export async function createClient() {
   const cookieStore = await cookies();
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co';
