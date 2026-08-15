@@ -155,26 +155,56 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({
             </p>
           )}
 
-          {/* Expandable Takeaways for Case Studies */}
-          {resource.takeaways && resource.takeaways.length > 0 && (
+          {/* Expandable Takeaways & Further Reading for Case Studies */}
+          {((resource.takeaways && resource.takeaways.length > 0) || (resource.furtherReading && resource.furtherReading.length > 0)) && (
             <div className="pt-2">
               <button
                 type="button"
                 onClick={() => setTakeawaysExpanded(!takeawaysExpanded)}
                 className="inline-flex items-center gap-1.5 text-xs font-semibold text-violet-600 dark:text-violet-400 hover:text-violet-700 dark:hover:text-violet-300 transition-colors py-1"
               >
-                <span>{takeawaysExpanded ? 'Hide Takeaways' : `Key Takeaways (${resource.takeaways.length})`}</span>
+                <span>
+                  {takeawaysExpanded
+                    ? 'Hide Takeaways'
+                    : `Key Takeaways (${resource.takeaways?.length || 0})`}
+                </span>
                 {takeawaysExpanded ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
               </button>
 
               {takeawaysExpanded && (
-                <ul className="mt-2 space-y-1.5 pl-4 list-disc text-xs text-zinc-600 dark:text-zinc-300 border-l-2 border-violet-500/30 ml-1 py-1">
-                  {resource.takeaways.map((takeaway, idx) => (
-                    <li key={idx} className="leading-relaxed pl-1">
-                      {takeaway}
-                    </li>
-                  ))}
-                </ul>
+                <div className="mt-2 space-y-3">
+                  {resource.takeaways && resource.takeaways.length > 0 && (
+                    <ul className="space-y-1.5 pl-4 list-disc text-xs text-zinc-600 dark:text-zinc-300 border-l-2 border-violet-500/30 ml-1 py-1">
+                      {resource.takeaways.map((takeaway, idx) => (
+                        <li key={idx} className="leading-relaxed pl-1">
+                          {takeaway}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+
+                  {resource.furtherReading && resource.furtherReading.length > 0 && (
+                    <div className="pt-2.5 border-t border-zinc-100 dark:border-zinc-800/80">
+                      <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-violet-600 dark:text-violet-400 block mb-1.5">
+                        Go deeper
+                      </span>
+                      <div className="space-y-1.5">
+                        {resource.furtherReading.map((item, idx) => (
+                          <a
+                            key={idx}
+                            href={item.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1.5 text-xs font-medium text-zinc-700 dark:text-zinc-300 hover:text-violet-600 dark:hover:text-violet-400 transition-colors group/link"
+                          >
+                            <span className="hover:underline">{item.title}</span>
+                            <ExternalLink className="w-3 h-3 flex-shrink-0 opacity-60 group-hover/link:opacity-100 text-violet-500 transition-opacity" />
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
               )}
             </div>
           )}

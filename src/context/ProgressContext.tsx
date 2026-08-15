@@ -99,6 +99,7 @@ const flattenCaseStudies = (): Resource[] => {
     type: 'case-study' as const,
     summary: cs.summary,
     takeaways: cs.takeaways,
+    furtherReading: cs.furtherReading,
     isCustom: false,
     taskLabel: 'Case Study',
   }));

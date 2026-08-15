@@ -5,6 +5,7 @@ export interface CaseStudy {
   title: string;
   summary: string;
   takeaways: string[];
+  furtherReading?: { title: string; url: string }[];
 }
 
 export interface Resource {
@@ -15,6 +16,7 @@ export interface Resource {
   notes?: string;
   summary?: string;
   takeaways?: string[];
+  furtherReading?: { title: string; url: string }[];
   isCustom?: boolean;
   badge?: string;
   weekId?: string;
