@@ -1,0 +1,11 @@
+{
+  "continuedLearning": [
+    {
+      "id": "cl-1",
+      "title": "Lenny's Newsletter & Podcast",
+      "description": "Weekly interviews and essays from top product leaders, increasingly focused on AI-native product development, evals, and interviews with AI PMs at companies like OpenAI, Google, and Anthropic.",
+      "url": "https://www.lennysnewsletter.com/",
+      "cadence": "Weekly"
+    }
+  ]
+}
