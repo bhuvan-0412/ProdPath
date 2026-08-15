@@ -17,7 +17,7 @@ export const Footer: React.FC = () => {
         </div>
 
         <div className="font-mono text-[11px]">
-          <span>Local Storage &bull; Self-Hosted</span>
+          <span>Cloud Synced &bull; Guest Mode</span>
         </div>
       </div>
     </footer>
