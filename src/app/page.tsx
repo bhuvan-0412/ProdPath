@@ -54,7 +54,7 @@ export default function DashboardPage() {
             </div>
 
             <h1 className="text-3xl sm:text-4xl font-display font-extrabold text-white">
-              Master Product Management in 4 Weeks
+              Master Product Management in 5 Weeks
             </h1>
 
             <p className="text-zinc-300 text-sm sm:text-base leading-relaxed">
@@ -147,7 +147,7 @@ export default function DashboardPage() {
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-4">
           {weeksData.weeks.map((week) => {
             const stats = getWeekStats(week.id);
             return (

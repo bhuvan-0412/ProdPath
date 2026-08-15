@@ -66,7 +66,7 @@ export default function SchedulePage() {
             Curriculum Timeline
           </h1>
           <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">
-            Track completion timestamps as you progress through your 4-week daily topics.
+            Track completion timestamps as you progress through your 5-week daily topics.
           </p>
         </div>
       </div>

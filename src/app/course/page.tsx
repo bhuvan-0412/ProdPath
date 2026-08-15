@@ -53,7 +53,7 @@ function CourseContent() {
         <div>
           <div className="inline-flex items-center gap-2 text-xs font-mono font-semibold text-violet-600 dark:text-violet-400 mb-1">
             <Calendar className="w-3.5 h-3.5" />
-            <span>4-Week Structured Curriculum</span>
+            <span>5-Week Structured Curriculum</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-display font-extrabold text-zinc-900 dark:text-zinc-100">
             Weekly Curriculum
@@ -73,7 +73,7 @@ function CourseContent() {
       </div>
 
       {/* Horizontal Week Navigation Tabs (Signature Glass on Active) */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
         {weeks.map((w) => {
           const stats = getWeekStats(w.id);
           const isActive = w.id === activeWeekId;

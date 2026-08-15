@@ -19,6 +19,12 @@
     { "id": "s20", "week": "Week 4", "day": 2, "topic": "Root Cause Analysis Questions", "sessionType": "Resources" },
     { "id": "s21", "week": "Week 4", "day": 3, "topic": "Guesstimates", "sessionType": "Resources" },
     { "id": "s22", "week": "Week 4", "day": 4, "topic": "Favourite Product and Improvement Questions", "sessionType": "Resources" },
-    { "id": "s23", "week": "Week 4", "day": 5, "topic": "Product Design and Behavioural Questions", "sessionType": "Resources" }
+    { "id": "s23", "week": "Week 4", "day": 5, "topic": "Product Design and Behavioural Questions", "sessionType": "Resources" },
+    { "id": "s25", "week": "Week 5", "day": 1, "topic": "AI PM vs Traditional PM — what actually changes", "sessionType": "Resources" },
+    { "id": "s26", "week": "Week 5", "day": 2, "topic": "ML/AI literacy without needing to code", "sessionType": "Resources" },
+    { "id": "s27", "week": "Week 5", "day": 3, "topic": "Evals — the defining new AI PM skill", "sessionType": "Resources" },
+    { "id": "s28", "week": "Week 5", "day": 4, "topic": "Responsible AI — bias, hallucination, governance", "sessionType": "Resources" },
+    { "id": "s29", "week": "Week 5", "day": 5, "topic": "AI PM interview prep", "sessionType": "Resources" },
+    { "id": "s30", "week": "Week 5", "topic": "AI Product Management Final Assessment & Portfolio Reflection", "sessionType": "Resources" }
   ]
 }

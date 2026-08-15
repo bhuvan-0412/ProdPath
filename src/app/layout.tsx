@@ -8,7 +8,7 @@ import { Analytics } from '@vercel/analytics/react';
 
 export const metadata: Metadata = {
   title: 'ProdPath — Personal Product Management Tracker',
-  description: 'Self-contained, trackable 4-week Product Management learning tracker with local progress storage.',
+  description: 'Self-contained, trackable 5-week Product Management learning tracker with local progress storage.',
 };
 
 export default function RootLayout({

@@ -548,6 +548,133 @@
           ]
         }
       ]
+    },
+    {
+      "id": "week-5",
+      "title": "Week 5: AI Product Management",
+      "days": [
+        {
+          "day": 1,
+          "brief": "AI PM vs Traditional PM — what actually changes",
+          "tasks": [
+            {
+              "label": "Task 1",
+              "resources": [
+                { "id": "w5d1r1", "title": "AI Product Management: The 2026 Guide", "url": "https://www.wrike.com/product-management-guide/ai-product-management/", "type": "article" }
+              ]
+            },
+            {
+              "label": "Task 2",
+              "resources": [
+                { "id": "w5d1r2", "title": "The 6 Core Skills Every AI PM Needs", "url": "https://www.productmap.io/blog/ai-product-manager-skills", "type": "article" }
+              ]
+            },
+            {
+              "label": "Task 3",
+              "resources": [
+                { "id": "w5d1r3", "title": "AI PM vs Traditional PM Comparison", "url": "https://theaiinternship.com/compare/ai-pm-vs-traditional-pm/", "type": "article" }
+              ]
+            }
+          ]
+        },
+        {
+          "day": 2,
+          "brief": "ML/AI literacy without needing to code",
+          "tasks": [
+            {
+              "label": "Task 1",
+              "resources": [
+                { "id": "w5d2r1", "title": "Machine Learning Demystified for Non-Technical Managers", "url": "https://www.linkedin.com/pulse/machine-intelligence-guide-learning-non-technical-managers-huang", "type": "article" }
+              ]
+            },
+            {
+              "label": "Task 2",
+              "resources": [
+                { "id": "w5d2r2", "title": "AI and ML Explained for Non-Technical Professionals", "url": "https://www.aiproductcraft.com/p/ai-and-ml-explained-for-non-technical-managers", "type": "article" }
+              ]
+            },
+            {
+              "label": "Task 3",
+              "resources": [
+                { "id": "w5d2r3", "title": "Machine Learning Foundations for Product Managers (Duke/Coursera)", "url": "https://www.coursera.org/programs/coursera-for-community-guides-neujh/learn/machine-learning-foundations-for-product-managers", "type": "article" }
+              ]
+            }
+          ]
+        },
+        {
+          "day": 3,
+          "brief": "Evals — the defining new AI PM skill",
+          "tasks": [
+            {
+              "label": "Task 1",
+              "resources": [
+                { "id": "w5d3r1", "title": "Beyond Vibe Checks: A PM's Complete Guide to Evals", "url": "https://www.lennysnewsletter.com/p/beyond-vibe-checks-a-pms-complete", "type": "article" }
+              ]
+            },
+            {
+              "label": "Task 2",
+              "resources": [
+                { "id": "w5d3r2", "title": "Evals for PMs: A Practical Guide", "url": "https://www.braintrust.dev/blog/evals-for-pms", "type": "article" }
+              ]
+            },
+            {
+              "label": "Task 3",
+              "resources": [
+                { "id": "w5d3r3", "title": "AI Evals for Product Managers: A Beginner's Guide", "url": "https://amplitude.com/blog/ai-evals-for-product-managers", "type": "article" }
+              ]
+            }
+          ]
+        },
+        {
+          "day": 4,
+          "brief": "Responsible AI — bias, hallucination, governance",
+          "tasks": [
+            {
+              "label": "Task 1",
+              "resources": [
+                { "id": "w5d4r1", "title": "Responsible AI for Product Managers: A Practical Playbook", "url": "https://kevinarmstrong.io/blog/responsible-ai-for-product-managers-a-practical-playbook/", "type": "article" }
+              ]
+            },
+            {
+              "label": "Task 2",
+              "resources": [
+                { "id": "w5d4r2", "title": "Responsible AI: The Responsibility of Product Managers", "url": "https://medium.com/@rashmigupta1109/responsible-ai-fa83e0bd9dd9", "type": "article" }
+              ]
+            },
+            {
+              "label": "Task 3",
+              "resources": [
+                { "id": "w5d4r3", "title": "AI Hallucination: Why It Happens and How to Prevent It", "url": "https://www.genesys.com/article/ai-hallucination-why-it-happens-and-how-to-prevent-it-in-the-age-of-agentic-ai", "type": "article" }
+              ]
+            }
+          ]
+        },
+        {
+          "day": 5,
+          "brief": "AI PM interview prep",
+          "tasks": [
+            {
+              "label": "Task 1",
+              "resources": [
+                { "id": "w5d5r1", "title": "Top 25 AI Product Manager Interview Questions", "url": "https://www.productleadership.com/blog/ai-product-manager-interview-questions/", "type": "article" }
+              ]
+            },
+            {
+              "label": "Task 2",
+              "resources": [
+                { "id": "w5d5r2", "title": "50+ AI Product Manager Interview Questions & Answers", "url": "https://www.institutepm.com/knowledge-hub/ai-product-manager-interview-questions", "type": "article" }
+              ]
+            },
+            {
+              "label": "Task 3",
+              "resources": [
+                { "id": "w5d5r3", "title": "Product Manager Case Study Interview: 25 Examples", "url": "https://www.startupeditor.com/product-manager-case-study-interview/", "type": "article" },
+                { "id": "w5d5r4", "title": "AI Product Manager Interview Questions — Signals & Grading", "url": "https://www.kore1.com/ai-product-manager-interview-questions-2026/", "type": "article" }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ]
 }
