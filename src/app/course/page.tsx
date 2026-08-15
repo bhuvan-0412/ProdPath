@@ -170,9 +170,16 @@ function CourseContent() {
             <div className="space-y-4">
               {day.tasks.map((task, tIdx) => (
                 <div key={tIdx} className="space-y-2">
-                  <span className="text-[10px] font-mono font-semibold uppercase text-zinc-400 dark:text-zinc-500 block">
-                    {task.label}
-                  </span>
+                  {task.label === 'AI PM Focus' ? (
+                    <span className="inline-flex items-center gap-1 text-[10px] font-mono font-bold uppercase px-2 py-0.5 rounded-md bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 border border-indigo-200/50 dark:border-indigo-800/40 mb-1">
+                      <Sparkles className="w-3 h-3 text-indigo-500" />
+                      {task.label}
+                    </span>
+                  ) : (
+                    <span className="text-[10px] font-mono font-semibold uppercase text-zinc-400 dark:text-zinc-500 block">
+                      {task.label}
+                    </span>
+                  )}
                   <div className="space-y-2">
                     {task.resources.map((res) => (
                       <ResourceCard

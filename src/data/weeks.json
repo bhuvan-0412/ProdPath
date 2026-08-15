@@ -27,6 +27,14 @@
                 { "id": "w1d1r4", "title": "What companies want in a PM role", "url": "https://youtu.be/O4TReKaJx50", "type": "video" },
                 { "id": "w1d1r5", "title": "Day in the life of a PM", "url": "https://www.youtube.com/watch?v=U-lYLSlYU1o", "type": "video" }
               ]
+            },
+            {
+              "label": "AI PM Focus",
+              "resources": [
+                { "id": "w1d1_ai1", "title": "AI Product Management: The 2026 Guide", "url": "https://www.wrike.com/product-management-guide/ai-product-management/", "type": "article" },
+                { "id": "w1d1_ai2", "title": "The 6 Core Skills Every AI PM Needs", "url": "https://www.productmap.io/blog/ai-product-manager-skills", "type": "article" },
+                { "id": "w1d1_ai3", "title": "AI PM vs Traditional PM Comparison", "url": "https://theaiinternship.com/compare/ai-pm-vs-traditional-pm/", "type": "article" }
+              ]
             }
           ]
         },
@@ -57,6 +65,14 @@
                 { "id": "w1d2r8", "title": "MECE Framework by McKinsey", "url": "https://www.mbacrystalball.com/blog/strategy/mece-framework/", "type": "article" },
                 { "id": "w1d2r9", "title": "Example of MECE trees", "url": "https://youtu.be/_pCU0DOKZDw", "type": "video" }
               ]
+            },
+            {
+              "label": "AI PM Focus",
+              "resources": [
+                { "id": "w1d2_ai1", "title": "How to Become an AI Product Manager in 2026 (Ex-Google, Microsoft)", "url": "https://www.youtube.com/watch?v=JKaA6HcxyXU", "type": "video" },
+                { "id": "w1d2_ai2", "title": "How to Become an AI Product Manager in 2026 (Full Roadmap)", "url": "https://www.youtube.com/watch?v=8_2tXfQ-944", "type": "video" },
+                { "id": "w1d2_ai3", "title": "The Art of Product Management in the Age of AI", "url": "https://www.youtube.com/watch?v=Wjg3MhygEfo", "type": "video" }
+              ]
             }
           ]
         },
@@ -74,6 +90,13 @@
               "label": "Task 2",
               "resources": [
                 { "id": "w1d3r2", "title": "Example of Product Cycle", "url": "https://youtu.be/ob5KWs3I3aY", "type": "video" }
+              ]
+            },
+            {
+              "label": "AI PM Focus",
+              "resources": [
+                { "id": "w1d3_ai1", "title": "10 AI Concepts Every Product Manager MUST Know", "url": "https://www.youtube.com/watch?v=clPM27cw2oE", "type": "video" },
+                { "id": "w1d3_ai2", "title": "HelloPM Free AI PM Course (9 masterclasses)", "url": "https://hellopm.co/free/", "type": "article" }
               ]
             }
           ]
@@ -104,6 +127,12 @@
                 { "id": "w1d4r7", "title": "Difference between User Flow and User Journey", "url": "https://youtu.be/IFnWMwEpes8", "type": "video" },
                 { "id": "w1d4r8", "title": "Tips on how to create a User Journey", "url": "https://youtu.be/ImxH9qZ0MQQ", "type": "video" }
               ]
+            },
+            {
+              "label": "AI PM Focus",
+              "resources": [
+                { "id": "w1d4_ai1", "title": "Google AI Essentials (free course)", "url": "https://grow.google/ai-essentials/", "type": "article" }
+              ]
             }
           ]
         },
@@ -128,6 +157,13 @@
               "resources": [
                 { "id": "w1d5r3", "title": "Wireframing using Figma", "url": "https://youtu.be/iyrEStiTZh0", "type": "video" },
                 { "id": "w1d5r4", "title": "Wireframe vs Mock-up vs Prototype", "url": "https://youtu.be/_SCcl06wZZs", "type": "video" }
+              ]
+            },
+            {
+              "label": "AI PM Focus",
+              "resources": [
+                { "id": "w1d5_ai1", "title": "OpenAI Academy", "url": "https://academy.openai.com/", "type": "article" },
+                { "id": "w1d5_ai2", "title": "Learn Prompting", "url": "https://learnprompting.org/", "type": "article" }
               ]
             }
           ]
@@ -161,6 +197,13 @@
                 { "id": "w2d1r4", "title": "North Star Metrics, L1 and L2 metrics", "url": "https://www.linkedin.com/pulse/product-metrics-your-guide-building-better-products-varun-khanna-hyj7e/", "type": "article" },
                 { "id": "w2d1r5", "title": "The most overlooked metric", "url": "https://youtu.be/j6F6qhi5cRI", "type": "video" }
               ]
+            },
+            {
+              "label": "AI PM Focus",
+              "resources": [
+                { "id": "w2d1_ai1", "title": "Machine Learning Foundations for Product Managers (Duke/Coursera)", "url": "https://www.coursera.org/programs/coursera-for-community-guides-neujh/learn/machine-learning-foundations-for-product-managers", "type": "article" },
+                { "id": "w2d1_ai2", "title": "Machine Learning Demystified for Non-Technical Managers", "url": "https://www.linkedin.com/pulse/machine-intelligence-guide-learning-non-technical-managers-huang", "type": "article" }
+              ]
             }
           ]
         },
@@ -189,6 +232,12 @@
               "resources": [
                 { "id": "w2d2r7", "title": "Products that couldn't find their fit", "url": "https://productschool.com/blog/product-fundamentals/understanding-product-market-fit", "type": "article" }
               ]
+            },
+            {
+              "label": "AI PM Focus",
+              "resources": [
+                { "id": "w2d2_ai1", "title": "[1hr Talk] Intro to Large Language Models — Andrej Karpathy", "url": "https://www.youtube.com/watch?v=zjkBMFhNj_g", "type": "video" }
+              ]
             }
           ]
         },
@@ -211,6 +260,12 @@
                 { "id": "w2d3r5", "title": "Double Diamond", "url": "https://youtu.be/w0_-1RqBK_0", "type": "video" },
                 { "id": "w2d3r6", "title": "BCG Growth Share Matrix", "url": "https://www.bcg.com/about/overview/our-history/growth-share-matrix", "type": "article" },
                 { "id": "w2d3r7", "title": "Ansoff Growth Matrix", "url": "https://youtu.be/SKRWvGDRWfg", "type": "video" }
+              ]
+            },
+            {
+              "label": "AI PM Focus",
+              "resources": [
+                { "id": "w2d3_ai1", "title": "Deep Dive into LLMs like ChatGPT — Andrej Karpathy", "url": "https://www.youtube.com/watch?v=7xTGNNLPyMI", "type": "video" }
               ]
             }
           ]
@@ -239,6 +294,13 @@
               "resources": [
                 { "id": "w2d4r6", "title": "Scrum vs Kanban", "url": "https://youtu.be/rIaz-l1Kf8w", "type": "video" }
               ]
+            },
+            {
+              "label": "AI PM Focus",
+              "resources": [
+                { "id": "w2d4_ai1", "title": "But What Is a GPT? Visual Intro to Transformers — 3Blue1Brown", "url": "https://www.youtube.com/watch?v=wjZofJX0v4M", "type": "video" },
+                { "id": "w2d4_ai2", "title": "Attention in Transformers, Visually Explained — 3Blue1Brown", "url": "https://www.youtube.com/watch?v=eMlx5fFNoYc", "type": "video" }
+              ]
             }
           ]
         },
@@ -266,6 +328,13 @@
               "resources": [
                 { "id": "w2d5r6", "title": "Important Pricing Strategies", "url": "https://youtu.be/YhnvZPVv9jc", "type": "video" },
                 { "id": "w2d5r7", "title": "Common Pricing Psychologies", "url": "https://youtu.be/KYqvqScg_j8", "type": "video" }
+              ]
+            },
+            {
+              "label": "AI PM Focus",
+              "resources": [
+                { "id": "w2d5_ai1", "title": "Google Prompting Essentials", "url": "https://www.coursera.org/courses?query=prompt+engineering", "type": "article" },
+                { "id": "w2d5_ai2", "title": "AI and ML Explained for Non-Technical Professionals", "url": "https://www.aiproductcraft.com/p/ai-and-ml-explained-for-non-technical-managers", "type": "article" }
               ]
             }
           ]
@@ -298,6 +367,12 @@
               "resources": [
                 { "id": "w3d1r4", "title": "SQL Tutorial (Videos 1-5)", "url": "https://www.youtube.com/watch?v=yVcRQXLMzCE&list=PLrL_PSQ6q062H5CetdplYW7xQKeq8XaR0", "type": "playlist" }
               ]
+            },
+            {
+              "label": "AI PM Focus",
+              "resources": [
+                { "id": "w3d1_ai1", "title": "Beyond Vibe Checks: A PM's Complete Guide to Evals", "url": "https://www.lennysnewsletter.com/p/beyond-vibe-checks-a-pms-complete", "type": "article" }
+              ]
             }
           ]
         },
@@ -324,6 +399,13 @@
               "resources": [
                 { "id": "w3d2r5", "title": "SQL Tutorial (Videos 6-9)", "url": "https://www.youtube.com/watch?v=yVcRQXLMzCE&list=PLrL_PSQ6q062H5CetdplYW7xQKeq8XaR0", "type": "playlist" }
               ]
+            },
+            {
+              "label": "AI PM Focus",
+              "resources": [
+                { "id": "w3d2_ai1", "title": "Evals for PMs: A Practical Guide", "url": "https://www.braintrust.dev/blog/evals-for-pms", "type": "article" },
+                { "id": "w3d2_ai2", "title": "AI Evals for Product Managers: A Beginner's Guide", "url": "https://amplitude.com/blog/ai-evals-for-product-managers", "type": "article" }
+              ]
             }
           ]
         },
@@ -342,6 +424,13 @@
               "label": "Task 2",
               "resources": [
                 { "id": "w3d3r3", "title": "SQL Tutorial (Videos 10-12)", "url": "https://www.youtube.com/watch?v=yVcRQXLMzCE&list=PLrL_PSQ6q062H5CetdplYW7xQKeq8XaR0", "type": "playlist" }
+              ]
+            },
+            {
+              "label": "AI PM Focus",
+              "resources": [
+                { "id": "w3d3_ai1", "title": "Responsible AI for Product Managers: A Practical Playbook", "url": "https://kevinarmstrong.io/blog/responsible-ai-for-product-managers-a-practical-playbook/", "type": "article" },
+                { "id": "w3d3_ai2", "title": "Responsible AI: The Responsibility of Product Managers", "url": "https://medium.com/@rashmigupta1109/responsible-ai-fa83e0bd9dd9", "type": "article" }
               ]
             }
           ]
@@ -368,6 +457,12 @@
               "resources": [
                 { "id": "w3d4r4", "title": "SQL Tutorial (Videos 13-18)", "url": "https://www.youtube.com/watch?v=yVcRQXLMzCE&list=PLrL_PSQ6q062H5CetdplYW7xQKeq8XaR0", "type": "playlist" }
               ]
+            },
+            {
+              "label": "AI PM Focus",
+              "resources": [
+                { "id": "w3d4_ai1", "title": "AI Hallucination: Why It Happens and How to Prevent It", "url": "https://www.genesys.com/article/ai-hallucination-why-it-happens-and-how-to-prevent-it-in-the-age-of-agentic-ai", "type": "article" }
+              ]
             }
           ]
         },
@@ -392,6 +487,12 @@
               "label": "Task 3",
               "resources": [
                 { "id": "w3d5r4", "title": "SQL Tutorial (Videos 19-25)", "url": "https://www.youtube.com/watch?v=yVcRQXLMzCE&list=PLrL_PSQ6q062H5CetdplYW7xQKeq8XaR0", "type": "playlist" }
+              ]
+            },
+            {
+              "label": "AI PM Focus",
+              "resources": [
+                { "id": "w3d5_ai1", "title": "Top 10 AI Tools for Product Managers in 2026", "url": "https://www.pendo.io/pendo-blog/top-10-ai-tools-for-product-managers-in-2026/", "type": "article" }
               ]
             }
           ]
@@ -453,6 +554,12 @@
               "resources": [
                 { "id": "w4d2r7", "title": "SQL Tutorial (Videos 29-32)", "url": "https://www.youtube.com/watch?v=yVcRQXLMzCE&list=PLrL_PSQ6q062H5CetdplYW7xQKeq8XaR0", "type": "playlist" }
               ]
+            },
+            {
+              "label": "AI PM Focus",
+              "resources": [
+                { "id": "w4d2_ai1", "title": "Top 25 AI Product Manager Interview Questions", "url": "https://www.productleadership.com/blog/ai-product-manager-interview-questions/", "type": "article" }
+              ]
             }
           ]
         },
@@ -485,6 +592,12 @@
               "resources": [
                 { "id": "w4d3r11", "title": "SQL Tutorial (Videos 33-35)", "url": "https://www.youtube.com/watch?v=yVcRQXLMzCE&list=PLrL_PSQ6q062H5CetdplYW7xQKeq8XaR0", "type": "playlist" }
               ]
+            },
+            {
+              "label": "AI PM Focus",
+              "resources": [
+                { "id": "w4d3_ai1", "title": "50+ AI Product Manager Interview Questions & Answers", "url": "https://www.institutepm.com/knowledge-hub/ai-product-manager-interview-questions", "type": "article" }
+              ]
             }
           ]
         },
@@ -513,6 +626,13 @@
               "label": "Task 3",
               "resources": [
                 { "id": "w4d4r8", "title": "SQL Tutorial (Videos 36-37)", "url": "https://www.youtube.com/watch?v=yVcRQXLMzCE&list=PLrL_PSQ6q062H5CetdplYW7xQKeq8XaR0", "type": "playlist" }
+              ]
+            },
+            {
+              "label": "AI PM Focus",
+              "resources": [
+                { "id": "w4d4_ai1", "title": "Product Manager Case Study Interview: 25 Examples", "url": "https://www.startupeditor.com/product-manager-case-study-interview/", "type": "article" },
+                { "id": "w4d4_ai2", "title": "AI Product Manager Interview Questions — Signals & Grading", "url": "https://www.kore1.com/ai-product-manager-interview-questions-2026/", "type": "article" }
               ]
             }
           ]
