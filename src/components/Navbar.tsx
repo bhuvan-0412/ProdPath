@@ -4,11 +4,13 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ThemeToggle } from './ThemeToggle';
-import { Compass, LayoutDashboard, BookOpen, Calendar, BookMarked, Video, Menu, X } from 'lucide-react';
+import { Compass, LayoutDashboard, BookOpen, Calendar, BookMarked, Video, Menu, X, ShieldAlert, LogIn, LogOut, User as UserIcon } from 'lucide-react';
+import { useProgress } from '@/context/ProgressContext';
 
 export const Navbar: React.FC = () => {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { user, profile, isAdmin, signOut, isLoadingAuth } = useProgress();
 
   const navLinks = [
     { href: '/', label: 'Dashboard', icon: LayoutDashboard },
@@ -18,10 +20,16 @@ export const Navbar: React.FC = () => {
     { href: '/live-sessions', label: 'Live Sessions', icon: Video },
   ];
 
+  if (isAdmin) {
+    navLinks.push({ href: '/admin', label: 'Admin', icon: ShieldAlert });
+  }
+
   const isActive = (href: string) => {
     if (href === '/') return pathname === '/';
     return pathname.startsWith(href);
   };
+
+  const userDisplayName = profile?.full_name || user?.user_metadata?.full_name || user?.email?.split('@')[0] || 'User';
 
   return (
     <header className="sticky top-0 z-40 w-full backdrop-blur-xl bg-white/75 dark:bg-[#0a0a0f]/80 border-b border-zinc-200/80 dark:border-zinc-800/80 transition-colors">
@@ -68,6 +76,40 @@ export const Navbar: React.FC = () => {
           <div className="flex items-center gap-2">
             <ThemeToggle />
 
+            {!isLoadingAuth && (
+              <>
+                {user ? (
+                  <div className="flex items-center gap-2 pl-2 border-l border-zinc-200 dark:border-zinc-800">
+                    <div className="hidden sm:flex flex-col text-right">
+                      <span className="text-xs font-semibold text-zinc-800 dark:text-zinc-200 max-w-[120px] truncate">
+                        {userDisplayName}
+                      </span>
+                      <span className="text-[10px] text-zinc-400 dark:text-zinc-500 truncate max-w-[120px]">
+                        {user.email}
+                      </span>
+                    </div>
+
+                    <button
+                      onClick={signOut}
+                      title="Sign Out"
+                      className="p-2 rounded-xl text-zinc-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/40 transition-colors"
+                      aria-label="Sign Out"
+                    >
+                      <LogOut className="w-4 h-4" />
+                    </button>
+                  </div>
+                ) : (
+                  <Link
+                    href="/login"
+                    className="flex items-center gap-1.5 py-1.5 px-3.5 bg-violet-600 hover:bg-violet-700 text-white rounded-xl text-xs font-semibold shadow-sm transition-all"
+                  >
+                    <LogIn className="w-3.5 h-3.5" />
+                    <span>Sign In</span>
+                  </Link>
+                )}
+              </>
+            )}
+
             {/* Mobile Hamburger Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -102,8 +144,27 @@ export const Navbar: React.FC = () => {
               </Link>
             );
           })}
+
+          {user && (
+            <div className="pt-2 border-t border-zinc-200 dark:border-zinc-800">
+              <div className="px-4 py-2 text-xs text-zinc-500">
+                Signed in as <span className="font-semibold text-zinc-800 dark:text-zinc-200">{user.email}</span>
+              </div>
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  signOut();
+                }}
+                className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs font-semibold text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40 transition-colors"
+              >
+                <LogOut className="w-4 h-4" />
+                <span>Sign Out</span>
+              </button>
+            </div>
+          )}
         </div>
       )}
     </header>
   );
 };
+

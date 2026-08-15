@@ -4,6 +4,7 @@ import { ProgressProvider } from '@/context/ProgressContext';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import LiquidEtherWrapper from '@/components/LiquidEtherWrapper';
+import { Analytics } from '@vercel/analytics/react';
 
 export const metadata: Metadata = {
   title: 'ProdPath — Personal Product Management Tracker',
@@ -27,7 +28,9 @@ export default function RootLayout({
           </main>
           <Footer />
         </ProgressProvider>
+        <Analytics />
       </body>
     </html>
   );
 }
+
