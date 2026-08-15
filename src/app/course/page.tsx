@@ -7,8 +7,9 @@ import { ResourceCard } from '@/components/ResourceCard';
 import { ProgressBar } from '@/components/ProgressBar';
 import { AddResourceModal } from '@/components/AddResourceModal';
 import weeksData from '@/data/weeks.json';
+import continuedLearningData from '@/data/continuedLearning.json';
 import { Week } from '@/types/curriculum';
-import { Plus, Calendar, CheckCircle, Sparkles, ArrowRight } from 'lucide-react';
+import { Plus, Calendar, CheckCircle, Sparkles, ArrowRight, Bookmark, ExternalLink } from 'lucide-react';
 
 function CourseContent() {
   const searchParams = useSearchParams();
@@ -217,6 +218,58 @@ function CourseContent() {
             <Plus className="w-3.5 h-3.5" />
             <span>Add extra resource to {activeWeek.id.replace('-', ' ')}</span>
           </button>
+        </div>
+      </div>
+
+      {/* Continued Learning Section (Independent Subscriptions) */}
+      <div className="pt-6 border-t border-zinc-200 dark:border-zinc-800/80 space-y-4">
+        <div className="flex items-center gap-2.5">
+          <div className="w-8 h-8 rounded-xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
+            <Bookmark className="w-4 h-4" />
+          </div>
+          <div>
+            <h2 className="text-lg font-display font-bold text-zinc-900 dark:text-zinc-100">
+              Continued Learning &amp; Subscriptions
+            </h2>
+            <p className="text-xs text-zinc-500 dark:text-zinc-400">
+              Ongoing publications, newsletters, and podcasts for continuous AI Product Management growth.
+            </p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {continuedLearningData.continuedLearning.map((item) => (
+            <div
+              key={item.id}
+              className="bg-white dark:bg-[#12121a] rounded-2xl p-5 border border-zinc-200 dark:border-zinc-800/80 hover:border-violet-500/40 transition-all flex flex-col justify-between space-y-3 shadow-xs"
+            >
+              <div className="space-y-2">
+                <div className="flex items-center justify-between gap-2">
+                  <h3 className="font-display font-bold text-base text-zinc-900 dark:text-zinc-100">
+                    {item.title}
+                  </h3>
+                  <span className="px-2.5 py-0.5 rounded-md bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-300 border border-indigo-200/50 dark:border-indigo-800/40 text-[10px] font-mono font-semibold uppercase">
+                    {item.cadence}
+                  </span>
+                </div>
+                <p className="text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed">
+                  {item.description}
+                </p>
+              </div>
+
+              <div className="pt-1">
+                <a
+                  href={item.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-zinc-100 dark:bg-zinc-800/80 hover:bg-violet-600 hover:text-white dark:hover:bg-violet-600 text-zinc-700 dark:text-zinc-300 text-xs font-semibold transition-all group"
+                >
+                  <span>Visit Publication</span>
+                  <ExternalLink className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                </a>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 

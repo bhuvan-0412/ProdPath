@@ -574,6 +574,17 @@
               "resources": [
                 { "id": "w5d1r3", "title": "AI PM vs Traditional PM Comparison", "url": "https://theaiinternship.com/compare/ai-pm-vs-traditional-pm/", "type": "article" }
               ]
+            },
+            {
+              "label": "Task 4",
+              "resources": [
+                { "id": "w5d1r4", "title": "How to Become an AI Product Manager in 2026 (Ex-Google, Microsoft)", "url": "https://www.youtube.com/watch?v=JKaA6HcxyXU", "type": "video" },
+                { "id": "w5d1r5", "title": "10 AI Concepts Every Product Manager MUST Know", "url": "https://www.youtube.com/watch?v=clPM27cw2oE", "type": "video" },
+                { "id": "w5d1r6", "title": "How to Become an AI Product Manager in 2026 (Full Roadmap)", "url": "https://www.youtube.com/watch?v=8_2tXfQ-944", "type": "video" },
+                { "id": "w5d1r7", "title": "The Art of Product Management in the Age of AI", "url": "https://www.youtube.com/watch?v=Wjg3MhygEfo", "type": "video" },
+                { "id": "w5d1r8", "title": "Google AI Essentials (free course)", "url": "https://grow.google/ai-essentials/", "type": "article" },
+                { "id": "w5d1r9", "title": "OpenAI Academy", "url": "https://academy.openai.com/", "type": "article" }
+              ]
             }
           ]
         },
@@ -597,6 +608,17 @@
               "label": "Task 3",
               "resources": [
                 { "id": "w5d2r3", "title": "Machine Learning Foundations for Product Managers (Duke/Coursera)", "url": "https://www.coursera.org/programs/coursera-for-community-guides-neujh/learn/machine-learning-foundations-for-product-managers", "type": "article" }
+              ]
+            },
+            {
+              "label": "Task 4",
+              "resources": [
+                { "id": "w5d2r4", "title": "[1hr Talk] Intro to Large Language Models — Andrej Karpathy", "url": "https://www.youtube.com/watch?v=zjkBMFhNj_g", "type": "video", "badge": "Technical Deep Dive" },
+                { "id": "w5d2r5", "title": "Deep Dive into LLMs like ChatGPT — Andrej Karpathy", "url": "https://www.youtube.com/watch?v=7xTGNNLPyMI", "type": "video", "badge": "Technical Deep Dive" },
+                { "id": "w5d2r6", "title": "But What Is a GPT? Visual Intro to Transformers — 3Blue1Brown", "url": "https://www.youtube.com/watch?v=wjZofJX0v4M", "type": "video", "badge": "Technical Deep Dive" },
+                { "id": "w5d2r7", "title": "Attention in Transformers, Visually Explained — 3Blue1Brown", "url": "https://www.youtube.com/watch?v=eMlx5fFNoYc", "type": "video", "badge": "Technical Deep Dive" },
+                { "id": "w5d2r8", "title": "HelloPM Free AI PM Course (9 masterclasses)", "url": "https://hellopm.co/free/", "type": "article" },
+                { "id": "w5d2r9", "title": "Learn Prompting", "url": "https://learnprompting.org/", "type": "article" }
               ]
             }
           ]

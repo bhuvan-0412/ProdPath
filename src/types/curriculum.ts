@@ -16,6 +16,7 @@ export interface Resource {
   summary?: string;
   takeaways?: string[];
   isCustom?: boolean;
+  badge?: string;
   weekId?: string;
   day?: number;
   taskLabel?: string;

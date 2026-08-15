@@ -107,6 +107,12 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({
                 Custom
               </span>
             )}
+
+            {resource.badge && (
+              <span className="inline-flex items-center gap-1 font-semibold px-2 py-0.5 rounded-md bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-300 border border-indigo-200/60 dark:border-indigo-800/50">
+                {resource.badge}
+              </span>
+            )}
           </div>
 
           {/* Title Header */}
