@@ -67,7 +67,8 @@
             {
               "label": "Task 1",
               "resources": [
-                { "id": "w1d3r1", "title": "What is Product Life Cycle", "url": "https://www.investopedia.com/terms/p/product-life-cycle.asp", "type": "article" }
+                { "id": "w1d3r1", "title": "What is Product Life Cycle", "url": "https://www.investopedia.com/terms/p/product-life-cycle.asp", "type": "article" },
+                { "id": "w1d3r3", "title": "What is Product Life Cycle - Video", "url": "https://www.youtube.com/watch?v=CUtsYPGydKk&t=244s", "type": "video" }
               ]
             },
             {
