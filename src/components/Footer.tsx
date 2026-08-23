@@ -31,10 +31,10 @@ export const Footer: React.FC = () => {
             </button>
           </div>
 
-          {/* Get in Touch Contact Section */}
+          {/* Contact Section */}
           <div className="space-y-2.5">
             <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-zinc-800 dark:text-zinc-200">
-              Get in Touch
+              Contact
             </h3>
             <ul className="space-y-2 text-xs text-zinc-500 dark:text-zinc-400">
               <li>
