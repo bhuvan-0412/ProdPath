@@ -76,7 +76,10 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({
       <div className="flex items-start gap-3 flex-1 min-w-0">
         {/* Animated Checkbox */}
         <button
-          onClick={() => toggleCompleted(resource.id)}
+          onClick={(e) => {
+            e.stopPropagation();
+            toggleCompleted(resource.id);
+          }}
           className={`flex-shrink-0 mt-0.5 w-5 h-5 rounded-lg border transition-all duration-200 flex items-center justify-center ${
             completed
               ? 'bg-violet-600 border-violet-600 text-white animate-pop shadow-xs'
@@ -122,6 +125,7 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({
               href={resource.url}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
               className={`font-semibold text-sm hover:text-violet-600 dark:hover:text-violet-400 transition-colors inline-flex items-center gap-1.5 ${
                 completed
                   ? 'line-through text-zinc-400 dark:text-zinc-500 font-normal'
@@ -161,7 +165,10 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({
             <div className="pt-2">
               <button
                 type="button"
-                onClick={() => setTakeawaysExpanded(!takeawaysExpanded)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setTakeawaysExpanded(!takeawaysExpanded);
+                }}
                 className="inline-flex items-center gap-1.5 text-xs font-semibold text-violet-600 dark:text-violet-400 hover:text-violet-700 dark:hover:text-violet-300 transition-colors py-1"
               >
                 <span>
@@ -196,6 +203,7 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({
                             href={item.url}
                             target="_blank"
                             rel="noopener noreferrer"
+                            onClick={(e) => e.stopPropagation()}
                             className="inline-flex items-center gap-1.5 text-xs font-medium text-zinc-700 dark:text-zinc-300 hover:text-violet-600 dark:hover:text-violet-400 transition-colors group/link"
                           >
                             <span className="hover:underline">{item.title}</span>
@@ -214,7 +222,10 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({
         {/* Delete button for custom additions */}
         {resource.isCustom && (
           <button
-            onClick={() => deleteCustomResource(resource.id)}
+            onClick={(e) => {
+              e.stopPropagation();
+              deleteCustomResource(resource.id);
+            }}
             className="p-1.5 rounded-lg text-zinc-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/50 transition-colors self-start"
             title="Delete custom resource"
             aria-label="Delete resource"

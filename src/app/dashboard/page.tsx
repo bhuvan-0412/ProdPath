@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useProgress } from '@/context/ProgressContext';
 import { ProgressBar } from '@/components/ProgressBar';
 import { ResourceCard } from '@/components/ResourceCard';
@@ -20,10 +21,9 @@ import {
 } from 'lucide-react';
 
 export default function DashboardPage() {
-  const { getOverallStats, getWeekStats, getLiveSessionStats, getCaseStudyStats, getNextIncompleteResource, resetProgress } = useProgress();
+  const router = useRouter();
+  const { getOverallStats, getLiveSessionStats, getCaseStudyStats, getNextIncompleteResource, resetProgress } = useProgress();
   const overall = getOverallStats();
-  const liveStats = getLiveSessionStats();
-  const caseStats = getCaseStudyStats();
   const nextUp = getNextIncompleteResource();
 
   const heroHref = nextUp
@@ -89,16 +89,19 @@ export default function DashboardPage() {
         </BorderGlow>
       </Link>
 
-      {/* "Continue Where I Left Off" Signature Surface Card */}
+      {/* "Continue Where I Left Off" Signature Surface Card (Split Click Zones) */}
       {nextUp ? (
-        <div className="glass-signature rounded-2xl p-6 shadow-sm space-y-3">
+        <div
+          onClick={() => router.push(heroHref)}
+          className="glass-signature rounded-2xl p-6 shadow-xs hover:shadow-md border border-zinc-200/80 dark:border-zinc-800/80 hover:border-violet-500/40 dark:hover:border-violet-500/40 cursor-pointer space-y-3.5 transition-all duration-200 group/hero-card"
+        >
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-xl bg-violet-500/10 text-violet-600 dark:text-violet-400 flex items-center justify-center">
+              <div className="w-8 h-8 rounded-xl bg-violet-500/10 text-violet-600 dark:text-violet-400 flex items-center justify-center group-hover/hero-card:scale-105 transition-transform">
                 <PlayCircle className="w-5 h-5" />
               </div>
               <div>
-                <h2 className="text-base font-display font-bold text-zinc-900 dark:text-zinc-100">
+                <h2 className="text-base font-display font-bold text-zinc-900 dark:text-zinc-100 group-hover/hero-card:text-violet-600 dark:group-hover/hero-card:text-violet-300 transition-colors">
                   Continue Where You Left Off
                 </h2>
                 <p className="text-xs font-mono text-zinc-500 dark:text-zinc-400">
@@ -108,6 +111,7 @@ export default function DashboardPage() {
             </div>
             <Link
               href="/course"
+              onClick={(e) => e.stopPropagation()}
               className="text-xs font-semibold text-violet-600 dark:text-violet-400 hover:underline inline-flex items-center gap-1"
             >
               <span>View full curriculum</span>
@@ -115,7 +119,18 @@ export default function DashboardPage() {
             </Link>
           </div>
 
-          <ResourceCard resource={nextUp} showWeekBadge={true} />
+          {/* Inner Resource Row: Click opens external resource link directly */}
+          <div
+            onClick={(e) => {
+              e.stopPropagation();
+              if (nextUp.url && nextUp.url !== '#') {
+                window.open(nextUp.url, '_blank', 'noopener,noreferrer');
+              }
+            }}
+            className="rounded-xl transition-all duration-200 hover:ring-2 hover:ring-violet-500/50 dark:hover:ring-violet-400/40 cursor-pointer"
+          >
+            <ResourceCard resource={nextUp} showWeekBadge={true} />
+          </div>
         </div>
       ) : (
         <div className="bg-violet-950/20 rounded-2xl p-6 border border-violet-500/30 flex items-center gap-4">
