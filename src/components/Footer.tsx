@@ -79,9 +79,8 @@ export const Footer: React.FC = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-zinc-200/60 dark:border-zinc-800/60 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] font-mono text-zinc-400">
+        <div className="border-t border-zinc-200/60 dark:border-zinc-800/60 pt-6 text-center sm:text-left text-[11px] font-mono text-zinc-400">
           <span>&copy; {new Date().getFullYear()} ProdPath. All rights reserved.</span>
-          <span>Built for Product Managers</span>
         </div>
       </div>
     </footer>
