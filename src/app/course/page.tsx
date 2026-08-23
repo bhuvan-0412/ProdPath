@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, Suspense } from 'react';
+import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { useProgress } from '@/context/ProgressContext';
 import { ResourceCard } from '@/components/ResourceCard';
@@ -9,7 +10,7 @@ import { AddResourceModal } from '@/components/AddResourceModal';
 import weeksData from '@/data/weeks.json';
 import continuedLearningData from '@/data/continuedLearning.json';
 import { Week } from '@/types/curriculum';
-import { Plus, Calendar, CheckCircle, Sparkles, ArrowRight, Bookmark, ExternalLink } from 'lucide-react';
+import { Plus, Calendar, CheckCircle, Sparkles, ArrowRight, Bookmark, ExternalLink, Video, BookMarked } from 'lucide-react';
 
 const getTaskDomId = (weekId: string, dayNum: number, taskLabel: string) => {
   const n = weekId.replace('week-', '');
@@ -153,8 +154,8 @@ function CourseContent() {
         </button>
       </div>
 
-      {/* Horizontal Week Navigation Tabs (Signature Glass on Active) */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+      {/* Horizontal Week & Module Navigation Tabs */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3">
         {weeks.map((w) => {
           const stats = getWeekStats(w.id);
           const isActive = w.id === activeWeekId;
@@ -207,6 +208,52 @@ function CourseContent() {
             </button>
           );
         })}
+
+        {/* Live Sessions Navigation Tab */}
+        <Link
+          href="/live-sessions"
+          className="p-4 rounded-2xl text-left bg-rose-50/40 dark:bg-rose-950/20 border border-rose-200/60 dark:border-rose-900/40 hover:border-rose-500/50 hover:shadow-md transition-all duration-200 flex flex-col justify-between space-y-3 group"
+        >
+          <div className="flex items-center justify-between">
+            <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-md uppercase bg-rose-600 text-white flex items-center gap-1">
+              Live <Video className="w-2.5 h-2.5" />
+            </span>
+            <ExternalLink className="w-3.5 h-3.5 text-rose-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+          </div>
+
+          <div>
+            <h3 className="font-display font-bold text-sm text-zinc-900 dark:text-zinc-100 group-hover:text-rose-600 dark:group-hover:text-rose-300 line-clamp-1">
+              Live Sessions
+            </h3>
+          </div>
+
+          <div className="pt-1 text-[10px] font-mono text-zinc-400">
+            <span>Speaker talks &rarr;</span>
+          </div>
+        </Link>
+
+        {/* Case Studies Navigation Tab */}
+        <Link
+          href="/resources"
+          className="p-4 rounded-2xl text-left bg-indigo-50/40 dark:bg-indigo-950/20 border border-indigo-200/60 dark:border-indigo-900/40 hover:border-indigo-500/50 hover:shadow-md transition-all duration-200 flex flex-col justify-between space-y-3 group"
+        >
+          <div className="flex items-center justify-between">
+            <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-md uppercase bg-indigo-600 text-white flex items-center gap-1">
+              Library <BookMarked className="w-2.5 h-2.5" />
+            </span>
+            <ExternalLink className="w-3.5 h-3.5 text-indigo-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+          </div>
+
+          <div>
+            <h3 className="font-display font-bold text-sm text-zinc-900 dark:text-zinc-100 group-hover:text-indigo-600 dark:group-hover:text-indigo-300 line-clamp-1">
+              Case Studies
+            </h3>
+          </div>
+
+          <div className="pt-1 text-[10px] font-mono text-zinc-400">
+            <span>Teardowns &amp; Strategy &rarr;</span>
+          </div>
+        </Link>
       </div>
 
       {/* Active Week Details Header */}
