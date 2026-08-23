@@ -20,7 +20,7 @@ export const Footer: React.FC = () => {
               <span className="font-display font-bold text-sm text-zinc-900 dark:text-zinc-100">ProdPath</span>
             </div>
             <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed max-w-xs">
-              Personal AI + Product Management learning hub and progress tracker.
+              Personal AI Product Management learning hub and progress tracker.
             </p>
             <button
               onClick={openFeedbackModal}
