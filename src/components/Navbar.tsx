@@ -13,7 +13,7 @@ export const Navbar: React.FC = () => {
   const { user, profile, isAdmin, signOut, isLoadingAuth, openFeedbackModal } = useProgress();
 
   const navLinks = [
-    { href: '/', label: 'Dashboard', icon: LayoutDashboard },
+    { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
     { href: '/course', label: 'Curriculum', icon: BookOpen },
     { href: '/schedule', label: 'Schedule', icon: Calendar },
     { href: '/resources', label: 'Case Studies', icon: BookMarked },
@@ -25,7 +25,7 @@ export const Navbar: React.FC = () => {
   }
 
   const isActive = (href: string) => {
-    if (href === '/') return pathname === '/';
+    if (href === '/dashboard') return pathname === '/dashboard';
     return pathname.startsWith(href);
   };
 
@@ -36,7 +36,7 @@ export const Navbar: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Brand Logo */}
-          <Link href="/" className="flex items-center gap-2.5 group">
+          <Link href={user ? '/dashboard' : '/'} className="flex items-center gap-2.5 group">
             <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-violet-600 to-indigo-500 flex items-center justify-center text-white shadow-sm group-hover:scale-105 transition-transform">
               <Compass className="w-5 h-5 stroke-[2.2]" />
             </div>
@@ -50,27 +50,29 @@ export const Navbar: React.FC = () => {
             </div>
           </Link>
 
-          {/* Desktop Nav Items */}
-          <nav className="hidden md:flex items-center gap-1">
-            {navLinks.map((link) => {
-              const Icon = link.icon;
-              const active = isActive(link.href);
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all ${
-                    active
-                      ? 'bg-violet-50 dark:bg-violet-950/60 text-violet-600 dark:text-violet-300 border border-violet-200/60 dark:border-violet-800/50'
-                      : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800/60'
-                  }`}
-                >
-                  <Icon className={`w-3.5 h-3.5 ${active ? 'text-violet-600 dark:text-violet-400' : 'text-zinc-400'}`} />
-                  <span>{link.label}</span>
-                </Link>
-              );
-            })}
-          </nav>
+          {/* Desktop Nav Items (Only shown for authenticated users) */}
+          {user && (
+            <nav className="hidden md:flex items-center gap-1">
+              {navLinks.map((link) => {
+                const Icon = link.icon;
+                const active = isActive(link.href);
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all ${
+                      active
+                        ? 'bg-violet-50 dark:bg-violet-950/60 text-violet-600 dark:text-violet-300 border border-violet-200/60 dark:border-violet-800/50'
+                        : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800/60'
+                    }`}
+                  >
+                    <Icon className={`w-3.5 h-3.5 ${active ? 'text-violet-600 dark:text-violet-400' : 'text-zinc-400'}`} />
+                    <span>{link.label}</span>
+                  </Link>
+                );
+              })}
+            </nav>
+          )}
 
           {/* Right Action Tools */}
           <div className="flex items-center gap-2">
@@ -134,25 +136,29 @@ export const Navbar: React.FC = () => {
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
         <div className="md:hidden border-b border-zinc-200 dark:border-zinc-800 bg-white/95 dark:bg-[#0a0a0f]/95 px-4 pt-2 pb-4 space-y-1 shadow-lg">
-          {navLinks.map((link) => {
-            const Icon = link.icon;
-            const active = isActive(link.href);
-            return (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={() => setMobileMenuOpen(false)}
-                className={`flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-semibold transition-colors ${
-                  active
-                    ? 'bg-violet-50 dark:bg-violet-950/60 text-violet-600 dark:text-violet-300 border border-violet-200/60 dark:border-violet-800/50'
-                    : 'text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800'
-                }`}
-              >
-                <Icon className="w-4 h-4 text-violet-500" />
-                <span>{link.label}</span>
-              </Link>
-            );
-          })}
+          {user && (
+            <>
+              {navLinks.map((link) => {
+                const Icon = link.icon;
+                const active = isActive(link.href);
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={`flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-semibold transition-colors ${
+                      active
+                        ? 'bg-violet-50 dark:bg-violet-950/60 text-violet-600 dark:text-violet-300 border border-violet-200/60 dark:border-violet-800/50'
+                        : 'text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800'
+                    }`}
+                  >
+                    <Icon className="w-4 h-4 text-violet-500" />
+                    <span>{link.label}</span>
+                  </Link>
+                );
+              })}
+            </>
+          )}
 
           <button
             onClick={() => {
@@ -165,7 +171,16 @@ export const Navbar: React.FC = () => {
             <span>Send Feedback</span>
           </button>
 
-          {user && (
+          {!user ? (
+            <Link
+              href="/login"
+              onClick={() => setMobileMenuOpen(false)}
+              className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-semibold bg-violet-600 text-white hover:bg-violet-700 transition-colors text-left"
+            >
+              <LogIn className="w-4 h-4" />
+              <span>Sign In with Google</span>
+            </Link>
+          ) : (
             <div className="pt-2 border-t border-zinc-200 dark:border-zinc-800">
               <div className="px-4 py-2 text-xs text-zinc-500">
                 Signed in as <span className="font-semibold text-zinc-800 dark:text-zinc-200">{user.email}</span>

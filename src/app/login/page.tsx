@@ -19,7 +19,7 @@ export default function LoginPage() {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${origin}/auth/callback`,
+          redirectTo: `${origin}/auth/callback?next=/dashboard`,
         },
       });
 
@@ -43,7 +43,7 @@ export default function LoginPage() {
           className="inline-flex items-center gap-2 text-xs font-semibold text-zinc-500 dark:text-zinc-400 hover:text-violet-600 dark:hover:text-violet-400 transition-colors mb-6"
         >
           <ArrowLeft className="w-4 h-4" />
-          Back to Dashboard
+          Back to Home
         </Link>
 
         {/* Login Card */}

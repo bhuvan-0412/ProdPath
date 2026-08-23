@@ -9,7 +9,6 @@ import confetti from 'canvas-confetti';
 import { createClient, isSupabaseConfigured } from '@/lib/supabase/client';
 import { User } from '@supabase/supabase-js';
 import { OptInModal } from '@/components/OptInModal';
-import { ImportProgressModal } from '@/components/ImportProgressModal';
 import { FeedbackModal } from '@/components/FeedbackModal';
 
 export interface UserProfile {
@@ -47,12 +46,6 @@ interface ProgressContextType {
   closeFeedbackModal: () => void;
   isFeedbackModalOpen: boolean;
 }
-
-const STORAGE_KEY_COMPLETED = 'prodpath_completed_ids_v1';
-const STORAGE_KEY_DATES = 'prodpath_completed_dates_v1';
-const STORAGE_KEY_CUSTOM = 'prodpath_custom_resources_v1';
-const LEGACY_STORAGE_KEY_COMPLETED = 'pm_hub_completed_ids_v1';
-const LEGACY_STORAGE_KEY_CUSTOM = 'pm_hub_custom_resources_v1';
 
 const ProgressContext = createContext<ProgressContextType | undefined>(undefined);
 
@@ -121,10 +114,7 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   // Modals state
   const [showOptInModal, setShowOptInModal] = useState(false);
-  const [showImportModal, setShowImportModal] = useState(false);
   const [showFeedbackModal, setShowFeedbackModal] = useState(false);
-  const [pendingLocalCompleted, setPendingLocalCompleted] = useState<string[]>([]);
-  const [pendingLocalCustom, setPendingLocalCustom] = useState<Resource[]>([]);
 
   const supabase = useMemo(() => createClient(), []);
 
@@ -184,58 +174,10 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         }));
         setCustomResources(formattedCustom);
       }
-
-      // 4. Check for unmigrated guest progress in localStorage
-      if (typeof window !== 'undefined') {
-        const savedCompletedStr = localStorage.getItem(STORAGE_KEY_COMPLETED) || localStorage.getItem(LEGACY_STORAGE_KEY_COMPLETED);
-        const savedCustomStr = localStorage.getItem(STORAGE_KEY_CUSTOM) || localStorage.getItem(LEGACY_STORAGE_KEY_CUSTOM);
-        
-        let localIds: string[] = [];
-        let localCustom: Resource[] = [];
-
-        if (savedCompletedStr) {
-          try { localIds = JSON.parse(savedCompletedStr); } catch {}
-        }
-        if (savedCustomStr) {
-          try { localCustom = JSON.parse(savedCustomStr); } catch {}
-        }
-
-        // Only prompt if guest progress has items not yet in user progress
-        const newCompleted = localIds.filter((id) => !progressRows?.some((r) => r.resource_id === id));
-        if (newCompleted.length > 0 || localCustom.length > 0) {
-          setPendingLocalCompleted(newCompleted);
-          setPendingLocalCustom(localCustom);
-          setShowImportModal(true);
-        }
-      }
     } catch (err) {
       console.error('Error fetching user data from Supabase:', err);
     }
   }, [supabase]);
-
-  // Handle local storage load for guest
-  const loadLocalStorage = useCallback(() => {
-    try {
-      if (typeof window !== 'undefined') {
-        const savedCompleted = localStorage.getItem(STORAGE_KEY_COMPLETED) || localStorage.getItem(LEGACY_STORAGE_KEY_COMPLETED);
-        if (savedCompleted) {
-          setCompletedIds(new Set(JSON.parse(savedCompleted)));
-        }
-
-        const savedDates = localStorage.getItem(STORAGE_KEY_DATES);
-        if (savedDates) {
-          setCompletedDates(JSON.parse(savedDates));
-        }
-
-        const savedCustom = localStorage.getItem(STORAGE_KEY_CUSTOM) || localStorage.getItem(LEGACY_STORAGE_KEY_CUSTOM);
-        if (savedCustom) {
-          setCustomResources(JSON.parse(savedCustom));
-        }
-      }
-    } catch (e) {
-      console.error('Failed to parse localStorage data:', e);
-    }
-  }, []);
 
   // Listen to Supabase Auth state changes
   useEffect(() => {
@@ -244,7 +186,6 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     if (!isSupabaseConfigured()) {
       setUser(null);
       setProfile(null);
-      loadLocalStorage();
       setIsLoadingAuth(false);
       setIsLoaded(true);
       return;
@@ -260,12 +201,13 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
           } else {
             setUser(null);
             setProfile(null);
-            loadLocalStorage();
+            setCompletedIds(new Set());
+            setCompletedDates({});
+            setCustomResources([]);
           }
         }
       } catch (err) {
         console.error('Auth initialization error:', err);
-        if (mounted) loadLocalStorage();
       } finally {
         if (mounted) {
           setIsLoadingAuth(false);
@@ -285,7 +227,9 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       } else {
         setUser(null);
         setProfile(null);
-        loadLocalStorage();
+        setCompletedIds(new Set());
+        setCompletedDates({});
+        setCustomResources([]);
       }
       setIsLoadingAuth(false);
     });
@@ -294,35 +238,7 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       mounted = false;
       subscription.unsubscribe();
     };
-  }, [supabase, fetchUserData, loadLocalStorage]);
-
-  // Guest localStorage syncs
-  useEffect(() => {
-    if (!isLoaded || user || typeof window === 'undefined') return;
-    try {
-      localStorage.setItem(STORAGE_KEY_COMPLETED, JSON.stringify(Array.from(completedIds)));
-    } catch (e) {
-      console.error('Failed to save completed IDs:', e);
-    }
-  }, [completedIds, isLoaded, user]);
-
-  useEffect(() => {
-    if (!isLoaded || user || typeof window === 'undefined') return;
-    try {
-      localStorage.setItem(STORAGE_KEY_DATES, JSON.stringify(completedDates));
-    } catch (e) {
-      console.error('Failed to save completed dates:', e);
-    }
-  }, [completedDates, isLoaded, user]);
-
-  useEffect(() => {
-    if (!isLoaded || user || typeof window === 'undefined') return;
-    try {
-      localStorage.setItem(STORAGE_KEY_CUSTOM, JSON.stringify(customResources));
-    } catch (e) {
-      console.error('Failed to save custom resources:', e);
-    }
-  }, [customResources, isLoaded, user]);
+  }, [supabase, fetchUserData]);
 
   const curriculumResources = useMemo(() => flattenCurriculum(), []);
   const liveSessionResources = useMemo(() => flattenLiveSessions(), []);
@@ -521,51 +437,7 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         } catch (err) {
           console.error('Failed to reset user progress in Supabase:', err);
         }
-      } else if (typeof window !== 'undefined') {
-        localStorage.removeItem(STORAGE_KEY_COMPLETED);
-        localStorage.removeItem(STORAGE_KEY_DATES);
       }
-    }
-  };
-
-  // Bulk import local progress into user account
-  const handleImportProgress = async () => {
-    if (!user) return;
-    try {
-      if (pendingLocalCompleted.length > 0) {
-        const progressInserts = pendingLocalCompleted.map((resId) => ({
-          user_id: user.id,
-          resource_id: resId,
-          completed_at: new Date().toISOString(),
-        }));
-        await supabase.from('user_progress').upsert(progressInserts, { onConflict: 'user_id,resource_id' });
-      }
-
-      if (pendingLocalCustom.length > 0) {
-        const customInserts = pendingLocalCustom.map((c) => ({
-          user_id: user.id,
-          title: c.title,
-          url: c.url,
-          type: c.type,
-          week_id: c.weekId,
-          notes: c.notes,
-        }));
-        await supabase.from('custom_resources').insert(customInserts);
-      }
-
-      // Clear local storage after successful import
-      if (typeof window !== 'undefined') {
-        localStorage.removeItem(STORAGE_KEY_COMPLETED);
-        localStorage.removeItem(STORAGE_KEY_DATES);
-        localStorage.removeItem(STORAGE_KEY_CUSTOM);
-      }
-
-      // Refresh user data from Supabase
-      await fetchUserData(user);
-    } catch (err) {
-      console.error('Error importing guest progress:', err);
-    } finally {
-      setShowImportModal(false);
     }
   };
 
@@ -576,7 +448,6 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     setCompletedIds(new Set());
     setCompletedDates({});
     setCustomResources([]);
-    loadLocalStorage();
   };
 
   return (
@@ -614,16 +485,6 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         <OptInModal
           userId={user.id}
           onClose={() => setShowOptInModal(false)}
-        />
-      )}
-
-      {/* Import Progress Modal */}
-      {showImportModal && user && (
-        <ImportProgressModal
-          completedCount={pendingLocalCompleted.length}
-          customCount={pendingLocalCustom.length}
-          onImport={handleImportProgress}
-          onSkip={() => setShowImportModal(false)}
         />
       )}
 
