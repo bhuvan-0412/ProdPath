@@ -7,8 +7,22 @@ import LiquidEtherWrapper from '@/components/LiquidEtherWrapper';
 import { Analytics } from '@vercel/analytics/react';
 
 export const metadata: Metadata = {
-  title: 'ProdPath — Personal Product Management Tracker',
-  description: 'Self-contained, trackable 5-week Product Management learning tracker with local progress storage.',
+  title: {
+    default: 'ProdPath • Personal Product Management Tracker',
+    template: '%s | ProdPath',
+  },
+  description: 'Self-contained, trackable 5-week Product Management learning tracker with cloud progress sync.',
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/icon.svg', type: 'image/svg+xml' },
+      { url: '/favicon-32x32.png', type: 'image/png', sizes: '32x32' },
+      { url: '/favicon-16x16.png', type: 'image/png', sizes: '16x16' },
+    ],
+    apple: [
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
+  },
 };
 
 export default function RootLayout({
