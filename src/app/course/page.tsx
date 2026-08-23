@@ -11,9 +11,62 @@ import continuedLearningData from '@/data/continuedLearning.json';
 import { Week } from '@/types/curriculum';
 import { Plus, Calendar, CheckCircle, Sparkles, ArrowRight, Bookmark, ExternalLink } from 'lucide-react';
 
+const getTaskDomId = (weekId: string, dayNum: number, taskLabel: string) => {
+  const n = weekId.replace('week-', '');
+  const cleanLabel = taskLabel.toLowerCase().replace(/^task[\s-_]*/i, '').replace(/[^a-z0-9]+/g, '-') || taskLabel.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+  return `week-${n}-day-${dayNum}-task-${cleanLabel}`;
+};
+
+const getDayDomId = (weekId: string, dayNum: number) => {
+  const n = weekId.replace('week-', '');
+  return `week-${n}-day-${dayNum}`;
+};
+
+const getWeekScrollTargetId = (week: Week, completedIds: Set<string>): string => {
+  const allTasks: { dayNum: number; taskLabel: string; isCompleted: boolean }[] = [];
+
+  week.days.forEach((dayObj) => {
+    dayObj.tasks.forEach((taskObj) => {
+      const isCompleted =
+        taskObj.resources.length > 0 &&
+        taskObj.resources.every((res) => completedIds.has(res.id));
+      allTasks.push({
+        dayNum: dayObj.day,
+        taskLabel: taskObj.label,
+        isCompleted,
+      });
+    });
+  });
+
+  if (allTasks.length === 0) {
+    return getDayDomId(week.id, 1);
+  }
+
+  const completedTasks = allTasks.filter((t) => t.isCompleted);
+
+  if (completedTasks.length === 0) {
+    return getDayDomId(week.id, 1);
+  } else if (completedTasks.length === allTasks.length) {
+    const lastTask = allTasks[allTasks.length - 1];
+    return getTaskDomId(week.id, lastTask.dayNum, lastTask.taskLabel);
+  } else {
+    const lastCompleted = completedTasks[completedTasks.length - 1];
+    return getTaskDomId(week.id, lastCompleted.dayNum, lastCompleted.taskLabel);
+  }
+};
+
+const scrollToId = (id: string) => {
+  setTimeout(() => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, 100);
+};
+
 function CourseContent() {
   const searchParams = useSearchParams();
-  const { getWeekStats, customResources } = useProgress();
+  const { getWeekStats, customResources, completedIds } = useProgress();
 
   const [activeWeekId, setActiveWeekId] = useState<string>('week-1');
   const [modalOpen, setModalOpen] = useState(false);
@@ -21,26 +74,53 @@ function CourseContent() {
 
   const weeks = weeksData.weeks as Week[];
 
-  // Determine initial active week tab: URL query param or first incomplete week
+  // Determine initial active week tab and auto-scroll target
   useEffect(() => {
     const paramWeek = searchParams.get('expanded');
-    if (paramWeek && weeks.some((w) => w.id === paramWeek)) {
-      setActiveWeekId(paramWeek);
-      return;
-    }
+    const paramTargetRes = searchParams.get('targetRes');
+    const paramTargetTask = searchParams.get('targetTask');
 
-    for (const w of weeks) {
-      const stats = getWeekStats(w.id);
-      if (stats.percentage < 100) {
-        setActiveWeekId(w.id);
-        return;
+    let initialWeekId = 'week-1';
+
+    if (paramWeek && weeks.some((w) => w.id === paramWeek)) {
+      initialWeekId = paramWeek;
+    } else {
+      for (const w of weeks) {
+        const stats = getWeekStats(w.id);
+        if (stats.percentage < 100) {
+          initialWeekId = w.id;
+          break;
+        }
       }
     }
-  }, [searchParams, getWeekStats, weeks]);
+
+    setActiveWeekId(initialWeekId);
+
+    if (paramTargetRes) {
+      scrollToId(`resource-${paramTargetRes}`);
+    } else if (paramTargetTask) {
+      scrollToId(paramTargetTask);
+    } else if (paramWeek) {
+      const targetWeek = weeks.find((w) => w.id === initialWeekId);
+      if (targetWeek) {
+        const targetId = getWeekScrollTargetId(targetWeek, completedIds);
+        scrollToId(targetId);
+      }
+    }
+  }, [searchParams, getWeekStats, weeks, completedIds]);
 
   const activeWeek = weeks.find((w) => w.id === activeWeekId) || weeks[0];
   const activeWeekStats = getWeekStats(activeWeek.id);
   const activeCustomResources = customResources.filter((r) => r.weekId === activeWeek.id);
+
+  const handleSelectWeekTab = (weekId: string) => {
+    setActiveWeekId(weekId);
+    const targetWeek = weeks.find((w) => w.id === weekId);
+    if (targetWeek) {
+      const targetId = getWeekScrollTargetId(targetWeek, completedIds);
+      scrollToId(targetId);
+    }
+  };
 
   const handleOpenAddModal = (weekId: string) => {
     setTargetWeekForAdd(weekId);
@@ -83,7 +163,7 @@ function CourseContent() {
           return (
             <button
               key={w.id}
-              onClick={() => setActiveWeekId(w.id)}
+              onClick={() => handleSelectWeekTab(w.id)}
               className={`p-4 rounded-2xl text-left transition-all duration-200 flex flex-col justify-between space-y-3 relative overflow-hidden ${
                 isActive
                   ? 'glass-signature shadow-md ring-2 ring-violet-500/50'
@@ -154,7 +234,8 @@ function CourseContent() {
         {activeWeek.days.map((day) => (
           <div
             key={day.day}
-            className="bg-white dark:bg-[#12121a] rounded-2xl p-5 sm:p-6 border border-zinc-200 dark:border-zinc-800/80 space-y-4 shadow-xs"
+            id={getDayDomId(activeWeek.id, day.day)}
+            className="bg-white dark:bg-[#12121a] rounded-2xl p-5 sm:p-6 border border-zinc-200 dark:border-zinc-800/80 space-y-4 shadow-xs scroll-mt-24"
           >
             {/* Day Header */}
             <div className="flex items-center gap-3 pb-3 border-b border-zinc-100 dark:border-zinc-800/80">
@@ -169,7 +250,11 @@ function CourseContent() {
             {/* Tasks */}
             <div className="space-y-4">
               {day.tasks.map((task, tIdx) => (
-                <div key={tIdx} className="space-y-2">
+                <div
+                  key={tIdx}
+                  id={getTaskDomId(activeWeek.id, day.day, task.label)}
+                  className="space-y-2 scroll-mt-24"
+                >
                   <span className="text-[10px] font-mono font-semibold uppercase text-zinc-400 dark:text-zinc-500 block">
                     {task.label}
                   </span>

@@ -66,7 +66,8 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({
 
   return (
     <div
-      className={`group relative flex flex-col justify-between gap-3 p-4 rounded-xl border transition-all duration-200 ${
+      id={`resource-${resource.id}`}
+      className={`group relative flex flex-col justify-between gap-3 p-4 rounded-xl border scroll-mt-24 transition-all duration-200 ${
         completed
           ? 'bg-zinc-50/70 dark:bg-[#12121a]/50 border-zinc-200/80 dark:border-zinc-800/60 text-zinc-500 dark:text-zinc-400'
           : 'bg-white dark:bg-[#12121a] border-zinc-200/90 dark:border-zinc-800 hover:border-violet-500/40 dark:hover:border-violet-500/40 shadow-xs'

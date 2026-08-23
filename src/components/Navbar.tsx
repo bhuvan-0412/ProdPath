@@ -4,13 +4,13 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ThemeToggle } from './ThemeToggle';
-import { Compass, LayoutDashboard, BookOpen, Calendar, BookMarked, Video, Menu, X, ShieldAlert, LogIn, LogOut, User as UserIcon } from 'lucide-react';
+import { Compass, LayoutDashboard, BookOpen, Calendar, BookMarked, Video, Menu, X, ShieldAlert, LogIn, LogOut, MessageSquare, User as UserIcon } from 'lucide-react';
 import { useProgress } from '@/context/ProgressContext';
 
 export const Navbar: React.FC = () => {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { user, profile, isAdmin, signOut, isLoadingAuth } = useProgress();
+  const { user, profile, isAdmin, signOut, isLoadingAuth, openFeedbackModal } = useProgress();
 
   const navLinks = [
     { href: '/', label: 'Dashboard', icon: LayoutDashboard },
@@ -74,6 +74,15 @@ export const Navbar: React.FC = () => {
 
           {/* Right Action Tools */}
           <div className="flex items-center gap-2">
+            <button
+              onClick={openFeedbackModal}
+              title="Send Feedback"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold text-zinc-600 dark:text-zinc-400 hover:text-violet-600 dark:hover:text-violet-300 hover:bg-violet-50 dark:hover:bg-violet-950/50 border border-transparent hover:border-violet-200 dark:hover:border-violet-800/40 transition-all"
+            >
+              <MessageSquare className="w-3.5 h-3.5 text-violet-500" />
+              <span className="hidden sm:inline">Feedback</span>
+            </button>
+
             <ThemeToggle />
 
             {!isLoadingAuth && (
@@ -144,6 +153,17 @@ export const Navbar: React.FC = () => {
               </Link>
             );
           })}
+
+          <button
+            onClick={() => {
+              setMobileMenuOpen(false);
+              openFeedbackModal();
+            }}
+            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-semibold text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors text-left"
+          >
+            <MessageSquare className="w-4 h-4 text-violet-500" />
+            <span>Send Feedback</span>
+          </button>
 
           {user && (
             <div className="pt-2 border-t border-zinc-200 dark:border-zinc-800">

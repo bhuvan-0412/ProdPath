@@ -28,65 +28,68 @@ export default function DashboardPage() {
   const caseStats = getCaseStudyStats();
   const nextUp = getNextIncompleteResource();
 
+  const heroHref = nextUp
+    ? (nextUp.weekId ? `/course?expanded=${nextUp.weekId}&targetRes=${nextUp.id}` : '/course')
+    : '/course';
+
   return (
     <div className="space-y-8 animate-fade-in">
       {/* Hero Welcome Banner with Signature Glass & BorderGlow */}
-      <BorderGlow
-        edgeSensitivity={35}
-        glowColor="270 85 65"
-        backgroundColor="rgba(18, 18, 26, 0.95)"
-        borderRadius={24}
-        glowRadius={35}
-        glowIntensity={1.2}
-        coneSpread={30}
-        animated={true}
-        colors={['#8b5cf6', '#a78bfa', '#6366f1']}
-        className="shadow-xl"
-      >
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-zinc-950 via-purple-950/40 to-zinc-950 border border-violet-500/20 p-6 sm:p-8 text-white">
-          <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 bg-violet-500/15 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute bottom-0 right-1/4 -mb-16 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
+      <Link href={heroHref} className="group block cursor-pointer transition-all duration-300">
+        <BorderGlow
+          edgeSensitivity={35}
+          glowColor="270 85 65"
+          backgroundColor="rgba(18, 18, 26, 0.95)"
+          borderRadius={24}
+          glowRadius={35}
+          glowIntensity={1.2}
+          coneSpread={30}
+          animated={true}
+          colors={['#8b5cf6', '#a78bfa', '#6366f1']}
+          className="shadow-xl group-hover:shadow-2xl group-hover:shadow-violet-500/10 transition-all duration-300"
+        >
+          <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-zinc-950 via-purple-950/40 to-zinc-950 border border-violet-500/20 group-hover:border-violet-400/40 group-hover:bg-purple-950/50 p-6 sm:p-8 text-white transition-all duration-300">
+            <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 bg-violet-500/15 rounded-full blur-3xl pointer-events-none group-hover:bg-violet-500/25 transition-all duration-300" />
+            <div className="absolute bottom-0 right-1/4 -mb-16 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
 
-          <div className="relative z-10 max-w-3xl space-y-4">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-500/10 border border-violet-400/20 text-violet-300 text-xs font-mono font-medium">
-              <Sparkles className="w-3.5 h-3.5 text-amber-300" />
-              <span>ProdPath &bull; PM Learning Hub</span>
-            </div>
-
-            <h1 className="text-3xl sm:text-4xl font-display font-extrabold text-white">
-              Master Product Management in 5 Weeks
-            </h1>
-
-            <p className="text-zinc-300 text-sm sm:text-base leading-relaxed">
-              Track your daily progress, analyze real-world case studies, watch speaker masterclasses, and customize your personal resource repository.
-            </p>
-
-            {/* Overall Progress Widget */}
-            <div className="pt-2">
-              <div className="bg-zinc-950/70 backdrop-blur-md rounded-2xl p-5 border border-violet-500/25 space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs uppercase font-mono font-bold tracking-wide text-violet-300 flex items-center gap-1.5">
-                    <TrendingUp className="w-4 h-4 text-violet-400" />
-                    Overall Curriculum Progress
-                  </span>
-                  <span className="text-2xl font-mono font-black text-white">{overall.percentage}%</span>
+            <div className="relative z-10 max-w-3xl space-y-4">
+              <div className="flex items-center justify-between">
+                <h1 className="text-3xl sm:text-4xl font-display font-extrabold text-white group-hover:text-violet-100 transition-colors">
+                  Master Product Management in 5 Weeks
+                </h1>
+                <div className="hidden sm:flex items-center gap-1.5 text-xs font-mono font-semibold text-violet-300/70 group-hover:text-violet-300 transition-colors bg-violet-500/10 px-3 py-1.5 rounded-full border border-violet-500/20">
+                  <span>Resume Learning</span>
+                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                 </div>
-                <ProgressBar
-                  percentage={overall.percentage}
-                  completed={overall.completed}
-                  total={overall.total}
-                  showLabel={false}
-                  size="lg"
-                />
-                <div className="flex justify-between items-center text-xs font-mono text-zinc-400 pt-1">
-                  <span>{overall.completed} completed of {overall.total} total items</span>
-                  <span>{overall.total - overall.completed} remaining</span>
+              </div>
+
+              {/* Overall Progress Widget */}
+              <div className="pt-2">
+                <div className="bg-zinc-950/70 backdrop-blur-md rounded-2xl p-5 border border-violet-500/25 group-hover:border-violet-500/40 space-y-3 transition-colors">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs uppercase font-mono font-bold tracking-wide text-violet-300 flex items-center gap-1.5">
+                      <TrendingUp className="w-4 h-4 text-violet-400" />
+                      Overall Curriculum Progress
+                    </span>
+                    <span className="text-2xl font-mono font-black text-white">{overall.percentage}%</span>
+                  </div>
+                  <ProgressBar
+                    percentage={overall.percentage}
+                    completed={overall.completed}
+                    total={overall.total}
+                    showLabel={false}
+                    size="lg"
+                  />
+                  <div className="flex justify-between items-center text-xs font-mono text-zinc-400 pt-1">
+                    <span>{overall.completed} completed of {overall.total} total items</span>
+                    <span>{overall.total - overall.completed} remaining</span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </BorderGlow>
+        </BorderGlow>
+      </Link>
 
       {/* "Continue Where I Left Off" Signature Surface Card */}
       {nextUp ? (

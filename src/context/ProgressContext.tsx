@@ -10,6 +10,7 @@ import { createClient, isSupabaseConfigured } from '@/lib/supabase/client';
 import { User } from '@supabase/supabase-js';
 import { OptInModal } from '@/components/OptInModal';
 import { ImportProgressModal } from '@/components/ImportProgressModal';
+import { FeedbackModal } from '@/components/FeedbackModal';
 
 export interface UserProfile {
   id: string;
@@ -42,6 +43,9 @@ interface ProgressContextType {
   getNextIncompleteResource: () => Resource | null;
   resetProgress: () => void;
   signOut: () => Promise<void>;
+  openFeedbackModal: () => void;
+  closeFeedbackModal: () => void;
+  isFeedbackModalOpen: boolean;
 }
 
 const STORAGE_KEY_COMPLETED = 'prodpath_completed_ids_v1';
@@ -118,6 +122,7 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   // Modals state
   const [showOptInModal, setShowOptInModal] = useState(false);
   const [showImportModal, setShowImportModal] = useState(false);
+  const [showFeedbackModal, setShowFeedbackModal] = useState(false);
   const [pendingLocalCompleted, setPendingLocalCompleted] = useState<string[]>([]);
   const [pendingLocalCustom, setPendingLocalCustom] = useState<Resource[]>([]);
 
@@ -597,6 +602,9 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         getNextIncompleteResource,
         resetProgress,
         signOut: handleSignOut,
+        openFeedbackModal: () => setShowFeedbackModal(true),
+        closeFeedbackModal: () => setShowFeedbackModal(false),
+        isFeedbackModalOpen: showFeedbackModal,
       }}
     >
       {children}
@@ -618,6 +626,12 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
           onSkip={() => setShowImportModal(false)}
         />
       )}
+
+      {/* Feedback Modal */}
+      <FeedbackModal
+        isOpen={showFeedbackModal}
+        onClose={() => setShowFeedbackModal(false)}
+      />
     </ProgressContext.Provider>
   );
 };
