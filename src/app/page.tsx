@@ -21,7 +21,8 @@ import {
   Layers,
   Compass,
   Lock,
-  Play
+  Play,
+  Cpu
 } from 'lucide-react';
 
 export default function LandingPage() {
@@ -135,7 +136,7 @@ export default function LandingPage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
           <div className="bg-white dark:bg-[#12121a] rounded-2xl p-6 border border-zinc-200 dark:border-zinc-800 space-y-3 shadow-xs hover:border-violet-500/40 transition-all">
             <div className="w-10 h-10 rounded-xl bg-violet-500/10 text-violet-600 dark:text-violet-400 flex items-center justify-center">
               <BookOpen className="w-5 h-5" />
@@ -148,7 +149,19 @@ export default function LandingPage() {
             </p>
           </div>
 
-          <div className="bg-white dark:bg-[#12121a] rounded-2xl p-6 border border-zinc-200 dark:border-zinc-800 space-y-3 shadow-xs hover:border-violet-500/40 transition-all">
+          <div className="bg-white dark:bg-[#12121a] rounded-2xl p-6 border border-zinc-200 dark:border-zinc-800 space-y-3 shadow-xs hover:border-emerald-500/40 transition-all">
+            <div className="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+              <Cpu className="w-5 h-5" />
+            </div>
+            <h3 className="font-display font-bold text-base text-zinc-900 dark:text-zinc-100">
+              Traditional &amp; AI PM
+            </h3>
+            <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
+              A full 5-week roadmap spanning PM foundations through evals, responsible AI, and AI PM interview prep.
+            </p>
+          </div>
+
+          <div className="bg-white dark:bg-[#12121a] rounded-2xl p-6 border border-zinc-200 dark:border-zinc-800 space-y-3 shadow-xs hover:border-indigo-500/40 transition-all">
             <div className="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
               <BookMarked className="w-5 h-5" />
             </div>
