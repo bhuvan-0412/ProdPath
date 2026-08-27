@@ -123,7 +123,7 @@ https://product-matters.ecelliitg.in/
 
 #### Task 1
 * [REAN Framework](https://www.mobiprep.com/post/rean-framework) *(Article)*
-* [SWOT Analysis Framework](https://productmanagement.world/Product+Frameworks/SWOT+Analysis+Framework) *(Article)*
+* [SWOT Analysis Framework](https://www.investopedia.com/terms/s/swot.asp) *(Article)*
 * [Porter's Five Forces](https://aakashgupta.medium.com/the-5-forces-every-product-manager-should-know-04de4b33f5c4) *(Article)*
 * [PESTEL Analysis](https://medium.com/@bastistraube/product-management-101-29-pestel-analysis-ddae5049fbc6) *(Article)*
 

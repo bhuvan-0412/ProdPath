@@ -201,7 +201,7 @@
               "label": "Task 1",
               "resources": [
                 { "id": "w2d3r1", "title": "REAN Framework", "url": "https://www.mobiprep.com/post/rean-framework", "type": "article" },
-                { "id": "w2d3r2", "title": "SWOT Analysis Framework", "url": "https://productmanagement.world/Product+Frameworks/SWOT+Analysis+Framework", "type": "article" },
+                { "id": "w2d3r2", "title": "SWOT Analysis Framework", "url": "https://www.investopedia.com/terms/s/swot.asp", "type": "article" },
                 { "id": "w2d3r3", "title": "Porter's Five Forces", "url": "https://aakashgupta.medium.com/the-5-forces-every-product-manager-should-know-04de4b33f5c4", "type": "article" },
                 { "id": "w2d3r4", "title": "PESTEL Analysis", "url": "https://medium.com/@bastistraube/product-management-101-29-pestel-analysis-ddae5049fbc6", "type": "article" }
               ]
