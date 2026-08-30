@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Compass, MessageSquare, Mail, Phone, ExternalLink } from 'lucide-react';
+import { Compass, MessageSquare, Mail, ExternalLink } from 'lucide-react';
 import { useProgress } from '@/context/ProgressContext';
 
 export const Footer: React.FC = () => {
@@ -44,15 +44,6 @@ export const Footer: React.FC = () => {
                 >
                   <Mail className="w-3.5 h-3.5 text-violet-500 flex-shrink-0 group-hover:scale-110 transition-transform" />
                   <span className="hover:underline">thotabhuvan@gmail.com</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  href="tel:+918341237836"
-                  className="inline-flex items-center gap-2 hover:text-violet-600 dark:hover:text-violet-300 transition-colors group"
-                >
-                  <Phone className="w-3.5 h-3.5 text-violet-500 flex-shrink-0 group-hover:scale-110 transition-transform" />
-                  <span className="hover:underline">+91 83412 37836</span>
                 </a>
               </li>
             </ul>
