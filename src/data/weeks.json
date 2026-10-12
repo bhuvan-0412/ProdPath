@@ -297,7 +297,8 @@
             {
               "label": "Task 3",
               "resources": [
-                { "id": "w3d1r4", "title": "SQL Tutorial (Videos 1-5)", "url": "https://www.youtube.com/watch?v=yVcRQXLMzCE&list=PLrL_PSQ6q062H5CetdplYW7xQKeq8XaR0", "type": "playlist" }
+                { "id": "w3d1r5", "title": "SQL Full Course — Part 1: Setup, Databases, Tables, INSERT & SELECT (0:00–33:32)", "url": "https://www.youtube.com/watch?v=5OdVJbNCSso", "type": "video" },
+                { "id": "w3d1r6", "title": "Leetcode SQL-50 (Problems 1-10)", "url": "https://leetcode.com/studyplan/top-sql-50/", "type": "article" }
               ]
             }
           ]
@@ -323,7 +324,8 @@
             {
               "label": "Task 3",
               "resources": [
-                { "id": "w3d2r5", "title": "SQL Tutorial (Videos 6-9)", "url": "https://www.youtube.com/watch?v=yVcRQXLMzCE&list=PLrL_PSQ6q062H5CetdplYW7xQKeq8XaR0", "type": "playlist" }
+                { "id": "w3d2r6", "title": "SQL Full Course — Part 2: UPDATE/DELETE, Transactions, Constraints & Primary Keys (33:32–1:11:36)", "url": "https://www.youtube.com/watch?v=5OdVJbNCSso&t=2012s", "type": "video" },
+                { "id": "w3d2r7", "title": "Leetcode SQL-50 (Problems 11-20)", "url": "https://leetcode.com/studyplan/top-sql-50/", "type": "article" }
               ]
             }
           ]
@@ -342,7 +344,8 @@
             {
               "label": "Task 2",
               "resources": [
-                { "id": "w3d3r3", "title": "SQL Tutorial (Videos 10-12)", "url": "https://www.youtube.com/watch?v=yVcRQXLMzCE&list=PLrL_PSQ6q062H5CetdplYW7xQKeq8XaR0", "type": "playlist" }
+                { "id": "w3d3r4", "title": "SQL Full Course — Part 3: Foreign Keys, Joins, Functions, Filtering, Sorting & Unions (1:11:36–1:48:37)", "url": "https://www.youtube.com/watch?v=5OdVJbNCSso&t=4296s", "type": "video" },
+                { "id": "w3d3r5", "title": "Leetcode SQL-50 (Problems 21-30)", "url": "https://leetcode.com/studyplan/top-sql-50/", "type": "article" }
               ]
             }
           ]
@@ -367,7 +370,8 @@
             {
               "label": "Task 3",
               "resources": [
-                { "id": "w3d4r4", "title": "SQL Tutorial (Videos 13-18)", "url": "https://www.youtube.com/watch?v=yVcRQXLMzCE&list=PLrL_PSQ6q062H5CetdplYW7xQKeq8XaR0", "type": "playlist" }
+                { "id": "w3d4r5", "title": "SQL Full Course — Part 4: Self Joins, Views, Indexes, Subqueries, GROUP BY & ROLLUP (1:48:37–2:26:50)", "url": "https://www.youtube.com/watch?v=5OdVJbNCSso&t=6517s", "type": "video" },
+                { "id": "w3d4r6", "title": "Leetcode SQL-50 (Problems 31-40)", "url": "https://leetcode.com/studyplan/top-sql-50/", "type": "article" }
               ]
             }
           ]
@@ -392,7 +396,8 @@
             {
               "label": "Task 3",
               "resources": [
-                { "id": "w3d5r4", "title": "SQL Tutorial (Videos 19-25)", "url": "https://www.youtube.com/watch?v=yVcRQXLMzCE&list=PLrL_PSQ6q062H5CetdplYW7xQKeq8XaR0", "type": "playlist" }
+                { "id": "w3d5r5", "title": "SQL Full Course — Part 5: ON DELETE, Stored Procedures & Triggers (2:26:50–3:00:00)", "url": "https://www.youtube.com/watch?v=5OdVJbNCSso&t=8810s", "type": "video" },
+                { "id": "w3d5r6", "title": "Leetcode SQL-50 (Problems 41-50)", "url": "https://leetcode.com/studyplan/top-sql-50/", "type": "article" }
               ]
             }
           ]
@@ -420,12 +425,6 @@
                 { "id": "w4d1r3", "title": "The 5C Framework", "url": "https://youtu.be/TG657u78MOQ", "type": "video" },
                 { "id": "w4d1r4", "title": "Mock: Imagine you are CEO of Uber", "url": "https://youtu.be/nrM6AwYOrBc", "type": "video" }
               ]
-            },
-            {
-              "label": "Task 3",
-              "resources": [
-                { "id": "w4d1r5", "title": "SQL Tutorial (Videos 26-28)", "url": "https://www.youtube.com/watch?v=yVcRQXLMzCE&list=PLrL_PSQ6q062H5CetdplYW7xQKeq8XaR0", "type": "playlist" }
-              ]
             }
           ]
         },
@@ -447,12 +446,6 @@
                 { "id": "w4d2r4", "title": "RCA Mock on Urban Company", "url": "https://youtu.be/OiE5vvbnryI", "type": "video" },
                 { "id": "w4d2r5", "title": "RCA on Financial app", "url": "https://youtu.be/DWB6ikZ-P6M", "type": "video" },
                 { "id": "w4d2r6", "title": "Playlist for quick RCA practice", "url": "https://www.youtube.com/watch?v=5C8R8DnffSs&list=PL-q2MNxDekiQZNoAL_xGTT2h5jtu4-55c", "type": "playlist" }
-              ]
-            },
-            {
-              "label": "Task 3",
-              "resources": [
-                { "id": "w4d2r7", "title": "SQL Tutorial (Videos 29-32)", "url": "https://www.youtube.com/watch?v=yVcRQXLMzCE&list=PLrL_PSQ6q062H5CetdplYW7xQKeq8XaR0", "type": "playlist" }
               ]
             }
           ]
@@ -480,12 +473,6 @@
                 { "id": "w4d3r9", "title": "Playlist for quick Guesstimate practice", "url": "https://www.youtube.com/watch?v=g7nvHCYzXQE&list=PL-q2MNxDekiSFUNcwCI-Q4-QqHWe5K42p", "type": "playlist" },
                 { "id": "w4d3r10", "title": "Guesstimates Cheat Sheet", "url": "https://sites.google.com/xlri.ac.in/crux/guesstimates/guesstimate-cheat-sheet", "type": "article" }
               ]
-            },
-            {
-              "label": "Task 3",
-              "resources": [
-                { "id": "w4d3r11", "title": "SQL Tutorial (Videos 33-35)", "url": "https://www.youtube.com/watch?v=yVcRQXLMzCE&list=PLrL_PSQ6q062H5CetdplYW7xQKeq8XaR0", "type": "playlist" }
-              ]
             }
           ]
         },
@@ -509,12 +496,6 @@
                 { "id": "w4d4r6", "title": "Product Improvement Mock 3", "url": "https://youtu.be/XAJeXlY6w-c", "type": "video" },
                 { "id": "w4d4r7", "title": "Product Improvement Mock 4", "url": "https://youtu.be/X4ohobzELAY", "type": "video" }
               ]
-            },
-            {
-              "label": "Task 3",
-              "resources": [
-                { "id": "w4d4r8", "title": "SQL Tutorial (Videos 36-37)", "url": "https://www.youtube.com/watch?v=yVcRQXLMzCE&list=PLrL_PSQ6q062H5CetdplYW7xQKeq8XaR0", "type": "playlist" }
-              ]
             }
           ]
         },
@@ -537,13 +518,6 @@
                 { "id": "w4d5r5", "title": "STAR framework + examples", "url": "https://youtu.be/WdyiUe7_3cA", "type": "video" },
                 { "id": "w4d5r6", "title": "Behavioural interview mock", "url": "https://youtu.be/sjTxmq68RXU", "type": "video" },
                 { "id": "w4d5r7", "title": "Questions to ask the interviewer", "url": "https://youtu.be/5-cba5niZs8", "type": "video" }
-              ]
-            },
-            {
-              "label": "Task 3",
-              "resources": [
-                { "id": "w4d5r8", "title": "SQL Tutorial (Videos 38-40)", "url": "https://www.youtube.com/watch?v=yVcRQXLMzCE&list=PLrL_PSQ6q062H5CetdplYW7xQKeq8XaR0", "type": "playlist" },
-                { "id": "w4d5r9", "title": "Leetcode SQL-50", "url": "https://leetcode.com/studyplan/top-sql-50/", "type": "article" }
               ]
             }
           ]

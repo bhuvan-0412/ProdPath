@@ -179,7 +179,8 @@ https://product-matters.ecelliitg.in/
 * [Introduction to Databases](https://youtu.be/EEBgMBE8R70) *(Video)*
 
 #### Task 3
-* [SQL Tutorial (Videos 1-5)](https://www.youtube.com/watch?v=yVcRQXLMzCE&list=PLrL_PSQ6q062H5CetdplYW7xQKeq8XaR0) *(Playlist)*
+* [SQL Full Course — Part 1: Setup, Databases, Tables, INSERT & SELECT (0:00–33:32)](https://www.youtube.com/watch?v=5OdVJbNCSso) *(Video)*
+* [Leetcode SQL-50 (Problems 1-10)](https://leetcode.com/studyplan/top-sql-50/) *(Article)*
 
 ---
 
@@ -194,7 +195,8 @@ https://product-matters.ecelliitg.in/
 * [What is AWS?](https://youtu.be/3XFODda6YXo) *(Video)*
 
 #### Task 3
-* [SQL Tutorial (Videos 6-9)](https://www.youtube.com/watch?v=yVcRQXLMzCE&list=PLrL_PSQ6q062H5CetdplYW7xQKeq8XaR0) *(Playlist)*
+* [SQL Full Course — Part 2: UPDATE/DELETE, Transactions, Constraints & Primary Keys (33:32–1:11:36)](https://www.youtube.com/watch?v=5OdVJbNCSso&t=2012s) *(Video)*
+* [Leetcode SQL-50 (Problems 11-20)](https://leetcode.com/studyplan/top-sql-50/) *(Article)*
 
 ---
 
@@ -205,7 +207,8 @@ https://product-matters.ecelliitg.in/
 * [PRD + Lovable](https://youtu.be/vai2hiA0btc) *(Video)*
 
 #### Task 2
-* [SQL Tutorial (Videos 10-12)](https://www.youtube.com/watch?v=yVcRQXLMzCE&list=PLrL_PSQ6q062H5CetdplYW7xQKeq8XaR0) *(Playlist)*
+* [SQL Full Course — Part 3: Foreign Keys, Joins, Functions, Filtering, Sorting & Unions (1:11:36–1:48:37)](https://www.youtube.com/watch?v=5OdVJbNCSso&t=4296s) *(Video)*
+* [Leetcode SQL-50 (Problems 21-30)](https://leetcode.com/studyplan/top-sql-50/) *(Article)*
 
 ---
 
@@ -219,7 +222,8 @@ https://product-matters.ecelliitg.in/
 * [Prompt Engineering Basics](https://youtu.be/p09yRj47kNM) *(Video)*
 
 #### Task 3
-* [SQL Tutorial (Videos 13-18)](https://www.youtube.com/watch?v=yVcRQXLMzCE&list=PLrL_PSQ6q062H5CetdplYW7xQKeq8XaR0) *(Playlist)*
+* [SQL Full Course — Part 4: Self Joins, Views, Indexes, Subqueries, GROUP BY & ROLLUP (1:48:37–2:26:50)](https://www.youtube.com/watch?v=5OdVJbNCSso&t=6517s) *(Video)*
+* [Leetcode SQL-50 (Problems 31-40)](https://leetcode.com/studyplan/top-sql-50/) *(Article)*
 
 ---
 
@@ -233,7 +237,8 @@ https://product-matters.ecelliitg.in/
 * [Mixpanel Spark](https://youtu.be/7UJUE3EfKQg) *(Video)*
 
 #### Task 3
-* [SQL Tutorial (Videos 19-25)](https://www.youtube.com/watch?v=yVcRQXLMzCE&list=PLrL_PSQ6q062H5CetdplYW7xQKeq8XaR0) *(Playlist)*
+* [SQL Full Course — Part 5: ON DELETE, Stored Procedures & Triggers (2:26:50–3:00:00)](https://www.youtube.com/watch?v=5OdVJbNCSso&t=8810s) *(Video)*
+* [Leetcode SQL-50 (Problems 41-50)](https://leetcode.com/studyplan/top-sql-50/) *(Article)*
 
 ---
 
@@ -249,9 +254,6 @@ https://product-matters.ecelliitg.in/
 * [The 5C Framework](https://youtu.be/TG657u78MOQ) *(Video)*
 * [Mock: Imagine you are CEO of Uber](https://youtu.be/nrM6AwYOrBc) *(Video)*
 
-#### Task 3
-* [SQL Tutorial (Videos 26-28)](https://www.youtube.com/watch?v=yVcRQXLMzCE&list=PLrL_PSQ6q062H5CetdplYW7xQKeq8XaR0) *(Playlist)*
-
 ---
 
 ### Day 2: Root Cause Analysis Questions
@@ -265,9 +267,6 @@ https://product-matters.ecelliitg.in/
 * [RCA Mock on Urban Company](https://youtu.be/OiE5vvbnryI) *(Video)*
 * [RCA on Financial app](https://youtu.be/DWB6ikZ-P6M) *(Video)*
 * [Playlist for quick RCA practice](https://www.youtube.com/watch?v=5C8R8DnffSs&list=PL-q2MNxDekiQZNoAL_xGTT2h5jtu4-55c) *(Playlist)*
-
-#### Task 3
-* [SQL Tutorial (Videos 29-32)](https://www.youtube.com/watch?v=yVcRQXLMzCE&list=PLrL_PSQ6q062H5CetdplYW7xQKeq8XaR0) *(Playlist)*
 
 ---
 
@@ -287,9 +286,6 @@ https://product-matters.ecelliitg.in/
 * [Playlist for quick Guesstimate practice](https://www.youtube.com/watch?v=g7nvHCYzXQE&list=PL-q2MNxDekiSFUNcwCI-Q4-QqHWe5K42p) *(Playlist)*
 * [Guesstimates Cheat Sheet](https://sites.google.com/xlri.ac.in/crux/guesstimates/guesstimate-cheat-sheet) *(Article)*
 
-#### Task 3
-* [SQL Tutorial (Videos 33-35)](https://www.youtube.com/watch?v=yVcRQXLMzCE&list=PLrL_PSQ6q062H5CetdplYW7xQKeq8XaR0) *(Playlist)*
-
 ---
 
 ### Day 4: Favourite Product and Improvement Questions
@@ -305,9 +301,6 @@ https://product-matters.ecelliitg.in/
 * [Product Improvement Mock 3](https://youtu.be/XAJeXlY6w-c) *(Video)*
 * [Product Improvement Mock 4](https://youtu.be/X4ohobzELAY) *(Video)*
 
-#### Task 3
-* [SQL Tutorial (Videos 36-37)](https://www.youtube.com/watch?v=yVcRQXLMzCE&list=PLrL_PSQ6q062H5CetdplYW7xQKeq8XaR0) *(Playlist)*
-
 ---
 
 ### Day 5: Product Design and Behavioural Questions
@@ -322,10 +315,6 @@ https://product-matters.ecelliitg.in/
 * [STAR framework + examples](https://youtu.be/WdyiUe7_3cA) *(Video)*
 * [Behavioural interview mock](https://youtu.be/sjTxmq68RXU) *(Video)*
 * [Questions to ask the interviewer](https://youtu.be/5-cba5niZs8) *(Video)*
-
-#### Task 3
-* [SQL Tutorial (Videos 38-40)](https://www.youtube.com/watch?v=yVcRQXLMzCE&list=PLrL_PSQ6q062H5CetdplYW7xQKeq8XaR0) *(Playlist)*
-* [Leetcode SQL-50](https://leetcode.com/studyplan/top-sql-50/) *(Article)*
 
 ---
 
