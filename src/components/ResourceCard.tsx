@@ -32,7 +32,7 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({
   };
 
   const actionButtonClass = (active: boolean) =>
-    `relative p-1.5 rounded-lg transition-colors ${
+    `relative inline-flex items-center justify-center gap-1.5 min-h-10 min-w-10 px-3 sm:min-h-0 sm:min-w-0 sm:p-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 sm:border-transparent sm:dark:border-transparent transition-colors ${
       active
         ? 'text-violet-600 dark:text-violet-400 bg-violet-50 dark:bg-violet-950/50'
         : 'text-zinc-400 hover:text-violet-600 dark:hover:text-violet-400 hover:bg-violet-50 dark:hover:bg-violet-950/50'
@@ -91,27 +91,31 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({
           : 'bg-white dark:bg-[#12121a] border-zinc-200/90 dark:border-zinc-800 hover:border-violet-500/40 dark:hover:border-violet-500/40 shadow-xs'
       }`}
     >
-      <div className="flex items-start gap-3 flex-1 min-w-0">
-        {/* Animated Checkbox */}
+      <div className="flex flex-wrap sm:flex-nowrap items-start gap-3 flex-1 min-w-0">
+        {/* Animated Checkbox: padded hit area on phones, same visual box everywhere */}
         <button
           onClick={(e) => {
             e.stopPropagation();
             toggleCompleted(resource.id);
           }}
-          className={`flex-shrink-0 mt-0.5 w-5 h-5 rounded-lg border transition-all duration-200 flex items-center justify-center ${
-            completed
-              ? 'bg-violet-600 border-violet-600 text-white animate-pop shadow-xs'
-              : 'border-zinc-300 dark:border-zinc-700 hover:border-violet-500 dark:hover:border-violet-400 bg-zinc-50 dark:bg-zinc-900'
-          }`}
+          className="group/check flex-shrink-0 -m-2.5 p-2.5 sm:m-0 sm:p-0 rounded-xl"
           aria-label={`Mark "${resource.title}" as ${completed ? 'incomplete' : 'complete'}`}
         >
-          {completed && <Check className="w-3.5 h-3.5 stroke-[3]" />}
+          <span
+            className={`mt-0.5 w-5 h-5 rounded-lg border transition-all duration-200 flex items-center justify-center ${
+              completed
+                ? 'bg-violet-600 border-violet-600 text-white animate-pop shadow-xs'
+                : 'border-zinc-300 dark:border-zinc-700 group-hover/check:border-violet-500 dark:group-hover/check:border-violet-400 bg-zinc-50 dark:bg-zinc-900'
+            }`}
+          >
+            {completed && <Check className="w-3.5 h-3.5 stroke-[3]" />}
+          </span>
         </button>
 
         {/* Resource Details & Content */}
         <div className="flex-1 min-w-0 space-y-1.5">
           {/* Metadata Badges */}
-          <div className="flex items-center gap-2 flex-wrap font-mono text-[10px]">
+          <div className="flex items-center gap-2 flex-wrap font-mono text-xs sm:text-[10px]">
             <span className={`inline-flex items-center gap-1 font-semibold px-2 py-0.5 rounded-md border ${getTypeBadgeClass()}`}>
               {getIcon()}
               <span>{getTypeLabel()}</span>
@@ -144,7 +148,7 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
-              className={`font-semibold text-sm hover:text-violet-600 dark:hover:text-violet-400 transition-colors inline-flex items-center gap-1.5 ${
+              className={`font-semibold text-[15px] sm:text-sm leading-snug py-1 -my-1 hover:text-violet-600 dark:hover:text-violet-400 transition-colors inline-flex items-center gap-1.5 ${
                 completed
                   ? 'line-through text-zinc-400 dark:text-zinc-500 font-normal'
                   : 'text-zinc-900 dark:text-zinc-100'
@@ -187,7 +191,7 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({
                   e.stopPropagation();
                   setTakeawaysExpanded(!takeawaysExpanded);
                 }}
-                className="inline-flex items-center gap-1.5 text-xs font-semibold text-violet-600 dark:text-violet-400 hover:text-violet-700 dark:hover:text-violet-300 transition-colors py-1"
+                className="inline-flex items-center gap-1.5 text-xs font-semibold text-violet-600 dark:text-violet-400 hover:text-violet-700 dark:hover:text-violet-300 transition-colors min-h-10 sm:min-h-0 py-1"
               >
                 <span>
                   {takeawaysExpanded
@@ -211,7 +215,7 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({
 
                   {resource.furtherReading && resource.furtherReading.length > 0 && (
                     <div className="pt-2.5 border-t border-zinc-100 dark:border-zinc-800/80">
-                      <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-violet-600 dark:text-violet-400 block mb-1.5">
+                      <span className="text-xs sm:text-[10px] font-mono font-bold uppercase tracking-wider text-violet-600 dark:text-violet-400 block mb-1.5">
                         Go deeper
                       </span>
                       <div className="space-y-1.5">
@@ -222,7 +226,7 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({
                             target="_blank"
                             rel="noopener noreferrer"
                             onClick={(e) => e.stopPropagation()}
-                            className="inline-flex items-center gap-1.5 text-xs font-medium text-zinc-700 dark:text-zinc-300 hover:text-violet-600 dark:hover:text-violet-400 transition-colors group/link"
+                            className="inline-flex items-center gap-1.5 text-xs font-medium text-zinc-700 dark:text-zinc-300 hover:text-violet-600 dark:hover:text-violet-400 transition-colors group/link py-1.5 sm:py-0"
                           >
                             <span className="hover:underline">{item.title}</span>
                             <ExternalLink className="w-3 h-3 flex-shrink-0 opacity-60 group-hover/link:opacity-100 text-violet-500 transition-opacity" />
@@ -237,8 +241,9 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({
           )}
         </div>
 
-        {/* Actions: AI summary, notes, delete */}
-        <div className="flex items-center gap-0.5 self-start flex-shrink-0">
+        {/* Actions: AI summary, notes, delete. Phones: labelled row along the bottom; larger screens: icons top-right */}
+        <div className="order-last basis-full sm:order-none sm:basis-auto flex items-center justify-end gap-2 sm:gap-0.5 sm:self-start flex-shrink-0">
+
           {summaryPoints && summaryPoints.length > 0 && (
             <button
               onClick={(e) => {
@@ -251,6 +256,7 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({
               aria-expanded={openPanel === 'summary'}
             >
               <WandSparkles className="w-4 h-4" />
+              <span className="sm:hidden text-xs font-semibold">Summary</span>
             </button>
           )}
 
@@ -265,6 +271,7 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({
             aria-expanded={openPanel === 'notes'}
           >
             <PenLine className="w-4 h-4" />
+            <span className="sm:hidden text-xs font-semibold">Notes</span>
             {hasNote && (
               <span className="absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-violet-500" aria-hidden="true" />
             )}
@@ -276,7 +283,7 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({
                 e.stopPropagation();
                 deleteCustomResource(resource.id);
               }}
-              className="p-1.5 rounded-lg text-zinc-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/50 transition-colors"
+              className="inline-flex items-center justify-center min-h-10 min-w-10 sm:min-h-0 sm:min-w-0 sm:p-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 sm:border-transparent sm:dark:border-transparent text-zinc-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/50 transition-colors"
               title="Delete custom resource"
               aria-label="Delete resource"
             >

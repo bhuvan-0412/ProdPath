@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, Suspense } from 'react';
+import React, { useState, useEffect, useRef, Suspense } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { useProgress } from '@/context/ProgressContext';
@@ -77,6 +77,17 @@ function CourseContent() {
   const { getWeekStats, customResources, completedIds } = useProgress();
 
   const [activeWeekId, setActiveWeekId] = useState<string>('week-1');
+  const weekStripRef = useRef<HTMLDivElement>(null);
+
+  // On phones the week tabs are a horizontal strip: keep the active week in view
+  useEffect(() => {
+    const strip = weekStripRef.current;
+    if (!strip || strip.scrollWidth <= strip.clientWidth) return;
+    const tab = strip.querySelector<HTMLElement>(`[data-week-tab="${activeWeekId}"]`);
+    if (!tab) return;
+    const left = tab.getBoundingClientRect().left - strip.getBoundingClientRect().left + strip.scrollLeft - 16;
+    strip.scrollTo({ left, behavior: 'smooth' });
+  }, [activeWeekId]);
   const [modalOpen, setModalOpen] = useState(false);
   const [targetWeekForAdd, setTargetWeekForAdd] = useState('week-1');
 
@@ -154,7 +165,7 @@ function CourseContent() {
 
         <button
           onClick={() => handleOpenAddModal(activeWeekId)}
-          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-violet-600 hover:bg-violet-700 text-white text-xs font-bold shadow-xs transition-all self-start sm:self-center"
+          className="inline-flex items-center gap-2 min-h-11 sm:min-h-0 px-4 py-2.5 rounded-xl bg-violet-600 hover:bg-violet-700 text-white text-xs font-bold shadow-xs transition-all self-start sm:self-center"
         >
           <Plus className="w-4 h-4" />
           <span>Add Resource</span>
@@ -162,7 +173,10 @@ function CourseContent() {
       </div>
 
       {/* Horizontal Week & Module Navigation Tabs */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3">
+      <div
+        ref={weekStripRef}
+        className="flex overflow-x-auto snap-x snap-mandatory no-scrollbar gap-3 -mx-4 px-4 pb-1 sm:mx-0 sm:px-0 sm:pb-0 sm:overflow-visible sm:grid sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7"
+      >
         {weeks.map((w) => {
           const stats = getWeekStats(w.id);
           const isActive = w.id === activeWeekId;
@@ -172,7 +186,8 @@ function CourseContent() {
             <button
               key={w.id}
               onClick={() => handleSelectWeekTab(w.id)}
-              className={`p-4 rounded-2xl text-left transition-all duration-200 flex flex-col justify-between space-y-3 relative overflow-hidden ${
+              data-week-tab={w.id}
+              className={`snap-start shrink-0 w-[44%] sm:w-auto p-4 rounded-2xl text-left transition-all duration-200 flex flex-col justify-between space-y-3 relative overflow-hidden ${
                 isActive
                   ? 'glass-signature shadow-md ring-2 ring-violet-500/50'
                   : 'bg-white dark:bg-[#12121a] border border-zinc-200 dark:border-zinc-800/80 hover:border-zinc-300 dark:hover:border-zinc-700'
@@ -180,7 +195,7 @@ function CourseContent() {
             >
               <div className="flex items-center justify-between">
                 <span
-                  className={`text-[10px] font-mono font-semibold px-2 py-0.5 rounded-md uppercase ${
+                  className={`text-xs sm:text-[10px] font-mono font-semibold px-2 py-0.5 rounded-md uppercase ${
                     isActive
                       ? 'bg-violet-600 text-white'
                       : isDone
@@ -207,7 +222,7 @@ function CourseContent() {
 
               <div className="space-y-1 pt-1">
                 <ProgressBar percentage={stats.percentage} showLabel={false} size="sm" />
-                <div className="flex justify-between items-center text-[10px] font-mono text-zinc-400">
+                <div className="flex justify-between items-center text-xs sm:text-[10px] font-mono text-zinc-400">
                   <span>{stats.percentage}% done</span>
                   {isDone && <CheckCircle className="w-3 h-3 text-emerald-500" />}
                 </div>
@@ -219,10 +234,10 @@ function CourseContent() {
         {/* Live Sessions Navigation Tab */}
         <Link
           href="/live-sessions"
-          className="p-4 rounded-2xl text-left bg-rose-50/40 dark:bg-rose-950/20 border border-rose-200/60 dark:border-rose-900/40 hover:border-rose-500/50 hover:shadow-md transition-all duration-200 flex flex-col justify-between space-y-3 group"
+          className="snap-start shrink-0 w-[44%] sm:w-auto p-4 rounded-2xl text-left bg-rose-50/40 dark:bg-rose-950/20 border border-rose-200/60 dark:border-rose-900/40 hover:border-rose-500/50 hover:shadow-md transition-all duration-200 flex flex-col justify-between space-y-3 group"
         >
           <div className="flex items-center justify-between">
-            <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-md uppercase bg-rose-600 text-white flex items-center gap-1">
+            <span className="text-xs sm:text-[10px] font-mono font-semibold px-2 py-0.5 rounded-md uppercase bg-rose-600 text-white flex items-center gap-1">
               Live <Video className="w-2.5 h-2.5" />
             </span>
             <ExternalLink className="w-3.5 h-3.5 text-rose-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
@@ -234,7 +249,7 @@ function CourseContent() {
             </h3>
           </div>
 
-          <div className="pt-1 text-[10px] font-mono text-zinc-400">
+          <div className="pt-1 text-xs sm:text-[10px] font-mono text-zinc-400">
             <span>Speaker talks &rarr;</span>
           </div>
         </Link>
@@ -242,10 +257,10 @@ function CourseContent() {
         {/* Case Studies Navigation Tab */}
         <Link
           href="/resources"
-          className="p-4 rounded-2xl text-left bg-indigo-50/40 dark:bg-indigo-950/20 border border-indigo-200/60 dark:border-indigo-900/40 hover:border-indigo-500/50 hover:shadow-md transition-all duration-200 flex flex-col justify-between space-y-3 group"
+          className="snap-start shrink-0 w-[44%] sm:w-auto p-4 rounded-2xl text-left bg-indigo-50/40 dark:bg-indigo-950/20 border border-indigo-200/60 dark:border-indigo-900/40 hover:border-indigo-500/50 hover:shadow-md transition-all duration-200 flex flex-col justify-between space-y-3 group"
         >
           <div className="flex items-center justify-between">
-            <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-md uppercase bg-indigo-600 text-white flex items-center gap-1">
+            <span className="text-xs sm:text-[10px] font-mono font-semibold px-2 py-0.5 rounded-md uppercase bg-indigo-600 text-white flex items-center gap-1">
               Library <BookMarked className="w-2.5 h-2.5" />
             </span>
             <ExternalLink className="w-3.5 h-3.5 text-indigo-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
@@ -257,14 +272,14 @@ function CourseContent() {
             </h3>
           </div>
 
-          <div className="pt-1 text-[10px] font-mono text-zinc-400">
+          <div className="pt-1 text-xs sm:text-[10px] font-mono text-zinc-400">
             <span>Teardowns &amp; Strategy &rarr;</span>
           </div>
         </Link>
       </div>
 
       {/* Active Week Details Header */}
-      <div className="bg-white dark:bg-[#12121a] rounded-2xl p-6 border border-zinc-200 dark:border-zinc-800/80 space-y-3">
+      <div className="bg-white dark:bg-[#12121a] rounded-2xl p-4 sm:p-6 border border-zinc-200 dark:border-zinc-800/80 space-y-3">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <span className="text-xs font-mono font-semibold uppercase text-violet-600 dark:text-violet-400">
@@ -289,7 +304,7 @@ function CourseContent() {
           <div
             key={day.day}
             id={getDayDomId(activeWeek.id, day.day)}
-            className="bg-white dark:bg-[#12121a] rounded-2xl p-5 sm:p-6 border border-zinc-200 dark:border-zinc-800/80 space-y-4 shadow-xs scroll-mt-24"
+            className="bg-white dark:bg-[#12121a] rounded-2xl p-4 sm:p-6 border border-zinc-200 dark:border-zinc-800/80 space-y-4 shadow-xs scroll-mt-24"
           >
             {/* Day Header */}
             <div className="flex items-center gap-3 pb-3 border-b border-zinc-100 dark:border-zinc-800/80">
@@ -353,7 +368,7 @@ function CourseContent() {
         <div className="flex justify-end pt-2">
           <button
             onClick={() => handleOpenAddModal(activeWeek.id)}
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-violet-600 dark:text-violet-400 hover:underline"
+            className="inline-flex items-center gap-1.5 min-h-10 sm:min-h-0 text-xs font-semibold text-violet-600 dark:text-violet-400 hover:underline"
           >
             <Plus className="w-3.5 h-3.5" />
             <span>Add extra resource to {activeWeek.id.replace('-', ' ')}</span>
@@ -388,7 +403,7 @@ function CourseContent() {
                   <h3 className="font-display font-bold text-base text-zinc-900 dark:text-zinc-100">
                     {item.title}
                   </h3>
-                  <span className="px-2.5 py-0.5 rounded-md bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-300 border border-indigo-200/50 dark:border-indigo-800/40 text-[10px] font-mono font-semibold uppercase">
+                  <span className="px-2.5 py-0.5 rounded-md bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-300 border border-indigo-200/50 dark:border-indigo-800/40 text-xs sm:text-[10px] font-mono font-semibold uppercase">
                     {item.cadence}
                   </span>
                 </div>
@@ -402,7 +417,7 @@ function CourseContent() {
                   href={item.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-zinc-100 dark:bg-zinc-800/80 hover:bg-violet-600 hover:text-white dark:hover:bg-violet-600 text-zinc-700 dark:text-zinc-300 text-xs font-semibold transition-all group"
+                  className="inline-flex items-center gap-1.5 min-h-10 sm:min-h-0 px-3.5 py-2 rounded-xl bg-zinc-100 dark:bg-zinc-800/80 hover:bg-violet-600 hover:text-white dark:hover:bg-violet-600 text-zinc-700 dark:text-zinc-300 text-xs font-semibold transition-all group"
                 >
                   <span>Visit Publication</span>
                   <ExternalLink className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />

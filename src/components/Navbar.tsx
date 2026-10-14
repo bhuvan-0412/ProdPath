@@ -32,7 +32,7 @@ export const Navbar: React.FC = () => {
   const userDisplayName = profile?.full_name || user?.user_metadata?.full_name || user?.email?.split('@')[0] || 'User';
 
   return (
-    <header className="sticky top-0 z-40 w-full backdrop-blur-xl bg-white/75 dark:bg-[#0a0a0f]/80 border-b border-zinc-200/80 dark:border-zinc-800/80 transition-colors">
+    <header className="sticky top-0 z-40 w-full bg-white/95 dark:bg-[#0a0a0f]/95 md:backdrop-blur-xl md:bg-white/75 md:dark:bg-[#0a0a0f]/80 border-b border-zinc-200/80 dark:border-zinc-800/80 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Brand Logo */}
@@ -79,7 +79,7 @@ export const Navbar: React.FC = () => {
             <button
               onClick={openFeedbackModal}
               title="Send Feedback"
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold text-zinc-600 dark:text-zinc-400 hover:text-violet-600 dark:hover:text-violet-300 hover:bg-violet-50 dark:hover:bg-violet-950/50 border border-transparent hover:border-violet-200 dark:hover:border-violet-800/40 transition-all"
+              className="flex items-center justify-center gap-1.5 min-h-10 min-w-10 sm:min-h-0 sm:min-w-0 px-3 py-1.5 rounded-xl text-xs font-semibold text-zinc-600 dark:text-zinc-400 hover:text-violet-600 dark:hover:text-violet-300 hover:bg-violet-50 dark:hover:bg-violet-950/50 border border-transparent hover:border-violet-200 dark:hover:border-violet-800/40 transition-all"
             >
               <MessageSquare className="w-3.5 h-3.5 text-violet-500" />
               <span className="hidden sm:inline">Feedback</span>
@@ -95,7 +95,7 @@ export const Navbar: React.FC = () => {
                       <span className="text-xs font-semibold text-zinc-800 dark:text-zinc-200 max-w-[120px] truncate">
                         {userDisplayName}
                       </span>
-                      <span className="text-[10px] text-zinc-400 dark:text-zinc-500 truncate max-w-[120px]">
+                      <span className="text-xs sm:text-[10px] text-zinc-400 dark:text-zinc-500 truncate max-w-[120px]">
                         {user.email}
                       </span>
                     </div>
@@ -103,7 +103,7 @@ export const Navbar: React.FC = () => {
                     <button
                       onClick={signOut}
                       title="Sign Out"
-                      className="p-2 rounded-xl text-zinc-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/40 transition-colors"
+                      className="p-3 sm:p-2 rounded-xl text-zinc-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/40 transition-colors"
                       aria-label="Sign Out"
                     >
                       <LogOut className="w-4 h-4" />
@@ -112,7 +112,7 @@ export const Navbar: React.FC = () => {
                 ) : (
                   <Link
                     href="/login"
-                    className="flex items-center gap-1.5 py-1.5 px-3.5 bg-violet-600 hover:bg-violet-700 text-white rounded-xl text-xs font-semibold shadow-sm transition-all"
+                    className="flex items-center gap-1.5 min-h-10 sm:min-h-0 py-1.5 px-3.5 whitespace-nowrap bg-violet-600 hover:bg-violet-700 text-white rounded-xl text-xs font-semibold shadow-sm transition-all"
                   >
                     <LogIn className="w-3.5 h-3.5" />
                     <span>Sign In</span>
@@ -124,7 +124,7 @@ export const Navbar: React.FC = () => {
             {/* Mobile Hamburger Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 rounded-xl text-zinc-600 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+              className="md:hidden p-2.5 rounded-xl text-zinc-600 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
               aria-label="Toggle Navigation Menu"
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -146,7 +146,7 @@ export const Navbar: React.FC = () => {
                     key={link.href}
                     href={link.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className={`flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-semibold transition-colors ${
+                    className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-colors ${
                       active
                         ? 'bg-violet-50 dark:bg-violet-950/60 text-violet-600 dark:text-violet-300 border border-violet-200/60 dark:border-violet-800/50'
                         : 'text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800'
@@ -165,7 +165,7 @@ export const Navbar: React.FC = () => {
               setMobileMenuOpen(false);
               openFeedbackModal();
             }}
-            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-semibold text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors text-left"
+            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors text-left"
           >
             <MessageSquare className="w-4 h-4 text-violet-500" />
             <span>Send Feedback</span>
@@ -175,7 +175,7 @@ export const Navbar: React.FC = () => {
             <Link
               href="/login"
               onClick={() => setMobileMenuOpen(false)}
-              className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-semibold bg-violet-600 text-white hover:bg-violet-700 transition-colors text-left"
+              className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold bg-violet-600 text-white hover:bg-violet-700 transition-colors text-left"
             >
               <LogIn className="w-4 h-4" />
               <span>Sign In with Google</span>
@@ -190,7 +190,7 @@ export const Navbar: React.FC = () => {
                   setMobileMenuOpen(false);
                   signOut();
                 }}
-                className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs font-semibold text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40 transition-colors"
+                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40 transition-colors"
               >
                 <LogOut className="w-4 h-4" />
                 <span>Sign Out</span>

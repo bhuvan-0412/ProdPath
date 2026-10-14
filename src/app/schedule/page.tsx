@@ -81,7 +81,7 @@ export default function SchedulePage() {
               {/* Timeline Node Point */}
               <button
                 onClick={() => handleToggleScheduleItem(item)}
-                className={`absolute -left-[21px] sm:-left-[27px] mt-3.5 w-4 h-4 rounded-full border-2 transition-all shadow-xs z-10 flex items-center justify-center ${
+                className={`absolute -left-[21px] sm:-left-[27px] mt-3.5 w-4 h-4 rounded-full border-2 transition-all shadow-xs z-10 flex items-center justify-center after:absolute after:-inset-3 after:content-[''] ${
                   isDone
                     ? 'bg-violet-600 border-violet-600 text-white scale-110'
                     : 'border-zinc-400 dark:border-zinc-600 bg-white dark:bg-[#0a0a0f] hover:border-violet-500'
@@ -99,12 +99,12 @@ export default function SchedulePage() {
                       <CheckCircle2 className="w-3.5 h-3.5" />
                       <span>Completed</span>
                     </div>
-                    <div className="text-[11px] text-zinc-500 dark:text-zinc-400 font-medium">
+                    <div className="text-xs sm:text-[11px] text-zinc-500 dark:text-zinc-400 font-medium">
                       {dateStr}
                     </div>
                   </>
                 ) : (
-                  <div className="text-[11px] text-zinc-400 dark:text-zinc-500 font-medium">
+                  <div className="text-xs sm:text-[11px] text-zinc-400 dark:text-zinc-500 font-medium">
                     Not started yet
                   </div>
                 )}
@@ -119,11 +119,11 @@ export default function SchedulePage() {
                 }`}
               >
                 <div className="flex items-center justify-between gap-2 flex-wrap">
-                  <span className="font-mono text-[10px] font-semibold uppercase text-violet-600 dark:text-violet-400 px-2 py-0.5 rounded-md bg-violet-50 dark:bg-violet-950/60 border border-violet-200/50 dark:border-violet-800/40">
+                  <span className="font-mono text-xs sm:text-[10px] font-semibold uppercase text-violet-600 dark:text-violet-400 px-2 py-0.5 rounded-md bg-violet-50 dark:bg-violet-950/60 border border-violet-200/50 dark:border-violet-800/40">
                     {item.week} {item.day ? `• Day ${item.day}` : ''}
                   </span>
 
-                  <span className="inline-flex items-center gap-1 font-mono text-[10px] font-semibold px-2.5 py-0.5 rounded-md bg-violet-50 dark:bg-violet-950/60 text-violet-600 dark:text-violet-300 border border-violet-200/60 dark:border-violet-800/50">
+                  <span className="inline-flex items-center gap-1 font-mono text-xs sm:text-[10px] font-semibold px-2.5 py-0.5 rounded-md bg-violet-50 dark:bg-violet-950/60 text-violet-600 dark:text-violet-300 border border-violet-200/60 dark:border-violet-800/50">
                     <BookOpen className="w-3 h-3" />
                     Resources
                   </span>

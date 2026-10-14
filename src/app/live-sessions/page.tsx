@@ -32,7 +32,7 @@ export default function LiveSessionsPage() {
         {/* Live Session Progress Counter Badge */}
         <div className="bg-white dark:bg-[#12121a] p-4 rounded-2xl border border-zinc-200 dark:border-zinc-800 shadow-xs min-w-[240px] space-y-2">
           <div className="flex items-center justify-between text-xs font-semibold">
-            <span className="text-zinc-600 dark:text-zinc-300 flex items-center gap-1.5 font-mono text-[11px]">
+            <span className="text-zinc-600 dark:text-zinc-300 flex items-center gap-1.5 font-mono text-xs sm:text-[11px]">
               <Tv className="w-3.5 h-3.5 text-violet-500" />
               Live Sessions
             </span>
@@ -41,7 +41,7 @@ export default function LiveSessionsPage() {
             </span>
           </div>
           <ProgressBar percentage={stats.percentage} showLabel={false} size="sm" />
-          <div className="text-[11px] font-mono text-zinc-500 dark:text-zinc-400 text-right">
+          <div className="text-xs sm:text-[11px] font-mono text-zinc-500 dark:text-zinc-400 text-right">
             {stats.percentage}% Complete
           </div>
         </div>
@@ -83,7 +83,7 @@ export default function LiveSessionsPage() {
                 {/* Checkbox */}
                 <button
                   onClick={() => toggleCompleted(itemId)}
-                  className={`flex-shrink-0 mt-1 sm:mt-0 w-5 h-5 rounded-lg border transition-all duration-200 flex items-center justify-center ${
+                  className={`relative flex-shrink-0 mt-1 sm:mt-0 w-5 h-5 rounded-lg border transition-all duration-200 flex items-center justify-center after:absolute after:-inset-2.5 after:content-[''] ${
                     completed
                       ? 'bg-violet-600 border-violet-600 text-white animate-pop shadow-xs'
                       : 'border-zinc-300 dark:border-zinc-700 hover:border-violet-500 dark:hover:border-violet-400 bg-zinc-50 dark:bg-zinc-900'
@@ -95,7 +95,7 @@ export default function LiveSessionsPage() {
 
                 {/* Session Details */}
                 <div className="flex-1 min-w-0 space-y-1">
-                  <div className="flex items-center gap-2 flex-wrap font-mono text-[10px]">
+                  <div className="flex items-center gap-2 flex-wrap font-mono text-xs sm:text-[10px]">
                     <span className="font-semibold px-2.5 py-0.5 rounded-md bg-violet-50 dark:bg-violet-950/60 text-violet-600 dark:text-violet-300 border border-violet-200/60 dark:border-violet-800/50 uppercase">
                       Session {session.sessionNumber}
                     </span>
@@ -124,7 +124,7 @@ export default function LiveSessionsPage() {
                   href={session.videoUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-violet-600 hover:bg-violet-700 text-white text-xs font-bold transition-all shadow-xs active:scale-95"
+                  className="inline-flex items-center gap-2 min-h-11 sm:min-h-0 px-4 py-2.5 rounded-xl bg-violet-600 hover:bg-violet-700 text-white text-xs font-bold transition-all shadow-xs active:scale-95"
                 >
                   <Video className="w-3.5 h-3.5" />
                   <span>Watch</span>

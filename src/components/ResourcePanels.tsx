@@ -55,10 +55,10 @@ export const NotesPanel: React.FC<NotesPanelProps> = ({ resourceId, onClose }) =
         maxLength={MAX_NOTE_LENGTH}
         rows={4}
         placeholder="Jot down your key points from this resource..."
-        className="w-full resize-y rounded-lg border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-900 px-3 py-2 text-xs text-zinc-800 dark:text-zinc-200 placeholder:text-zinc-400 dark:placeholder:text-zinc-500 leading-relaxed focus:outline-none focus:ring-2 focus:ring-violet-500/40 focus:border-violet-500/60"
+        className="w-full resize-y rounded-lg border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-900 px-3 py-2 text-base sm:text-xs text-zinc-800 dark:text-zinc-200 placeholder:text-zinc-400 dark:placeholder:text-zinc-500 leading-relaxed focus:outline-none focus:ring-2 focus:ring-violet-500/40 focus:border-violet-500/60"
       />
       <div className="flex items-center justify-between gap-2">
-        <span className="text-[10px] font-mono text-zinc-400 dark:text-zinc-500">
+        <span className="text-xs sm:text-[10px] font-mono text-zinc-400 dark:text-zinc-500">
           {status === 'error' ? (
             <span className="text-rose-600 dark:text-rose-400">Couldn&apos;t save. Please try again.</span>
           ) : status === 'saved' && !isDirty ? (
@@ -66,14 +66,14 @@ export const NotesPanel: React.FC<NotesPanelProps> = ({ resourceId, onClose }) =
               <Check className="w-3 h-3" /> Saved
             </span>
           ) : (
-            'Ctrl + Enter to save'
+            <span className="hidden sm:inline">Ctrl + Enter to save</span>
           )}
         </span>
         <div className="flex items-center gap-2">
           <button
             type="button"
             onClick={onClose}
-            className="px-3 py-1.5 rounded-lg text-xs font-semibold text-zinc-600 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+            className="min-h-10 sm:min-h-0 px-4 sm:px-3 py-1.5 rounded-lg text-xs font-semibold text-zinc-600 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
           >
             Close
           </button>
@@ -81,7 +81,7 @@ export const NotesPanel: React.FC<NotesPanelProps> = ({ resourceId, onClose }) =
             type="button"
             onClick={handleSave}
             disabled={!isDirty || status === 'saving'}
-            className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-violet-600 text-white hover:bg-violet-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+            className="min-h-10 sm:min-h-0 px-5 sm:px-3 py-1.5 rounded-lg text-xs font-semibold bg-violet-600 text-white hover:bg-violet-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
           >
             {status === 'saving' ? 'Saving...' : 'Save'}
           </button>
@@ -102,14 +102,14 @@ export const TaskHeader: React.FC<TaskHeaderProps> = ({ label, summary }) => {
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between gap-2">
-        <span className="text-[10px] font-mono font-semibold uppercase text-zinc-400 dark:text-zinc-500 block">
+        <span className="text-xs sm:text-[10px] font-mono font-semibold uppercase text-zinc-400 dark:text-zinc-500 block">
           {label}
         </span>
         {summary && (
           <button
             type="button"
             onClick={() => setOpen((current) => !current)}
-            className={`inline-flex items-center gap-1 px-2 py-1 rounded-lg text-[10px] font-mono font-semibold transition-colors ${
+            className={`inline-flex items-center gap-1.5 min-h-10 px-3 sm:min-h-0 sm:gap-1 sm:px-2 sm:py-1 rounded-lg text-xs sm:text-[10px] font-mono font-semibold transition-colors ${
               open
                 ? 'text-violet-600 dark:text-violet-400 bg-violet-50 dark:bg-violet-950/50'
                 : 'text-zinc-400 hover:text-violet-600 dark:hover:text-violet-400 hover:bg-violet-50 dark:hover:bg-violet-950/50'
@@ -138,7 +138,7 @@ interface SummaryPanelProps {
 
 export const SummaryPanel: React.FC<SummaryPanelProps> = ({ points }) => (
   <div className="space-y-2">
-    <span className="inline-flex items-center gap-1.5 text-[10px] font-mono font-bold uppercase tracking-wider text-violet-600 dark:text-violet-400">
+    <span className="inline-flex items-center gap-1.5 text-xs sm:text-[10px] font-mono font-bold uppercase tracking-wider text-violet-600 dark:text-violet-400">
       <WandSparkles className="w-3 h-3" />
       AI Summary
     </span>

@@ -47,7 +47,7 @@ export default function LoginPage() {
         </Link>
 
         {/* Login Card */}
-        <div className="bg-white/80 dark:bg-zinc-900/90 backdrop-blur-xl border border-zinc-200/80 dark:border-zinc-800 rounded-3xl p-8 shadow-xl shadow-indigo-500/5">
+        <div className="bg-white/95 dark:bg-zinc-900/95 md:bg-white/80 md:dark:bg-zinc-900/90 md:backdrop-blur-xl border border-zinc-200/80 dark:border-zinc-800 rounded-3xl p-8 shadow-xl shadow-indigo-500/5">
           <div className="text-center mb-8">
             <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-violet-600 to-indigo-500 flex items-center justify-center text-white shadow-lg shadow-violet-500/30 mx-auto mb-4">
               <Compass className="w-6 h-6 stroke-[2.2]" />
@@ -95,7 +95,7 @@ export default function LoginPage() {
             </button>
           </div>
 
-          <p className="text-[11px] text-zinc-400 dark:text-zinc-500 text-center mt-6">
+          <p className="text-xs sm:text-[11px] text-zinc-400 dark:text-zinc-500 text-center mt-6">
             By signing in, you accept our standard terms and privacy defaults.
           </p>
         </div>

@@ -215,7 +215,7 @@ export default function LandingPage() {
 
         {/* Mockup Container */}
         <div className="relative overflow-hidden rounded-3xl bg-white dark:bg-[#12121a] border border-zinc-200 dark:border-zinc-800 shadow-xl p-6 sm:p-8 space-y-6">
-          <div className="absolute top-3 right-4 flex items-center gap-1.5 px-3 py-1 rounded-full bg-violet-500/10 border border-violet-500/20 text-violet-600 dark:text-violet-300 text-[11px] font-mono">
+          <div className="absolute top-3 right-4 flex items-center gap-1.5 px-3 py-1 rounded-full bg-violet-500/10 border border-violet-500/20 text-violet-600 dark:text-violet-300 text-xs sm:text-[11px] font-mono">
             <Lock className="w-3 h-3" />
             <span>Interactive view unlocks on login</span>
           </div>
@@ -223,53 +223,53 @@ export default function LandingPage() {
           {/* Sample Week Tabs Mock */}
           <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 pt-4">
             <div className="p-3.5 rounded-2xl bg-violet-50 dark:bg-violet-950/60 border border-violet-300 dark:border-violet-800/80 shadow-xs">
-              <span className="text-[10px] font-mono font-bold uppercase text-violet-600 dark:text-violet-300">
+              <span className="text-xs sm:text-[10px] font-mono font-bold uppercase text-violet-600 dark:text-violet-300">
                 Week 1
               </span>
               <h4 className="font-bold text-xs text-zinc-900 dark:text-zinc-100 mt-1 truncate">
                 PM Foundations
               </h4>
-              <span className="text-[10px] font-mono text-zinc-400 block mt-2">7 Topics</span>
+              <span className="text-xs sm:text-[10px] font-mono text-zinc-400 block mt-2">7 Topics</span>
             </div>
 
             <div className="p-3.5 rounded-2xl bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800 opacity-80">
-              <span className="text-[10px] font-mono font-bold uppercase text-zinc-500">
+              <span className="text-xs sm:text-[10px] font-mono font-bold uppercase text-zinc-500">
                 Week 2
               </span>
               <h4 className="font-bold text-xs text-zinc-700 dark:text-zinc-300 mt-1 truncate">
                 Product Sense &amp; Strategy
               </h4>
-              <span className="text-[10px] font-mono text-zinc-400 block mt-2">6 Topics</span>
+              <span className="text-xs sm:text-[10px] font-mono text-zinc-400 block mt-2">6 Topics</span>
             </div>
 
             <div className="p-3.5 rounded-2xl bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800 opacity-80">
-              <span className="text-[10px] font-mono font-bold uppercase text-zinc-500">
+              <span className="text-xs sm:text-[10px] font-mono font-bold uppercase text-zinc-500">
                 Week 3
               </span>
               <h4 className="font-bold text-xs text-zinc-700 dark:text-zinc-300 mt-1 truncate">
                 Metrics &amp; System Design
               </h4>
-              <span className="text-[10px] font-mono text-zinc-400 block mt-2">8 Topics</span>
+              <span className="text-xs sm:text-[10px] font-mono text-zinc-400 block mt-2">8 Topics</span>
             </div>
 
             <div className="p-3.5 rounded-2xl bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800 opacity-80">
-              <span className="text-[10px] font-mono font-bold uppercase text-zinc-500">
+              <span className="text-xs sm:text-[10px] font-mono font-bold uppercase text-zinc-500">
                 Week 4
               </span>
               <h4 className="font-bold text-xs text-zinc-700 dark:text-zinc-300 mt-1 truncate">
                 Execution &amp; Teardowns
               </h4>
-              <span className="text-[10px] font-mono text-zinc-400 block mt-2">5 Topics</span>
+              <span className="text-xs sm:text-[10px] font-mono text-zinc-400 block mt-2">5 Topics</span>
             </div>
 
             <div className="p-3.5 rounded-2xl bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800 opacity-80 col-span-2 sm:col-span-1">
-              <span className="text-[10px] font-mono font-bold uppercase text-zinc-500">
+              <span className="text-xs sm:text-[10px] font-mono font-bold uppercase text-zinc-500">
                 Week 5
               </span>
               <h4 className="font-bold text-xs text-zinc-700 dark:text-zinc-300 mt-1 truncate">
                 Leadership &amp; Career
               </h4>
-              <span className="text-[10px] font-mono text-zinc-400 block mt-2">6 Topics</span>
+              <span className="text-xs sm:text-[10px] font-mono text-zinc-400 block mt-2">6 Topics</span>
             </div>
           </div>
 
@@ -294,10 +294,10 @@ export default function LandingPage() {
                     <h5 className="font-bold text-xs text-zinc-900 dark:text-zinc-100">
                       What is Product Management &amp; Roles of a PM
                     </h5>
-                    <span className="text-[10px] font-mono text-zinc-400">Article &bull; IBM PM Guide</span>
+                    <span className="text-xs sm:text-[10px] font-mono text-zinc-400">Article &bull; IBM PM Guide</span>
                   </div>
                 </div>
-                <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-zinc-100 dark:bg-zinc-800 text-zinc-500">
+                <span className="px-2 py-0.5 rounded text-xs sm:text-[10px] font-mono bg-zinc-100 dark:bg-zinc-800 text-zinc-500">
                   Preview
                 </span>
               </div>
@@ -311,10 +311,10 @@ export default function LandingPage() {
                     <h5 className="font-bold text-xs text-zinc-900 dark:text-zinc-100">
                       Product Sense: Building Intuition Over Time
                     </h5>
-                    <span className="text-[10px] font-mono text-zinc-400">Video &bull; Lenny&apos;s Newsletter</span>
+                    <span className="text-xs sm:text-[10px] font-mono text-zinc-400">Video &bull; Lenny&apos;s Newsletter</span>
                   </div>
                 </div>
-                <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-zinc-100 dark:bg-zinc-800 text-zinc-500">
+                <span className="px-2 py-0.5 rounded text-xs sm:text-[10px] font-mono bg-zinc-100 dark:bg-zinc-800 text-zinc-500">
                   Preview
                 </span>
               </div>

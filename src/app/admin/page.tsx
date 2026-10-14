@@ -235,7 +235,7 @@ export default function AdminPage() {
           <p className="text-3xl font-extrabold text-zinc-900 dark:text-white">
             {loadingStats ? '...' : usersList.length}
           </p>
-          <p className="text-[11px] text-zinc-400 mt-1">Google OAuth authenticated</p>
+          <p className="text-xs sm:text-[11px] text-zinc-400 mt-1">Google OAuth authenticated</p>
         </div>
 
         <div className="bg-white/80 dark:bg-zinc-900/90 backdrop-blur-xl border border-zinc-200/80 dark:border-zinc-800 rounded-3xl p-6 shadow-sm">
@@ -250,7 +250,7 @@ export default function AdminPage() {
           <p className="text-3xl font-extrabold text-zinc-900 dark:text-white">
             {loadingStats ? '...' : optedInCount}
           </p>
-          <p className="text-[11px] text-zinc-400 mt-1">
+          <p className="text-xs sm:text-[11px] text-zinc-400 mt-1">
             {usersList.length > 0 ? Math.round((optedInCount / usersList.length) * 100) : 0}% opt-in rate
           </p>
         </div>
@@ -271,7 +271,7 @@ export default function AdminPage() {
               ? Math.round(usersList.reduce((acc, u) => acc + u.completion_percentage, 0) / usersList.length) + '%'
               : '0%'}
           </p>
-          <p className="text-[11px] text-zinc-400 mt-1">Across all registered accounts</p>
+          <p className="text-xs sm:text-[11px] text-zinc-400 mt-1">Across all registered accounts</p>
         </div>
       </div>
 
@@ -287,7 +287,7 @@ export default function AdminPage() {
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
               <thead>
-                <tr className="border-b border-zinc-200 dark:border-zinc-800 text-zinc-400 uppercase font-semibold text-[10px]">
+                <tr className="border-b border-zinc-200 dark:border-zinc-800 text-zinc-400 uppercase font-semibold text-xs sm:text-[10px]">
                   <th className="pb-3 px-2">User</th>
                   <th className="pb-3 px-2">Joined</th>
                   <th className="pb-3 px-2">Progress</th>
@@ -313,7 +313,7 @@ export default function AdminPage() {
                             </span>
                           )}
                         </div>
-                        <div className="text-[11px] text-zinc-400 font-mono">{u.email}</div>
+                        <div className="text-xs sm:text-[11px] text-zinc-400 font-mono">{u.email}</div>
                       </td>
                       <td className="py-3 px-2 text-zinc-500 whitespace-nowrap">
                         {new Date(u.created_at).toLocaleDateString('en-GB', {
@@ -337,11 +337,11 @@ export default function AdminPage() {
                       </td>
                       <td className="py-3 px-2 text-right whitespace-nowrap">
                         {u.marketing_opt_in ? (
-                          <span className="px-2.5 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 text-[10px] font-bold">
+                          <span className="px-2.5 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 text-xs sm:text-[10px] font-bold">
                             Opted In
                           </span>
                         ) : (
-                          <span className="px-2.5 py-1 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-400 text-[10px] font-medium">
+                          <span className="px-2.5 py-1 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-400 text-xs sm:text-[10px] font-medium">
                             Opted Out
                           </span>
                         )}
@@ -385,7 +385,7 @@ export default function AdminPage() {
                 value={emailSubject}
                 onChange={(e) => setEmailSubject(e.target.value)}
                 placeholder="e.g. New Product Management Case Studies Available!"
-                className="w-full px-3.5 py-2.5 rounded-xl text-xs bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-violet-500"
+                className="w-full px-3.5 py-2.5 rounded-xl text-base sm:text-xs bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-violet-500"
               />
             </div>
 
@@ -399,7 +399,7 @@ export default function AdminPage() {
                 value={emailMessage}
                 onChange={(e) => setEmailMessage(e.target.value)}
                 placeholder="Write your broadcast update message here..."
-                className="w-full px-3.5 py-2.5 rounded-xl text-xs bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-violet-500 resize-none flex-1"
+                className="w-full px-3.5 py-2.5 rounded-xl text-base sm:text-xs bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-violet-500 resize-none flex-1"
               />
             </div>
 

@@ -141,9 +141,9 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose })
                 placeholder="Tell me what's working, what's not, or what you'd like to see"
                 maxLength={maxChars}
                 disabled={isSubmitting}
-                className="w-full px-4 py-3 rounded-2xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-sm text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500 transition-all resize-none disabled:opacity-50"
+                className="w-full px-4 py-3 rounded-2xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-base sm:text-sm text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500 transition-all resize-none disabled:opacity-50"
               />
-              <div className="flex justify-between items-center text-[10px] font-mono text-zinc-400 px-1">
+              <div className="flex justify-between items-center text-xs sm:text-[10px] font-mono text-zinc-400 px-1">
                 <span>Min {minChars} characters</span>
                 <span className={charCount > maxChars ? 'text-rose-500 font-bold' : ''}>
                   {charCount} / {maxChars}

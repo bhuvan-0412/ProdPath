@@ -24,7 +24,7 @@ export const Footer: React.FC = () => {
             </p>
             <button
               onClick={openFeedbackModal}
-              className="hover:underline text-violet-600 dark:text-violet-400 text-xs font-semibold inline-flex items-center gap-1.5 transition-colors"
+              className="hover:underline text-violet-600 dark:text-violet-400 text-xs font-semibold inline-flex items-center gap-1.5 transition-colors min-h-10 sm:min-h-0"
             >
               <MessageSquare className="w-3.5 h-3.5" />
               <span>Send Feedback</span>
@@ -40,7 +40,7 @@ export const Footer: React.FC = () => {
               <li>
                 <a
                   href="mailto:thotabhuvan@gmail.com"
-                  className="inline-flex items-center gap-2 hover:text-violet-600 dark:hover:text-violet-300 transition-colors group"
+                  className="inline-flex items-center gap-2 min-h-10 sm:min-h-0 hover:text-violet-600 dark:hover:text-violet-300 transition-colors group"
                 >
                   <Mail className="w-3.5 h-3.5 text-violet-500 flex-shrink-0 group-hover:scale-110 transition-transform" />
                   <span className="hover:underline">thotabhuvan@gmail.com</span>
@@ -60,7 +60,7 @@ export const Footer: React.FC = () => {
                 href="https://product-matters.ecelliitg.in/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:underline text-violet-600 dark:text-violet-400 font-semibold inline-flex items-center gap-1"
+                className="hover:underline text-violet-600 dark:text-violet-400 font-semibold inline-flex items-center gap-1 py-2 sm:py-0"
               >
                 <span>Product Matters by E-Cell IIT Guwahati</span>
                 <ExternalLink className="w-3 h-3 inline" />
@@ -70,7 +70,7 @@ export const Footer: React.FC = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-zinc-200/60 dark:border-zinc-800/60 pt-6 text-center sm:text-left text-[11px] font-mono text-zinc-400">
+        <div className="border-t border-zinc-200/60 dark:border-zinc-800/60 pt-6 text-center sm:text-left text-xs sm:text-[11px] font-mono text-zinc-400">
           <span>&copy; {new Date().getFullYear()} ProdPath. All rights reserved.</span>
         </div>
       </div>

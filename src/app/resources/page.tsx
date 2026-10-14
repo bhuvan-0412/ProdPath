@@ -104,7 +104,7 @@ function ResourcesContent() {
             placeholder="Search case studies by title, summary, or takeaway (e.g. First Principles, Growth, Strategy)..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 rounded-xl text-sm bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-violet-500 transition-all"
+            className="w-full pl-10 pr-4 py-2.5 rounded-xl text-base sm:text-sm bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-violet-500 transition-all"
           />
         </div>
 
@@ -119,7 +119,7 @@ function ResourcesContent() {
           <select
             value={selectedWeek}
             onChange={(e) => setSelectedWeek(e.target.value)}
-            className="px-3 py-1.5 rounded-lg bg-zinc-100 dark:bg-zinc-900 text-zinc-700 dark:text-zinc-200 border border-zinc-200 dark:border-zinc-800 font-medium focus:outline-none focus:ring-1 focus:ring-violet-500"
+            className="min-h-10 sm:min-h-0 px-3 py-1.5 rounded-lg text-base sm:text-xs bg-zinc-100 dark:bg-zinc-900 text-zinc-700 dark:text-zinc-200 border border-zinc-200 dark:border-zinc-800 font-medium focus:outline-none focus:ring-1 focus:ring-violet-500"
           >
             <option value="all">All Weeks</option>
             <option value="week-1">Week 1 (PM Foundations)</option>
@@ -133,7 +133,7 @@ function ResourcesContent() {
           <select
             value={selectedStatus}
             onChange={(e) => setSelectedStatus(e.target.value)}
-            className="px-3 py-1.5 rounded-lg bg-zinc-100 dark:bg-zinc-900 text-zinc-700 dark:text-zinc-200 border border-zinc-200 dark:border-zinc-800 font-medium focus:outline-none focus:ring-1 focus:ring-violet-500"
+            className="min-h-10 sm:min-h-0 px-3 py-1.5 rounded-lg text-base sm:text-xs bg-zinc-100 dark:bg-zinc-900 text-zinc-700 dark:text-zinc-200 border border-zinc-200 dark:border-zinc-800 font-medium focus:outline-none focus:ring-1 focus:ring-violet-500"
           >
             <option value="all">All Statuses</option>
             <option value="pending">Uncompleted</option>

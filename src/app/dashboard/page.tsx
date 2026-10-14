@@ -63,7 +63,7 @@ export default function DashboardPage() {
 
               {/* Overall Progress Widget */}
               <div className="pt-2">
-                <div className="bg-zinc-950/70 backdrop-blur-md rounded-2xl p-5 border border-violet-500/25 group-hover:border-violet-500/40 space-y-3 transition-colors">
+                <div className="bg-zinc-950/85 md:bg-zinc-950/70 md:backdrop-blur-md rounded-2xl p-5 border border-violet-500/25 group-hover:border-violet-500/40 space-y-3 transition-colors">
                   <div className="flex items-center justify-between">
                     <span className="text-xs uppercase font-mono font-bold tracking-wide text-violet-300 flex items-center gap-1.5">
                       <TrendingUp className="w-4 h-4 text-violet-400" />
@@ -112,7 +112,7 @@ export default function DashboardPage() {
             <Link
               href="/course"
               onClick={(e) => e.stopPropagation()}
-              className="text-xs font-semibold text-violet-600 dark:text-violet-400 hover:underline inline-flex items-center gap-1"
+              className="text-xs font-semibold text-violet-600 dark:text-violet-400 hover:underline inline-flex items-center gap-1 min-h-10 sm:min-h-0"
             >
               <span>View full curriculum</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -225,7 +225,7 @@ export default function DashboardPage() {
       <div className="flex justify-end pt-4">
         <button
           onClick={resetProgress}
-          className="inline-flex items-center gap-1.5 text-xs font-mono text-zinc-400 hover:text-rose-500 transition-colors px-3 py-1.5 rounded-lg hover:bg-rose-50 dark:hover:bg-rose-950/30"
+          className="inline-flex items-center gap-1.5 min-h-10 sm:min-h-0 text-xs font-mono text-zinc-400 hover:text-rose-500 transition-colors px-3 py-1.5 rounded-lg hover:bg-rose-50 dark:hover:bg-rose-950/30"
         >
           <RotateCcw className="w-3.5 h-3.5" />
           <span>Reset completion progress</span>
