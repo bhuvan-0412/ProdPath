@@ -31,10 +31,20 @@ create table if not exists public.custom_resources (
   created_at timestamptz default now()
 );
 
+create table if not exists public.resource_notes (
+  id uuid default gen_random_uuid() primary key,
+  user_id uuid references public.profiles(id) on delete cascade not null,
+  resource_id text not null,
+  content text not null,
+  updated_at timestamptz default now(),
+  unique(user_id, resource_id)
+);
+
 -- 2. Enable Row Level Security (RLS)
 alter table public.profiles enable row level security;
 alter table public.user_progress enable row level security;
 alter table public.custom_resources enable row level security;
+alter table public.resource_notes enable row level security;
 
 -- Helper function to check if executing user is admin safely
 create or replace function public.is_admin()
@@ -94,7 +104,24 @@ create policy "Users can delete own custom resources"
   on public.custom_resources for delete
   using (auth.uid() = user_id);
 
--- 6. Trigger to automatically create profile on Google / OAuth Sign Up
+-- 6. RLS Policies for Resource Notes
+create policy "Users can read own notes"
+  on public.resource_notes for select
+  using (auth.uid() = user_id);
+
+create policy "Users can insert own notes"
+  on public.resource_notes for insert
+  with check (auth.uid() = user_id);
+
+create policy "Users can update own notes"
+  on public.resource_notes for update
+  using (auth.uid() = user_id);
+
+create policy "Users can delete own notes"
+  on public.resource_notes for delete
+  using (auth.uid() = user_id);
+
+-- 7. Trigger to automatically create profile on Google / OAuth Sign Up
 create or replace function public.handle_new_user()
 returns trigger as $$
 begin

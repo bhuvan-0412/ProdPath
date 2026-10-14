@@ -1,0 +1,31 @@
+{
+  "summaries": {
+    "w3d5r1": [
+      "PMs get thousands of feedback items weekly from interviews, surveys, app reviews, sales calls, support tickets and social posts. Reading it all manually is impossible.",
+      "Amplitude AI Feedback (formerly Kraftful) connects all these sources in minutes, with no engineering help, and uses agentic AI to sort the unstructured text into product categories.",
+      "It surfaces top complaints and top feature requests with counts (e.g. 96 users asking for more reliable notifications), plus deep dives into sub-themes and the original comments.",
+      "Insights turn into action: build a cohort of users who made a request, watch their session replays, or survey them to learn more.",
+      "The same insights help marketing (customers' own words for positioning) and support (common complaints to fix head-on)."
+    ],
+    "w3d5r2": [
+      "Mixpanel is event-centric: every user action is an event with a time, a user, and custom properties (e.g. video category, minutes watched); user profiles add descriptive properties.",
+      "Dashboards show top-line KPIs, and global filters (e.g. mobile vs web) let you slice every metric instantly, with no SQL or data team needed.",
+      "Insights report: pick an event, choose a counting method (totals vs uniques), add first-time and inline filters, compare to prior periods, and break down by properties like UTM source.",
+      "Funnels measure step-by-step conversion (e.g. app open → watch video → purchase), with views for conversion over time, time to convert, and frequency.",
+      "Flows map the unknown paths users take to a milestone; Retention shows when users drop off (e.g. below 50% around day 24–26)."
+    ],
+    "w3d5r3": [
+      "Spark is Mixpanel's generative-AI feature: you ask questions about your data in plain English and get a ready-made report.",
+      "Product example: \"What do users do after logging in on iOS?\" returns a Flows report; asking for login → search → view item → add to cart → checkout returns a funnel with drop-off per step.",
+      "Marketing example: rank campaigns by revenue contribution, then ask for return on ad spend (ROAS) per campaign.",
+      "Key principle: AI output can be verified. You can open any generated report to check its events, formulas and breakdowns, and edit it manually or by asking Spark (e.g. switch last-touch to first-touch attribution)."
+    ],
+    "w3d5r5": [
+      "ON DELETE SET NULL: when a referenced parent row is deleted, the foreign key in the child table becomes NULL. ON DELETE CASCADE deletes the whole child row instead.",
+      "Add these to existing tables by dropping the old foreign key constraint and re-adding it with ALTER TABLE ... ADD CONSTRAINT ... ON DELETE ....",
+      "Stored procedures save reusable SQL: CREATE PROCEDURE name(params) BEGIN ... END, run it with CALL name(...). Change the DELIMITER temporarily while creating one. Procedures can take parameters (e.g. IN id INT).",
+      "Stored procedure trade-offs: less network traffic, better performance and permission-based security, but more memory per connection.",
+      "Triggers run automatically BEFORE/AFTER an INSERT, UPDATE or DELETE, FOR EACH ROW. Use NEW.col and OLD.col, e.g. auto-calculate salary from hourly pay, or keep an expenses total in sync."
+    ]
+  }
+}

@@ -29,6 +29,9 @@ interface ProgressContextType {
   completedIds: Set<string>;
   completedDates: Record<string, string>;
   customResources: Resource[];
+  notes: Record<string, string>;
+  getNote: (resourceId: string) => string;
+  saveNote: (resourceId: string, content: string) => Promise<boolean>;
   toggleCompleted: (id: string) => Promise<void>;
   isCompleted: (id: string) => boolean;
   getCompletionDate: (id: string) => string | null;
@@ -110,6 +113,7 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const [completedIds, setCompletedIds] = useState<Set<string>>(new Set());
   const [completedDates, setCompletedDates] = useState<Record<string, string>>({});
   const [customResources, setCustomResources] = useState<Resource[]>([]);
+  const [notes, setNotes] = useState<Record<string, string>>({});
   const [isLoaded, setIsLoaded] = useState(false);
 
   // Modals state
@@ -174,6 +178,20 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         }));
         setCustomResources(formattedCustom);
       }
+
+      // 4. Fetch Resource Notes
+      const { data: noteRows } = await supabase
+        .from('resource_notes')
+        .select('resource_id, content')
+        .eq('user_id', currUser.id);
+
+      if (noteRows) {
+        const fetchedNotes: Record<string, string> = {};
+        noteRows.forEach((n) => {
+          fetchedNotes[n.resource_id] = n.content;
+        });
+        setNotes(fetchedNotes);
+      }
     } catch (err) {
       console.error('Error fetching user data from Supabase:', err);
     }
@@ -204,6 +222,7 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
             setCompletedIds(new Set());
             setCompletedDates({});
             setCustomResources([]);
+            setNotes({});
           }
         }
       } catch (err) {
@@ -230,6 +249,7 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         setCompletedIds(new Set());
         setCompletedDates({});
         setCustomResources([]);
+        setNotes({});
       }
       setIsLoadingAuth(false);
     });
@@ -372,15 +392,70 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       delete next[id];
       return next;
     });
+    setNotes((prev) => {
+      const next = { ...prev };
+      delete next[id];
+      return next;
+    });
 
     if (user) {
       try {
         await supabase.from('custom_resources').delete().eq('id', id).eq('user_id', user.id);
         await supabase.from('user_progress').delete().eq('resource_id', id).eq('user_id', user.id);
+        await supabase.from('resource_notes').delete().eq('resource_id', id).eq('user_id', user.id);
       } catch (err) {
         console.error('Failed to delete custom resource from Supabase:', err);
       }
     }
+  };
+
+  const getNote = (resourceId: string) => notes[resourceId] || '';
+
+  // Saves a note; an empty note deletes it. Returns false if the cloud save failed.
+  const saveNote = async (resourceId: string, content: string): Promise<boolean> => {
+    const trimmed = content.trim();
+    const previous = notes[resourceId];
+
+    setNotes((prev) => {
+      const next = { ...prev };
+      if (trimmed) {
+        next[resourceId] = trimmed;
+      } else {
+        delete next[resourceId];
+      }
+      return next;
+    });
+
+    if (!user) return true;
+
+    const { error } = trimmed
+      ? await supabase.from('resource_notes').upsert({
+          user_id: user.id,
+          resource_id: resourceId,
+          content: trimmed,
+          updated_at: new Date().toISOString(),
+        }, { onConflict: 'user_id,resource_id' })
+      : await supabase
+          .from('resource_notes')
+          .delete()
+          .eq('user_id', user.id)
+          .eq('resource_id', resourceId);
+
+    if (error) {
+      console.error('Failed to save note to Supabase:', error);
+      // Roll back the optimistic update
+      setNotes((prev) => {
+        const next = { ...prev };
+        if (previous) {
+          next[resourceId] = previous;
+        } else {
+          delete next[resourceId];
+        }
+        return next;
+      });
+      return false;
+    }
+    return true;
   };
 
   const getWeekStats = (weekId: string) => {
@@ -452,6 +527,7 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     setCompletedIds(new Set());
     setCompletedDates({});
     setCustomResources([]);
+    setNotes({});
     if (typeof window !== 'undefined') {
       window.location.href = '/';
     }
@@ -467,6 +543,9 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         completedIds,
         completedDates,
         customResources,
+        notes,
+        getNote,
+        saveNote,
         toggleCompleted,
         isCompleted,
         getCompletionDate,

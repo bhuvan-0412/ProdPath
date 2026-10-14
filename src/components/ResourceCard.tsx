@@ -3,7 +3,11 @@
 import React, { useState } from 'react';
 import { Resource } from '@/types/curriculum';
 import { useProgress } from '@/context/ProgressContext';
-import { Video, FileText, ListVideo, ExternalLink, Check, Trash2, Sparkles, BookMarked, ChevronDown, ChevronUp } from 'lucide-react';
+import { NotesPanel, SummaryPanel } from '@/components/ResourcePanels';
+import summariesData from '@/data/summaries.json';
+import { Video, FileText, ListVideo, ExternalLink, Check, Trash2, Sparkles, BookMarked, ChevronDown, ChevronUp, PenLine, WandSparkles } from 'lucide-react';
+
+const summaries = summariesData.summaries as Record<string, string[]>;
 
 interface ResourceCardProps {
   resource: Resource;
@@ -16,9 +20,23 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({
   showWeekBadge = false,
   defaultExpandedTakeaways = false,
 }) => {
-  const { isCompleted, toggleCompleted, deleteCustomResource } = useProgress();
+  const { isCompleted, toggleCompleted, deleteCustomResource, getNote } = useProgress();
   const completed = isCompleted(resource.id);
   const [takeawaysExpanded, setTakeawaysExpanded] = useState(defaultExpandedTakeaways);
+  const [openPanel, setOpenPanel] = useState<'notes' | 'summary' | null>(null);
+  const hasNote = getNote(resource.id) !== '';
+  const summaryPoints = summaries[resource.id];
+
+  const togglePanel = (panel: 'notes' | 'summary') => {
+    setOpenPanel((current) => (current === panel ? null : panel));
+  };
+
+  const actionButtonClass = (active: boolean) =>
+    `relative p-1.5 rounded-lg transition-colors ${
+      active
+        ? 'text-violet-600 dark:text-violet-400 bg-violet-50 dark:bg-violet-950/50'
+        : 'text-zinc-400 hover:text-violet-600 dark:hover:text-violet-400 hover:bg-violet-50 dark:hover:bg-violet-950/50'
+    }`;
 
   const getIcon = () => {
     switch (resource.type) {
@@ -219,21 +237,68 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({
           )}
         </div>
 
-        {/* Delete button for custom additions */}
-        {resource.isCustom && (
+        {/* Actions: AI summary, notes, delete */}
+        <div className="flex items-center gap-0.5 self-start flex-shrink-0">
+          {summaryPoints && summaryPoints.length > 0 && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                togglePanel('summary');
+              }}
+              className={actionButtonClass(openPanel === 'summary')}
+              title="AI summary"
+              aria-label={`Show AI summary of "${resource.title}"`}
+              aria-expanded={openPanel === 'summary'}
+            >
+              <WandSparkles className="w-4 h-4" />
+            </button>
+          )}
+
           <button
             onClick={(e) => {
               e.stopPropagation();
-              deleteCustomResource(resource.id);
+              togglePanel('notes');
             }}
-            className="p-1.5 rounded-lg text-zinc-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/50 transition-colors self-start"
-            title="Delete custom resource"
-            aria-label="Delete resource"
+            className={actionButtonClass(openPanel === 'notes')}
+            title={hasNote ? 'View your notes' : 'Add notes'}
+            aria-label={`${hasNote ? 'View' : 'Add'} notes for "${resource.title}"`}
+            aria-expanded={openPanel === 'notes'}
           >
-            <Trash2 className="w-4 h-4" />
+            <PenLine className="w-4 h-4" />
+            {hasNote && (
+              <span className="absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-violet-500" aria-hidden="true" />
+            )}
           </button>
-        )}
+
+          {resource.isCustom && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                deleteCustomResource(resource.id);
+              }}
+              className="p-1.5 rounded-lg text-zinc-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/50 transition-colors"
+              title="Delete custom resource"
+              aria-label="Delete resource"
+            >
+              <Trash2 className="w-4 h-4" />
+            </button>
+          )}
+        </div>
       </div>
+
+      {/* Dropdown panel: stops clicks so parent click handlers (e.g. dashboard card) don't fire */}
+      {openPanel && (
+        <div
+          onClick={(e) => e.stopPropagation()}
+          className="pt-3 border-t border-zinc-100 dark:border-zinc-800/80 animate-fade-in cursor-auto"
+        >
+          {openPanel === 'notes' ? (
+            <NotesPanel resourceId={resource.id} onClose={() => setOpenPanel(null)} />
+          ) : (
+            summaryPoints && <SummaryPanel points={summaryPoints} />
+          )}
+        </div>
+      )}
     </div>
   );
 };
