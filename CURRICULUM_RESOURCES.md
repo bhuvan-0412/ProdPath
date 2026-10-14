@@ -172,7 +172,7 @@ https://product-matters.ecelliitg.in/
 ### Day 1: Introduction to Tech for PM
 
 #### Task 1
-* [Why is Tech important for PM](https://youtu.be/MUPJZZd7Sm0) *(Video)*
+* [Why is Tech important for PM](https://www.youtube.com/watch?v=ysBpePyeHkU) *(Video)*
 
 #### Task 2
 * [What is an API?](https://youtu.be/T5y0WKmKenQ) *(Video)*
@@ -329,7 +329,7 @@ https://product-matters.ecelliitg.in/
 * [The 6 Core Skills Every AI PM Needs](https://www.productmap.io/blog/ai-product-manager-skills) *(Article)*
 
 #### Task 3
-* [AI PM vs Traditional PM Comparison](https://theaiinternship.com/compare/ai-pm-vs-traditional-pm/) *(Article)*
+* [AI PM vs Traditional PM Comparison](https://www.productledalliance.com/think-like-an-ai-pm-what-ai-first-products-change-for-pms/) *(Article)*
 
 #### Task 4
 * [How to Become an AI Product Manager in 2026 (Ex-Google, Microsoft)](https://www.youtube.com/watch?v=JKaA6HcxyXU) *(Video)*

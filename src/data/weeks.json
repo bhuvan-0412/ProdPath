@@ -284,7 +284,7 @@
             {
               "label": "Task 1",
               "resources": [
-                { "id": "w3d1r1", "title": "Why is Tech important for PM", "url": "https://youtu.be/MUPJZZd7Sm0", "type": "video" }
+                { "id": "w3d1r1", "title": "Why is Tech important for PM", "url": "https://www.youtube.com/watch?v=ysBpePyeHkU", "type": "video" }
               ]
             },
             {
@@ -547,7 +547,7 @@
             {
               "label": "Task 3",
               "resources": [
-                { "id": "w5d1r3", "title": "AI PM vs Traditional PM Comparison", "url": "https://theaiinternship.com/compare/ai-pm-vs-traditional-pm/", "type": "article" }
+                { "id": "w5d1r3", "title": "AI PM vs Traditional PM Comparison", "url": "https://www.productledalliance.com/think-like-an-ai-pm-what-ai-first-products-change-for-pms/", "type": "article" }
               ]
             },
             {
