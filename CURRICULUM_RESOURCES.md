@@ -230,7 +230,7 @@ https://product-matters.ecelliitg.in/
 ### Day 5: AI Tools for Customer Insights & Data Analysis
 
 #### Task 1
-* [Kraftful for Customer Reviews](https://youtu.be/jmmP8rjFWk0) *(Video)*
+* [Amplitude AI Feedback (formerly Kraftful)](https://www.youtube.com/watch?v=nPQSqhdeZw4) *(Video)*
 
 #### Task 2
 * [Mixpanel](https://www.youtube.com/watch?v=c7SfDNFhD0E) *(Video)*
