@@ -7,7 +7,9 @@ import { useProgress } from '@/context/ProgressContext';
 import { ResourceCard } from '@/components/ResourceCard';
 import { ProgressBar } from '@/components/ProgressBar';
 import { AddResourceModal } from '@/components/AddResourceModal';
+import { TaskHeader } from '@/components/ResourcePanels';
 import weeksData from '@/data/weeks.json';
+import taskSummariesData from '@/data/taskSummaries.json';
 import continuedLearningData from '@/data/continuedLearning.json';
 import { Week } from '@/types/curriculum';
 import { Plus, Calendar, CheckCircle, Sparkles, ArrowRight, Bookmark, ExternalLink, Video, BookMarked } from 'lucide-react';
@@ -17,6 +19,11 @@ const getTaskDomId = (weekId: string, dayNum: number, taskLabel: string) => {
   const cleanLabel = taskLabel.toLowerCase().replace(/^task[\s-_]*/i, '').replace(/[^a-z0-9]+/g, '-') || taskLabel.toLowerCase().replace(/[^a-z0-9]+/g, '-');
   return `week-${n}-day-${dayNum}-task-${cleanLabel}`;
 };
+
+const taskSummaries = taskSummariesData.taskSummaries as Record<string, string>;
+
+const getTaskSummaryKey = (weekId: string, dayNum: number, taskLabel: string) =>
+  `${weekId}-d${dayNum}-${taskLabel.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}`;
 
 const getDayDomId = (weekId: string, dayNum: number) => {
   const n = weekId.replace('week-', '');
@@ -302,9 +309,10 @@ function CourseContent() {
                   id={getTaskDomId(activeWeek.id, day.day, task.label)}
                   className="space-y-2 scroll-mt-24"
                 >
-                  <span className="text-[10px] font-mono font-semibold uppercase text-zinc-400 dark:text-zinc-500 block">
-                    {task.label}
-                  </span>
+                  <TaskHeader
+                    label={task.label}
+                    summary={taskSummaries[getTaskSummaryKey(activeWeek.id, day.day, task.label)]}
+                  />
                   <div className="space-y-2">
                     {task.resources.map((res) => (
                       <ResourceCard

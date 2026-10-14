@@ -1,5 +1,557 @@
 {
   "summaries": {
+    "w1d1r1": [
+      "Product management guides a product through its whole lifecycle (research, planning, development, launch, support and optimization) to meet business goals and customer needs.",
+      "Product managers own the 'what' and 'why' (vision and strategy); project managers own the day-to-day 'how' and 'when' of delivery.",
+      "Core responsibilities: market and competitor research, defining a product vision and roadmap, coordinating cross-functional teams, and improving the product after launch using feedback and analytics.",
+      "PMs act as the bridge between business, engineering, design, marketing and sales, balancing budget, resources, release dates and stakeholder input.",
+      "Customer experience and product-market fit are the north star: build something that fills a real market gap and can evolve as the market changes."
+    ],
+    "w1d1r2": [
+      "Common myths: a PM is not a project manager, not a general manager, and not unrelated to technology. The 'mini-CEO' label really means a PM sits at the centre of business, technology and user experience.",
+      "In broad terms the PM does everything needed to ship a quality product: user and market research, business strategy and modelling, building a great user experience, getting it built technically, and taking it to market.",
+      "Step 1 is understanding the user (surveys, interviews, watching people use the product, analysing data) and the market, including what competitors offer. In B2B, knowing the competition can be the difference between winning and losing a sale.",
+      "Design the experience by prototyping, testing with real users and repeating until it fits. Then work with engineers to build and ship.",
+      "Building isn't the end: growth, sales collateral and even meeting key clients are part of the job. A PM must do all this without direct authority over anyone."
+    ],
+    "w1d1r3": [
+      "Hard skills: a problem-solving attitude, enough tech understanding to know how products and systems talk to each other, deep user understanding, and a good eye for UX.",
+      "Business sense matters: a product users love still gets shut down if it doesn't support the company's business model and P&L.",
+      "Be analytical and data-driven, reading usage data to understand why users stay or leave and what to build next.",
+      "Soft skills: lead without authority (nobody reports to you), communicate clearly (especially in writing), and take feedback without taking it personally.",
+      "Ruthless prioritization: you'll always have more ideas than capacity, so focus on the few that matter most."
+    ],
+    "w1d1r4": [
+      "PMs oversee the whole lifecycle of a product and work at the intersection of users (UX), business and technology. No coding is required.",
+      "Key responsibilities: empathy for users and advocating their needs, managing the build cycle (problem → ideas → experiments → launch), and bringing cross-functional teams together.",
+      "Entry-level titles to look for: Associate Product Manager (APM) or Product Associate. Mentorship mentioned in a job ad is a good sign for beginners.",
+      "Real job ads (HubSpot APM, TripAdvisor, Uber checkout) repeatedly ask for user empathy, cross-functional collaboration, problem solving, lifecycle ownership and metric tracking.",
+      "Roles vary in emphasis: some lean on UX, some on delivery, some on technical depth (e.g. platform/payments), so match ads to your background."
+    ],
+    "w1d1r5": [
+      "There's no typical PM day. Work shifts with the product stage: discovery (user interviews), definition (MVP planning with design), execution (building with engineers, A/B tests with data science).",
+      "Mornings: triage urgent emails and messages, then check product health dashboards (north star and supporting metrics) and flag anything trending the wrong way.",
+      "Daily engineering stand-up (scrum) to unblock the team, clarify requirements and share updates like a new PRD.",
+      "Usability sessions to test newly shipped features and catch bugs, plus 1:1s with marketing, ML and data science counterparts.",
+      "End of day: focused solo work such as writing PRDs, reviewing other teams' docs and sending leadership updates. Much of a PM's job is meetings that unblock others."
+    ],
+    "w1d2r1": [
+      "Product sense is the ability to understand what makes a product great and what users need, even when those needs aren't obvious.",
+      "It's a learnable skill, not an innate talent, and one of the core hard skills of a PM.",
+      "Build it through hands-on experience: use and test features, and note why some are more useful than others.",
+      "Study competitors from the user's point of view: which needs they meet that you don't, and vice versa.",
+      "Clearly define product goals and your ideal user so decisions stay aligned with the people you're building for."
+    ],
+    "w1d2r2": [
+      "Product sense = consistently building products that have the intended impact on users. It rests on empathy (finding real needs) and creativity (solving them well). It's learned, not innate.",
+      "Examples: the original iPhone (aesthetics matter), Gmail (storage, search, threading) and Superhuman (speed for busy professionals) all came from spotting unmet needs.",
+      "Practice 1: regularly watch real people use products (yours and others) to spot subtle functional, social and emotional needs.",
+      "Practice 2: deconstruct everyday products. Ask why they were designed the way they are and what trade-offs were made.",
+      "Practices 3–4: learn from great product thinkers, and stay curious about changes in technology and your domain that open up new solutions."
+    ],
+    "w1d2r3": [
+      "A product critique judges a product against what the user is trying to achieve, not personal taste or the designer's intent.",
+      "Start by asking who the product is for and what problem it solves, then walk through it as that user.",
+      "Look at it in stages: first impression, first use, and long-term use each reveal different problems.",
+      "Prioritize feedback in layers: first is it valuable (does it solve the problem?), then is it easy to use, then is it delightful. Leave visual polish for last.",
+      "Use outside signals such as app reviews and social media comments to check your view against real users."
+    ],
+    "w1d2r4": [
+      "Product Hunt is a community site that features new tech products every day, ranked by upvotes and comments.",
+      "Use it to build product sense: browse daily launches and ask what problem each solves, for whom, and why it might win or fail.",
+      "Launch pages show how makers pitch their product (taglines, positioning, first-user feedback), which is useful for learning GTM and messaging.",
+      "Comment threads show real early-adopter reactions, feature requests and objections."
+    ],
+    "w1d2r5": [
+      "First principles are basic truths that can't be broken down further. First-principles thinking means questioning every assumption instead of copying what others do.",
+      "Illustration: instead of seeing a motorboat, a tank and a bicycle, see their parts (motor, treads, skis, seat, handlebars) and recombine them into a snowmobile.",
+      "Step 1: clearly identify the problem (Einstein: spend most of your time understanding the problem).",
+      "Step 2: break it down to fundamentals, like a tree's trunk and branches before the leaves. Musk found battery materials cost about $80/kWh against $600/kWh battery packs.",
+      "Step 3: rebuild a new solution from those fundamentals, free of 'how it's always done' beliefs."
+    ],
+    "w1d2r6": [
+      "Musk contrasts reasoning by analogy (doing things because others did them, with small iterations) with reasoning from first principles.",
+      "First principles is a physics approach: boil things down to the most fundamental truths you're sure of, then reason up from there. It takes more mental effort.",
+      "Analogy-based thinking would have said nobody wants cars because horses work fine. Past constraints aren't laws.",
+      "Battery example: packs cost $600/kWh historically, but the raw materials (cobalt, nickel, aluminium, carbon, polymers, a steel can) cost about $80/kWh on the metals market, so the gap is a design and manufacturing problem to solve."
+    ],
+    "w1d2r7": [
+      "Maze exercise: most people trace the usual path, but nobody asks whether the maze is really two-dimensional. Hidden assumptions, not the problem itself, are what stop growth.",
+      "Most of life is reasoning by analogy ('this is how it's always been done'). First principles means boiling things down to fundamental truths and reasoning up from there, as Elon Musk describes.",
+      "Step 1: identify and define your current assumptions about your business and goals. Step 2: break the problem into its basic components (e.g. the commodity cost of each material in a product).",
+      "Step 3: create new solutions from those fundamentals. Musk's battery packs cost $600/kWh by analogy but their raw materials cost far less, which pointed to about $80/kWh.",
+      "Business example: a custom-product maker cut unit cost from about $13.50 to about $1.35 by questioning the assumption that it had to use the original material and local labour. The same thinking can turn dead inventory into a profit centre."
+    ],
+    "w1d2r8": [
+      "MECE (\"mee-see\") stands for Mutually Exclusive, Collectively Exhaustive: group information so buckets don't overlap and together cover everything.",
+      "Example: splitting people into under 60 and 60+ is MECE. Splitting into under 60 and 50–70 is not (overlap, and gaps).",
+      "Consultants (McKinsey and other MBB firms) use it to break complex client problems into parts that can be analyzed one by one. Frameworks like Porter's Five Forces and the 4Cs are built on it.",
+      "Three MECE tools: issue trees (break a problem into sub-issues), decision trees (map choices and outcomes) and hypothesis trees (test likely answers).",
+      "Classic issue tree: 'Restaurant not profitable' → increase revenue (more orders, higher prices) vs reduce costs (salaries, rent, raw materials), with each branch broken down further."
+    ],
+    "w1d2r9": [
+      "MECE means grouping ideas into buckets that are Mutually Exclusive (no overlap) and Collectively Exhaustive (nothing missing). It's expected in consulting case interviews.",
+      "Test: every item belongs to exactly one bucket, and the buckets cover all possibilities.",
+      "MECE frameworks include issue trees, decision trees and hypothesis trees, used to split big, messy problems into small, solvable ones.",
+      "Worked example: a profitability issue tree splits into revenue (number of orders × price) and costs (salary, rent, raw materials), then asks 'how?' at each level down to concrete actions."
+    ],
+    "w1d3r1": [
+      "The product life cycle runs from market introduction to removal from shelves, in four stages: introduction, growth, maturity, decline.",
+      "Introduction: heavy marketing spend to build awareness, low sales, little competition, and often losses.",
+      "Growth: sales and revenue climb, competitors enter, and marketing shifts from awareness to differentiation. The product gets refined using customer feedback.",
+      "Maturity: sales level off, the market saturates, and competition on price and features intensifies. Decline: sales fall due to competition or obsolescence.",
+      "The life cycle guides pricing, promotion, expansion and cost decisions, and products move through the stages at different speeds."
+    ],
+    "w1d3r3": [
+      "The product life cycle is how long a product stays on the market, from introduction until it's pulled. It's used to decide when to advertise more, cut prices, expand or redesign.",
+      "Introduction: build awareness and create demand. Sales are slow and most products fail here.",
+      "Growth: sales take off and competitors copy or improve the product, so branding, pricing and availability become critical.",
+      "Maturity: growth slows in a saturated market, production and marketing costs fall, and differentiation is key to holding share.",
+      "Decline: competition or new technology takes over (e.g. typewriters replaced by computers). Companies scale back, exit, or try to extend the mature stage."
+    ],
+    "w1d3r2": [
+      "Full cycle: R&D (costly, no sales, negative cash flow) → introduction → growth → maturity → decline.",
+      "Introduction: heavy promotion and negative cash flow. Penetration pricing or price skimming attracts early adopters.",
+      "Growth: sales rise fast, competitors appear, and cash flow usually turns positive. Maturity: demand stagnates but costs fall, so cash flow stays positive.",
+      "Decline: oversupply, new technology and changing tastes push sales down, ending in clearance pricing and discontinuation.",
+      "Extension strategies delay decline. Coca-Cola used line extensions (Diet Coke, Coke Zero, Cherry Coke, the short-lived Coca-Cola Life) and brand extensions. Apple keeps the iPhone growing with regular new models."
+    ],
+    "w1d4r1": [
+      "A user persona is a semi-fictional profile of a target user built from real research. Without one, teams end up designing for 'everyone', which means no one.",
+      "Step 1: research. Interview 10–20 users, run surveys and focus groups, and analyze reviews and forums. With no users yet, use market research.",
+      "Step 2: group users with similar needs and behaviors into a few distinct segments, one persona each.",
+      "Step 3: write the persona's background, goals, daily habits and frustrations (e.g. 'Design Lead Priya, 34, juggles reviews across projects, hates duplicate work').",
+      "Steps 4–5: bring it to life with a name, face and setting, share it with the team, and update it as you learn more."
+    ],
+    "w1d4r2": [
+      "A user persona (also called a buyer or customer persona) is a 1–2 page fictional character representing a target audience group.",
+      "Why: it builds empathy (users as people, not numbers), gives marketing a clear direction ('would our persona like this?'), and keeps teams consistent.",
+      "Include basic info (name, age, gender, location), deeper details (job, family), goals, pain points, behaviors, skills, and favourite channels and influences.",
+      "Add a realistic photo that fits the persona to make them feel human.",
+      "Base it on research and real data, not assumptions."
+    ],
+    "w1d4r3": [
+      "A user flow maps every step a user takes through your product to complete one specific task, from entry point to goal.",
+      "Start from the user's goal and context, and limit each flow to a single task so it stays readable.",
+      "Use consistent notation: circles for start and end, rectangles for screens or steps, diamonds for decisions, and arrows for movement in one main direction.",
+      "Include error states and alternative paths (wrong password, going back), not just the happy path.",
+      "Keep flows simple, share them with designers and engineers, and test them against how real users behave."
+    ],
+    "w1d4r4": [
+      "User flows show all the steps a user can take to complete a task, so designers can predict the path and fix problems early.",
+      "Notation: circles for start and end, rectangles for steps, diamonds for key decisions, solid lines for the preferred (forward) action, dotted lines for alternatives (like going back).",
+      "Login example: has an account? → enter email and password → do they match? → yes: into the app; no: 'forgot password?' → retry, or go to a separate password-recovery flow.",
+      "Separate sub-flows (registration, password recovery) are shown as their own circles."
+    ],
+    "w1d4r5": [
+      "A user flow diagram shows the path a user takes to reach a goal. It tells you which pages to design and improves your information architecture.",
+      "Five elements: start point (an app home, or any landing page for websites), end point, pages/screens, decision points (diamonds) and arrows.",
+      "Always make flows contextual: define upfront what the user wants to achieve (e.g. sign in to check bonus points).",
+      "Walkthrough in FigJam: home → sign in → enter credentials → valid? → new device? → extra security check. Invalid → error → retry or reset the password by email link.",
+      "Tip: solid lines for the primary path and dashed lines for alternatives keep the diagram readable."
+    ],
+    "w1d4r6": [
+      "A user journey visualizes the steps a user takes to reach a goal on a timeline, enriched with their thoughts and emotions.",
+      "Zomato example: hungry → open app → overwhelmed by options → pick a cuisine → confused between restaurants → choose a dish → pay (happy if there's an offer) → wait for delivery.",
+      "Plotting emotions at each step reveals pain points, here the confusion and overload when choosing what and where to order.",
+      "The PM's job is to spot these pain points in the journey and design solutions that make that moment easier."
+    ],
+    "w1d4r7": [
+      "A user flow covers the specific, step-by-step actions to complete one task (e.g. login with error paths), usually drawn as a flowchart.",
+      "A user journey map covers the overall experience across touchpoints and phases (e.g. discover → research → buy → support for a laptop), including pain points and opportunities.",
+      "Journey maps are high-level, cross-platform and experience/emotion-focused. User flows are detailed, interface-centric and action-focused.",
+      "Both focus on the user's goals and pain points and work as communication tools for stakeholders, designers and developers."
+    ],
+    "w1d4r8": [
+      "A user journey map shows a user's touchpoints, emotions and channels as they interact with a product. It helps find blind spots and prioritize features.",
+      "Journey vs flow: a flow covers interactions at one stage; a journey gives the bigger picture, including feelings and frustrations.",
+      "Start with a well-researched persona so you can predict expectations, goals and pain points.",
+      "Break the journey into phases and touchpoints (each touchpoint may contain a user flow, e.g. booking tickets online), and note emotions at each one.",
+      "Use storytelling: play out a realistic scenario in the user's shoes to find where frustration happens and what to optimize first."
+    ],
+    "w1d5r1": [
+      "A wireframe is a 2D blueprint of a digital product's interface: grayscale, no-frills and clearly not the final design. Its main goal is team alignment before coding starts.",
+      "PMs should understand wireframes to speak designers' language, influence without authority, and sketch their own ideas instead of describing them vaguely.",
+      "Low fidelity: rough sketches that capture the idea and flow. Mid fidelity: more concrete layouts, still grayscale. High fidelity: pixel-specific, with interactivity, menus, microcopy, images and colors.",
+      "Move to the next fidelity only after the previous one is approved, and really listen to feedback.",
+      "Tools: pen and paper, Figma (collaborative and cloud-based) and Balsamiq (an industry classic). A wireframe still needs the PM to explain the 'why' behind it."
+    ],
+    "w1d5r2": [
+      "Wireframes aren't a visual copy of the product. They communicate what the user should do to get value and whether that matches what the business needs.",
+      "Conceptual design: the mental model users expect (e.g. Uber uses a map because transport means moving between two places).",
+      "Information structure: the essential inputs users expect (e.g. every flight site asks from, to, date, passengers).",
+      "Functional layers: information design and interaction design, meaning what happens when users click, add to cart, and so on.",
+      "Worked example: a premium e-commerce app where the homepage is built around the main intent (easy product discovery), with promotions as a secondary intent."
+    ],
+    "w1d5r3": [
+      "A wireframe is a basic outline of a digital experience, used to visualize ideas, communicate clearly and iterate fast.",
+      "In Figma: create a design file, add a phone-sized frame (the 'paper'), and paste a reference screenshot (e.g. the YouTube app) resized to match.",
+      "You only need two tools, rectangles and text. Start with the biggest element (the thumbnail), then add the timestamp, avatar (ellipse, with Shift for a perfect circle), title and icons.",
+      "Write real copy instead of Lorem Ipsum to catch overlooked details. Shortcuts: R = rectangle, T = text, L = line, O = ellipse.",
+      "Stick to grayscale so attention stays on layout and structure."
+    ],
+    "w1d5r4": [
+      "Wireframe: a low-fidelity, grayscale blueprint of layout and structure (what goes where). Quick and cheap to change.",
+      "Mockup: a static, high-fidelity visual design with real colors, typography, images and branding, showing how the product will look.",
+      "Prototype: an interactive simulation of the product that you can click through, used to test flows and usability with users before building.",
+      "They usually progress in that order, adding fidelity and cost at each step, so settle structure early and polish later."
+    ],
+    "w2d1r1": [
+      "Revenue alone is a poor guide to product success. Every product needs its own north star that reflects the value it delivers.",
+      "Context matters: Hinge is 'designed to be deleted', so users leaving after finding a partner is 'good churn', a success metric rather than a failure.",
+      "Metrics give an aggregated view of how users behave (e.g. Bumble saw a 56% spike in video calls early in the 2020 lockdowns and doubled down on virtual dating).",
+      "Pick metrics from your goals. The three fundamentals are acquiring users, retaining them, and growing revenue, each with its own metrics (traffic, sources and acquisition cost; engagement and retention; revenue).",
+      "Products must eventually make money and keep costs low. Vine was culturally huge but shut down in 2017 for lack of monetization."
+    ],
+    "w2d1r2": [
+      "HEART (Google) measures user experience quality: Happiness (satisfaction, NPS), Engagement (usage depth and frequency), Adoption (new users or feature uptake), Retention (users who come back) and Task success (completion rate, errors, time on task).",
+      "Apply HEART with Goals → Signals → Metrics: define the goal for each dimension, the user behavior that signals it, then the metric that measures it.",
+      "AARRR ('pirate metrics', Dave McClure) tracks the customer lifecycle funnel: Acquisition, Activation, Retention, Referral, Revenue.",
+      "Use AARRR to find where the funnel leaks (e.g. many signups but poor activation) and HEART to judge the quality of the experience. The two complement each other."
+    ],
+    "w2d1r3": [
+      "A metric is any measurement of size or scale (e.g. your weight on a scale), tracked over time.",
+      "A KPI is a metric tied directly to a stated goal or objective with a target and timeframe (e.g. lose 35 lb in 7 months for a reunion = 5 lb per month).",
+      "Every KPI is a metric, but not every metric is a KPI. What makes the difference is intent and a strategy to control and improve the number.",
+      "KPIs drive action: if you're off target (lost only 4 lb in month two), you adjust the plan (6 lb next month) to get back on track."
+    ],
+    "w2d1r4": [
+      "Metrics help you understand users, make better decisions, and end debates about what's working. Types: qualitative vs quantitative, A/B-testable, and leading (early warning) vs lagging (what already happened).",
+      "North Star Metric: the single metric that best reflects the product's core value (Spotify: time spent listening; Airbnb: nights booked; Facebook: monthly active users).",
+      "L1 metrics directly drive the North Star (Spotify: songs played, playlists created, podcast subscriptions). L2 metrics drive the L1s (signups, social shares, app store ratings).",
+      "Five must-track PM metrics: Customer Acquisition Cost (CAC), trial-to-paid conversion, feature adoption rate, retention/churn, and DAU/MAU.",
+      "Use metrics as a compass, not a crystal ball."
+    ],
+    "w2d1r5": [
+      "Many teams have great dashboards, perfect north star metrics and product-led growth frameworks, and still fail. Metrics alone aren't the problem.",
+      "At Stripe, Patrick Collison asked a pivotal question in a product review: 'Have you talked to customers who signed up but then didn't engage?'",
+      "The most overlooked signal: users who showed real intent (signed up and maybe took a few core actions) and then dropped off.",
+      "Define an intent threshold for your product (e.g. created a base, filled it and shared it in Airtable), then talk to the people who crossed it but didn't stick, to learn what blocked them.",
+      "Understanding these high-intent drop-offs is what unlocks early-stage product-led growth, more than any metric framework."
+    ],
+    "w2d2r1": [
+      "An MVP (Minimum Viable Product), a concept popularized by Eric Ries's Lean Startup, is the most essential version of a product that solves a core pain point for real users.",
+      "Minimum = as few features as possible. Viable = it still delivers part of the value proposition, so early adopters have a reason to use it.",
+      "It reduces the risk of failure and maximizes ROI by getting to market fast, learning from customers and iterating.",
+      "Build–measure–learn loop: form a hypothesis, build and launch the MVP, measure the response (adoption, feedback), then learn and iterate or pivot.",
+      "Use MVPs to test ideas before big investment. Beyond viable, aim for a Minimum Lovable Product (MLP) that also delights users. An MVP is different from a prototype."
+    ],
+    "w2d2r2": [
+      "MVPs are often misunderstood as 'the least amount of work'. A real MVP is the smallest thing you can build to learn something about your product or users.",
+      "An MVP can be a landing page, a prototype or a basic working product. Its goals are to learn perceived user value quickly and gather real-world feedback.",
+      "Benefits: early feedback from real users, fewer sunk costs if the idea doesn't work, and lean development focused on essentials.",
+      "Steps: identify the core audience problem → decide on features and functionality → design a prototype → launch and gather feedback → scale into a more robust product.",
+      "Best practice: collect and react to user feedback continuously. Watch out for building too little to learn anything, or too much."
+    ],
+    "w2d2r3": [
+      "42% of startups fail because there's no market need. An MVP tests viability with real users before investing in a full product.",
+      "An MVP is the simplest version of a product with just enough features to attract early customers and gather feedback.",
+      "Three key elements: enough features for people to want it, a feedback mechanism, and benefits for early adopters.",
+      "Famous MVPs: Amazon started selling used college textbooks online; Airbnb started by renting out air mattresses through a simple website.",
+      "Plan by focusing on core features only, launching quickly, then iterating based on what users actually want."
+    ],
+    "w2d2r4": [
+      "Collection of famous MVPs: Facebook, Groupon, Airbnb, Zynga, Pebble, Amazon, Zappos, Etsy, Dropbox, Buffer, Twitter, Foursquare, Spotify, Uber, the iPhone, AngelList and Product Hunt.",
+      "Common patterns: Dropbox validated demand with an explainer video before building, Zappos manually bought shoes from stores to fulfil orders, Buffer used a landing page to test interest, and Product Hunt began as an email list.",
+      "Lesson: the first version is often very basic, manual or limited in scope. The goal is to validate demand and learn, not to impress.",
+      "Many giants started in one narrow niche (Facebook at Harvard, Amazon with books, Uber with black cars in San Francisco) before expanding."
+    ],
+    "w2d2r5": [
+      "Product-market fit (PMF): your target customers are buying, using and recommending your product in numbers large enough to sustain growth and profit. Marc Andreessen defines it as 'a good market with a product that can satisfy it'.",
+      "Before PMF, focus on finding fit. Pushing growth or upselling too early can backfire. Many companies think they have PMF when they don't.",
+      "PMF is a company-wide responsibility, not just product and marketing.",
+      "Signals (Andrew Chen): users say they'd switch to you, people who rejected similar products try yours, users understand your differentiators, and your retention beats competitors'.",
+      "Use both qualitative and quantitative evidence: word of mouth, media and analyst interest, retention, growth. Dan Olsen's PMF Pyramid is a useful framework."
+    ],
+    "w2d2r6": [
+      "PMF is when your product strongly matches market demand and users become enthusiastic advocates, driving organic growth.",
+      "Know your customer: their challenges, current alternatives and pain points, through research and interviews.",
+      "Craft a clear value proposition that answers 'Why choose us over the competition?', focused on the problem you uniquely solve.",
+      "Build an MVP for early adopters and iterate in build–test–learn–refine cycles based on their feedback.",
+      "Signs of PMF: high engagement, low churn, and rising referrals and word of mouth. It isn't a one-time milestone, because markets and competitors keep changing."
+    ],
+    "w2d2r7": [
+      "Product-market fit simply asks whether your product is needed and whether people are eager to pay for it, with a clear USP versus competitors.",
+      "Warning signs of no PMF: low customer response, negative or no press, and high visibility with no engagement.",
+      "Amazon Fire Phone (2014): overpriced, locked into Amazon's ecosystem, and its 3D gimmick didn't solve a real need. It lost about $170M.",
+      "New Coke (1985): nobody had asked for a new recipe to replace a beloved product, and the backlash forced a reversal. Microsoft Zune (2006): arrived after the iPod already owned the market, with no compelling reason to switch.",
+      "The road to PMF runs through an MVP: test and learn before committing heavily."
+    ],
+    "w2d3r1": [
+      "REAN (Reach, Engage, Activate, Nurture), from Steve Jackson's book Cult of Analytics, is a flexible framework for planning and measuring how a product captures its audience.",
+      "Reach: how well-known the product or brand is and how far it attracts potential users.",
+      "Engage: help users understand the product (inform, not just sell) through activities and content.",
+      "Activate: whether users actually take action, i.e. try, sign up or buy. Nurture: build an ongoing relationship so users come back.",
+      "Use it to find weak stages in your marketing funnel and justify budgets for remarketing or product changes with concrete metrics."
+    ],
+    "w2d3r2": [
+      "SWOT analysis assesses Strengths, Weaknesses, Opportunities and Threats. It works for a company, product line, department or even an individual.",
+      "Strengths and weaknesses are internal (brand, loyal customers, technology, debt, supply chain). Opportunities and threats are external (new markets, regulation, competitors, economic shifts).",
+      "Examples: a tariff cut is an opportunity for a carmaker to export; a drought is a threat to a wheat producer.",
+      "It should be realistic, fact-based and data-driven, using input from diverse groups across the organization rather than marketing spin.",
+      "Use it to guide strategy toward plans more likely to succeed. Its limitation is that it's a snapshot, not a full plan."
+    ],
+    "w2d3r3": [
+      "Porter's Five Forces helps PMs look beyond direct competitors to the full set of pressures that shape a market's profitability.",
+      "1) Rivalry among existing competitors. 2) Threat of substitutes, meaning different products that solve the same need.",
+      "3) Bargaining power of buyers, which sets their willingness to pay. 4) Bargaining power of suppliers, which sets input costs.",
+      "5) Threat of new entrants who could take share, depending on barriers to entry.",
+      "PMs use it to step out of daily execution, judge how attractive a market is, and shape strategy and pricing (airlines are a classic example of a market squeezed on every side)."
+    ],
+    "w2d3r4": [
+      "PESTEL analysis scans the external macro environment that can affect a product: Political, Economic, Social, Technological, Environmental and Legal factors.",
+      "Political: government policy, stability and trade. Economic: growth, inflation, interest rates and spending power.",
+      "Social: demographics, culture and changing behaviors. Technological: new tech, automation and platform shifts.",
+      "Environmental: climate, sustainability and resource concerns. Legal: regulation, data privacy, consumer and employment law.",
+      "PMs use it for market entry, roadmap risk and opportunity spotting. It pairs well with SWOT, where its findings feed opportunities and threats."
+    ],
+    "w2d3r5": [
+      "The Double Diamond (UK Design Council) shows design as a systematic process: define the right problem before finding the right solution.",
+      "Discover (diverge): explore by talking to and observing users and gathering insights into their needs, thoughts and feelings.",
+      "Define (converge): filter the insights down to the essence and reframe the core problem and scope.",
+      "Develop (diverge): generate as many ideas as possible, quantity over quality, in collaboration across disciplines and with users.",
+      "Deliver (converge): prototype the best ideas simply and test them with users. The process is iterative, with learning loops that raise the chance of success."
+    ],
+    "w2d3r6": [
+      "The BCG Growth-Share Matrix (Boston Consulting Group, about 1970) classifies a company's products or business units by market growth rate and relative market share.",
+      "Stars: high growth, high share. Leaders that need heavy investment to keep growing.",
+      "Cash Cows: low growth, high share. Generate more cash than they need, funding other units.",
+      "Question Marks: high growth, low share. Could become Stars with investment, or decline. Dogs: low growth, low share. Usually candidates to divest.",
+      "Typical path: Question Mark → Star → Cash Cow → Dog. Criticism: it simplifies strategy to two variables and ignores synergies between units."
+    ],
+    "w2d3r7": [
+      "The Ansoff Matrix plans growth strategy along two axes, existing vs new products and existing vs new markets, giving four strategies.",
+      "Market penetration (existing product, existing market): sell more through marketing, promotions and pricing, e.g. McDonald's pushing Big Mac sales. Lowest risk.",
+      "Product development (new product, existing market): innovate for current customers, e.g. McDonald's launching the McPlant in the UK. Being first to market matters.",
+      "Market development (existing product, new market): take products to new regions or segments.",
+      "Diversification (new product, new market): highest risk, but can open entirely new revenue streams."
+    ],
+    "w2d4r1": [
+      "Prioritization frameworks don't produce the answer on their own. They make trade-offs visible and defensible, so the team can debate on shared terms (and answer loud stakeholders).",
+      "Quantitative scoring: RICE (Reach × Impact × Confidence ÷ Effort, from Intercom) and Value vs Effort are the fastest to start with. They ignore dependencies, and their estimates are subjective.",
+      "Customer-input methods: the Kano Model (must-haves vs delighters, via surveys), opportunity scoring (importance vs satisfaction), Product Tree and Buy a Feature (customer workshops and games).",
+      "Release scoping: the Story Map (MVP and release slices) and MoSCoW (Must/Should/Could/Won't), where teams tend to overinflate the Must-haves.",
+      "Cost of Delay puts a money value on waiting (weekly value ÷ build time). Running two frameworks on the same backlog often reveals hidden bias."
+    ],
+    "w2d4r2": [
+      "WSJF (Weighted Shortest Job First) prioritizes the jobs that deliver the most value soonest. It's common in large organizations using SAFe (Scaled Agile Framework).",
+      "Score four inputs: Business Value (impact on revenue and goals), Time Criticality (deadlines, customer risk), Risk Reduction/Opportunity Enablement, and Job Size (effort, e.g. T-shirt sizes).",
+      "Cost of Delay = Business Value + Time Criticality + Risk Reduction.",
+      "WSJF score = Cost of Delay ÷ Job Size. Higher scores go first, so small, high-value, urgent work rises to the top.",
+      "Demo: score each backlog item in Jira (with the Foxly app) and sort by WSJF."
+    ],
+    "w2d4r3": [
+      "ICE = Impact, Confidence, Ease. It started for prioritizing growth experiments and is now used for backlogs, especially when usage data is limited.",
+      "Impact: how much does this move the goal (e.g. trial-to-paid conversion, retention, brand awareness)?",
+      "Confidence: how sure are you it will deliver that impact? High with supporting data, low without. It keeps optimism in check.",
+      "Ease: how easy is it to deliver, counting everyone involved (design, development, testing)?",
+      "Score = Impact × Confidence × Ease, and work from the highest score down. Example: an onboarding video scores high on impact because users weren't reaching the 'aha' moment fast enough."
+    ],
+    "w2d4r4": [
+      "Waterfall: a linear, sequential process (requirements → design → build → test → deploy) where each phase finishes before the next begins and changes later are costly.",
+      "Agile: work in short iterative cycles (sprints), delivering small working pieces, gathering customer feedback each cycle and adapting.",
+      "Agile benefits: transparency for clients, who see progress and give feedback every sprint, more predictable cost and schedule per sprint, and easy change.",
+      "Waterfall suits projects with fixed, well-understood requirements and strict documentation needs. Agile suits evolving requirements and fast-changing markets.",
+      "Most modern software and product teams use Agile (Scrum, Kanban) because requirements rarely stay fixed."
+    ],
+    "w2d4r5": [
+      "Agile: projects are completed in small parts with regular feedback, so plans adapt easily and stay customer-focused.",
+      "Agile principles: people and collaboration, openness to change at any point, regular customer feedback, continuous improvement, clear communication, and early, frequent delivery.",
+      "Waterfall: a step-by-step process with all planning and requirements fixed upfront. Each stage completes before the next, and changes are hard later.",
+      "Waterfall pros: clear structure, documentation and predictability. Cons: inflexible, with late testing and late user feedback.",
+      "Choose Waterfall for stable, well-defined, regulated projects. Choose Agile when requirements may change or speed to market matters."
+    ],
+    "w2d4r6": [
+      "Both Scrum and Kanban are Agile pull systems. The Product Owner keeps a prioritized Product Backlog of features and user stories, and value ships in small increments with feedback.",
+      "Scrum: fixed sprints (usually 2 weeks). Sprint Planning pulls items into a Sprint Backlog, new work waits until the next sprint, there's a daily 15-minute stand-up, and each sprint ends with a Sprint Review (demo) and Retrospective.",
+      "Kanban: a continuous flow with no sprints or sprint backlog. The pull happens through Work-in-Progress (WIP) limits on each board column, and an empty slot signals the team to pull the next item.",
+      "Roles: Scrum Master (Scrum) or Agile Coach (Kanban) helps the team keep good habits. Kanban teams also often hold stand-ups, demos and retros.",
+      "Neither is as rigid as it sounds. High-performing teams adapt the system to what works for them."
+    ],
+    "w2d5r1": [
+      "A go-to-market (GTM) strategy turns a product bet into measurable market outcomes. It's a cross-functional plan, not just a launch checklist.",
+      "It answers four questions: who are we targeting and why, what problem we solve and why we're the best solution, how we'll reach, convert and support customers, and how we'll know it's working.",
+      "GTM connects company strategy with day-to-day execution, aligning product, product marketing, sales and customer success around one value proposition and narrative.",
+      "Lisa Kamm (Dow Jones): judge launches on outcomes, not outputs. Ask 'did it create the expected outcome?' rather than 'did we launch?'",
+      "A good GTM makes ownership explicit and sets the metrics that tell you when to change course."
+    ],
+    "w2d5r2": [
+      "GTM strategy answers three questions: where to play, what to sell, and how to engage.",
+      "Layer 1, target market and ideal customer profile (ICP): by vertical, company size or geography.",
+      "Layer 2, unique value proposition per persona: messaging that resonates rationally and emotionally and creates urgency.",
+      "Layer 3, route to market: inside sales, e-commerce, direct sales reps or partners. Layer 4, packaging and pricing: free trials, freemium, land-and-expand, good-better-best tiers.",
+      "Layer 5, tactics: brand awareness → lead generation → sales enablement and training."
+    ],
+    "w2d5r3": [
+      "An investor's view (Steve Barsh of Dreamit Ventures, on Slidebean) of the go-to-market slide in a pitch deck. Investors want to see an efficient, focused plan to win early customers with the fewest resources.",
+      "'We'll do direct sales' or 'online sales' is not a GTM strategy. Those are sales tactics.",
+      "Fishing analogy: fish where the fish are. Going offshore for tuna (big enterprise deals) means 12–18 month sales cycles that can outlast your runway. Fish in the bay instead: closer, easier, quicker catches.",
+      "Choose targeting criteria such as a searing pain point, a buyer who is the decision maker (faster closes), geographic closeness for feedback, and a price point that fits their typical budgets. 'Push sand down a hill, not up.'",
+      "This first segment is your beachhead. Repeat the process to rank follow-on markets, and remember that tactics are wasted if the underlying strategy isn't tuned."
+    ],
+    "w2d5r4": [
+      "A SaaS founder's three GTM channel principles for driving growth, mapped to how aware buyers are.",
+      "Principle 1: win the roughly 3% of your ICP who already know their problem and are choosing a solution. The main channel is Google search ads on high-intent keywords (e.g. 'referral marketing platform').",
+      "Principle 2: get in front of ideal customers who aren't actively buying yet and educate them with content that builds awareness and trust before they're in market.",
+      "Principle 3: proactive outbound with very simple, direct messages to target accounts.",
+      "Matching channels to the buyer's stage (aware and searching vs unaware) lets you capture demand now while building future pipeline."
+    ],
+    "w2d5r5": [
+      "A GTM strategy is the plan to bring your product to target customers through the right channels. It comes after positioning and messaging.",
+      "Pre-launch: build awareness and credibility by educating your target market, growing an organic following that beta tests and spreads the word.",
+      "Launch: drive adoption by announcing across all organic channels and amplifying with paid ads.",
+      "Post-launch: optimize and scale. Cut channels that don't work, double down on those that do, and test new ones.",
+      "Template per phase: objective, KPI (SMART), timeline, plus a table of channels, activities and resources. Worked example: a reading app for children with learning disabilities."
+    ],
+    "w2d5r6": [
+      "Ten common pricing strategies: competition-based, cost-plus, freemium, dynamic, skimming, penetration, economy, premium, bundle and psychological.",
+      "Competition-based: benchmark against rivals (Pepsi vs Coca-Cola). Common in saturated markets, but ignores your costs and demand.",
+      "Cost-plus: cost plus a fixed markup. Simple, but ignores customer value and competitors and weakens the incentive to cut costs.",
+      "Skimming (start high, then lower, e.g. new tech) vs penetration (start low to win share fast). Dynamic pricing changes with demand (airlines, ride-hailing).",
+      "Freemium (free base, paid upgrades), premium (price signals quality), economy (low cost, high volume), bundles (packages that raise order value) and psychological pricing (e.g. $9.99)."
+    ],
+    "w2d5r7": [
+      "Charm pricing: $1.99 feels like $1 because our brains anchor on the first digit, which is especially strong just below 10, 100 or 1,000.",
+      "Premium or exclusive pricing: brands like Apple and luxury labels sell status and lifestyle, not specs, so a higher price adds appeal.",
+      "Visual tricks: small fonts and no commas ($2399 vs $2,399) make prices feel smaller, and words that suggest 'small' soften big prices.",
+      "Price partitioning: '$3 a day' sounds cheaper than a monthly fee, even though per-visit cost is often far higher.",
+      "Precise prices ($29,654.37) feel honest and invite less haggling. Round prices work better for emotional purchases like wedding rings."
+    ],
+    "w3d1r1": [
+      "A Google PM (Liam Bolling) explains how deep a PM needs to go: a PM sits between UX, business and engineering, and needs to know each category well without being an expert in any.",
+      "Tech basics: how the internet works at a high level, how data is stored (data types like integer, double and string), what an API is and why it needs a key, what programming languages are used for, web vs native apps, and what servers and latency are.",
+      "Be able to break problems into smaller high-level solutions with engineers, own your metrics (it's never just 'daily active users') and draw the architecture diagram of boxes and arrows with confidence.",
+      "SQL is the one technical skill worth learning so you can pull your own data. Avoid buzzwords like AI, blockchain or ML unless you know what they mean. Don't have opinions on specific technologies. You've gone too far if you're the best engineer on the team.",
+      "Business skills: revenue, costs, profit and EBITDA, pricing and monetization models (freemium, ad-supported, pay once, subscription), and understanding why competitors succeed or fail. Learn from free courses and tech news."
+    ],
+    "w3d1r2": [
+      "An API (application programming interface) lets two systems communicate: system A sends a request, system B does the work and sends back a response. A big part of a PM's job is talking to engineers, so this is a core concept.",
+      "Restaurant analogy: the waiter takes your order from a menu, passes it to the kitchen and brings back the food. The menu defines what you can ask for and how.",
+      "Movie-ticket app example: giving your location as a parameter makes an API fetch the movies playing in your city. Searching for a movie triggers another API call.",
+      "Endpoints are the different addresses of an API (like different doors of a house), e.g. the Google Maps text search endpoint, which returns places for a query such as 'pizza in New York'.",
+      "Responses come back as JSON (e.g. address, photos, ratings). Also covered: parameters, payloads, and GET (fetch data) versus POST (send data) requests."
+    ],
+    "w3d1r3": [
+      "A database is an organized collection of information stored electronically. It can be structured (tables of rows and columns, like a spreadsheet) or unstructured.",
+      "E-commerce example: a Customers table (customer ID, name, address, phone) and an Orders table (order ID, customer ID, item count, total cost) together form a database.",
+      "Relational (SQL) databases store data in related tables. Non-relational (NoSQL) databases store data more flexibly. Which to choose depends on the use case.",
+      "Primary key: a unique identifier for each record (e.g. customer ID), essential for retrieving or updating the right row when two customers share a name.",
+      "Foreign key: a column that links two tables (e.g. customer ID in Orders), so you can fetch all orders for a given customer."
+    ],
+    "w3d1r5": [
+      "Bro Code's SQL Full Course, Part 1 (0:00–33:32): install MySQL and MySQL Workbench on Windows or macOS.",
+      "Databases: CREATE DATABASE, USE, DROP DATABASE, and setting a database to read-only.",
+      "Tables: CREATE TABLE with column names and data types (INT, VARCHAR, DECIMAL, DATE), plus RENAME, ALTER TABLE ADD/MODIFY/DROP COLUMN.",
+      "INSERT INTO ... VALUES to add single or multiple rows, including inserting only selected columns.",
+      "SELECT to read data: SELECT * vs specific columns, and filtering with WHERE (=, !=, >, <, IS NULL)."
+    ],
+    "w3d1r6": [
+      "LeetCode's Top SQL 50 study plan, problems 1–10: the Select section (Recyclable and Low Fat Products, Find Customer Referee, Big Countries, Article Views I, Invalid Tweets) and the first Basic Joins problems.",
+      "Skills practised: SELECT with WHERE filters, AND/OR conditions, handling NULLs (e.g. referee_id IS NULL OR referee_id != 2), DISTINCT and string length checks.",
+      "Joins introduced: LEFT JOIN to keep unmatched rows (Replace Employee ID, Customers Who Visited but Did Not Make Transactions), INNER JOIN for matched data, and self-joins on dates (Rising Temperature).",
+      "Tip: write the query yourself first, then compare with the Editorial and community solutions to learn cleaner patterns."
+    ],
+    "w3d2r1": [
+      "Webhooks let systems talk in real time: one system registers a URL, and the other sends (POSTs) data to it when an event happens.",
+      "Compared with polling (constantly asking 'anything new?', which is wasteful) and open connections like WebSockets (always connected, which ties up resources), webhooks are event-driven and efficient.",
+      "Main benefit: much less server load, because clients don't have to keep checking for updates.",
+      "Real uses: GitHub notifies CI tools on a push, Slack posts messages from other apps, and Stripe tells your server when a payment succeeds.",
+      "Consider security (verify signatures), retries for failed deliveries, and idempotency so duplicate events don't cause problems."
+    ],
+    "w3d2r2": [
+      "The SDLC (Software Development Life Cycle) is the structured process for building software from client requirements. Example: Adam's online home-decor store.",
+      "1) Planning: agree the app's purpose, end users and key elements. 2) Requirement analysis: detail each element, security and risks, and document them in an SRS (Software Requirements Specification).",
+      "3) Design: architects create the system design from the SRS, recorded in a DDS (Design Document Specification).",
+      "4) Implementation: developers write the code. 5) Testing: QA finds and fixes bugs and checks requirements are met.",
+      "6) Deployment and maintenance: release to users, then fix issues and add updates over time. Models like Waterfall and Agile run these phases differently."
+    ],
+    "w3d2r3": [
+      "A server is a computer that provides services (websites, data, email, files) to client machines over the internet or a local network.",
+      "'Server' is a role, not a type of hardware. Any desktop can act as a file or web server, but desktops can't handle heavy loads or many simultaneous connections.",
+      "Large organizations dedicate servers to one service each (web, database, email). Small ones may run several services on one machine.",
+      "Real servers run 24/7 and use specialized, redundant hardware (multiple drives, power supplies, ECC memory) and server operating systems built for many concurrent connections.",
+      "Common types: web, file, database, email, DNS and application servers."
+    ],
+    "w3d2r4": [
+      "Problem: Rob's online store crashes when holiday traffic spikes. Buying more servers is expensive and wasteful for the rest of the year.",
+      "AWS (Amazon Web Services) is a cloud platform offering compute, storage, databases, networking and more on a pay-as-you-go model.",
+      "Benefits: security, flexibility (choose OS, language, database), ease of use and auto-scaling up or down with demand.",
+      "Key services: compute (EC2, Lambda, Lightsail, Elastic Beanstalk), storage (S3, EBS, S3 Glacier, EFS), plus databases, networking and analytics.",
+      "History: launched in 2002, first cloud services in 2006, now 100+ services and the leading cloud provider by market share."
+    ],
+    "w3d2r6": [
+      "SQL Full Course, Part 2 (33:32–1:11:36): UPDATE ... SET ... WHERE to change rows and DELETE FROM ... WHERE to remove them. Always use WHERE, or you'll change every row.",
+      "Transactions: turn off AUTOCOMMIT, then COMMIT to save changes or ROLLBACK to undo mistakes.",
+      "CURRENT_DATE() and CURRENT_TIME() (plus NOW()) insert today's date and time.",
+      "Constraints: UNIQUE (no duplicates), NOT NULL (value required), CHECK (e.g. hourly_pay >= 10) and DEFAULT (auto-fill when no value is given).",
+      "PRIMARY KEY uniquely identifies each row (one per table, unique and not null). AUTO_INCREMENT generates IDs automatically."
+    ],
+    "w3d2r7": [
+      "LeetCode Top SQL 50, problems 11–20: finishing Basic Joins (Employee Bonus, Students and Examinations, Managers with at Least 5 Direct Reports, Confirmation Rate) and starting Basic Aggregate Functions.",
+      "Join skills: LEFT JOIN with NULL handling, CROSS JOIN to build every combination (Students and Examinations), and self-joins with GROUP BY and HAVING.",
+      "Aggregate skills: AVG, SUM, COUNT and ROUND, computing rates and percentages (Confirmation Rate, Percentage of Users Attended a Contest, Queries Quality and Percentage).",
+      "Also: filtering with modulo for odd IDs (Not Boring Movies), weighted averages over date ranges (Average Selling Price), and grouping by month (Monthly Transactions I)."
+    ],
+    "w3d3r1": [
+      "A PRD (Product Requirements Document), mainly written by the PM, answers three questions: why build it, what it should do, and how success will be measured. It's a common APM interview topic.",
+      "It aligns engineering, design, support and sales on one picture, and balances engineering's functional concerns with design's focus on usability. It should not dictate 'how' to build.",
+      "Five tips: describe the problem and leave room for solutions, keep it concise (a few pages), keep it updated (add a 'Recent Updates' log), get stakeholder feedback in the doc, and apply the 'rule of 5' (five random teammates should describe purpose, timeline, status and features the same way).",
+      "Writing a PRD forces you to think end to end (dependencies), separate must-haves from nice-to-haves for the MVP, and validate assumptions.",
+      "Other docs build on it: engineering tech specs and architecture docs, design wireframes and mockups, and QA test plans."
+    ],
+    "w3d3r2": [
+      "One-line prompts to AI app builders like Bolt and Lovable give mediocre results. Generating a PRD first can improve output dramatically.",
+      "Step 1: ask a reasoning model (Grok in Think mode, or ChatGPT o3/o4-mini) for a PRD covering product overview, target users, user stories, functional requirements and success metrics.",
+      "Include specifics in the prompt, such as the tech stack (e.g. React) and the core idea (an app for dentists to schedule patient appointments).",
+      "Step 2: review and edit the PRD, then paste the whole thing into Bolt or Lovable as the build prompt.",
+      "Result: a much more complete first version, with features, pages and flows matching the requirements, and fewer follow-up fixes."
+    ],
+    "w3d3r4": [
+      "SQL Full Course, Part 3 (1:11:36–1:48:37): FOREIGN KEY constraints link tables (e.g. transactions.customer_id → customers) and protect referential integrity.",
+      "JOINS: INNER JOIN (matching rows only), LEFT JOIN (all left-table rows) and RIGHT JOIN (all right-table rows).",
+      "Functions: COUNT, MAX, MIN, AVG, SUM and CONCAT, with aliases via AS.",
+      "Filtering: AND, OR, NOT, BETWEEN and IN. Wildcards with LIKE: % for any characters, _ for a single character.",
+      "ORDER BY (ASC/DESC, multiple columns), LIMIT with offset for pagination, and UNION / UNION ALL to stack results from tables with matching columns."
+    ],
+    "w3d3r5": [
+      "LeetCode Top SQL 50, problems 21–30: finishing aggregates (Immediate Food Delivery II, Game Play Analysis IV) and the Sorting and Grouping section.",
+      "Grouping skills: COUNT(DISTINCT ...), GROUP BY with HAVING (Classes More Than 5 Students, Customers Who Bought All Products) and filtering by date windows (User Activity for the Past 30 Days I).",
+      "Subquery-style patterns: first-order or first-login logic with MIN() (Immediate Food Delivery II, Product Sales Analysis III, Game Play Analysis IV).",
+      "Also: Find Followers Count, Biggest Single Number (return NULL when no answer), and starting Advanced Select and Joins with The Number of Employees Which Report to Each Employee."
+    ],
+    "w3d4r1": [
+      "Visily is an AI-powered wireframing tool. Its AI features live in the left-side AI panel.",
+      "Screenshot to Design converts screenshots of existing apps into editable wireframes (also via the Chrome extension). Sketch to Design turns hand-drawn sketches into wireframes.",
+      "Text to Diagram creates diagrams from a description. The lo-fi/hi-fi switcher lets you validate core functionality in low fidelity, then polish in high fidelity.",
+      "Magic Theme extracts color themes from a website or image. Magic Image generates matching visuals from a description.",
+      "Smart Table Data Fill populates tables with realistic data (names, addresses, phone numbers) so mockups look complete."
+    ],
+    "w3d4r2": [
+      "Visily's Text to Design turns a prompt (e.g. 'a mobile CRM app with a dashboard, account view and attached documents') into multiple screens in about 90 seconds.",
+      "Auto Prototyping also generates the connections between screens, so you can click through the prototype immediately.",
+      "Everything stays editable. Fix a missing link (e.g. a broken back button) or adjust designs by hand.",
+      "The point: AI automates time-consuming but low-thinking work (wiring obvious connections), so PMs and designers spend their time conveying ideas."
+    ],
+    "w3d4r3": [
+      "Notes on Google's Prompting Essentials course (four modules): prompting fundamentals, everyday work tasks (emails, brainstorming, tables, summaries), data analysis and presentations, and AI as a creative or expert partner.",
+      "Five-step framework, 'Tiny Crabs Ride Enormous Iguanas': Task (include a persona and output format), Context, References (examples), Evaluate the output, Iterate.",
+      "If results fall short: revisit the framework (more context or examples), split the prompt into shorter sentences, rephrase or switch to an analogous task (e.g. 'write a story' instead of 'a marketing plan'), or add constraints.",
+      "Advanced techniques: prompt chaining (feed outputs into the next prompt), chain-of-thought (ask for step-by-step reasoning), tree-of-thought (explore multiple paths), and designing AI agents with personas.",
+      "Use AI responsibly: check outputs for accuracy, bias and hallucinations, and keep a human in the loop."
+    ],
+    "w3d4r5": [
+      "SQL Full Course, Part 4 (1:48:37–2:26:50): SELF JOIN, joining a table to itself (e.g. customers to their referrer, employees to their supervisor).",
+      "VIEWS: virtual tables built from a query (CREATE VIEW). They always show current data and simplify repeated queries.",
+      "INDEXES: B-tree structures that speed up lookups (SELECT) at the cost of slower writes. Multi-column indexes follow column order.",
+      "SUBQUERIES: queries nested inside others, e.g. finding employees paid above the average, or using IN / NOT IN with a subquery.",
+      "GROUP BY with aggregates (SUM, MAX, AVG, COUNT), HAVING to filter groups (not WHERE), and WITH ROLLUP to add super-aggregate total rows."
+    ],
+    "w3d4r6": [
+      "LeetCode Top SQL 50, problems 31–40: the rest of Advanced Select and Joins, and the start of Subqueries.",
+      "Patterns practised: CASE WHEN logic (Triangle Judgement, Count Salary Categories), primary-flag-or-only-row logic (Primary Department for Each Employee) and running totals with window functions (Last Person to Fit in the Bus).",
+      "Consecutive Numbers uses self-joins or LAG/LEAD. Product Price at a Given Date combines the latest-change-before-a-date with a default value.",
+      "Subqueries: Employees Whose Manager Left the Company, Exchange Seats (swap adjacent IDs), Movie Rating (UNION of two ranked results) and Restaurant Growth (7-day moving averages)."
+    ],
     "w3d5r1": [
       "PMs get thousands of feedback items weekly from interviews, surveys, app reviews, sales calls, support tickets and social posts. Reading it all manually is impossible.",
       "Amplitude AI Feedback (formerly Kraftful) connects all these sources in minutes, with no engineering help, and uses agentic AI to sort the unstructured text into product categories.",
@@ -26,6 +578,455 @@
       "Stored procedures save reusable SQL: CREATE PROCEDURE name(params) BEGIN ... END, run it with CALL name(...). Change the DELIMITER temporarily while creating one. Procedures can take parameters (e.g. IN id INT).",
       "Stored procedure trade-offs: less network traffic, better performance and permission-based security, but more memory per connection.",
       "Triggers run automatically BEFORE/AFTER an INSERT, UPDATE or DELETE, FOR EACH ROW. Use NEW.col and OLD.col, e.g. auto-calculate salary from hourly pay, or keep an expenses total in sync."
+    ],
+    "w3d5r6": [
+      "LeetCode Top SQL 50, problems 41–50: the end of Subqueries and the Advanced String Functions / Regex / Clause section.",
+      "Subqueries: Friend Requests II (UNION ALL then count), Investments in 2016 (conditions on duplicate and unique values) and Department Top Three Salaries (DENSE_RANK or a correlated subquery).",
+      "Strings and regex: Fix Names in a Table (UPPER/LOWER/SUBSTRING), Patients With a Condition (LIKE patterns), Find Users With Valid E-Mails (REGEXP) and Group Sold Products By The Date (GROUP_CONCAT).",
+      "Clauses: Delete Duplicate Emails (DELETE with a self-join), Second Highest Salary (LIMIT/OFFSET, returning NULL if missing) and List the Products Ordered in a Period (date filters with HAVING).",
+      "Finishing all 50 covers most SQL patterns asked in PM and analyst interviews."
+    ],
+    "w4d1r1": [
+      "A former Google PM's 6-step structure for answering any PM interview question.",
+      "1) Listen actively and take notes on keywords, showing enthusiasm. 2) Ask clarifying questions (users, platforms, domestic vs international), or restate the question: 'You're asking me to... correct?'",
+      "3) Pause for 10–15 seconds to think. Interviewers prefer a coherent answer to an instant one.",
+      "4) Lay out your structure before diving in (e.g. 'I'll cover three options and their trade-offs'), ideally on a whiteboard, so the interviewer can redirect you.",
+      "5) Explain your reasoning confidently with visuals. 6) Check in and pivot if the interviewer's cues suggest you're off track."
+    ],
+    "w4d1r2": [
+      "Kevin Way (Amazon senior PM) on 'Should company X get into space Y?' questions, which test business goals, market risks and opportunities, and internal and external factors.",
+      "Structure: clarify the company's goals (what it does, how it makes money, current focus) → analyze what helps or hinders it → pick the factors that matter most → make a recommendation.",
+      "Frameworks to choose from (none is wrong): the 5Cs (Customers, Company, Collaborators, Competitors, Climate), SWOT, or Porter's Five Forces. Just cover both internal and external considerations.",
+      "Worked example, 'Should Google build a modular phone?': first-mover advantage but unproven and costly, and a key tension is ecosystem vs revenue (more Android users vs less revenue per device).",
+      "Say what you plan to jot down, tee up the central trade-off, then end with a confident recommendation tied to the company's goal. It doesn't need to be all-or-nothing."
+    ],
+    "w4d1r3": [
+      "Strategy and GTM questions usually take the form 'Should X enter market Y?' (e.g. Google into streaming, Facebook into dating, Swiggy/Zomato into restaurants). They test executive-level, structured thinking.",
+      "Don't jump to yes or no. Clarify the company's goals and motivation first, then work through a structured process.",
+      "5C framework: Competition (how crowded, any unfair advantages?), Customers (synergy between current and new customers; Facebook → dating makes sense, Facebook → cloud doesn't), Company (capabilities, assets, fit).",
+      "Collaborators: which partners you'd need. Climate: regulatory, political and economic environment, licences, purchasing power.",
+      "Weigh the evidence from each C, make a clear go or no-go call, then outline how to enter (build, partner or acquire) and the risks."
+    ],
+    "w4d1r4": [
+      "Google mock: 'You're the new CEO of Uber. What's your 10-year strategy?' Stay high-level and focus on the big bets.",
+      "Clarify the context (profitability struggles, intense competition), then set a mission: 'Be the way you move', covering both people and things.",
+      "Define consumer tenets to guide decisions: fast and convenient, safe, environmentally conscious.",
+      "Build strategic pillars from strengths such as network effects and global distribution, with expansion into local markets through competition or acquisition, which needs a strong capital base.",
+      "Strong answers articulate a vision, stress-test their own plan ('throw darts at my own solution') and tie every pillar back to the mission."
+    ],
+    "w4d2r1": [
+      "Root cause analysis (RCA) questions give you a metric change (e.g. Facebook Groups creation down 15%, Slack email open rate down 10%) and ask you to diagnose it.",
+      "Interviewers look for three things: understanding the metric in context of the whole product, data-driven hypotheses, and a structured approach.",
+      "Step 1: clarify the metric definition and its link to the north star. A drop in DoorDash orders is clearly bad; fewer YouTube videos watched may not be if watch time is up.",
+      "Step 2: characterize the change: sudden or gradual, seen before, seasonal? Sudden drops usually aren't behavioral and may be system glitches.",
+      "Step 3: rule out data and tracking issues, then segment (platform, region, user type, funnel step) and look at internal changes (releases, campaigns) vs external factors (competitors, news, regulation)."
+    ],
+    "w4d2r3": [
+      "Mock: Flipkart has seen a 15% decline in add-to-cart over the last 3 days. Diagnose it.",
+      "The candidate clarifies the scope and lays out a plan, then checks external factors first: competitor launches or sales, and big events like Big Billion Days.",
+      "Narrows it down by segment: location (no impact; the drop is spread everywhere), user segments, platforms and categories.",
+      "Walks through the user flow (search → product page → add to cart) to locate where in the funnel the drop happens.",
+      "Feedback: keep it conversational, ask questions, and course-correct as you go rather than getting lost in your own framework. Practise mocks with peers."
+    ],
+    "w4d2r4": [
+      "RCA mock on Urban Company: app usage dropped by about 6–7%.",
+      "Framework, from closest to furthest: 1) your own product (start by validating the analytics tool and data), 2) releases by other teams last week, 3) company-level changes in strategy or marketing messaging.",
+      "4) External factors: political changes, industry news, or regional events (e.g. restrictions in some areas) outside the company's control.",
+      "Segment by service category, city, platform and user type to localize the drop before forming hypotheses.",
+      "Career tip: engineers moving into PM should take on product-thinking projects (why a feature exists, how it's marketed) to build a track record."
+    ],
+    "w4d2r6": [
+      "Technomanagers playlist of RCA practice questions and mocks across companies: Uber, YouTube, Amazon, Google, Netflix and Google Pay.",
+      "Includes AI-era RCA cases such as 'ChatGPT downvotes have increased' and an AI-specific root cause analysis.",
+      "Contains 'Master Framework' and 'Ultimate Framework' videos for structuring RCA answers.",
+      "How to use it: pause after each question, attempt your own answer (clarify → rule out data issues → segment → internal vs external → fix), then compare."
+    ],
+    "w4d3r1": [
+      "Guesstimates test your approach, not the final number: break an estimate into logical, calculable pieces. They're common in consulting and non-tech interviews.",
+      "There's rarely one right way. Most guesstimates can be solved several ways.",
+      "Demand-side approach: start from population and segment down by who uses or buys the thing and how often.",
+      "Supply-side approach: start from a constraint such as capacity, area or resources (e.g. outlets × capacity × utilization).",
+      "Interviewers may ask for a second approach, so solving it both ways earns extra credit. State your assumptions clearly and sanity-check the result."
+    ],
+    "w4d3r3": [
+      "Real ISB placement guesstimate: how many kites are sold (and flown) during Makar Sankranti?",
+      "Break it into kites per person × number of people flying kites during the festival.",
+      "Kites per person: assume about 2 days of flying and about 8 hours a day after sleep and other activities, with kites getting cut regularly, so people use several each.",
+      "Number of kite flyers: start from the relevant population (states that celebrate), then narrow by age group and participation rates.",
+      "Key lesson: the exact answer matters less than a clear, step-by-step breakdown with stated assumptions."
+    ],
+    "w4d3r5": [
+      "Type 1 guesstimates are market sizing. Worked example: how many electric vehicles will be sold in India in 2021?",
+      "Try it yourself first, then compare. A different approach isn't wrong if it's logical.",
+      "Follow a structure: clarify scope (which vehicles: two-wheelers, cars, three-wheelers?), choose demand or supply side, then segment.",
+      "Segment by vehicle type and buyer group, apply adoption rates for EVs within total vehicle sales, then add it up.",
+      "Close with a sanity check and note the key assumptions driving the number."
+    ],
+    "w4d3r6": [
+      "MBB-style supply-side guesstimate: how many flights fly out of Delhi in a day?",
+      "Clarify first: only IGI airport, or also military (Hindon) and other airports? What kind of day (weekday or weekend, season)? Assume an average day.",
+      "Don't start from population. This is a capacity problem, so use the supply side: runways, operating hours and the take-off rate per runway.",
+      "Flights = runways × operational hours × departures per runway per hour × utilization, adjusted for peak vs off-peak hours.",
+      "Sanity-check against known benchmarks (busy hub airports handle hundreds of departures a day)."
+    ],
+    "w4d3r7": [
+      "Mock: estimate the daily toll revenue of Mumbai's Bandra-Worli Sea Link.",
+      "Clarify scope: toll revenue only (no advertising), open 24/7, all vehicle types, and monthly passes for regular commuters.",
+      "Structure: split the day into heavy, medium and low traffic hours, each with a different rate of vehicles per gate per hour.",
+      "Scale from one gate to all gates to get total daily vehicles, then split by category (cars, heavy vehicles, etc.).",
+      "Multiply each category by its average toll (adjusting for pass holders) and sum to get daily revenue."
+    ],
+    "w4d3r8": [
+      "Mock: 'How many daily active users does WhatsApp have in India, and how would you improve the metric?', a guesstimate combined with product strategy.",
+      "Clarify: India only, personal use (not WhatsApp Business).",
+      "Estimate: 1.3B population ÷ about 4 per household = about 325M households, segmented into upper (20%), middle (65%) and lower (15%) income groups with different phones per household and usage rates.",
+      "Improve DAU: identify user pain points first, brainstorm solutions, and prioritize on effort vs impact (e.g. a Splitwise-style bill-splitting feature inside WhatsApp Pay).",
+      "Takeaway: the structured guesstimate, then pain points before solutions, then prioritization."
+    ],
+    "w4d3r9": [
+      "Technomanagers playlist of about 28 guesstimate practice questions for PM and consulting interviews.",
+      "Market sizing: shampoo bottles, refrigerators or iPhones sold, Amazon Prime Video market size, driverless cars in 2030.",
+      "Revenue: Domino's, a petrol pump, a multiplex. Supply and capacity: DMart cash counters, flights from an airport, planes in the air, people at an airport.",
+      "Tech and AI: Google Maps storage, GPUs to serve 500M GPT users, Nest camera memory, WhatsApp messages, Gmail users in India.",
+      "Practise by pausing after each question and solving it first with a clear structure."
+    ],
+    "w4d3r10": [
+      "XLRI CRUX club's quick-reference cheat sheet of standard numbers and assumptions for solving guesstimates.",
+      "Covers general cases (population, households, demographic splits, urban/rural ratios and similar figures) so you can start estimates confidently.",
+      "Includes a separate cheat sheet for policy-related cases (Samagra-style public policy questions).",
+      "Use it to memorize a few anchor figures, but always state your assumptions out loud in interviews."
+    ],
+    "w4d4r1": [
+      "'What's your favorite product and why?' is one of the most common PM interview questions, so prepare it in advance.",
+      "Passion: pick something you genuinely use and care about, not a product chosen to impress. Fake enthusiasm is obvious.",
+      "Perspective: have an arguable, nuanced thesis. 'Gmail organizes my email' is bland; take a position someone could disagree with.",
+      "Personality: let your interests and product taste show. It builds rapport and shows what you love about product work."
+    ],
+    "w4d4r2": [
+      "Framework example: Too Good To Go, an app selling restaurants' surplus food at steep discounts in 'surprise bags'.",
+      "Start with why you love it: the mission (tackling food waste) plus the user experience.",
+      "Walk through the user journey: search restaurants with filters (nearby, pickup time) → view the profile and ratings → claim a surprise bag → pick up.",
+      "Explain value for each side: consumers get affordable food from good restaurants, restaurants recover revenue from waste, and the company likely earns platform fees.",
+      "Then identify pain points (e.g. uncertainty about what's in the bag) and propose improvements that fit the product's goals."
+    ],
+    "w4d4r3": [
+      "Product improvement questions come as 'favorite product + improve it' or a standalone 'How would you improve X?'",
+      "Step 1: name the product and three reasons you love it. Example: Kindle covers the whole reading journey (discovery → reading with notes and dictionary → recommendations), it's easy for all ages, and it has no distractions.",
+      "Step 2: define the goal and choose a user segment (e.g. avid fiction readers who follow specific authors).",
+      "Step 3: list that segment's pain points, then brainstorm solutions such as book summaries, author fan clubs and Kindle-exclusive short stories.",
+      "Step 4: prioritize by impact (how critical the pain point is) vs effort, and pick 1–2 solutions (here: book summaries and author following)."
+    ],
+    "w4d4r4": [
+      "Mock: 'Design a new feature to improve Google Maps.' The candidate chooses engagement as the goal and mobile as the platform.",
+      "Segment users (commuters, travelers, local explorers, businesses), brainstorm each segment's pain points, and pick the most promising segment.",
+      "Focus on travelers planning trips, who juggle many apps and tabs.",
+      "Solution: a 'Trips' tab next to Explore as a one-stop trip planner covering high-level details (dates, destination), specific activities (hiking, food) and logistics.",
+      "Prioritize features, define success metrics tied to engagement, and discuss trade-offs and risks."
+    ],
+    "w4d4r5": [
+      "Mock: 'How would you improve Headspace?' A product sense question run by a Coinbase (ex-YouTube) PM.",
+      "Clarify: act as a Headspace PM and pick a goal. Engagement, measured as minutes meditated, is chosen as the key metric.",
+      "Identify user personas (tech professionals, teachers, students, etc.), choose one segment, and list their pain points.",
+      "Brainstorm and prioritize solutions, with the final idea centred on getting users to an early meditation habit.",
+      "The interviewer notes it matches real data: Calm found (via Amplitude) that early meditation milestones drive the 'aha moment' and retention."
+    ],
+    "w4d4r6": [
+      "Google mock: 'How would you improve Google Chrome?' Clarify what 'improve' means: acquisition, frequency of use, or satisfaction.",
+      "Scoping through clarifying questions keeps the problem solvable within the interview.",
+      "The candidate picks satisfaction, measured by CSAT (a better fit than NPS, since few people actively promote a browser).",
+      "Segments users, finds pain points, brainstorms solutions (e.g. unified search across local files and the web) and prioritizes them with criteria set upfront.",
+      "Key takeaway: think out loud the whole way so the interviewer sees how you generate, weigh and choose ideas."
+    ],
+    "w4d4r7": [
+      "Mock with an Indeed senior PM: 'What's your favorite product and how would you improve it?' He picks Milkbasket, a daily grocery subscription app.",
+      "Why he loves it: ease of use (one-click orders, order until about 11 PM for next-morning delivery, edit the cart any time) and a routine that 'sorts your day'.",
+      "Improvement flow: users and segments → pain points → solutions (e.g. better search, 'recipe of the day' to inspire orders) → prioritize.",
+      "Metrics: primary (add-to-cart or orders after a search) plus one or two secondary metrics, without over-detailing unless asked.",
+      "Strong finish: add futuristic ideas (e.g. voice search), call out risks, and summarize."
+    ],
+    "w4d5r2": [
+      "Meta mock: 'Design a fitness app for Meta.' Start by asking why Meta wants it: to get the community off screens and active together in the real world.",
+      "Set a mission-aligned goal ('bring the world together through activity and fitness') with sub-goals measured by acquisition and engagement.",
+      "Use Meta's huge user base for market segmentation, then pick a target segment whose needs fit the goal.",
+      "Identify that segment's pain points, brainstorm solutions, and prioritize, keeping a clear line from mission → goal → segment → solution.",
+      "Address safety and resources (healthy, safe programs at scale) and get to pain points and solutions quickly."
+    ],
+    "w4d5r3": [
+      "Exponent mock interview: 'Design a refrigerator for kids,' answered by Diego Granados (Microsoft AI/ML PM), who explains his reasoning as he goes.",
+      "Common mistake: rushing to solutions. He first asks clarifying questions: what type of company (assume a connected-appliance company with data, AI and cloud) and what constraints.",
+      "Pain points: kids can't tell what's inside the fridge (containers, raw food), so they go for the easy option. Parents worry about unhealthy choices even when healthy food is available.",
+      "He proposes three solutions (including a game-like system), checks them against a parent's concerns, prioritizes them, and defines success through sales, returns and support calls.",
+      "Interviewer tip: lay your structure out visually (numbered, spatially) so the interviewer can follow your thinking."
+    ],
+    "w4d5r4": [
+      "Exponent mock interview: 'Design an audio product for Meta,' answered by a Meta PM (ex-Amazon).",
+      "Clarify scope: no fixed surface within Meta's family of apps, and focus on the US market to keep it concrete. Lay out a roadmap for the answer up front.",
+      "Choose the user: focus on listeners (consumers), reasoning that if listeners engage, creators and brands will follow. Pick pain points where solving them yields the highest engagement ROI.",
+      "State a vision, then propose solutions such as an audio-sharing product where users clip audio and share it as a story, reel, post or message. Both ideas are framed as minimum lovable products.",
+      "Prioritize one under bandwidth limits. Interviewer takeaway: there's no single right answer. They look at your approach, prioritization and reasoning."
+    ],
+    "w4d5r5": [
+      "Behavioral questions ('Tell me about a time you...') test qualities like leadership, problem solving, teamwork and integrity, even in technical roles.",
+      "Use STAR: Situation (context), Task (your responsibility), Action (what you specifically did), Result (outcome, with numbers if possible). Add what you learned.",
+      "Expect first-order questions (e.g. 'tell me about teamwork') and deeper follow-ups (conflict, failure, proudest accomplishment).",
+      "Prepare a bank of stories you can adapt to different qualities.",
+      "Integrity example: raising a coworker's timekeeping issue respectfully led to a better company system. The lesson: small things define character."
+    ],
+    "w4d5r6": [
+      "A mock behavioral interview for a consulting firm (not PM-specific), but the structure is the same for PM interviews.",
+      "Opening: a concise intro tying your background (internships, club leadership, long-term goal) to why this firm. Name two specific reasons the firm appeals to you.",
+      "Problem-solving story using STAR: a supplier's capacity and pricing didn't fit the budget, so he built a list of alternative suppliers, analysed them and convinced a VP not to delay the launch by sourcing unused material from other facilities.",
+      "Leadership and weakness questions: for his weakness (prioritization) he describes what he does now, asking his manager where the business focus should be.",
+      "Interviewer feedback: poised and confident, used STAR clearly, concise stories, and ended with thoughtful questions about the company."
+    ],
+    "w4d5r7": [
+      "A general interview tip (not PM-specific): when asked 'Do you have any questions?', never say no. It signals you're unprepared.",
+      "Ask three questions from a list of ten. For example: what's the first thing I should concentrate on if I succeed, what advice would you give a candidate who wants to excel, and what growth opportunities does the role offer?",
+      "Also: tell me about the team, what's the culture like, what are the biggest challenges and how could I help, what would success look like in 12 months, and what do top performers do here?",
+      "Closing questions: is there anything I should read to learn more about the company, and what are the next steps and timeline?",
+      "Send a short follow-up email after the interview to reinforce your interest."
+    ],
+    "w5d1r1": [
+      "AI product management means taking a product whose core value comes from AI/ML from concept to launch and ongoing operation, owning the vision, data strategy and model evaluation process.",
+      "Test for an AI product: if you remove the AI and it still works the same, it's not an AI product. Recommendation engines, fraud detection and generative assistants are AI products; a bolted-on chatbot is just an AI feature.",
+      "Versus traditional PM: the same core (vision, discovery, MVPs, GTM), plus owning a data strategy, managing behavior that shifts after release, tracking model metrics alongside product metrics, and handling fairness and explainability.",
+      "Three types: the AI-powered PM (uses AI tools to work faster), the applied/AI-enabled PM (integrates pre-trained models and LLM APIs into products) and the core/platform AI PM (builds foundation models or ML platforms, needs deep ML knowledge).",
+      "AI PMs balance product metrics against model performance, risk and responsible-AI guardrails across an AI-specific lifecycle."
+    ],
+    "w5d1r2": [
+      "Most of what an AI PM needs, a good PM already has. AI-first PM adds a thin but important layer of new skills.",
+      "The 6 core competencies: 1) AI/ML fundamentals, 2) data literacy and data readiness, 3) prompt craft and AI tool fluency.",
+      "4) Working effectively with ML engineers and data scientists, 5) responsible AI and ethical judgment, 6) strategic judgment that AI can't replace.",
+      "Employers look for hands-on experience shipping AI features, not just a title change. A common mistake is adding 'AI' to your title without the substance.",
+      "Coding isn't required, but you need enough technical fluency to discuss trade-offs credibly."
+    ],
+    "w5d1r3": [
+      "In 2023 Netflix offered up to $900,000 for an AI product manager, showing how much companies value the role. The fundamentals (solve real customer problems, own the product lifecycle) stay the same, but the process changes.",
+      "Lifecycle: traditional features are deterministic, but AI work is data-driven and experimental. Accessing and cleaning data can take months, models are trained and tuned iteratively (frameworks like CRISP-DM), and the work continues after launch as new data arrives.",
+      "Timelines are less predictable. AI PMs set progress milestones instead of fixed delivery dates and plan fallbacks in case the ML approach doesn't meet the bar.",
+      "Stakeholders widen: data scientists, data engineers and ML engineers daily, plus legal, compliance and privacy teams. The PM also manages executive hype by explaining what the model can and can't do.",
+      "Experimentation and evaluation: treat each model version like an A/B test, design fail-safes, and track model metrics (accuracy, precision, recall, AUC) alongside product metrics, accepting trade-offs between accuracy, speed and cost."
+    ],
+    "w5d1r4": [
+      "A roadmap from Aishwarya Srinivasan (ex-Microsoft, Google and IBM data scientist). Most aspiring AI PMs go about it backwards, collecting certificates without shipping anything.",
+      "Step 1: learn practical AI basics: models, training vs inference, fine-tuning vs prompting, vector databases and RAG, and latency trade-offs. Enough vocabulary to earn engineers' trust.",
+      "Step 2: deconstruct AI products deliberately, one per week (try to break them, guess their system prompts). Step 3: build and ship a tiny AI product, e.g. a resume or cover-letter assistant. You learn that prompts are brittle, latency matters and users behave unexpectedly.",
+      "Step 4: understand AI infrastructure as a PM: evals ('what does good look like?'), cost and latency trade-offs (bigger models can cost 3× and respond 2× slower), observability and a practical responsible-AI framework.",
+      "Step 5: get visible. Share your work publicly, network and apply. AI PMs now own the full feedback loop, including evals, and agentic AI has raised the bar."
+    ],
+    "w5d1r5": [
+      "AI vs ML vs LLM: AI is the umbrella (systems that reason and act), ML learns patterns from data without explicit rules, and LLMs (GPT, Claude) are ML models trained on huge text datasets to predict the next token.",
+      "Prompt engineering: the same model gives very different output for 'summarize this report' vs 'summarize in 3 bullets for a CEO with 30 seconds'. AI PMs build prompt systems (structured templates), not one-off magic prompts.",
+      "AI agents and workflows: systems that decide and take multi-step actions. Fine-tuning: further training a model on your data for a specialized task or style.",
+      "RAG (retrieval-augmented generation) lets models pull fresh or private data (docs, wikis, databases) to ground answers. Hallucination is confident but false output. Guardrails and safety constrain what the model can say or do.",
+      "MCP (Model Context Protocol) is like 'Bluetooth for AI', plugging models into tools such as CRMs and email. Evals measure how well your AI actually performs and are essential before and after launch."
+    ],
+    "w5d1r6": [
+      "An AI PM sits between AI engineers (who write the code, wire models and run production systems) and the business, deciding what's worth building. The core skills are data literacy and judgment, not coding.",
+      "The job has grown: AI features moved from 'a text box calling an API' to agents that browse, write and run code, and coordinate tools, so PMs now design how whole systems behave.",
+      "Demand is real. AI PM hiring roughly doubled, and roles asking for AI skills pay about 28% more. Openings currently outnumber qualified candidates.",
+      "Key responsibilities: data (where it comes from, how it's labeled, since bad data is usually the real problem), guardrails (what the AI does when unsure: answer, abstain or hand off to a human; which tasks can run autonomously) and defining 'good enough' with evals.",
+      "Prepare for today's role, not the one from 3 years ago: build hands-on experience with real AI products and agents."
+    ],
+    "w5d1r7": [
+      "A 10-year follow-up to the popular 'Art of Product Management' Wharton lecture: how AI changes each part of the PM role.",
+      "Customer insight: AI now synthesizes raw feedback into themes (beyond sentiment analysis and tag clouds), often spotting patterns humans miss.",
+      "Analytics: AI writes and runs SQL, analyzes CSVs and Excel files, and visualizes results, connecting directly to data warehouses through MCP (Model Context Protocol) servers.",
+      "Ideation and prototyping: AI prototyping lets PMs and designers build working concepts quickly (e.g. Duolingo's chess course came from an enterprising PM–designer duo). Execution: AI speeds up communication such as status updates and stakeholder alignment.",
+      "What AI can't replace is taste: non-consensus strategy, a compelling vision and judgment. Taste has never mattered more."
+    ],
+    "w5d1r8": [
+      "Google AI Essentials is a free-to-audit, self-paced online course from Google experts (through Grow with Google and Coursera) that teaches AI fundamentals and productive use of AI tools. No experience needed.",
+      "Five modules: Introduction to AI, Maximize Productivity With AI Tools, Discover the Art of Prompting, Use AI Responsibly, and Stay Ahead of the AI Curve.",
+      "Focus on practical skills: using generative AI for everyday work tasks, writing effective prompts, and recognizing bias and limitations.",
+      "Completion earns a Google certificate you can share with employers. It's a good foundation before deeper AI PM material."
+    ],
+    "w5d1r9": [
+      "OpenAI Academy is OpenAI's free learning hub for building practical AI skills for work and careers.",
+      "Learning paths: core prompting and output-review habits, repeatable AI workflows, and directing work with agents.",
+      "Technical tracks: using Codex across the software development lifecycle and building with the OpenAI API.",
+      "Strategy track: turning a real AI initiative into a roadmap and an initial AI strategy draft, which is directly useful for AI PMs. There's also content for education and career preparation."
+    ],
+    "w5d2r1": [
+      "ML turns data into knowledge through self-learning. Andrew Ng: 'AI is the new electricity'. PMs must speak engineers' language and understand ML's capabilities and limits.",
+      "Types: supervised learning (labeled data; classification like spam filters, regression like predicting house prices), unsupervised learning (finding structure, e.g. clustering) and reinforcement learning (learning by maximizing rewards). Supervised learning drives most economic value today.",
+      "Neural networks learn through forward propagation (predict), a cost function (measure error), and backpropagation with gradient descent (adjust weights), repeated many times.",
+      "Underfitting (high bias) means the model is too simple to fit the data. Overfitting (high variance) means it memorizes training data and fails on new data. Diagnose by comparing training and dev/test error to human-level error.",
+      "Split data into training, dev and test sets. Fixes: bigger models or more training for bias, more data or regularization for variance."
+    ],
+    "w5d2r2": [
+      "Non-technical PMs need AI/ML fundamentals to build and manage AI products effectively.",
+      "AI is the broad goal of machines performing intelligent tasks. ML is the subset where systems learn from data instead of explicit rules.",
+      "Key components: data (collected, cleaned, preprocessed), algorithms (learning procedures), models (the trained result), training, and evaluation on unseen data.",
+      "Best practices: define the problem and business objective clearly, manage data quality, choose suitable tools (TensorFlow, PyTorch, scikit-learn), and build a multidisciplinary team.",
+      "Develop iteratively: start with an MVP, test, gather feedback and improve, and consider ethics and bias throughout."
+    ],
+    "w5d2r3": [
+      "The first course of Duke University's AI Product Management Specialization on Coursera: a non-coding introduction to machine learning for PMs.",
+      "Covers how ML works and its types, the model development process, and the intuition behind common ML and deep learning algorithms.",
+      "Learn the challenges of modeling and how to overcome them, plus best practices for evaluating and interpreting ML models.",
+      "Six modules, ending with a hands-on project where you train and optimize a model on a simple real-world problem.",
+      "Goal: collaborate confidently with data scientists and engineers and make informed AI product decisions."
+    ],
+    "w5d2r4": [
+      "An LLM is essentially two files: a huge parameters file (e.g. Llama 2 70B is about 140GB) and a small program that runs it. Pretraining compresses a large chunk of the internet (about 10TB of text, thousands of GPUs, millions of dollars) into those weights.",
+      "The core task is next-word prediction, which forces the model to learn a lot about the world. The knowledge is lossy and 'dreamed', which is why models hallucinate.",
+      "Base model → assistant: fine-tune on high-quality Q&A conversations written by human labelers, then refine with human feedback (RLHF).",
+      "Capabilities scale predictably with model size and data (scaling laws). Modern LLMs use tools (browsing, calculator, code), are multimodal, and are moving toward slower 'System 2' reasoning and self-improvement. Karpathy frames the LLM as the kernel of a new operating system.",
+      "Security challenges: jailbreaks, prompt injection (hidden instructions in web pages or images) and data poisoning/backdoors."
+    ],
+    "w5d2r5": [
+      "Pretraining: download and filter web text (e.g. FineWeb), tokenize it into about 100K token types, and train a transformer to predict the next token. The result is a 'base model', an internet document simulator.",
+      "Post-training (supervised fine-tuning) on curated conversations turns a base model into a helpful assistant. You're effectively talking to a statistical simulation of an expert labeler.",
+      "LLM psychology: hallucinations (mitigated by teaching models to say 'I don't know' and by tools like search), knowledge in weights is a vague memory while the context window is working memory, and models need tokens to think, so step-by-step reasoning helps.",
+      "Tokenization quirks explain failures at counting letters or spelling. Intelligence is 'jagged': brilliant at hard tasks, sometimes failing simple ones.",
+      "Reinforcement learning lets models discover reasoning strategies ('thinking' models like DeepSeek-R1, much like AlphaGo's move 37). RLHF helps with unverifiable tasks but can be gamed."
+    ],
+    "w5d2r6": [
+      "GPT = Generative Pre-trained Transformer. It generates text by repeatedly predicting a probability distribution over the next token, sampling one, appending it, and repeating.",
+      "Text is split into tokens, and each token becomes a vector (embedding). Directions in embedding space encode meaning (e.g. king − man + woman ≈ queen).",
+      "Inside a transformer, attention blocks let vectors share context with each other, and MLP blocks process each vector. Repeating these layers refines meaning.",
+      "Deep learning premise: all behavior comes from tunable weights (GPT-3 has about 175B) organized in matrices, learned from data rather than hand-coded.",
+      "At the end, unembedding turns the final vector into scores for every token, and softmax with temperature converts them into probabilities (higher temperature means more random, creative output)."
+    ],
+    "w5d2r7": [
+      "Attention lets each token's embedding update based on context. 'Mole' means different things in 'American shrew mole', 'one mole of CO2' and 'take a biopsy of the mole'.",
+      "Each token produces a query ('what am I looking for?') and a key ('what do I contain?'). Query–key dot products measure relevance, and softmax normalizes them into an attention pattern.",
+      "Masking stops tokens from seeing future tokens during training, which is what lets the model predict the next word.",
+      "Value vectors carry the information that gets added to relevant embeddings, e.g. adjectives refining the nouns they describe.",
+      "Multi-headed attention runs many attention heads in parallel (96 per layer in GPT-3), each learning different relationships. Attention cost grows with the square of context length."
+    ],
+    "w5d2r8": [
+      "HelloPM's free AI product management course: 9 masterclasses (12+ hours) across AI PM, core PM skills and career growth.",
+      "AI track: how LLMs work (tokens, transformers), the GenAI value stack, RAG (chunking, embeddings, vector DBs), prompt engineering, fine-tuning (full vs PEFT/LoRA) and AI agents (workflow vs autonomous).",
+      "Includes product teardowns of Granola, NotebookLM and Lovable, plus AI evals: success criteria, evaluation datasets, LLM-as-judge and continuous monitoring.",
+      "Key ideas: context engineering (prompt → RAG → fine-tune) as an AI PM's decision tree, most agent failures come from poor problem definition, and a great AI PM is 'PM first, AI second'.",
+      "Other modules cover PRDs, analytics, APIs, PM interviews and salary negotiation."
+    ],
+    "w5d2r9": [
+      "Learn Prompting is a large, free, open prompt engineering resource (60+ modules, 9 languages) backed by published research.",
+      "Courses include Introduction to Prompt Engineering, LLMs, RAG, Generative AI Agents and practical GenAI for everyday efficiency and marketing.",
+      "Also covers AI security: a free 7-day LLM security course (prompt hacking types, common attacks and defenses) and an AI red-teaming masterclass with Sander Schulhoff.",
+      "Useful for AI PMs to build practical prompting skills and understand prompt injection and other risks in AI products."
+    ],
+    "w5d3r1": [
+      "By Aman Khan (Arize AI, ex-Spotify and Apple) on Lenny's Newsletter: evals, not prompts, are the hidden lever behind great AI products, and writing them is becoming the defining AI PM skill.",
+      "Evals break an AI system into steps and measure the impact of each change, replacing 'vibe checks' with data. Running example: a trip-planning agent ('relaxing weekend near SF under $1,000') that uses flight, hotel and map tools.",
+      "Human evals: thumbs up/down or expert labelers. Real signal, but sparse, ambiguous and costly.",
+      "Code-based evals: deterministic checks (is the API call or code valid? does it run?). LLM-as-judge evals: a judge model grades outputs against a rubric. Scalable, natural-language, and can explain its judgments.",
+      "Workflow: define what 'good' means for each step, build a labeled dataset, write eval prompts, check judges against human labels, and iterate continuously as the product changes."
+    ],
+    "w5d3r2": [
+      "AI systems are non-deterministic, so you can't manually test your way to confidence. Evals turn 'I think it's better' into 'we tested 200 cases and accuracy rose 5% without hurting tone'.",
+      "Evals give PMs coverage (hundreds of scenarios), trade-off visibility and version comparison. Defining 'good' is a product decision, not just an engineering one.",
+      "Three components: a dataset (golden cases, edge cases and known failures; start with 5–10 and grow to a golden set), the task (the prompt, chain or agent being tested) and scorers (0–1 scores, one quality dimension each, via code checks or LLM judges).",
+      "PMs own success criteria and rubrics, essentially a PRD for AI behavior. Engineers build scorers and infrastructure.",
+      "Three phases of agent development lead to automated evaluation and a continuous loop: find issues in production → update datasets and scorers → run evals → improve → monitor."
+    ],
+    "w5d3r3": [
+      "AI agents break traditional analytics. Inputs are open-ended chat and outputs are non-deterministic, so click-based tracking can't see what happened inside.",
+      "A trace records an entire agent interaction: user input and intent, each tool call (span) and its result, retrieved context (RAG), the final outcome and feedback signals.",
+      "Single-trace inspection debugs specific failures (e.g. 'charged twice' traced to a billing tool returning a duplicate row). Aggregate trace analysis finds patterns: failing intents, erroring tools, costly queries.",
+      "Evals measure agent quality systematically and connect it to engagement and business outcomes.",
+      "PMs who treat eval design as part of the job own the loop between agent quality and business results. Otherwise you ship features you can't measure, debug or defend."
+    ],
+    "w5d4r1": [
+      "PMs rarely own the model, but they own the experience and launch criteria, so responsible AI is part of the job. It splits into four areas: bias, fairness, transparency and hallucinations.",
+      "Bias: ask which users are missing from the data and who pays when the model errs. Segment model error rates like funnel metrics (a 10-point accuracy gap for one group is a defect), but don't over-correct into failing everyone equally.",
+      "Fairness: pick one product-specific definition (e.g. equal approval rates for qualified applicants) and write it in the spec. Run a pre-launch audit on about 1,000 real inputs bucketed by segment.",
+      "Transparency: label AI outputs, show confidence for high-stakes answers, let users dispute results, and review disputes regularly.",
+      "Hallucinations: sort use cases by blast radius. Low-risk features get light review; high-risk ones need grounding, a human in the loop or checker models. Build escape hatches (retry, fallback to human support)."
+    ],
+    "w5d4r2": [
+      "PMs decide what AI features ship and how they behave, so responsible AI is a core product responsibility, not just an engineering or legal one.",
+      "Key principles: fairness (avoid biased outcomes for user groups), transparency and explainability (users know when AI is involved and why), privacy and data protection, and accountability.",
+      "Build responsibility in from discovery: question training data sources, consider who could be harmed, and define acceptable risk before building.",
+      "Put guardrails and human oversight in place for high-stakes decisions, and monitor models after launch for drift, bias and misuse.",
+      "Balance innovation with trust. Responsible products protect users and the company's reputation long term."
+    ],
+    "w5d4r3": [
+      "AI hallucinations are confident but false outputs. In customer experience they damage trust and can scale across thousands of interactions.",
+      "Core causes: incomplete, outdated or biased training data (the model fills gaps with assumptions), ambiguous prompts and intent confusion, and a lack of governance and guardrails.",
+      "The model isn't lying. It predicts likely patterns, and with an incomplete picture the prediction may not match reality or intent.",
+      "Prevention by design: ground AI in unified, real-time data (fewer fragmented bolt-on tools), build in governance and guardrails, and monitor outputs.",
+      "Human oversight: human-in-the-loop review, escalation to human agents when requests exceed the AI's limits, and transparency, which matter all the more as agentic AI takes actions."
+    ],
+    "w5d5r1": [
+      "A list of 25 common AI PM interview questions with sample answers, from basics to scenarios.",
+      "Concepts: how AI products differ from traditional ones, model bias, the cold-start problem, explainability, hallucinations, and A/B testing for AI.",
+      "Metrics and evaluation: measuring AI product success, chatbot metrics, and evaluating generative AI products.",
+      "Design and scenarios: improve a recommendation system, design a chatbot, improve search with AI, launch a low-accuracy product, debug an AI product.",
+      "Collaboration and risk: the PM's role in an AI team, working with data scientists, prioritizing AI features, and handling data privacy."
+    ],
+    "w5d5r2": [
+      "50+ AI PM interview questions with expert answers, grouped by type. AI PM interviews add technical AI depth on top of classic PM rounds.",
+      "Technical: supervised vs unsupervised vs reinforcement learning, precision vs recall (and when to optimize each), how LLMs work, RAG vs fine-tuning, and model evaluation metrics.",
+      "Product sense and strategy: improve Google Search with AI, design an AI feature for a daily-use product, decide whether every product needs AI, prioritize an AI roadmap with limited ML resources, respond to a competitor's AI launch.",
+      "Execution and ethics: diagnose a chatbot getting negative feedback, design AI content moderation, fix a biased recommender.",
+      "Behavioral and craft: decisions with incomplete data, disagreeing with engineers, failed launches, staying current, writing PRDs for AI features, and working with ML engineers."
+    ],
+    "w5d5r3": [
+      "PM case interviews give a realistic problem (improve an app, diagnose a metric drop, launch a feature). Interviewers judge structure, data use, prioritization and communication over a single 'right' answer.",
+      "Steps: clarify the business goal → identify the main user problem → state assumptions → brainstorm → prioritize → recommend an MVP → summarize. CSPMS shorthand: Clarify, Segment, Problem, Metrics, Solution.",
+      "25 example cases cover growth (Spotify podcasts, LinkedIn engagement), metric drops (Amazon checkout down 12%, Netflix retention), design (grocery app for seniors), monetization (Duolingo revenue), roadmaps, AI products and trust/security (Airbnb, banking).",
+      "Tips: pick one target segment, one primary metric plus 2–3 guardrails, and one realistic MVP, and say what you won't build.",
+      "Use AI only when it clearly beats a non-AI solution, and define fallbacks, accuracy and safety. In a 30-minute case, budget time and stay calm when challenged."
+    ],
+    "w5d5r4": [
+      "Written by a recruiting firm co-founder, so read it with that bias in mind. AI PM interviews test four signals: AI product sense, evaluating a model that's sometimes wrong, partnering with data science across the model lifecycle, and shipping responsibly under uncertainty.",
+      "Cautionary story: a polished candidate aced product sense but froze on evals. She couldn't separate an offline regression set from online metrics and had no fallback plan. The rougher candidate who answered well got the job.",
+      "Strong answer pattern: a hand-labeled golden dataset with domain experts, a hallucination-rate threshold you won't ship above, shadow deployment against the current system, and human review below a confidence cutoff.",
+      "The job is shipping products built on a component that is probabilistic, sometimes wrong, expensive to run and changing every few months.",
+      "The questions come with grading notes on which answers pass and which quietly fail, covering metrics, model lifecycle collaboration and responsible-AI guardrails."
+    ],
+    "live-session-1": [
+      "Masterclass by Niranjal Suresh Kumar (IITG and IIM Bangalore alum, PM on Microsoft Copilot agents) on breaking into PM in the AI era.",
+      "A PM blends business, technology and UX: understand the user, then craft flows that move them seamlessly toward their goal while balancing user fatigue against business goals.",
+      "Role definition: the strategic owner of a product's vision and lifecycle, and the 'single-threaded' owner who aligns multiple teams. When something goes wrong, people come to you.",
+      "Breaking in: be a PM of your own career. Build original products, prototype quickly with AI tools, enter case competitions, share your work publicly, and build a strong community and referral network.",
+      "Communication is the biggest lever: storytelling, positioning and concise answers (practise answering in under 50 words)."
+    ],
+    "live-session-2": [
+      "Session by Anil Kumar Shahi (IIT Roorkee and IIM Ahmedabad alum, PM at Tata 1mg) on building product sense.",
+      "Product sense combines user psychology, critical reasoning, prioritization, UX sensibility, data fluency and tech awareness. Understanding user psychology is the most unique and important part, and it takes practice.",
+      "Example: why Instagram Stories works (borrowed from Snapchat). Ephemeral, low-pressure sharing visible for 24 hours.",
+      "Persona creation: there are endless ways to slice users. Better segmentation follows the user lifecycle, e.g. Instamart new vs repeat users, then by acquisition channel and behavior.",
+      "Knowing exactly who you're solving for leads you to the right problems, and good solutions follow from the right problem statements."
+    ],
+    "live-session-3": [
+      "Session by Akhil, founder of Product Space, on understanding users and UI/UX, which he calls the toughest part of PM.",
+      "User segmentation: group users into cohorts by shared characteristics, which is everywhere in daily life. Top-of-mind awareness decides which apps users go to first (e.g. Flipkart and Amazon for online shopping).",
+      "Market context matters: early Indian e-commerce (2012–15) was immature, with room for several players (Flipkart, Amazon, Jabong, Snapdeal) to become category creators by winning users fast.",
+      "UX goal: a frictionless interface that lets users complete the goal they came for (e.g. ordering food on Swiggy from a well-structured homepage with search and recommendations).",
+      "Shows how AI design tools can fast-track product design beyond traditional tools like Figma."
+    ],
+    "live-session-4": [
+      "Session on measuring success, from metrics to product-market fit.",
+      "Metric focus shifts across the product life cycle: acquisition in introduction, engagement and retention in growth, monetization in maturity, and sunset or spin-off decisions in decline.",
+      "Product-market fit sits within this: the alignment of a product's features with the target market's needs.",
+      "Measuring the wrong metric is disastrous. The US in Vietnam optimized for kill ratio, 'won' on it and still lost the war. Pick outcome-based metrics.",
+      "Metric trees: break a north star such as listening time into levers like more users (notifications, trending artists, recommendations) × time per session (playlists, personalization)."
+    ],
+    "live-session-5": [
+      "Session by a Dream11 PM on MVP and GTM: building and launching products.",
+      "India is now the world's third-largest startup hub (about 150K startups a year), and AI is making building even faster.",
+      "MVPs evolve with user feedback (e.g. Swiggy's journey from food delivery toward Instamart and more). The MVP phase never ends, because new features start as MVPs. Skip the MVP route only when strong evidence exists (Blinkit scaling after seeing Instamart's traction).",
+      "'If a picture is worth a thousand words, a prototype is worth a thousand meetings.' Tools like Lovable let PMs test many ideas cheaply, knowing most will fail.",
+      "GTM alignment: product, marketing and sales must share the same understanding of the problem, user, pricing and positioning. Promising one thing in an ad and showing another on landing breaks trust."
+    ],
+    "live-session-6": [
+      "Session by Product Space on AI tools for PMs and preparing for AI PM interviews.",
+      "AI won't replace PMs. Products are end-to-end workflows that need judgment and direction, and that judgment is what differentiates one company from another when everyone has access to the same LLMs.",
+      "Expectations are rising: PMs now need to understand classical ML (regression, decision trees, boosting), generative AI (LLMs, SLMs) and agentic AI, and the field moves fast, so keep upskilling.",
+      "Stay updated with real industry practice (e.g. how teams build AI recommendation engines) by learning the fundamentals first.",
+      "Interviews: classic product sense, execution and strategy questions remain, plus subject-matter AI questions. Avoid over-relying on ChatGPT for your thinking."
+    ],
+    "live-session-7": [
+      "A 90-minute Product Space masterclass on tech basics for PMs, with hands-on API practice.",
+      "How the internet works: a web address (URL) is like a house address. HTTPS is the protocol (the way information travels), a domain name is the readable name, and DNS maps it to a numeric IP address, like a phone book.",
+      "Databases and SQL: SQL (structured query language) talks to relational databases and powers CRUD operations. How much a PM needs depends on the company and whether dedicated analysts are available.",
+      "APIs, hands-on in Postman: endpoints, parameters, authentication vs authorization, and importing a cURL command. Status codes tell teams what went wrong (200 = working, 400 = bad request) so bugs can be diagnosed faster.",
+      "E-commerce example: homepage → search → product listing page (PLP) → product detail page (PDP), each step calling an API. Validate inputs up front in the UI (e.g. email format) to reduce failures."
     ]
   }
 }

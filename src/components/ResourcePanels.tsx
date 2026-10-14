@@ -91,6 +91,47 @@ export const NotesPanel: React.FC<NotesPanelProps> = ({ resourceId, onClose }) =
   );
 };
 
+interface TaskHeaderProps {
+  label: string;
+  summary?: string;
+}
+
+export const TaskHeader: React.FC<TaskHeaderProps> = ({ label, summary }) => {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div className="space-y-2">
+      <div className="flex items-center justify-between gap-2">
+        <span className="text-[10px] font-mono font-semibold uppercase text-zinc-400 dark:text-zinc-500 block">
+          {label}
+        </span>
+        {summary && (
+          <button
+            type="button"
+            onClick={() => setOpen((current) => !current)}
+            className={`inline-flex items-center gap-1 px-2 py-1 rounded-lg text-[10px] font-mono font-semibold transition-colors ${
+              open
+                ? 'text-violet-600 dark:text-violet-400 bg-violet-50 dark:bg-violet-950/50'
+                : 'text-zinc-400 hover:text-violet-600 dark:hover:text-violet-400 hover:bg-violet-50 dark:hover:bg-violet-950/50'
+            }`}
+            title="AI summary of this task"
+            aria-label={`Show AI summary of ${label}`}
+            aria-expanded={open}
+          >
+            <WandSparkles className="w-3.5 h-3.5" />
+            <span>Summary</span>
+          </button>
+        )}
+      </div>
+      {open && summary && (
+        <p className="text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed border-l-2 border-violet-500/30 pl-3 py-1 animate-fade-in">
+          {summary}
+        </p>
+      )}
+    </div>
+  );
+};
+
 interface SummaryPanelProps {
   points: string[];
 }
