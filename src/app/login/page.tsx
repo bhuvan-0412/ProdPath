@@ -40,28 +40,28 @@ export default function LoginPage() {
         {/* Back Link */}
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-xs font-semibold text-zinc-500 dark:text-zinc-400 hover:text-violet-600 dark:hover:text-violet-400 transition-colors mb-6"
+          className="inline-flex items-center gap-2 text-xs font-semibold text-muted hover:text-accent-dark transition-colors mb-6"
         >
           <ArrowLeft className="w-4 h-4" />
           Back to Home
         </Link>
 
         {/* Login Card */}
-        <div className="bg-white/95 dark:bg-zinc-900/95 md:bg-white/80 md:dark:bg-zinc-900/90 md:backdrop-blur-xl border border-zinc-200/80 dark:border-zinc-800 rounded-3xl p-8 shadow-xl shadow-indigo-500/5">
+        <div className="bg-surface md:bg-surface border border-line rounded-xl p-8 ">
           <div className="text-center mb-8">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-violet-600 to-indigo-500 flex items-center justify-center text-white shadow-lg shadow-violet-500/30 mx-auto mb-4">
+            <div className="w-12 h-12 rounded-xl bg-accent flex items-center justify-center text-paper mx-auto mb-4">
               <Compass className="w-6 h-6 stroke-[2.2]" />
             </div>
-            <h1 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-white mb-2">
+            <h1 className="text-2xl font-bold tracking-tight text-ink mb-2">
               Welcome to ProdPath
             </h1>
-            <p className="text-xs text-zinc-500 dark:text-zinc-400 max-w-xs mx-auto">
+            <p className="text-xs text-muted max-w-xs mx-auto">
               Sign in to synchronize your learning progress across devices, save custom resources, and unlock your personal roadmap.
             </p>
           </div>
 
           {errorMsg && (
-            <div className="mb-6 p-3 rounded-xl bg-red-50 dark:bg-red-950/50 border border-red-200 dark:border-red-800/50 text-red-600 dark:text-red-400 text-xs font-medium text-center">
+            <div className="mb-6 p-3 rounded-xl bg-danger/10 border border-danger/30 text-danger text-xs font-medium text-center">
               {errorMsg}
             </div>
           )}
@@ -70,7 +70,7 @@ export default function LoginPage() {
             <button
               onClick={handleGoogleLogin}
               disabled={loading}
-              className="w-full py-3.5 px-4 bg-white dark:bg-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-700/80 text-zinc-800 dark:text-zinc-100 border border-zinc-300 dark:border-zinc-700 rounded-2xl font-semibold text-sm shadow-sm hover:shadow transition-all flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed group"
+              className="w-full py-3.5 px-4 bg-surface hover:bg-line/40 text-ink border border-line rounded-xl font-semibold text-sm hover:shadow-offset transition-all flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed group"
             >
               <svg className="w-5 h-5" viewBox="0 0 24 24">
                 <path
@@ -91,11 +91,11 @@ export default function LoginPage() {
                 />
               </svg>
               <span>{loading ? 'Connecting to Google...' : 'Continue with Google'}</span>
-              {!loading && <LogIn className="w-4 h-4 text-zinc-400 group-hover:text-violet-500 transition-colors" />}
+              {!loading && <LogIn className="w-4 h-4 text-muted group-hover:text-accent-dark transition-colors" />}
             </button>
           </div>
 
-          <p className="text-xs sm:text-[11px] text-zinc-400 dark:text-zinc-500 text-center mt-6">
+          <p className="text-xs sm:text-[11px] text-muted text-center mt-6">
             By signing in, you accept our standard terms and privacy defaults.
           </p>
         </div>

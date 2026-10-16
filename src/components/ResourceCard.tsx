@@ -32,23 +32,23 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({
   };
 
   const actionButtonClass = (active: boolean) =>
-    `relative inline-flex items-center justify-center gap-1.5 min-h-10 min-w-10 px-3 sm:min-h-0 sm:min-w-0 sm:p-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 sm:border-transparent sm:dark:border-transparent transition-colors ${
+    `relative inline-flex items-center justify-center gap-1.5 min-h-10 min-w-10 px-3 sm:min-h-0 sm:min-w-0 sm:p-1.5 rounded-lg border border-line sm:border-transparent transition-colors ${
       active
-        ? 'text-violet-600 dark:text-violet-400 bg-violet-50 dark:bg-violet-950/50'
-        : 'text-zinc-400 hover:text-violet-600 dark:hover:text-violet-400 hover:bg-violet-50 dark:hover:bg-violet-950/50'
+        ? 'text-accent-dark bg-accent-soft'
+        : 'text-muted hover:text-accent-dark hover:bg-accent-soft'
     }`;
 
   const getIcon = () => {
     switch (resource.type) {
       case 'case-study':
-        return <BookMarked className="w-3.5 h-3.5 text-violet-500 dark:text-violet-400" />;
+        return <BookMarked className="w-3.5 h-3.5" aria-hidden="true" />;
       case 'video':
-        return <Video className="w-3.5 h-3.5 text-rose-500 dark:text-rose-400" />;
+        return <Video className="w-3.5 h-3.5" aria-hidden="true" />;
       case 'playlist':
-        return <ListVideo className="w-3.5 h-3.5 text-purple-500 dark:text-purple-400" />;
+        return <ListVideo className="w-3.5 h-3.5" aria-hidden="true" />;
       case 'article':
       default:
-        return <FileText className="w-3.5 h-3.5 text-sky-500 dark:text-sky-400" />;
+        return <FileText className="w-3.5 h-3.5" aria-hidden="true" />;
     }
   };
 
@@ -66,29 +66,15 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({
     }
   };
 
-  const getTypeBadgeClass = () => {
-    switch (resource.type) {
-      case 'case-study':
-        return 'bg-violet-50 dark:bg-violet-950/60 text-violet-600 dark:text-violet-300 border-violet-200/60 dark:border-violet-800/50';
-      case 'video':
-        return 'bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-300 border-rose-200/60 dark:border-rose-800/50';
-      case 'playlist':
-        return 'bg-purple-50 dark:bg-purple-950/60 text-purple-600 dark:text-purple-300 border-purple-200/60 dark:border-purple-800/50';
-      case 'article':
-      default:
-        return 'bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 border-zinc-200/60 dark:border-zinc-700/50';
-    }
-  };
-
   const isExternalLink = resource.url && resource.url !== '#' && /^https?:\/\//i.test(resource.url);
 
   return (
     <div
       id={`resource-${resource.id}`}
-      className={`group relative flex flex-col justify-between gap-3 p-4 rounded-xl border scroll-mt-24 transition-all duration-200 ${
+      className={`group relative flex flex-col justify-between gap-3 p-4 rounded-card border scroll-mt-24 transition-all duration-200 ${
         completed
-          ? 'bg-zinc-50/70 dark:bg-[#12121a]/50 border-zinc-200/80 dark:border-zinc-800/60 text-zinc-500 dark:text-zinc-400'
-          : 'bg-white dark:bg-[#12121a] border-zinc-200/90 dark:border-zinc-800 hover:border-violet-500/40 dark:hover:border-violet-500/40 shadow-xs'
+          ? 'bg-paper border-line text-muted'
+          : 'bg-surface border-line hover:border-ink hover:shadow-offset'
       }`}
     >
       <div className="flex flex-wrap sm:flex-nowrap items-start gap-3 flex-1 min-w-0">
@@ -102,10 +88,10 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({
           aria-label={`Mark "${resource.title}" as ${completed ? 'incomplete' : 'complete'}`}
         >
           <span
-            className={`mt-0.5 w-5 h-5 rounded-lg border transition-all duration-200 flex items-center justify-center ${
+            className={`mt-0.5 w-5 h-5 rounded-md border-[1.5px] transition-all duration-200 flex items-center justify-center ${
               completed
-                ? 'bg-violet-600 border-violet-600 text-white animate-pop shadow-xs'
-                : 'border-zinc-300 dark:border-zinc-700 group-hover/check:border-violet-500 dark:group-hover/check:border-violet-400 bg-zinc-50 dark:bg-zinc-900'
+                ? 'bg-accent border-accent text-paper animate-pop'
+                : 'border-ink/50 group-hover/check:border-ink bg-surface'
             }`}
           >
             {completed && <Check className="w-3.5 h-3.5 stroke-[3]" />}
@@ -116,26 +102,26 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({
         <div className="flex-1 min-w-0 space-y-1.5">
           {/* Metadata Badges */}
           <div className="flex items-center gap-2 flex-wrap font-mono text-xs sm:text-[10px]">
-            <span className={`inline-flex items-center gap-1 font-semibold px-2 py-0.5 rounded-md border ${getTypeBadgeClass()}`}>
+            <span className={`inline-flex items-center gap-1 font-semibold px-2 py-0.5 rounded-md border border-ink/60 text-ink`}>
               {getIcon()}
               <span>{getTypeLabel()}</span>
             </span>
 
             {showWeekBadge && resource.weekId && (
-              <span className="font-semibold px-2 py-0.5 rounded-md bg-violet-50 dark:bg-violet-950/60 text-violet-600 dark:text-violet-300 border border-violet-200/60 dark:border-violet-800/50 uppercase">
+              <span className="font-semibold px-2 py-0.5 rounded-md text-muted border border-line uppercase">
                 {resource.weekId.replace('-', ' ')}
               </span>
             )}
 
             {resource.isCustom && (
-              <span className="inline-flex items-center gap-1 font-semibold px-2 py-0.5 rounded-md bg-amber-50 dark:bg-amber-950/50 text-amber-700 dark:text-amber-300 border border-amber-200/50 dark:border-amber-800/40">
-                <Sparkles className="w-3 h-3 text-amber-500" />
+              <span className="inline-flex items-center gap-1 font-semibold px-2 py-0.5 rounded-md text-ink border border-ink/60">
+                <Sparkles className="w-3 h-3" aria-hidden="true" />
                 Custom
               </span>
             )}
 
             {resource.badge && (
-              <span className="inline-flex items-center gap-1 font-semibold px-2 py-0.5 rounded-md bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-300 border border-indigo-200/60 dark:border-indigo-800/50">
+              <span className="inline-flex items-center gap-1 font-semibold px-2 py-0.5 rounded-md bg-accent-soft text-accent-dark border border-accent/40">
                 {resource.badge}
               </span>
             )}
@@ -148,10 +134,10 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
-              className={`font-semibold text-[15px] sm:text-sm leading-snug py-1 -my-1 hover:text-violet-600 dark:hover:text-violet-400 transition-colors inline-flex items-center gap-1.5 ${
+              className={`font-semibold text-[15px] sm:text-sm leading-snug py-1 -my-1 hover:text-accent-dark transition-colors inline-flex items-center gap-1.5 ${
                 completed
-                  ? 'line-through text-zinc-400 dark:text-zinc-500 font-normal'
-                  : 'text-zinc-900 dark:text-zinc-100'
+                  ? 'line-through text-muted font-normal'
+                  : 'text-ink'
               }`}
             >
               <span>{resource.title}</span>
@@ -161,8 +147,8 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({
             <h4
               className={`font-semibold text-sm ${
                 completed
-                  ? 'line-through text-zinc-400 dark:text-zinc-500 font-normal'
-                  : 'text-zinc-900 dark:text-zinc-100'
+                  ? 'line-through text-muted font-normal'
+                  : 'text-ink'
               }`}
             >
               {resource.title}
@@ -171,13 +157,13 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({
 
           {/* Summary / Notes */}
           {resource.summary && (
-            <p className="text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed font-normal">
+            <p className="text-xs text-muted leading-relaxed font-normal">
               {resource.summary}
             </p>
           )}
 
           {resource.notes && !resource.summary && (
-            <p className="text-xs text-zinc-500 dark:text-zinc-400 italic">
+            <p className="text-xs text-muted italic">
               &quot;{resource.notes}&quot;
             </p>
           )}
@@ -191,7 +177,7 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({
                   e.stopPropagation();
                   setTakeawaysExpanded(!takeawaysExpanded);
                 }}
-                className="inline-flex items-center gap-1.5 text-xs font-semibold text-violet-600 dark:text-violet-400 hover:text-violet-700 dark:hover:text-violet-300 transition-colors min-h-10 sm:min-h-0 py-1"
+                className="inline-flex items-center gap-1.5 text-xs font-semibold text-accent-dark hover:underline min-h-10 sm:min-h-0 py-1"
               >
                 <span>
                   {takeawaysExpanded
@@ -204,7 +190,7 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({
               {takeawaysExpanded && (
                 <div className="mt-2 space-y-3">
                   {resource.takeaways && resource.takeaways.length > 0 && (
-                    <ul className="space-y-1.5 pl-4 list-disc text-xs text-zinc-600 dark:text-zinc-300 border-l-2 border-violet-500/30 ml-1 py-1">
+                    <ul className="space-y-1.5 pl-4 list-disc text-xs text-muted border-l-2 border-accent/40 ml-1 py-1">
                       {resource.takeaways.map((takeaway, idx) => (
                         <li key={idx} className="leading-relaxed pl-1">
                           {takeaway}
@@ -214,8 +200,8 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({
                   )}
 
                   {resource.furtherReading && resource.furtherReading.length > 0 && (
-                    <div className="pt-2.5 border-t border-zinc-100 dark:border-zinc-800/80">
-                      <span className="text-xs sm:text-[10px] font-mono font-bold uppercase tracking-wider text-violet-600 dark:text-violet-400 block mb-1.5">
+                    <div className="pt-2.5 border-t border-line">
+                      <span className="text-xs sm:text-[10px] font-mono font-bold uppercase tracking-wider text-accent-dark block mb-1.5">
                         Go deeper
                       </span>
                       <div className="space-y-1.5">
@@ -226,10 +212,10 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({
                             target="_blank"
                             rel="noopener noreferrer"
                             onClick={(e) => e.stopPropagation()}
-                            className="inline-flex items-center gap-1.5 text-xs font-medium text-zinc-700 dark:text-zinc-300 hover:text-violet-600 dark:hover:text-violet-400 transition-colors group/link py-1.5 sm:py-0"
+                            className="inline-flex items-center gap-1.5 text-xs font-medium text-ink/80 hover:text-accent-dark transition-colors group/link py-1.5 sm:py-0"
                           >
                             <span className="hover:underline">{item.title}</span>
-                            <ExternalLink className="w-3 h-3 flex-shrink-0 opacity-60 group-hover/link:opacity-100 text-violet-500 transition-opacity" />
+                            <ExternalLink className="w-3 h-3 flex-shrink-0 opacity-60 group-hover/link:opacity-100 text-accent-dark transition-opacity" />
                           </a>
                         ))}
                       </div>
@@ -273,7 +259,7 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({
             <PenLine className="w-4 h-4" />
             <span className="sm:hidden text-xs font-semibold">Notes</span>
             {hasNote && (
-              <span className="absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-violet-500" aria-hidden="true" />
+              <span className="absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-accent" aria-hidden="true" />
             )}
           </button>
 
@@ -283,7 +269,7 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({
                 e.stopPropagation();
                 deleteCustomResource(resource.id);
               }}
-              className="inline-flex items-center justify-center min-h-10 min-w-10 sm:min-h-0 sm:min-w-0 sm:p-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 sm:border-transparent sm:dark:border-transparent text-zinc-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/50 transition-colors"
+              className="inline-flex items-center justify-center min-h-10 min-w-10 sm:min-h-0 sm:min-w-0 sm:p-1.5 rounded-lg border border-line sm:border-transparent text-muted hover:text-danger hover:bg-danger/10 transition-colors"
               title="Delete custom resource"
               aria-label="Delete resource"
             >
@@ -297,7 +283,7 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({
       {openPanel && (
         <div
           onClick={(e) => e.stopPropagation()}
-          className="pt-3 border-t border-zinc-100 dark:border-zinc-800/80 animate-fade-in cursor-auto"
+          className="pt-3 border-t border-line animate-fade-in cursor-auto"
         >
           {openPanel === 'notes' ? (
             <NotesPanel resourceId={resource.id} onClose={() => setOpenPanel(null)} />

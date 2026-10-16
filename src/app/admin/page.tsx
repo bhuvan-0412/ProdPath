@@ -165,8 +165,8 @@ export default function AdminPage() {
   if (isLoadingAuth || (!isAdmin && user)) {
     return (
       <div className="min-h-[60vh] flex flex-col items-center justify-center gap-3">
-        <RefreshCw className="w-8 h-8 text-violet-600 animate-spin" />
-        <p className="text-xs text-zinc-500 font-medium">Verifying admin access...</p>
+        <RefreshCw className="w-8 h-8 text-accent-dark animate-spin" />
+        <p className="text-xs text-muted font-medium">Verifying admin access...</p>
       </div>
     );
   }
@@ -176,13 +176,13 @@ export default function AdminPage() {
   return (
     <div className="space-y-8 pb-12">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-200 dark:border-zinc-800 pb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-line pb-6">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-100 dark:bg-violet-950/60 text-violet-600 dark:text-violet-400 text-xs font-bold mb-2">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent-soft text-accent-dark text-xs font-bold mb-2">
             <ShieldCheck className="w-3.5 h-3.5" />
             <span>Admin Control Panel</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-zinc-900 dark:text-white">
+          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-ink">
             User Analytics & Communication
           </h1>
         </div>
@@ -190,7 +190,7 @@ export default function AdminPage() {
         <button
           onClick={loadAdminData}
           disabled={loadingStats}
-          className="self-start sm:self-auto flex items-center gap-2 px-3.5 py-2 rounded-xl bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 text-xs font-semibold transition-colors disabled:opacity-50"
+          className="self-start sm:self-auto flex items-center gap-2 px-3.5 py-2 rounded-xl bg-paper hover:bg-line/70 text-ink/80 text-xs font-semibold transition-colors disabled:opacity-50"
         >
           <RefreshCw className={`w-3.5 h-3.5 ${loadingStats ? 'animate-spin' : ''}`} />
           <span>Refresh Data</span>
@@ -198,7 +198,7 @@ export default function AdminPage() {
       </div>
 
       {errorMsg && (
-        <div className="p-4 rounded-2xl bg-red-50 dark:bg-red-950/50 border border-red-200 dark:border-red-800/50 text-red-600 dark:text-red-400 text-xs font-medium flex items-center justify-between">
+        <div className="p-4 rounded-xl bg-danger/10 border border-danger/30 text-danger text-xs font-medium flex items-center justify-between">
           <div className="flex items-center gap-2">
             <AlertTriangle className="w-4 h-4 shrink-0" />
             <span>{errorMsg}</span>
@@ -210,7 +210,7 @@ export default function AdminPage() {
       )}
 
       {emailSuccessMsg && (
-        <div className="p-4 rounded-2xl bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 dark:border-emerald-800/50 text-emerald-600 dark:text-emerald-400 text-xs font-medium flex items-center justify-between">
+        <div className="p-4 rounded-xl bg-success/10 border border-success/30 text-success text-xs font-medium flex items-center justify-between">
           <div className="flex items-center gap-2">
             <CheckCircle2 className="w-4 h-4 shrink-0" />
             <span>{emailSuccessMsg}</span>
@@ -223,99 +223,99 @@ export default function AdminPage() {
 
       {/* Metrics Cards Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-        <div className="bg-white/80 dark:bg-zinc-900/90 backdrop-blur-xl border border-zinc-200/80 dark:border-zinc-800 rounded-3xl p-6 shadow-sm">
+        <div className="bg-surface border border-line rounded-xl p-6">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-wide">
+            <span className="text-xs font-semibold text-muted uppercase tracking-wide">
               Total Registered Users
             </span>
-            <div className="w-9 h-9 rounded-2xl bg-indigo-100 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
+            <div className="w-9 h-9 rounded-xl bg-accent-soft text-accent-dark flex items-center justify-center">
               <Users className="w-5 h-5" />
             </div>
           </div>
-          <p className="text-3xl font-extrabold text-zinc-900 dark:text-white">
+          <p className="text-3xl font-extrabold text-ink">
             {loadingStats ? '...' : usersList.length}
           </p>
-          <p className="text-xs sm:text-[11px] text-zinc-400 mt-1">Google OAuth authenticated</p>
+          <p className="text-xs sm:text-[11px] text-muted mt-1">Google OAuth authenticated</p>
         </div>
 
-        <div className="bg-white/80 dark:bg-zinc-900/90 backdrop-blur-xl border border-zinc-200/80 dark:border-zinc-800 rounded-3xl p-6 shadow-sm">
+        <div className="bg-surface border border-line rounded-xl p-6">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-wide">
+            <span className="text-xs font-semibold text-muted uppercase tracking-wide">
               Marketing Opt-ins
             </span>
-            <div className="w-9 h-9 rounded-2xl bg-violet-100 dark:bg-violet-950/60 text-violet-600 dark:text-violet-400 flex items-center justify-center">
+            <div className="w-9 h-9 rounded-xl bg-accent-soft text-accent-dark flex items-center justify-center">
               <MailCheck className="w-5 h-5" />
             </div>
           </div>
-          <p className="text-3xl font-extrabold text-zinc-900 dark:text-white">
+          <p className="text-3xl font-extrabold text-ink">
             {loadingStats ? '...' : optedInCount}
           </p>
-          <p className="text-xs sm:text-[11px] text-zinc-400 mt-1">
+          <p className="text-xs sm:text-[11px] text-muted mt-1">
             {usersList.length > 0 ? Math.round((optedInCount / usersList.length) * 100) : 0}% opt-in rate
           </p>
         </div>
 
-        <div className="bg-white/80 dark:bg-zinc-900/90 backdrop-blur-xl border border-zinc-200/80 dark:border-zinc-800 rounded-3xl p-6 shadow-sm">
+        <div className="bg-surface border border-line rounded-xl p-6">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-wide">
+            <span className="text-xs font-semibold text-muted uppercase tracking-wide">
               Avg. Completion Rate
             </span>
-            <div className="w-9 h-9 rounded-2xl bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+            <div className="w-9 h-9 rounded-xl bg-success/10 text-success flex items-center justify-center">
               <Award className="w-5 h-5" />
             </div>
           </div>
-          <p className="text-3xl font-extrabold text-zinc-900 dark:text-white">
+          <p className="text-3xl font-extrabold text-ink">
             {loadingStats
               ? '...'
               : usersList.length > 0
               ? Math.round(usersList.reduce((acc, u) => acc + u.completion_percentage, 0) / usersList.length) + '%'
               : '0%'}
           </p>
-          <p className="text-xs sm:text-[11px] text-zinc-400 mt-1">Across all registered accounts</p>
+          <p className="text-xs sm:text-[11px] text-muted mt-1">Across all registered accounts</p>
         </div>
       </div>
 
       {/* Main Grid: User Table & Email Broadcast */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* User Table */}
-        <div className="lg:col-span-2 bg-white/80 dark:bg-zinc-900/90 backdrop-blur-xl border border-zinc-200/80 dark:border-zinc-800 rounded-3xl p-6 shadow-sm space-y-4">
-          <h2 className="text-lg font-bold text-zinc-900 dark:text-white flex items-center gap-2">
-            <Users className="w-5 h-5 text-violet-500" />
+        <div className="lg:col-span-2 bg-surface border border-line rounded-xl p-6 space-y-4">
+          <h2 className="text-lg font-bold text-ink flex items-center gap-2">
+            <Users className="w-5 h-5 text-accent-dark" />
             <span>Registered Users Directory</span>
           </h2>
 
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
               <thead>
-                <tr className="border-b border-zinc-200 dark:border-zinc-800 text-zinc-400 uppercase font-semibold text-xs sm:text-[10px]">
+                <tr className="border-b border-line text-muted uppercase font-semibold text-xs sm:text-[10px]">
                   <th className="pb-3 px-2">User</th>
                   <th className="pb-3 px-2">Joined</th>
                   <th className="pb-3 px-2">Progress</th>
                   <th className="pb-3 px-2 text-right">Marketing</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-zinc-100 dark:divide-zinc-800/60">
+              <tbody className="divide-y border-line">
                 {usersList.length === 0 ? (
                   <tr>
-                    <td colSpan={4} className="py-8 text-center text-zinc-400">
+                    <td colSpan={4} className="py-8 text-center text-muted">
                       {loadingStats ? 'Loading users...' : 'No registered users found.'}
                     </td>
                   </tr>
                 ) : (
                   usersList.map((u) => (
-                    <tr key={u.id} className="hover:bg-zinc-50/50 dark:hover:bg-zinc-800/40 transition-colors">
+                    <tr key={u.id} className="hover:bg-line/40 transition-colors">
                       <td className="py-3 px-2">
-                        <div className="font-semibold text-zinc-800 dark:text-zinc-200">
+                        <div className="font-semibold text-ink">
                           {u.full_name || 'Anonymous User'}
                           {u.is_admin && (
-                            <span className="ml-2 px-1.5 py-0.5 rounded text-[9px] font-bold bg-amber-100 dark:bg-amber-950/80 text-amber-600 dark:text-amber-400">
+                            <span className="ml-2 px-1.5 py-0.5 rounded text-[9px] font-bold bg-marigold/15 text-ink">
                               ADMIN
                             </span>
                           )}
                         </div>
-                        <div className="text-xs sm:text-[11px] text-zinc-400 font-mono">{u.email}</div>
+                        <div className="text-xs sm:text-[11px] text-muted font-mono">{u.email}</div>
                       </td>
-                      <td className="py-3 px-2 text-zinc-500 whitespace-nowrap">
+                      <td className="py-3 px-2 text-muted whitespace-nowrap">
                         {new Date(u.created_at).toLocaleDateString('en-GB', {
                           day: 'numeric',
                           month: 'short',
@@ -324,24 +324,24 @@ export default function AdminPage() {
                       </td>
                       <td className="py-3 px-2 whitespace-nowrap">
                         <div className="flex items-center gap-2">
-                          <div className="w-16 h-1.5 rounded-full bg-zinc-200 dark:bg-zinc-700 overflow-hidden">
+                          <div className="w-16 h-1.5 rounded-full bg-line overflow-hidden">
                             <div
-                              className="h-full bg-violet-600 rounded-full transition-all"
+                              className="h-full bg-accent-dark rounded-full transition-all"
                               style={{ width: `${u.completion_percentage}%` }}
                             />
                           </div>
-                          <span className="font-bold text-zinc-700 dark:text-zinc-300">
+                          <span className="font-bold text-ink/80">
                             {u.completion_percentage}%
                           </span>
                         </div>
                       </td>
                       <td className="py-3 px-2 text-right whitespace-nowrap">
                         {u.marketing_opt_in ? (
-                          <span className="px-2.5 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 text-xs sm:text-[10px] font-bold">
+                          <span className="px-2.5 py-1 rounded-full bg-success/10 text-success text-xs sm:text-[10px] font-bold">
                             Opted In
                           </span>
                         ) : (
-                          <span className="px-2.5 py-1 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-400 text-xs sm:text-[10px] font-medium">
+                          <span className="px-2.5 py-1 rounded-full bg-paper text-muted text-xs sm:text-[10px] font-medium">
                             Opted Out
                           </span>
                         )}
@@ -355,12 +355,12 @@ export default function AdminPage() {
         </div>
 
         {/* Email Broadcast Form */}
-        <div className="bg-white/80 dark:bg-zinc-900/90 backdrop-blur-xl border border-zinc-200/80 dark:border-zinc-800 rounded-3xl p-6 shadow-sm flex flex-col">
-          <h2 className="text-lg font-bold text-zinc-900 dark:text-white flex items-center gap-2 mb-2">
-            <Send className="w-5 h-5 text-indigo-500" />
+        <div className="bg-surface border border-line rounded-xl p-6 flex flex-col">
+          <h2 className="text-lg font-bold text-ink flex items-center gap-2 mb-2">
+            <Send className="w-5 h-5 text-accent-dark" />
             <span>Send Email Campaign</span>
           </h2>
-          <p className="text-xs text-zinc-500 dark:text-zinc-400 mb-6">
+          <p className="text-xs text-muted mb-6">
             Broadcast a manual update via Resend to all users who opted into marketing communications.
           </p>
 
@@ -376,7 +376,7 @@ export default function AdminPage() {
             className="space-y-4 flex-1 flex flex-col"
           >
             <div>
-              <label className="block text-xs font-semibold text-zinc-700 dark:text-zinc-300 mb-1.5">
+              <label className="block text-xs font-semibold text-ink/80 mb-1.5">
                 Subject Line
               </label>
               <input
@@ -385,12 +385,12 @@ export default function AdminPage() {
                 value={emailSubject}
                 onChange={(e) => setEmailSubject(e.target.value)}
                 placeholder="e.g. New Product Management Case Studies Available!"
-                className="w-full px-3.5 py-2.5 rounded-xl text-base sm:text-xs bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-violet-500"
+                className="w-full px-3.5 py-2.5 rounded-xl text-base sm:text-xs bg-paper border border-line text-ink focus:outline-none focus:ring-2 focus:ring-accent"
               />
             </div>
 
             <div className="flex-1 flex flex-col">
-              <label className="block text-xs font-semibold text-zinc-700 dark:text-zinc-300 mb-1.5">
+              <label className="block text-xs font-semibold text-ink/80 mb-1.5">
                 Message Body
               </label>
               <textarea
@@ -399,7 +399,7 @@ export default function AdminPage() {
                 value={emailMessage}
                 onChange={(e) => setEmailMessage(e.target.value)}
                 placeholder="Write your broadcast update message here..."
-                className="w-full px-3.5 py-2.5 rounded-xl text-base sm:text-xs bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-violet-500 resize-none flex-1"
+                className="w-full px-3.5 py-2.5 rounded-xl text-base sm:text-xs bg-paper border border-line text-ink focus:outline-none focus:ring-2 focus:ring-accent resize-none flex-1"
               />
             </div>
 
@@ -407,7 +407,7 @@ export default function AdminPage() {
               <button
                 type="submit"
                 disabled={sendingEmail || !emailSubject || !emailMessage || optedInCount === 0}
-                className="w-full py-3 px-4 bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 text-white font-semibold text-xs rounded-xl shadow-md shadow-violet-500/20 transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full py-3 px-4 bg-accent-dark hover:bg-accent-dark/90 text-paper font-semibold text-xs rounded-xl transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <Send className="w-4 h-4" />
                 <span>Prepare Campaign ({optedInCount} Opted-In)</span>
@@ -419,35 +419,35 @@ export default function AdminPage() {
 
       {/* Confirmation Modal before Sending Email */}
       {showConfirmModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
-          <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl relative">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-ink/60 animate-fade-in">
+          <div className="bg-surface border border-line rounded-xl p-6 sm:p-8 max-w-md w-full relative">
             <button
               onClick={() => setShowConfirmModal(false)}
-              className="absolute top-4 right-4 p-2 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 rounded-full transition-colors"
+              className="absolute top-4 right-4 p-2 text-muted hover:text-muted rounded-full transition-colors"
             >
               <X className="w-5 h-5" />
             </button>
 
             <div className="flex items-center gap-3.5 mb-4">
-              <div className="w-10 h-10 rounded-2xl bg-amber-100 dark:bg-amber-950/60 flex items-center justify-center text-amber-600 dark:text-amber-400">
+              <div className="w-10 h-10 rounded-xl bg-marigold/15 flex items-center justify-center text-ink">
                 <AlertTriangle className="w-5 h-5" />
               </div>
               <div>
-                <h2 className="text-lg font-bold text-zinc-900 dark:text-white">
+                <h2 className="text-lg font-bold text-ink">
                   Confirm Email Campaign
                 </h2>
-                <p className="text-xs text-zinc-500 dark:text-zinc-400">
+                <p className="text-xs text-muted">
                   Manual broadcast trigger
                 </p>
               </div>
             </div>
 
-            <div className="p-4 rounded-2xl bg-violet-50 dark:bg-violet-950/40 border border-violet-200/80 dark:border-violet-800/50 mb-6 text-xs text-violet-900 dark:text-violet-200 space-y-2">
+            <div className="p-4 rounded-xl bg-accent-soft border border-accent/40 mb-6 text-xs text-accent-dark space-y-2">
               <p className="font-semibold text-sm">
                 This will email {optedInCount} opted-in user{optedInCount === 1 ? '' : 's'}.
               </p>
-              <p className="text-violet-700 dark:text-violet-300">
-                Subject: <span className="font-medium text-zinc-900 dark:text-white">&quot;{emailSubject}&quot;</span>
+              <p className="text-accent-dark">
+                Subject: <span className="font-medium text-ink">&quot;{emailSubject}&quot;</span>
               </p>
             </div>
 
@@ -455,14 +455,14 @@ export default function AdminPage() {
               <button
                 onClick={() => setShowConfirmModal(false)}
                 disabled={sendingEmail}
-                className="py-2.5 px-4 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 font-semibold text-xs rounded-xl transition-colors disabled:opacity-50"
+                className="py-2.5 px-4 bg-paper hover:bg-line/70 text-ink/80 font-semibold text-xs rounded-xl transition-colors disabled:opacity-50"
               >
                 Cancel
               </button>
               <button
                 onClick={handleSendEmail}
                 disabled={sendingEmail}
-                className="py-2.5 px-4 bg-violet-600 hover:bg-violet-700 text-white font-semibold text-xs rounded-xl shadow-md shadow-violet-500/20 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+                className="py-2.5 px-4 bg-accent-dark hover:bg-accent-dark/90 text-paper font-semibold text-xs rounded-xl transition-all flex items-center justify-center gap-2 disabled:opacity-50"
               >
                 {sendingEmail ? (
                   <>

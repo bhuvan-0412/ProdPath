@@ -55,14 +55,14 @@ export const NotesPanel: React.FC<NotesPanelProps> = ({ resourceId, onClose }) =
         maxLength={MAX_NOTE_LENGTH}
         rows={4}
         placeholder="Jot down your key points from this resource..."
-        className="w-full resize-y rounded-lg border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-900 px-3 py-2 text-base sm:text-xs text-zinc-800 dark:text-zinc-200 placeholder:text-zinc-400 dark:placeholder:text-zinc-500 leading-relaxed focus:outline-none focus:ring-2 focus:ring-violet-500/40 focus:border-violet-500/60"
+        className="w-full resize-y rounded-lg border border-line bg-paper px-3 py-2 text-base sm:text-xs text-ink placeholder:text-muted leading-relaxed focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent"
       />
       <div className="flex items-center justify-between gap-2">
-        <span className="text-xs sm:text-[10px] font-mono text-zinc-400 dark:text-zinc-500">
+        <span className="text-xs sm:text-[10px] font-mono text-muted">
           {status === 'error' ? (
-            <span className="text-rose-600 dark:text-rose-400">Couldn&apos;t save. Please try again.</span>
+            <span className="text-danger">Couldn&apos;t save. Please try again.</span>
           ) : status === 'saved' && !isDirty ? (
-            <span className="inline-flex items-center gap-1 text-emerald-600 dark:text-emerald-400">
+            <span className="inline-flex items-center gap-1 text-success">
               <Check className="w-3 h-3" /> Saved
             </span>
           ) : (
@@ -73,7 +73,7 @@ export const NotesPanel: React.FC<NotesPanelProps> = ({ resourceId, onClose }) =
           <button
             type="button"
             onClick={onClose}
-            className="min-h-10 sm:min-h-0 px-4 sm:px-3 py-1.5 rounded-lg text-xs font-semibold text-zinc-600 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+            className="min-h-10 sm:min-h-0 px-4 sm:px-3 py-1.5 rounded-lg text-xs font-semibold text-muted hover:bg-line/40 transition-colors"
           >
             Close
           </button>
@@ -81,7 +81,7 @@ export const NotesPanel: React.FC<NotesPanelProps> = ({ resourceId, onClose }) =
             type="button"
             onClick={handleSave}
             disabled={!isDirty || status === 'saving'}
-            className="min-h-10 sm:min-h-0 px-5 sm:px-3 py-1.5 rounded-lg text-xs font-semibold bg-violet-600 text-white hover:bg-violet-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+            className="min-h-10 sm:min-h-0 px-5 sm:px-3 py-1.5 rounded-lg text-xs font-semibold bg-accent-dark text-paper hover:bg-accent-dark/90 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
           >
             {status === 'saving' ? 'Saving...' : 'Save'}
           </button>
@@ -102,7 +102,7 @@ export const TaskHeader: React.FC<TaskHeaderProps> = ({ label, summary }) => {
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between gap-2">
-        <span className="text-xs sm:text-[10px] font-mono font-semibold uppercase text-zinc-400 dark:text-zinc-500 block">
+        <span className="text-xs sm:text-[10px] font-mono font-semibold uppercase text-muted block">
           {label}
         </span>
         {summary && (
@@ -111,8 +111,8 @@ export const TaskHeader: React.FC<TaskHeaderProps> = ({ label, summary }) => {
             onClick={() => setOpen((current) => !current)}
             className={`inline-flex items-center gap-1.5 min-h-10 px-3 sm:min-h-0 sm:gap-1 sm:px-2 sm:py-1 rounded-lg text-xs sm:text-[10px] font-mono font-semibold transition-colors ${
               open
-                ? 'text-violet-600 dark:text-violet-400 bg-violet-50 dark:bg-violet-950/50'
-                : 'text-zinc-400 hover:text-violet-600 dark:hover:text-violet-400 hover:bg-violet-50 dark:hover:bg-violet-950/50'
+                ? 'text-accent-dark bg-accent-soft'
+                : 'text-muted hover:text-accent-dark hover:bg-accent-soft'
             }`}
             title="AI summary of this task"
             aria-label={`Show AI summary of ${label}`}
@@ -124,7 +124,7 @@ export const TaskHeader: React.FC<TaskHeaderProps> = ({ label, summary }) => {
         )}
       </div>
       {open && summary && (
-        <p className="text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed border-l-2 border-violet-500/30 pl-3 py-1 animate-fade-in">
+        <p className="text-xs text-muted leading-relaxed border-l-2 border-accent/40 pl-3 py-1 animate-fade-in">
           {summary}
         </p>
       )}
@@ -138,11 +138,11 @@ interface SummaryPanelProps {
 
 export const SummaryPanel: React.FC<SummaryPanelProps> = ({ points }) => (
   <div className="space-y-2">
-    <span className="inline-flex items-center gap-1.5 text-xs sm:text-[10px] font-mono font-bold uppercase tracking-wider text-violet-600 dark:text-violet-400">
+    <span className="inline-flex items-center gap-1.5 text-xs sm:text-[10px] font-mono font-bold uppercase tracking-wider text-accent-dark">
       <WandSparkles className="w-3 h-3" />
       AI Summary
     </span>
-    <ul className="space-y-1.5 pl-4 list-disc text-xs text-zinc-600 dark:text-zinc-300 border-l-2 border-violet-500/30 ml-1 py-1">
+    <ul className="space-y-1.5 pl-4 list-disc text-xs text-muted border-l-2 border-accent/40 ml-1 py-1">
       {points.map((point, idx) => (
         <li key={idx} className="leading-relaxed pl-1">
           {point}

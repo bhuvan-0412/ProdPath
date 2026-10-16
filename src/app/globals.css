@@ -3,24 +3,41 @@
 @tailwind utilities;
 
 @layer base {
+  /* Design tokens as RGB channels (used by tailwind.config.ts). Light mode is the default. */
   :root {
-    --background: #faf9f6;
-    --foreground: #121217;
-    --surface: #ffffff;
-    --surface-border: rgba(0, 0, 0, 0.08);
+    --paper: 246 241 231;       /* #F6F1E7 page background */
+    --surface: 251 248 241;     /* #FBF8F1 cards */
+    --ink: 31 36 48;            /* #1F2430 main text */
+    --muted: 102 106 117;       /* #666A75 secondary text (nudged from #6B6F7A to pass AA on paper) */
+    --line: 221 213 196;        /* #DDD5C4 borders */
+    --accent: 194 96 58;        /* #C2603A terracotta */
+    --accent-dark: 158 69 36;   /* #9E4524 */
+    --accent-soft: 243 217 204; /* #F3D9CC */
+    --marigold: 232 176 74;     /* #E8B04A milestones and streaks only */
+    --danger: 168 50 42;        /* #A8322A */
+    --success: 53 107 68;       /* #356B44 */
+    color-scheme: light;
   }
 
   .dark {
-    --background: #0a0a0f;
-    --foreground: #f4f4f7;
-    --surface: #12121a;
-    --surface-border: rgba(255, 255, 255, 0.08);
+    --paper: 23 21 18;          /* #171512 */
+    --surface: 32 29 25;        /* #201D19 */
+    --ink: 237 230 216;         /* #EDE6D8 */
+    --muted: 162 154 138;       /* #A29A8A */
+    --line: 58 53 45;           /* #3A352D */
+    --accent: 224 122 82;       /* #E07A52 */
+    --accent-dark: 224 122 82;  /* the base accent already passes AA on dark paper */
+    --accent-soft: 58 36 24;    /* #3A2418 */
+    --marigold: 232 176 74;     /* #E8B04A */
+    --danger: 240 138 128;      /* #F08A80 */
+    --success: 140 199 155;     /* #8CC79B */
+    color-scheme: dark;
   }
 
   html {
     @apply scroll-smooth;
-    background-color: var(--background);
-    color: var(--foreground);
+    background-color: rgb(var(--paper));
+    color: rgb(var(--ink));
     font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
     /* Stop decorative elements from widening the page on phones; clip keeps the sticky navbar working */
     overflow-x: clip;
@@ -29,8 +46,8 @@
   }
 
   body {
-    background-color: var(--background);
-    color: var(--foreground);
+    background-color: rgb(var(--paper));
+    color: rgb(var(--ink));
     font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
     min-height: 100vh;
     min-height: 100dvh;
@@ -40,66 +57,20 @@
   }
 
   h1, h2, h3, h4, h5, h6, .font-display {
-    font-family: var(--font-display), sans-serif;
-    letter-spacing: -0.015em;
-  }
-}
-
-/* Glassmorphism reserved for signature surfaces */
-.glass-signature {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(139, 92, 246, 0.25);
-}
-
-.dark .glass-signature {
-  background: rgba(18, 18, 26, 0.75);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(139, 92, 246, 0.3);
-}
-
-/* On phones, blurring over the animated background repaints every frame; use a near-opaque fill instead */
-@media (max-width: 767px) {
-  .glass-signature {
-    background: rgba(255, 255, 255, 0.94);
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
+    font-family: var(--font-display), Georgia, serif;
+    letter-spacing: -0.01em;
   }
 
-  .dark .glass-signature {
-    background: rgba(18, 18, 26, 0.94);
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
+  ::selection {
+    background-color: rgb(var(--accent-soft));
+    color: rgb(var(--ink));
   }
-}
 
-/* Subtle Gradient Card Border */
-.gradient-border {
-  position: relative;
-}
-
-.gradient-border::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(255, 255, 255, 0.05), rgba(139, 92, 246, 0.1));
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-}
-
-/* Liquid Ether Container */
-.liquid-ether-container {
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-  height: 100%;
-  touch-action: none;
+  /* Visible focus ring on every interactive element when using the keyboard */
+  :focus-visible {
+    outline: 2px solid rgb(var(--accent));
+    outline-offset: 2px;
+  }
 }
 
 /* Custom scrollbar styling */
@@ -113,16 +84,12 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(139, 92, 246, 0.25);
+  background: rgb(var(--line));
   border-radius: 9999px;
 }
 
-.dark ::-webkit-scrollbar-thumb {
-  background: rgba(139, 92, 246, 0.35);
-}
-
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(139, 92, 246, 0.7);
+  background: rgb(var(--muted));
 }
 
 /* Horizontal scrollers (e.g. week tabs on phones) without a visible scrollbar */

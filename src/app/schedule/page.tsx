@@ -56,23 +56,23 @@ export default function SchedulePage() {
   return (
     <div className="space-y-8 animate-fade-in">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-200 dark:border-zinc-800/80 pb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-line pb-6">
         <div>
-          <div className="inline-flex items-center gap-2 text-xs font-mono font-semibold text-violet-600 dark:text-violet-400 mb-1">
+          <div className="inline-flex items-center gap-2 text-xs font-mono font-semibold text-accent-dark mb-1">
             <Calendar className="w-3.5 h-3.5" />
             <span>Self-Paced Learning Roadmap</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-display font-extrabold text-zinc-900 dark:text-zinc-100">
+          <h1 className="text-2xl sm:text-3xl font-display font-extrabold text-ink">
             Curriculum Timeline
           </h1>
-          <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">
+          <p className="text-sm text-muted mt-1">
             Track completion timestamps as you progress through your 5-week daily topics.
           </p>
         </div>
       </div>
 
       {/* Vertical Timeline Rail + Nodes */}
-      <div className="relative pl-6 sm:pl-8 space-y-6 before:absolute before:left-2.5 sm:before:left-3.5 before:top-3 before:bottom-3 before:w-0.5 before:bg-gradient-to-b before:from-violet-500/50 before:via-violet-500/25 before:to-zinc-300 dark:before:to-zinc-800">
+      <div className="relative pl-6 sm:pl-8 space-y-6 before:absolute before:left-2.5 sm:before:left-3.5 before:top-3 before:bottom-3 before:w-0.5 before:bg-line">
         {scheduleList.map((item) => {
           const { isDone, dateStr } = getScheduleItemState(item);
 
@@ -81,10 +81,10 @@ export default function SchedulePage() {
               {/* Timeline Node Point */}
               <button
                 onClick={() => handleToggleScheduleItem(item)}
-                className={`absolute -left-[21px] sm:-left-[27px] mt-3.5 w-4 h-4 rounded-full border-2 transition-all shadow-xs z-10 flex items-center justify-center after:absolute after:-inset-3 after:content-[''] ${
+                className={`absolute -left-[21px] sm:-left-[27px] mt-3.5 w-4 h-4 rounded-full border-2 transition-all z-10 flex items-center justify-center after:absolute after:-inset-3 after:content-[''] ${
                   isDone
-                    ? 'bg-violet-600 border-violet-600 text-white scale-110'
-                    : 'border-zinc-400 dark:border-zinc-600 bg-white dark:bg-[#0a0a0f] hover:border-violet-500'
+                    ? 'bg-accent-dark border-accent text-paper scale-110'
+                    : 'border-muted bg-surface hover:border-accent'
                 }`}
                 aria-label={`Mark ${item.topic} as ${isDone ? 'incomplete' : 'complete'}`}
               >
@@ -95,16 +95,16 @@ export default function SchedulePage() {
               <div className="w-28 sm:w-36 pt-3 flex-shrink-0 font-mono text-xs space-y-0.5">
                 {isDone ? (
                   <>
-                    <div className="font-bold text-violet-600 dark:text-violet-400 flex items-center gap-1">
+                    <div className="font-bold text-accent-dark flex items-center gap-1">
                       <CheckCircle2 className="w-3.5 h-3.5" />
                       <span>Completed</span>
                     </div>
-                    <div className="text-xs sm:text-[11px] text-zinc-500 dark:text-zinc-400 font-medium">
+                    <div className="text-xs sm:text-[11px] text-muted font-medium">
                       {dateStr}
                     </div>
                   </>
                 ) : (
-                  <div className="text-xs sm:text-[11px] text-zinc-400 dark:text-zinc-500 font-medium">
+                  <div className="text-xs sm:text-[11px] text-muted font-medium">
                     Not started yet
                   </div>
                 )}
@@ -112,18 +112,18 @@ export default function SchedulePage() {
 
               {/* Timeline Node Content Card */}
               <div
-                className={`flex-1 p-4 sm:p-5 rounded-2xl border transition-all duration-200 shadow-xs space-y-2 ${
+                className={`flex-1 p-4 sm:p-5 rounded-xl border transition-all duration-200 space-y-2 ${
                   isDone
-                    ? 'bg-zinc-50/70 dark:bg-[#12121a]/60 border-zinc-200/80 dark:border-zinc-800/60'
-                    : 'bg-white dark:bg-[#12121a] border-zinc-200 dark:border-zinc-800/80 hover:border-violet-500/40 dark:hover:border-violet-500/40'
+                    ? 'bg-paper border-line'
+                    : 'bg-surface border-line hover:border-accent'
                 }`}
               >
                 <div className="flex items-center justify-between gap-2 flex-wrap">
-                  <span className="font-mono text-xs sm:text-[10px] font-semibold uppercase text-violet-600 dark:text-violet-400 px-2 py-0.5 rounded-md bg-violet-50 dark:bg-violet-950/60 border border-violet-200/50 dark:border-violet-800/40">
+                  <span className="font-mono text-xs sm:text-[10px] font-semibold uppercase text-accent-dark px-2 py-0.5 rounded-md bg-accent-soft border border-accent/40">
                     {item.week} {item.day ? `• Day ${item.day}` : ''}
                   </span>
 
-                  <span className="inline-flex items-center gap-1 font-mono text-xs sm:text-[10px] font-semibold px-2.5 py-0.5 rounded-md bg-violet-50 dark:bg-violet-950/60 text-violet-600 dark:text-violet-300 border border-violet-200/60 dark:border-violet-800/50">
+                  <span className="inline-flex items-center gap-1 font-mono text-xs sm:text-[10px] font-semibold px-2.5 py-0.5 rounded-md bg-accent-soft text-accent-dark border border-accent/40">
                     <BookOpen className="w-3 h-3" />
                     Resources
                   </span>
@@ -131,7 +131,7 @@ export default function SchedulePage() {
 
                 <h3
                   className={`font-display font-bold text-sm sm:text-base transition-colors ${
-                    isDone ? 'line-through text-zinc-400 dark:text-zinc-500 font-normal' : 'text-zinc-900 dark:text-zinc-100'
+                    isDone ? 'line-through text-muted font-normal' : 'text-ink'
                   }`}
                 >
                   {item.topic}
