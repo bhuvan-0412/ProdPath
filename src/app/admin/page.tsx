@@ -313,7 +313,7 @@ export default function AdminPage() {
                             </span>
                           )}
                         </div>
-                        <div className="text-xs sm:text-[11px] text-muted font-mono">{u.email}</div>
+                        <div className="text-xs sm:text-[11px] text-muted">{u.email}</div>
                       </td>
                       <td className="py-3 px-2 text-muted whitespace-nowrap">
                         {new Date(u.created_at).toLocaleDateString('en-GB', {

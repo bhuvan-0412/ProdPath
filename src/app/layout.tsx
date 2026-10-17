@@ -15,10 +15,10 @@ const themeScript = `(function(){try{var t=localStorage.getItem('prodpath_theme'
 
 export const metadata: Metadata = {
   title: {
-    default: 'ProdPath • Personal Product Management Tracker',
+    default: 'ProdPath | Learn Product Management in 5 Weeks',
     template: '%s | ProdPath',
   },
-  description: 'Self-contained, trackable 5-week Product Management learning tracker with cloud progress sync.',
+  description: 'A free, structured 5-week product management learning path with an AI PM track. Track your progress across devices.',
   icons: {
     icon: [
       { url: '/favicon.ico', sizes: 'any'},

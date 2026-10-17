@@ -87,7 +87,7 @@ export default function DashboardPage() {
                 <h2 className="text-base font-display font-bold text-ink group-hover/hero-card:text-accent-dark transition-colors">
                   Continue Where You Left Off
                 </h2>
-                <p className="text-xs font-mono text-muted">
+                <p className="text-xs text-muted">
                   Next up in your curriculum sequence
                 </p>
               </div>
@@ -164,7 +164,7 @@ export default function DashboardPage() {
               Timeline Schedule
             </h3>
             <p className="text-xs text-muted mt-0.5">
-              Chronological 4-week program roadmap
+              Chronological 5-week program roadmap
             </p>
           </div>
         </Link>
@@ -208,7 +208,7 @@ export default function DashboardPage() {
       <div className="flex justify-end pt-4">
         <button
           onClick={resetProgress}
-          className="inline-flex items-center gap-1.5 min-h-10 sm:min-h-0 text-xs font-mono text-muted hover:text-danger transition-colors px-3 py-1.5 rounded-lg hover:bg-danger/10"
+          className="inline-flex items-center gap-1.5 min-h-10 sm:min-h-0 text-xs text-muted hover:text-danger transition-colors px-3 py-1.5 rounded-lg hover:bg-danger/10"
         >
           <RotateCcw className="w-3.5 h-3.5" />
           <span>Reset completion progress</span>

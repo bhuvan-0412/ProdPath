@@ -143,7 +143,7 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose })
                 disabled={isSubmitting}
                 className="w-full px-4 py-3 rounded-lg bg-paper border border-line text-base sm:text-sm text-ink placeholder-muted focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all resize-none disabled:opacity-50"
               />
-              <div className="flex justify-between items-center text-xs sm:text-[10px] font-mono text-muted px-1">
+              <div className="flex justify-between items-center text-xs sm:text-[10px] text-muted px-1">
                 <span>Min {minChars} characters</span>
                 <span className={charCount > maxChars ? 'text-danger font-bold' : ''}>
                   {charCount} / {maxChars}

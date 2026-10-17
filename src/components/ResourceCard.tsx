@@ -101,7 +101,7 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({
         {/* Resource Details & Content */}
         <div className="flex-1 min-w-0 space-y-1.5">
           {/* Metadata Badges */}
-          <div className="flex items-center gap-2 flex-wrap font-mono text-xs sm:text-[10px]">
+          <div className="flex items-center gap-2 flex-wrap text-xs sm:text-[10px]">
             <span className={`inline-flex items-center gap-1 font-semibold px-2 py-0.5 rounded-md border border-ink/60 text-ink`}>
               {getIcon()}
               <span>{getTypeLabel()}</span>
@@ -201,7 +201,7 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({
 
                   {resource.furtherReading && resource.furtherReading.length > 0 && (
                     <div className="pt-2.5 border-t border-line">
-                      <span className="text-xs sm:text-[10px] font-mono font-bold uppercase tracking-wider text-accent-dark block mb-1.5">
+                      <span className="text-xs sm:text-[10px] font-bold uppercase tracking-wider text-accent-dark block mb-1.5">
                         Go deeper
                       </span>
                       <div className="space-y-1.5">

@@ -151,7 +151,7 @@ function CourseContent() {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-line pb-6">
         <div>
-          <div className="inline-flex items-center gap-2 text-xs font-mono font-semibold text-accent-dark mb-1">
+          <div className="inline-flex items-center gap-2 text-xs font-semibold text-accent-dark mb-1">
             <Calendar className="w-3.5 h-3.5" />
             <span>5-Week Structured Curriculum</span>
           </div>
@@ -195,7 +195,7 @@ function CourseContent() {
             >
               <div className="flex items-center justify-between">
                 <span
-                  className={`text-xs sm:text-[10px] font-mono font-semibold px-2 py-0.5 rounded-md uppercase ${
+                  className={`text-xs sm:text-[10px] font-semibold px-2 py-0.5 rounded-md uppercase tracking-wider ${
                     isActive
                       ? 'bg-accent-dark text-paper'
                       : isDone
@@ -205,7 +205,7 @@ function CourseContent() {
                 >
                   {w.id.replace('week-', 'Week ')}
                 </span>
-                <span className="text-xs font-mono font-semibold text-muted">
+                <span className="text-xs font-semibold text-muted">
                   {stats.completed}/{stats.total}
                 </span>
               </div>
@@ -222,7 +222,7 @@ function CourseContent() {
 
               <div className="space-y-1 pt-1">
                 <ProgressBar percentage={stats.percentage} showLabel={false} size="sm" />
-                <div className="flex justify-between items-center text-xs sm:text-[10px] font-mono text-muted">
+                <div className="flex justify-between items-center text-xs sm:text-[10px] text-muted">
                   <span>{stats.percentage}% done</span>
                   {isDone && <CheckCircle className="w-3 h-3 text-accent" />}
                 </div>
@@ -237,7 +237,7 @@ function CourseContent() {
           className="snap-start shrink-0 w-[44%] sm:w-auto p-4 rounded-xl text-left bg-accent-soft border border-accent/40 hover:border-accent hover:shadow-offset transition-all duration-200 flex flex-col justify-between space-y-3 group"
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs sm:text-[10px] font-mono font-semibold px-2 py-0.5 rounded-md uppercase bg-accent-dark text-paper flex items-center gap-1">
+            <span className="text-xs sm:text-[10px] font-semibold px-2 py-0.5 rounded-md uppercase tracking-wider bg-accent-dark text-paper flex items-center gap-1">
               Live <Video className="w-2.5 h-2.5" />
             </span>
             <ExternalLink className="w-3.5 h-3.5 text-accent-dark group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
@@ -249,7 +249,7 @@ function CourseContent() {
             </h3>
           </div>
 
-          <div className="pt-1 text-xs sm:text-[10px] font-mono text-muted">
+          <div className="pt-1 text-xs sm:text-[10px] text-muted">
             <span>Speaker talks &rarr;</span>
           </div>
         </Link>
@@ -260,7 +260,7 @@ function CourseContent() {
           className="snap-start shrink-0 w-[44%] sm:w-auto p-4 rounded-xl text-left bg-accent-soft border border-accent/40 hover:border-accent hover:shadow-offset transition-all duration-200 flex flex-col justify-between space-y-3 group"
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs sm:text-[10px] font-mono font-semibold px-2 py-0.5 rounded-md uppercase bg-accent-dark text-paper flex items-center gap-1">
+            <span className="text-xs sm:text-[10px] font-semibold px-2 py-0.5 rounded-md uppercase tracking-wider bg-accent-dark text-paper flex items-center gap-1">
               Library <BookMarked className="w-2.5 h-2.5" />
             </span>
             <ExternalLink className="w-3.5 h-3.5 text-accent-dark group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
@@ -272,7 +272,7 @@ function CourseContent() {
             </h3>
           </div>
 
-          <div className="pt-1 text-xs sm:text-[10px] font-mono text-muted">
+          <div className="pt-1 text-xs sm:text-[10px] text-muted">
             <span>Teardowns &amp; Strategy &rarr;</span>
           </div>
         </Link>
@@ -282,7 +282,7 @@ function CourseContent() {
       <div className="bg-surface rounded-xl p-4 sm:p-6 border border-line space-y-3">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <span className="text-xs font-mono font-semibold uppercase text-accent-dark">
+            <span className="text-xs font-semibold uppercase tracking-wider text-accent-dark">
               Active Module &bull; {activeWeek.id.replace('-', ' ')}
             </span>
             <h2 className="text-xl font-display font-bold text-ink mt-0.5">
@@ -308,7 +308,7 @@ function CourseContent() {
           >
             {/* Day Header */}
             <div className="flex items-center gap-3 pb-3 border-b border-line">
-              <span className="px-2.5 py-1 rounded-lg bg-accent-dark text-paper font-mono font-bold text-xs">
+              <span className="px-2.5 py-1 rounded-lg bg-accent-dark text-paper font-bold text-xs">
                 Day {day.day}
               </span>
               <h3 className="font-display font-bold text-ink text-base">
@@ -403,7 +403,7 @@ function CourseContent() {
                   <h3 className="font-display font-bold text-base text-ink">
                     {item.title}
                   </h3>
-                  <span className="px-2.5 py-0.5 rounded-md bg-accent-soft text-accent-dark border border-accent/40 text-xs sm:text-[10px] font-mono font-semibold uppercase">
+                  <span className="px-2.5 py-0.5 rounded-md bg-accent-soft text-accent-dark border border-accent/40 text-xs sm:text-[10px] font-semibold uppercase tracking-wider">
                     {item.cadence}
                   </span>
                 </div>
@@ -441,7 +441,7 @@ function CourseContent() {
 export default function CoursePage() {
   return (
     <Suspense fallback={
-      <div className="p-8 text-center font-mono text-xs text-muted animate-pulse">
+      <div className="p-8 text-center text-xs text-muted animate-pulse">
         Loading curriculum...
       </div>
     }>

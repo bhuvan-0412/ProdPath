@@ -59,7 +59,7 @@ function ResourcesContent() {
       <div className="rounded-xl bg-surface border border-line p-6 sm:p-8 text-ink">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <div className="inline-flex items-center gap-2 text-xs font-mono font-semibold text-accent-dark mb-1">
+            <div className="inline-flex items-center gap-2 text-xs font-semibold text-accent-dark mb-1">
               <BookMarked className="w-3.5 h-3.5" />
               <span>PM Strategy & Case Analysis</span>
             </div>
@@ -96,7 +96,7 @@ function ResourcesContent() {
         </div>
 
         {/* Filter Badges */}
-        <div className="flex flex-wrap items-center gap-3 pt-1 text-xs font-mono">
+        <div className="flex flex-wrap items-center gap-3 pt-1 text-xs">
           <div className="flex items-center gap-1.5 font-bold text-muted mr-1">
             <Filter className="w-3.5 h-3.5" />
             <span>Filters:</span>
@@ -144,11 +144,11 @@ function ResourcesContent() {
       </div>
 
       {/* Case Study Counter Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs font-mono text-muted px-1">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-muted px-1">
         <span>
           Showing <strong className="text-ink">{filteredCaseStudies.length}</strong> case studies
         </span>
-        <div className="inline-flex items-center gap-1.5 font-mono text-xs font-semibold px-2.5 py-1 rounded-lg bg-accent-soft text-accent-dark border border-accent/40 self-start sm:self-auto">
+        <div className="inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-lg bg-accent-soft text-accent-dark border border-accent/40 self-start sm:self-auto">
           <BookMarked className="w-3.5 h-3.5" />
           <span>Case Studies Progress: {caseStats.completed}/{caseStats.total} ({caseStats.percentage}%)</span>
         </div>
@@ -183,7 +183,7 @@ export default function ResourcesPage() {
   return (
     <Suspense
       fallback={
-        <div className="p-8 text-center font-mono text-xs text-muted animate-pulse">
+        <div className="p-8 text-center text-xs text-muted animate-pulse">
           Loading case studies...
         </div>
       }

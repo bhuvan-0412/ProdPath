@@ -58,7 +58,7 @@ export const NotesPanel: React.FC<NotesPanelProps> = ({ resourceId, onClose }) =
         className="w-full resize-y rounded-lg border border-line bg-paper px-3 py-2 text-base sm:text-xs text-ink placeholder:text-muted leading-relaxed focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent"
       />
       <div className="flex items-center justify-between gap-2">
-        <span className="text-xs sm:text-[10px] font-mono text-muted">
+        <span className="text-xs sm:text-[10px] text-muted">
           {status === 'error' ? (
             <span className="text-danger">Couldn&apos;t save. Please try again.</span>
           ) : status === 'saved' && !isDirty ? (
@@ -102,14 +102,14 @@ export const TaskHeader: React.FC<TaskHeaderProps> = ({ label, summary }) => {
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between gap-2">
-        <span className="text-xs sm:text-[10px] font-mono font-semibold uppercase text-muted block">
+        <span className="text-xs sm:text-[10px] font-semibold uppercase tracking-wider text-muted block">
           {label}
         </span>
         {summary && (
           <button
             type="button"
             onClick={() => setOpen((current) => !current)}
-            className={`inline-flex items-center gap-1.5 min-h-10 px-3 sm:min-h-0 sm:gap-1 sm:px-2 sm:py-1 rounded-lg text-xs sm:text-[10px] font-mono font-semibold transition-colors ${
+            className={`inline-flex items-center gap-1.5 min-h-10 px-3 sm:min-h-0 sm:gap-1 sm:px-2 sm:py-1 rounded-lg text-xs sm:text-[10px] font-semibold transition-colors ${
               open
                 ? 'text-accent-dark bg-accent-soft'
                 : 'text-muted hover:text-accent-dark hover:bg-accent-soft'
@@ -138,7 +138,7 @@ interface SummaryPanelProps {
 
 export const SummaryPanel: React.FC<SummaryPanelProps> = ({ points }) => (
   <div className="space-y-2">
-    <span className="inline-flex items-center gap-1.5 text-xs sm:text-[10px] font-mono font-bold uppercase tracking-wider text-accent-dark">
+    <span className="inline-flex items-center gap-1.5 text-xs sm:text-[10px] font-bold uppercase tracking-wider text-accent-dark">
       <WandSparkles className="w-3 h-3" />
       AI Summary
     </span>

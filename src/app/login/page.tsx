@@ -56,7 +56,7 @@ export default function LoginPage() {
               Welcome to ProdPath
             </h1>
             <p className="text-xs text-muted max-w-xs mx-auto">
-              Sign in to synchronize your learning progress across devices, save custom resources, and unlock your personal roadmap.
+              Sign in to synchronize your learning progress across devices, save custom resources, and pick up your learning path where you left off.
             </p>
           </div>
 

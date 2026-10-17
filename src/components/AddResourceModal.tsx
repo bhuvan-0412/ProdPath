@@ -129,7 +129,7 @@ export const AddResourceModal: React.FC<AddResourceModalProps> = ({
               <select
                 value={type}
                 onChange={(e) => setType(e.target.value as ResourceType)}
-                className="w-full px-3.5 py-2.5 rounded-lg border border-line bg-paper text-ink text-base sm:text-sm focus:outline-none focus:ring-2 focus:ring-accent font-mono text-xs"
+                className="w-full px-3.5 py-2.5 rounded-lg border border-line bg-paper text-ink text-base sm:text-sm focus:outline-none focus:ring-2 focus:ring-accent text-xs"
               >
                 <option value="article">Article</option>
                 <option value="video">Video</option>
@@ -145,7 +145,7 @@ export const AddResourceModal: React.FC<AddResourceModalProps> = ({
               <select
                 value={weekId}
                 onChange={(e) => setWeekId(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-lg border border-line bg-paper text-ink text-base sm:text-sm focus:outline-none focus:ring-2 focus:ring-accent font-mono text-xs"
+                className="w-full px-3.5 py-2.5 rounded-lg border border-line bg-paper text-ink text-base sm:text-sm focus:outline-none focus:ring-2 focus:ring-accent text-xs"
               >
                 <option value="week-1">Week 1: PM Foundations</option>
                 <option value="week-2">Week 2: Metrics, MVP & Strategy</option>

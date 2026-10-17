@@ -58,7 +58,7 @@ export default function SchedulePage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-line pb-6">
         <div>
-          <div className="inline-flex items-center gap-2 text-xs font-mono font-semibold text-accent-dark mb-1">
+          <div className="inline-flex items-center gap-2 text-xs font-semibold text-accent-dark mb-1">
             <Calendar className="w-3.5 h-3.5" />
             <span>Self-Paced Learning Roadmap</span>
           </div>
@@ -92,7 +92,7 @@ export default function SchedulePage() {
               </button>
 
               {/* Completion Date Pillar */}
-              <div className="w-28 sm:w-36 pt-3 flex-shrink-0 font-mono text-xs space-y-0.5">
+              <div className="w-28 sm:w-36 pt-3 flex-shrink-0 text-xs space-y-0.5">
                 {isDone ? (
                   <>
                     <div className="font-bold text-accent-dark flex items-center gap-1">
@@ -119,11 +119,11 @@ export default function SchedulePage() {
                 }`}
               >
                 <div className="flex items-center justify-between gap-2 flex-wrap">
-                  <span className="font-mono text-xs sm:text-[10px] font-semibold uppercase text-accent-dark px-2 py-0.5 rounded-md bg-accent-soft border border-accent/40">
+                  <span className="text-xs sm:text-[10px] font-semibold uppercase tracking-wider text-accent-dark px-2 py-0.5 rounded-md bg-accent-soft border border-accent/40">
                     {item.week} {item.day ? `• Day ${item.day}` : ''}
                   </span>
 
-                  <span className="inline-flex items-center gap-1 font-mono text-xs sm:text-[10px] font-semibold px-2.5 py-0.5 rounded-md bg-accent-soft text-accent-dark border border-accent/40">
+                  <span className="inline-flex items-center gap-1 text-xs sm:text-[10px] font-semibold px-2.5 py-0.5 rounded-md bg-accent-soft text-accent-dark border border-accent/40">
                     <BookOpen className="w-3 h-3" />
                     Resources
                   </span>

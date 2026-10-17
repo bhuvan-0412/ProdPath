@@ -4,8 +4,9 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ThemeToggle } from './ThemeToggle';
-import { Menu, X, LogIn, LogOut, MessageSquare } from 'lucide-react';
+import { Menu, X, LogOut, MessageSquare } from 'lucide-react';
 import { useProgress } from '@/context/ProgressContext';
+import { signInWithGoogle } from './landing/GoogleSignIn';
 
 export const Navbar: React.FC = () => {
   const pathname = usePathname();
@@ -101,32 +102,34 @@ export const Navbar: React.FC = () => {
                     </button>
                   </div>
                 ) : (
-                  <Link
-                    href="/login"
-                    className="hidden sm:inline-flex items-center gap-1.5 h-10 px-4 whitespace-nowrap bg-accent-dark hover:bg-accent-dark/90 text-paper rounded-lg text-sm font-semibold transition-colors"
+                  <button
+                    type="button"
+                    onClick={signInWithGoogle}
+                    className="inline-flex items-center h-10 px-4 whitespace-nowrap rounded-lg border border-ink text-ink hover:bg-ink hover:text-paper text-sm font-semibold transition-colors"
                   >
-                    <LogIn className="w-4 h-4" />
-                    <span>Sign In</span>
-                  </Link>
+                    Sign in
+                  </button>
                 )}
               </>
             )}
 
-            {/* Mobile menu button */}
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-lg border border-line text-ink"
-              aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
-              aria-expanded={mobileMenuOpen}
-            >
-              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-            </button>
+            {/* Mobile menu button (signed-in users only; visitors just need Sign in) */}
+            {user && (
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-lg border border-line text-ink"
+                aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+                aria-expanded={mobileMenuOpen}
+              >
+                {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              </button>
+            )}
           </div>
         </div>
       </div>
 
       {/* Mobile menu */}
-      {mobileMenuOpen && (
+      {user && mobileMenuOpen && (
         <div className="md:hidden border-t border-line bg-paper px-4 pt-2 pb-4 space-y-1">
           {user &&
             navLinks.map((link) => {
@@ -157,16 +160,7 @@ export const Navbar: React.FC = () => {
             <span>Send Feedback</span>
           </button>
 
-          {!user ? (
-            <Link
-              href="/login"
-              onClick={() => setMobileMenuOpen(false)}
-              className="w-full flex items-center gap-3 px-3 py-3 rounded-lg text-base font-semibold bg-accent-dark text-paper"
-            >
-              <LogIn className="w-4 h-4" />
-              <span>Sign In with Google</span>
-            </Link>
-          ) : (
+          {user && (
             <div className="pt-2 mt-2 border-t border-line">
               <div className="flex items-center gap-3 px-3 py-2">
                 <span className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-accent-soft text-accent-dark font-display font-semibold text-sm border border-line">

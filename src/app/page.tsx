@@ -1,360 +1,374 @@
-'use client';
+import React from 'react';
+import { BookOpen, BookMarked, Video, TrendingUp, Check } from 'lucide-react';
+import weeksData from '@/data/weeks.json';
+import caseStudiesData from '@/data/caseStudies.json';
+import liveSessionsData from '@/data/liveSessions.json';
+import type { Week, ResourceType } from '@/types/curriculum';
+import { GoogleSignInButton, ReturningLearnerLink, SignedInRedirect } from '@/components/landing/GoogleSignIn';
+import { TrailMap } from '@/components/landing/TrailMap';
 
-import React, { useEffect } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { useProgress } from '@/context/ProgressContext';
-import { createClient } from '@/lib/supabase/client';
-import {
-  Sparkles,
-  ArrowRight,
-  BookOpen,
-  Calendar,
-  Video,
-  CheckCircle2,
-  TrendingUp,
-  BookMarked,
-  ShieldCheck,
-  Zap,
-  Target,
-  Layers,
-  Compass,
-  Lock,
-  Play,
-  Cpu
-} from 'lucide-react';
+// Everything below is computed from the data files at build time, so the page updates when they change
+const weeks = (weeksData as { weeks: Week[] }).weeks;
+const caseStudies = caseStudiesData.caseStudies;
+const liveSessions = liveSessionsData.liveSessions;
+
+const allResources = weeks.flatMap((w) => w.days.flatMap((d) => d.tasks.flatMap((t) => t.resources)));
+const totalDays = weeks.reduce((sum, w) => sum + w.days.length, 0);
+const countByType = (type: ResourceType) => allResources.filter((r) => r.type === type).length;
+const resourceMix = [
+  { label: 'Videos', count: countByType('video'), className: 'bg-accent' },
+  { label: 'Articles', count: countByType('article'), className: 'bg-ink' },
+  { label: 'Playlists', count: countByType('playlist'), className: 'bg-marigold' },
+  { label: 'Case studies', count: countByType('case-study'), className: 'bg-accent-soft' },
+].filter((m) => m.count > 0);
+
+const weekResourceCount = (w: Week) => w.days.reduce((s, d) => s + d.tasks.reduce((t, task) => t + task.resources.length, 0), 0);
+// "Week 1: PM Foundations" -> "PM Foundations"
+const weekName = (w: Week) => w.title.replace(/^Week\s*\d+\s*[:\-–]\s*/i, '');
+const isAiTrack = (w: Week) => /AI Product Management/i.test(w.title);
+
+const sampleWeek = weeks[0];
+const sampleDay = sampleWeek?.days[0];
+const sampleResources = sampleDay ? sampleDay.tasks.flatMap((t) => t.resources) : [];
+
+const typeLabel: Record<ResourceType, string> = {
+  article: 'Article',
+  video: 'Video',
+  playlist: 'Playlist',
+  'case-study': 'Case study',
+};
+
+// Fixed illustrative pattern for the sample activity grid (7 rows x 20 columns), denser towards the right
+const ACTIVITY_COLS = 20;
+const activityLevels = Array.from({ length: 7 * ACTIVITY_COLS }, (_, i) => {
+  const row = i % 7;
+  const col = Math.floor(i / 7);
+  const noise = ((col * 73 + row * 151 + col * row * 17) % 97) / 97;
+  const value = noise * 0.75 + (col / ACTIVITY_COLS) * 0.4;
+  if (value > 0.92) return 4;
+  if (value > 0.8) return 3;
+  if (value > 0.66) return 2;
+  if (value > 0.5) return 1;
+  return 0;
+});
+const activityShade = [
+  'bg-paper border border-line',
+  'bg-accent-soft',
+  'bg-accent/50',
+  'bg-accent dark:bg-accent/75',
+  'bg-[#9E4524] dark:bg-accent',
+];
+
+const SmallLabel: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className = '' }) => (
+  <p className={`text-xs font-semibold uppercase tracking-[0.12em] text-muted ${className}`}>{children}</p>
+);
 
 export default function LandingPage() {
-  const { user, isLoadingAuth } = useProgress();
-  const router = useRouter();
-
-  // Client-side fallback redirect for authenticated users
-  useEffect(() => {
-    if (!isLoadingAuth && user) {
-      router.replace('/dashboard');
-    }
-  }, [user, isLoadingAuth, router]);
-
-  const handleGoogleLogin = async () => {
-    try {
-      const supabase = createClient();
-      const origin = typeof window !== 'undefined' ? window.location.origin : '';
-      await supabase.auth.signInWithOAuth({
-        provider: 'google',
-        options: {
-          redirectTo: `${origin}/auth/callback?next=/dashboard`,
-        },
-      });
-    } catch (err) {
-      console.error('Login error:', err);
-    }
-  };
-
   return (
-    <div className="space-y-16 py-4 animate-fade-in">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden rounded-xl bg-surface border border-line p-8 sm:p-12 text-ink">
-        <div className="relative max-w-4xl mx-auto text-center space-y-6">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-accent-soft border border-accent/40 text-accent-dark text-xs font-mono font-medium">
-            <Sparkles className="w-3.5 h-3.5 text-marigold animate-pulse" />
-            <span>Personal Product Management Roadmap</span>
-          </div>
+    <div className="animate-fade-in">
+      <SignedInRedirect />
 
-          <h1 className="text-4xl sm:text-6xl font-display font-semibold tracking-tight text-ink leading-tight sm:leading-none">
-            Master Product Management <br />
-            <span className="text-accent-dark">
-              in 5 Structured Weeks
-            </span>
+      {/* Hero */}
+      <section className="grid md:grid-cols-[minmax(0,1fr)_280px] lg:grid-cols-[minmax(0,1fr)_360px] gap-10 lg:gap-16 items-center pt-4 pb-16 sm:pt-10 sm:pb-24">
+        <div className="max-w-3xl">
+          <p className="text-sm font-medium text-muted">Free {weeks.length}-week product management path</p>
+          <h1 className="mt-4 text-[2.6rem] leading-[1.05] sm:text-6xl lg:text-7xl font-display font-semibold tracking-tight text-ink">
+            Become a product manager, <span className="text-accent-dark">one small step a day.</span>
           </h1>
-
-          <p className="text-muted text-base sm:text-lg max-w-2xl mx-auto leading-relaxed font-normal">
-            ProdPath is your personal product management learning hub and progress tracker. Track daily tasks, analyze real-world case studies, watch executive masterclasses, and build product intuition.
+          <p className="mt-6 text-base sm:text-lg text-muted leading-relaxed max-w-[44rem]">
+            A structured path through PM foundations, metrics, tech, interview prep and AI product management. Free, and your progress saves across devices.
           </p>
-
-          {/* Call To Action Buttons */}
-          <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button
-              onClick={handleGoogleLogin}
-              className="w-full sm:w-auto px-7 py-4 rounded-xl bg-accent-dark hover:bg-accent-dark/90 text-paper font-bold text-sm transition-all flex items-center justify-center gap-3 group"
-            >
-              <svg className="w-5 h-5 bg-surface rounded-full p-0.5" viewBox="0 0 24 24">
-                <path
-                  fill="#4285F4"
-                  d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-                />
-                <path
-                  fill="#34A853"
-                  d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-                />
-                <path
-                  fill="#FBBC05"
-                  d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"
-                />
-                <path
-                  fill="#EA4335"
-                  d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
-                />
-              </svg>
-              <span>Sign in with Google</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </button>
-
-            <Link
-              href="/login"
-              className="w-full sm:w-auto px-6 py-4 rounded-xl bg-transparent hover:bg-ink/5 border border-ink text-ink text-sm font-semibold transition-all flex items-center justify-center"
-            >
-              Log In to Account
-            </Link>
+          <div className="mt-8 space-y-4">
+            <GoogleSignInButton className="w-full sm:w-auto" />
+            <ReturningLearnerLink />
           </div>
+        </div>
 
-          <div className="pt-2 flex items-center justify-center gap-6 text-xs text-muted font-mono">
-            <span className="flex items-center gap-1.5">
-              <ShieldCheck className="w-4 h-4 text-success" />
-              100% Free &amp; Cloud Synced
-            </span>
-            <span>&bull;</span>
-            <span className="flex items-center gap-1.5">
-              <Target className="w-4 h-4 text-accent-dark" />
-              Curated Curriculum
-            </span>
-          </div>
+        <div className="w-full max-w-sm mx-auto md:max-w-none">
+          <TrailMap weekCount={weeks.length} dayCount={totalDays} resourceCount={allResources.length} />
         </div>
       </section>
 
-      {/* Core Features Grid */}
-      <section className="space-y-6">
-        <div className="text-center space-y-2 max-w-2xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl font-display font-bold text-ink">
-            Everything you need to master Product Management
-          </h2>
-          <p className="text-sm text-muted">
-            Designed for aspiring and practicing PMs to build core competencies through deliberate daily practice.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
-          <div className="bg-surface rounded-xl p-6 border border-line space-y-3 hover:border-accent transition-all">
-            <div className="w-10 h-10 rounded-xl bg-accent-soft text-accent-dark flex items-center justify-center">
-              <BookOpen className="w-5 h-5" />
-            </div>
-            <h3 className="font-display font-bold text-base text-ink">
-              5-Week Curriculum
-            </h3>
-            <p className="text-xs text-muted leading-relaxed">
-              Step-by-step daily guides covering PM foundations, product sense, system design, metrics, &amp; execution.
+      {/* The path, week by week */}
+      <section aria-labelledby="path-heading" className="reveal border-t border-line pt-14 pb-16 sm:pt-20 sm:pb-24">
+        <div className="grid lg:grid-cols-[280px_minmax(0,1fr)] gap-10 lg:gap-16">
+          <div>
+            <SmallLabel>The curriculum</SmallLabel>
+            <h2 id="path-heading" className="mt-3 text-3xl sm:text-4xl font-display font-semibold text-ink">
+              Your {weeks.length}-week path
+            </h2>
+            <p className="mt-4 text-muted leading-relaxed">
+              {totalDays} days of reading, watching and practising, in order. Each day builds on the one before.
             </p>
           </div>
 
-          <div className="bg-surface rounded-xl p-6 border border-line space-y-3 hover:border-success/30 transition-all">
-            <div className="w-10 h-10 rounded-xl bg-success/10 text-success flex items-center justify-center">
-              <Cpu className="w-5 h-5" />
-            </div>
-            <h3 className="font-display font-bold text-base text-ink">
-              Traditional &amp; AI PM
-            </h3>
-            <p className="text-xs text-muted leading-relaxed">
-              A full 5-week roadmap spanning PM foundations through evals, responsible AI, and AI PM interview prep.
-            </p>
-          </div>
-
-          <div className="bg-surface rounded-xl p-6 border border-line space-y-3 hover:border-accent transition-all">
-            <div className="w-10 h-10 rounded-xl bg-accent-soft text-accent-dark flex items-center justify-center">
-              <BookMarked className="w-5 h-5" />
-            </div>
-            <h3 className="font-display font-bold text-base text-ink">
-              Real-World Case Studies
-            </h3>
-            <p className="text-xs text-muted leading-relaxed">
-              Deconstruct tech breakdowns, strategy teardowns, and key executive decision patterns from top tech products.
-            </p>
-          </div>
-
-          <div className="bg-surface rounded-xl p-6 border border-line space-y-3 hover:border-accent transition-all">
-            <div className="w-10 h-10 rounded-xl bg-accent-soft text-accent-dark flex items-center justify-center">
-              <Video className="w-5 h-5" />
-            </div>
-            <h3 className="font-display font-bold text-base text-ink">
-              Speaker Masterclasses
-            </h3>
-            <p className="text-xs text-muted leading-relaxed">
-              Watch curated talks and recordings from experienced product leaders and domain experts.
-            </p>
-          </div>
-
-          <div className="bg-surface rounded-xl p-6 border border-line space-y-3 hover:border-marigold/40 transition-all">
-            <div className="w-10 h-10 rounded-xl bg-marigold/15 text-ink flex items-center justify-center">
-              <TrendingUp className="w-5 h-5" />
-            </div>
-            <h3 className="font-display font-bold text-base text-ink">
-              Cloud Progress Sync
-            </h3>
-            <p className="text-xs text-muted leading-relaxed">
-              Track completion dates, save custom resources, and resume your sequence seamlessly across devices.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Visual Curriculum Preview Mockup */}
-      <section className="space-y-6">
-        <div className="text-center space-y-2 max-w-2xl mx-auto">
-          <span className="text-xs font-mono uppercase font-bold text-accent-dark">
-            Curriculum Preview
-          </span>
-          <h2 className="text-2xl sm:text-3xl font-display font-bold text-ink">
-            Inside the 5-Week Program
-          </h2>
-          <p className="text-sm text-muted">
-            A static preview of the structured modules and daily topics inside ProdPath.
-          </p>
-        </div>
-
-        {/* Mockup Container */}
-        <div className="relative overflow-hidden rounded-xl bg-surface border border-line p-6 sm:p-8 space-y-6">
-          <div className="absolute top-3 right-4 flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent-soft border border-accent/40 text-accent-dark text-xs sm:text-[11px] font-mono">
-            <Lock className="w-3 h-3" />
-            <span>Interactive view unlocks on login</span>
-          </div>
-
-          {/* Sample Week Tabs Mock */}
-          <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 pt-4">
-            <div className="p-3.5 rounded-xl bg-accent-soft border border-accent/40 ">
-              <span className="text-xs sm:text-[10px] font-mono font-bold uppercase text-accent-dark">
-                Week 1
-              </span>
-              <h4 className="font-bold text-xs text-ink mt-1 truncate">
-                PM Foundations
-              </h4>
-              <span className="text-xs sm:text-[10px] font-mono text-muted block mt-2">7 Topics</span>
-            </div>
-
-            <div className="p-3.5 rounded-xl bg-paper border border-line opacity-80">
-              <span className="text-xs sm:text-[10px] font-mono font-bold uppercase text-muted">
-                Week 2
-              </span>
-              <h4 className="font-bold text-xs text-ink/80 mt-1 truncate">
-                Product Sense &amp; Strategy
-              </h4>
-              <span className="text-xs sm:text-[10px] font-mono text-muted block mt-2">6 Topics</span>
-            </div>
-
-            <div className="p-3.5 rounded-xl bg-paper border border-line opacity-80">
-              <span className="text-xs sm:text-[10px] font-mono font-bold uppercase text-muted">
-                Week 3
-              </span>
-              <h4 className="font-bold text-xs text-ink/80 mt-1 truncate">
-                Metrics &amp; System Design
-              </h4>
-              <span className="text-xs sm:text-[10px] font-mono text-muted block mt-2">8 Topics</span>
-            </div>
-
-            <div className="p-3.5 rounded-xl bg-paper border border-line opacity-80">
-              <span className="text-xs sm:text-[10px] font-mono font-bold uppercase text-muted">
-                Week 4
-              </span>
-              <h4 className="font-bold text-xs text-ink/80 mt-1 truncate">
-                Execution &amp; Teardowns
-              </h4>
-              <span className="text-xs sm:text-[10px] font-mono text-muted block mt-2">5 Topics</span>
-            </div>
-
-            <div className="p-3.5 rounded-xl bg-paper border border-line opacity-80 col-span-2 sm:col-span-1">
-              <span className="text-xs sm:text-[10px] font-mono font-bold uppercase text-muted">
-                Week 5
-              </span>
-              <h4 className="font-bold text-xs text-ink/80 mt-1 truncate">
-                Leadership &amp; Career
-              </h4>
-              <span className="text-xs sm:text-[10px] font-mono text-muted block mt-2">6 Topics</span>
-            </div>
-          </div>
-
-          {/* Sample Day Card Preview */}
-          <div className="bg-paper rounded-xl p-5 border border-line space-y-4">
-            <div className="flex items-center gap-3 pb-3 border-b border-line">
-              <span className="px-2.5 py-1 rounded-lg bg-accent-dark text-paper font-mono font-bold text-xs">
-                Day 1 Sample
-              </span>
-              <h4 className="font-bold text-ink text-sm">
-                Introduction to Product Management &amp; Core Frameworks
-              </h4>
-            </div>
-
-            <div className="space-y-3">
-              <div className="p-3.5 rounded-xl bg-surface border border-line flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-7 h-7 rounded-lg bg-accent-soft text-accent-dark flex items-center justify-center text-xs font-bold">
-                    1
+          <ol className="relative">
+            {/* The trail line */}
+            <span aria-hidden="true" className="absolute left-[7px] top-3 bottom-3 w-px bg-line" />
+            {weeks.map((week, i) => {
+              const ai = isAiTrack(week);
+              const remaining = week.days.length - 3;
+              return (
+                <li key={week.id} className={`relative pl-10 ${i < weeks.length - 1 ? 'pb-10' : ''}`}>
+                  <span
+                    aria-hidden="true"
+                    className={`absolute rounded-full border-[1.5px] ${
+                      ai
+                        ? 'left-[-2px] top-[18px] w-[19px] h-[19px] bg-marigold border-ink'
+                        : i === 0
+                        ? 'left-0 top-[6px] w-[15px] h-[15px] bg-accent border-accent'
+                        : 'left-0 top-[6px] w-[15px] h-[15px] bg-paper border-ink'
+                    }`}
+                  />
+                  <div
+                    className={`grid sm:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] gap-x-8 gap-y-3 ${
+                      ai ? 'rounded-card border border-ink/80 bg-surface p-5 sm:p-6' : ''
+                    }`}
+                  >
+                    <div>
+                      <div className="flex flex-wrap items-center gap-2">
+                        <span className="text-xs font-semibold uppercase tracking-[0.12em] text-accent-dark">Week {i + 1}</span>
+                        {ai && (
+                          <span className="text-[11px] font-semibold uppercase tracking-[0.1em] px-2 py-0.5 rounded bg-marigold text-[#1F2430]">
+                            AI PM track
+                          </span>
+                        )}
+                      </div>
+                      <h3 className={`mt-1.5 font-display font-semibold text-ink ${ai ? 'text-2xl sm:text-3xl' : 'text-xl sm:text-2xl'}`}>
+                        {weekName(week)}
+                      </h3>
+                      <p className="mt-1 text-sm text-muted">
+                        {week.days.length} days &middot; {weekResourceCount(week)} resources
+                      </p>
+                    </div>
+                    <ul className="space-y-1.5 text-sm text-ink/90 sm:pt-6">
+                      {week.days.slice(0, 3).map((day) => (
+                        <li key={day.day} className="flex gap-3">
+                          <span className="w-12 flex-shrink-0 text-muted tabular-nums">Day {day.day}</span>
+                          <span>{day.brief}</span>
+                        </li>
+                      ))}
+                      {remaining > 0 && (
+                        <li className="pl-[3.75rem] text-muted">
+                          and {remaining} more {remaining === 1 ? 'day' : 'days'}
+                        </li>
+                      )}
+                    </ul>
                   </div>
+                </li>
+              );
+            })}
+          </ol>
+        </div>
+      </section>
+
+      {/* A sample day */}
+      {sampleDay && (
+        <section aria-labelledby="day-heading" className="reveal border-t border-line pt-14 pb-16 sm:pt-20 sm:pb-24">
+          <div className="grid lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] gap-10 lg:gap-16 items-start">
+            <div className="lg:order-2">
+              <SmallLabel>How it works</SmallLabel>
+              <h2 id="day-heading" className="mt-3 text-3xl sm:text-4xl font-display font-semibold text-ink">
+                A day on ProdPath
+              </h2>
+              <ol className="mt-8 space-y-6">
+                {[
+                  ["Do today's resources", 'Articles, videos and case studies, picked and put in order for you.'],
+                  ['Check them off', 'Tick each one as you finish and watch your progress fill in.'],
+                  ['Pick up on any device', 'Your progress saves to your account, right where you left off.'],
+                ].map(([title, body], i) => (
+                  <li key={title} className="flex gap-5">
+                    <span className="font-display text-3xl font-semibold leading-none text-accent-dark w-6 flex-shrink-0" aria-hidden="true">
+                      {i + 1}
+                    </span>
+                    <div>
+                      <h3 className="font-sans font-semibold text-ink tracking-normal">
+                        <span className="sr-only">Step {i + 1}: </span>
+                        {title}
+                      </h3>
+                      <p className="mt-1 text-sm text-muted leading-relaxed">{body}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </div>
+
+            <figure className="lg:order-1">
+              <div className="rounded-card border border-line bg-surface">
+                <div className="px-5 py-4 border-b border-line flex items-start justify-between gap-4">
                   <div>
-                    <h5 className="font-bold text-xs text-ink">
-                      What is Product Management &amp; Roles of a PM
-                    </h5>
-                    <span className="text-xs sm:text-[10px] font-mono text-muted">Article &bull; IBM PM Guide</span>
+                    <p className="text-xs font-semibold uppercase tracking-[0.12em] text-accent-dark">
+                      Week 1 &middot; Day {sampleDay.day}
+                    </p>
+                    <p className="mt-1 font-display text-xl font-semibold text-ink">{sampleDay.brief}</p>
                   </div>
+                  <span className="text-xs text-muted whitespace-nowrap pt-0.5">
+                    1 of {sampleResources.length} done
+                  </span>
                 </div>
-                <span className="px-2 py-0.5 rounded text-xs sm:text-[10px] font-mono bg-paper text-muted">
-                  Preview
-                </span>
+                <div className="h-1 bg-paper" aria-hidden="true">
+                  <div className="h-full bg-accent" style={{ width: `${100 / Math.max(sampleResources.length, 1)}%` }} />
+                </div>
+                <div className="p-5 space-y-5">
+                  {sampleDay.tasks.map((task) => (
+                    <div key={task.label}>
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-muted mb-2">{task.label}</p>
+                      <ul className="space-y-2">
+                        {task.resources.map((res) => {
+                          const done = res.id === sampleResources[0]?.id;
+                          return (
+                            <li key={res.id} className="flex items-start gap-3 p-3 rounded-lg border border-line bg-paper/60">
+                              <span
+                                aria-hidden="true"
+                                className={`mt-0.5 w-5 h-5 rounded-md border-[1.5px] flex items-center justify-center flex-shrink-0 ${
+                                  done ? 'bg-accent border-accent text-paper' : 'border-ink/50 bg-surface'
+                                }`}
+                              >
+                                {done && <Check className="w-3.5 h-3.5 stroke-[3]" />}
+                              </span>
+                              <span className="min-w-0">
+                                <span className={`block text-sm font-medium ${done ? 'text-muted line-through' : 'text-ink'}`}>
+                                  {res.title}
+                                  {done && <span className="sr-only"> (done)</span>}
+                                </span>
+                                <span className="block text-xs text-muted mt-0.5">{typeLabel[res.type]}</span>
+                              </span>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
               </div>
+              <figcaption className="mt-3 text-sm text-muted">
+                Sample from Week 1 - sign in to start checking things off.
+              </figcaption>
+            </figure>
+          </div>
+        </section>
+      )}
 
-              <div className="p-3.5 rounded-xl bg-surface border border-line flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-7 h-7 rounded-lg bg-accent-soft text-accent-dark flex items-center justify-center text-xs font-bold">
-                    2
-                  </div>
-                  <div>
-                    <h5 className="font-bold text-xs text-ink">
-                      Product Sense: Building Intuition Over Time
-                    </h5>
-                    <span className="text-xs sm:text-[10px] font-mono text-muted">Video &bull; Lenny&apos;s Newsletter</span>
-                  </div>
-                </div>
-                <span className="px-2 py-0.5 rounded text-xs sm:text-[10px] font-mono bg-paper text-muted">
-                  Preview
-                </span>
-              </div>
+      {/* Everything in one place */}
+      <section aria-labelledby="features-heading" className="reveal border-t border-line pt-14 pb-16 sm:pt-20 sm:pb-24">
+        <SmallLabel>What&apos;s inside</SmallLabel>
+        <h2 id="features-heading" className="mt-3 text-3xl sm:text-4xl font-display font-semibold text-ink">
+          Everything in one place
+        </h2>
+
+        <div className="mt-10 grid gap-4 lg:grid-cols-3">
+          {/* Curriculum: the large block */}
+          <div className="lg:col-span-2 lg:row-span-2 rounded-card border border-line bg-surface p-6 sm:p-8 flex flex-col">
+            <div className="flex items-center gap-2 text-accent-dark">
+              <BookOpen className="w-5 h-5" aria-hidden="true" />
+              <h3 className="font-sans text-sm font-semibold uppercase tracking-[0.12em]">The curriculum</h3>
             </div>
+            <p className="mt-6 font-display font-semibold text-ink leading-none">
+              <span className="text-6xl sm:text-7xl">{allResources.length}</span>
+              <span className="ml-3 text-2xl sm:text-3xl">resources</span>
+            </p>
+            <p className="mt-4 max-w-md text-muted leading-relaxed">
+              Hand-picked articles, videos and playlists, arranged into {totalDays} days across {weeks.length} weeks, so you always know what to do next.
+            </p>
+
+            <div className="mt-auto pt-10">
+              <div className="flex h-3 rounded-sm overflow-hidden border border-line" aria-hidden="true">
+                {resourceMix.map((m) => (
+                  <span key={m.label} className={m.className} style={{ width: `${(m.count / allResources.length) * 100}%` }} />
+                ))}
+              </div>
+              <ul className="mt-3 flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted">
+                {resourceMix.map((m) => (
+                  <li key={m.label} className="flex items-center gap-2">
+                    <span aria-hidden="true" className={`w-2.5 h-2.5 rounded-sm border border-line ${m.className}`} />
+                    <span>
+                      <span className="font-semibold text-ink tabular-nums">{m.count}</span> {m.label.toLowerCase()}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          {/* Case studies */}
+          <div className="rounded-card border border-line bg-surface p-6">
+            <div className="flex items-baseline justify-between gap-3">
+              <h3 className="font-display text-xl font-semibold text-ink">Case Studies</h3>
+              <BookMarked className="w-5 h-5 text-accent-dark flex-shrink-0" aria-hidden="true" />
+            </div>
+            <p className="mt-1 text-sm text-muted">
+              <span className="font-semibold text-ink">{caseStudies.length}</span> strategy teardowns with key takeaways
+            </p>
+            <ul className="mt-4 space-y-1.5 text-sm text-ink/90 border-t border-line pt-4">
+              {caseStudies.slice(0, 3).map((cs) => (
+                <li key={cs.id} className="truncate">{cs.title}</li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Speaker masterclasses */}
+          <div className="rounded-card border border-line bg-paper p-6">
+            <div className="flex items-baseline justify-between gap-3">
+              <h3 className="font-display text-xl font-semibold text-ink">Speaker Masterclasses</h3>
+              <Video className="w-5 h-5 text-accent-dark flex-shrink-0" aria-hidden="true" />
+            </div>
+            <p className="mt-1 text-sm text-muted">
+              <span className="font-semibold text-ink">{liveSessions.length}</span> recorded sessions with product leaders
+            </p>
+            <ul className="mt-4 space-y-1.5 text-sm text-ink/90 border-t border-line pt-4">
+              {liveSessions.slice(0, 3).map((s) => (
+                <li key={s.sessionNumber} className="truncate">{s.topic}</li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Progress tracking */}
+          <div className="lg:col-span-3 rounded-card border border-line bg-surface p-6 sm:p-8 grid md:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] gap-8 items-center">
+            <div>
+              <div className="flex items-center gap-2 text-accent-dark">
+                <TrendingUp className="w-5 h-5" aria-hidden="true" />
+                <h3 className="font-sans text-sm font-semibold uppercase tracking-[0.12em]">Progress tracking</h3>
+              </div>
+              <p className="mt-4 font-display text-2xl sm:text-3xl font-semibold text-ink leading-snug">
+                See every day you showed up.
+              </p>
+              <p className="mt-3 text-muted leading-relaxed">
+                Each resource you check off is saved with the date, and syncs to your account on every device.
+              </p>
+            </div>
+            <figure className="w-full max-w-[460px] md:justify-self-end">
+              <div
+                aria-hidden="true"
+                className="grid gap-[3px]"
+                style={{ gridTemplateColumns: `repeat(${ACTIVITY_COLS}, minmax(0, 1fr))`, gridTemplateRows: 'repeat(7, auto)', gridAutoFlow: 'column' }}
+              >
+                {activityLevels.map((level, i) => (
+                  <span key={i} className={`aspect-square rounded-[2px] ${activityShade[level]}`} />
+                ))}
+              </div>
+              <figcaption className="mt-3 text-xs text-muted">
+                Sample activity - your own heat map fills in as you learn.
+              </figcaption>
+            </figure>
           </div>
         </div>
       </section>
 
-      {/* Final Sign In CTA Section */}
-      <section className="rounded-xl p-8 sm:p-12 bg-surface border border-line text-center space-y-6">
-        <div className="max-w-2xl mx-auto space-y-3">
-          <h2 className="text-2xl sm:text-4xl font-display font-semibold text-ink">
-            Ready to start your Product Management journey?
-          </h2>
-          <p className="text-muted text-sm sm:text-base">
-            Sign in with Google to unlock full access to the 5-week curriculum, case study repository, speaker masterclasses, and cloud progress tracking.
-          </p>
-        </div>
-
-        <div className="pt-2 flex justify-center">
-          <button
-            onClick={handleGoogleLogin}
-            className="px-8 py-4 rounded-xl bg-accent-dark hover:bg-accent-dark/90 text-paper font-bold text-sm transition-all flex items-center gap-3"
-          >
-            <svg className="w-5 h-5 bg-surface rounded-full p-0.5" viewBox="0 0 24 24">
-              <path
-                fill="#4285F4"
-                d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-              />
-              <path
-                fill="#34A853"
-                d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-              />
-              <path
-                fill="#FBBC05"
-                d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"
-              />
-              <path
-                fill="#EA4335"
-                d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
-              />
-            </svg>
-            <span>Sign in with Google</span>
-          </button>
+      {/* Final call to action: a full-bleed ink band that sits on the footer */}
+      <section
+        aria-labelledby="cta-heading"
+        className="mx-[calc(50%-50vw)] -mb-8 bg-[#1F2430] border-y border-line text-[#F6F1E7]"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 flex flex-col md:flex-row md:items-center md:justify-between gap-8">
+          <div>
+            <h2 id="cta-heading" className="text-3xl sm:text-5xl font-display font-semibold">
+              Start with Day 1 today.
+            </h2>
+            <p className="mt-3 text-[#F6F1E7]/80">
+              Free, no setup. Sign in and your first day is ready.
+            </p>
+          </div>
+          <GoogleSignInButton variant="onDark" className="w-full sm:w-auto flex-shrink-0" />
         </div>
       </section>
     </div>

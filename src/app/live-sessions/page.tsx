@@ -17,7 +17,7 @@ export default function LiveSessionsPage() {
       {/* Header Banner */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-line pb-6">
         <div>
-          <div className="inline-flex items-center gap-2 text-xs font-mono font-semibold text-accent-dark mb-1">
+          <div className="inline-flex items-center gap-2 text-xs font-semibold text-accent-dark mb-1">
             <Video className="w-3.5 h-3.5" />
             <span>On-Demand Masterclass Library</span>
           </div>
@@ -32,16 +32,16 @@ export default function LiveSessionsPage() {
         {/* Live Session Progress Counter Badge */}
         <div className="bg-surface p-4 rounded-xl border border-line min-w-[240px] space-y-2">
           <div className="flex items-center justify-between text-xs font-semibold">
-            <span className="text-muted flex items-center gap-1.5 font-mono text-xs sm:text-[11px]">
+            <span className="text-muted flex items-center gap-1.5 text-xs sm:text-[11px]">
               <Tv className="w-3.5 h-3.5 text-accent-dark" />
               Live Sessions
             </span>
-            <span className="text-accent-dark font-mono font-bold">
+            <span className="text-accent-dark font-bold">
               {stats.completed}/{stats.total}
             </span>
           </div>
           <ProgressBar percentage={stats.percentage} showLabel={false} size="sm" />
-          <div className="text-xs sm:text-[11px] font-mono text-muted text-right">
+          <div className="text-xs sm:text-[11px] text-muted text-right">
             {stats.percentage}% Complete
           </div>
         </div>
@@ -95,7 +95,7 @@ export default function LiveSessionsPage() {
 
                 {/* Session Details */}
                 <div className="flex-1 min-w-0 space-y-1">
-                  <div className="flex items-center gap-2 flex-wrap font-mono text-xs sm:text-[10px]">
+                  <div className="flex items-center gap-2 flex-wrap text-xs sm:text-[10px]">
                     <span className="font-semibold px-2.5 py-0.5 rounded-md bg-accent-soft text-accent-dark border border-accent/40 uppercase">
                       Session {session.sessionNumber}
                     </span>
