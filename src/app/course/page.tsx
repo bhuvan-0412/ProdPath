@@ -13,6 +13,7 @@ import weeksData from '@/data/weeks.json';
 import taskSummariesData from '@/data/taskSummaries.json';
 import continuedLearningData from '@/data/continuedLearning.json';
 import { Week } from '@/types/curriculum';
+import { WeekMark } from '@/components/landing/Illustrations';
 import { Plus, Calendar, CheckCircle, Sparkles, ArrowRight, Bookmark, ExternalLink, Video, BookMarked } from 'lucide-react';
 
 const getTaskDomId = (weekId: string, dayNum: number, taskLabel: string) => {
@@ -287,8 +288,9 @@ function CourseContent() {
             <span className="text-xs font-semibold uppercase tracking-wider text-accent-dark">
               Active Module &bull; {activeWeek.id.replace('-', ' ')}
             </span>
-            <h2 className="text-xl font-display font-bold text-ink mt-0.5">
-              {activeWeek.title}
+            <h2 className="text-xl font-display font-bold text-ink mt-1 flex items-center gap-3">
+              <WeekMark index={weeks.indexOf(activeWeek)} className="w-9 h-9 flex-shrink-0" />
+              <span>{activeWeek.title}</span>
             </h2>
           </div>
 

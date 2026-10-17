@@ -7,24 +7,42 @@ import { useProgress } from '@/context/ProgressContext';
 import { ProgressBar } from '@/components/ProgressBar';
 import { ResourceCard } from '@/components/ResourceCard';
 import { GlowCard } from '@/components/GlowCard';
+import { StickyCheck, MiniFlag } from '@/components/landing/Illustrations';
 import weeksData from '@/data/weeks.json';
+import caseStudiesData from '@/data/caseStudies.json';
+import liveSessionsData from '@/data/liveSessions.json';
 import {
   ArrowRight,
   BookOpen,
-  Calendar,
+  CalendarDays,
   Video,
   PlayCircle,
   CheckCircle2,
-  TrendingUp,
   RotateCcw,
   BookMarked
 } from 'lucide-react';
 
+// Live counts for the quick-navigation cards, straight from the data files
+const weekCount = weeksData.weeks.length;
+const caseStudyCount = caseStudiesData.caseStudies.length;
+const liveSessionCount = liveSessionsData.liveSessions.length;
+
+const QUICK_NAV = [
+  { href: '/course', label: 'Curriculum', count: `${weekCount} weeks`, icon: BookOpen },
+  { href: '/activity', label: 'Activity', count: null, icon: CalendarDays },
+  { href: '/resources', label: 'Case Studies', count: String(caseStudyCount), icon: BookMarked },
+  { href: '/live-sessions', label: 'Live Sessions', count: String(liveSessionCount), icon: Video },
+];
+
 export default function DashboardPage() {
   const router = useRouter();
-  const { getOverallStats, getLiveSessionStats, getCaseStudyStats, getNextIncompleteResource, resetProgress } = useProgress();
+  const { user, profile, getOverallStats, getNextIncompleteResource, resetProgress } = useProgress();
   const overall = getOverallStats();
   const nextUp = getNextIncompleteResource();
+  const finished = overall.total > 0 && overall.completed === overall.total;
+
+  const fullName: string = profile?.full_name || user?.user_metadata?.full_name || user?.user_metadata?.name || '';
+  const firstName = fullName.trim().split(/\s+/)[0];
 
   const heroHref = nextUp
     ? (nextUp.weekId ? `/course?expanded=${nextUp.weekId}&targetRes=${nextUp.id}` : '/course')
@@ -32,48 +50,55 @@ export default function DashboardPage() {
 
   return (
     <div className="space-y-8 animate-fade-in">
-      {/* Hero Welcome Banner */}
-      <GlowCard
-        as={Link}
-        href={heroHref}
-        className="group block cursor-pointer rounded-xl bg-surface border border-line p-6 sm:p-8 text-ink transition-colors duration-200"
-      >
-          <div className="max-w-3xl space-y-4">
-            <div className="flex items-center justify-between gap-4">
-              <h1 className="text-3xl sm:text-4xl font-display font-semibold text-ink">
-                Master Product Management in 5 Weeks
-              </h1>
-              <div className="hidden sm:flex shrink-0 items-center gap-1.5 text-xs font-semibold text-accent-dark bg-accent-soft px-3 py-1.5 rounded-full">
-                <span>Resume Learning</span>
-                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+      {/* Welcome card, with a soft circle peeking out from behind it and a sticky note (768px and up) */}
+      <div className="relative">
+        <span aria-hidden="true" className="hidden md:block absolute -top-7 right-24 w-40 h-40 rounded-full bg-accent-soft" />
+        <GlowCard
+          as={Link}
+          href={heroHref}
+          className="group relative block cursor-pointer rounded-xl bg-surface border border-line p-6 sm:p-8 text-ink transition-colors duration-200"
+        >
+          <div className="grid md:grid-cols-[minmax(0,1fr)_112px] lg:grid-cols-[minmax(0,48rem)_112px] md:justify-between gap-8 items-center">
+            <div className="space-y-6">
+              <div className="flex items-center justify-between gap-4">
+                <h1 className="text-3xl sm:text-4xl font-display font-semibold text-ink">
+                  {firstName ? `Welcome back, ${firstName}` : 'Welcome back'}
+                </h1>
+                <div className="hidden sm:flex shrink-0 items-center gap-1.5 text-xs font-semibold text-accent-dark bg-accent-soft px-3 py-1.5 rounded-full">
+                  <span>Resume Learning</span>
+                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                </div>
               </div>
+
+              {finished ? (
+                <div className="bg-paper rounded-lg p-5 border border-line flex items-center gap-4">
+                  <MiniFlag className="w-9 h-11 flex-shrink-0" />
+                  <p className="font-display text-xl font-semibold text-ink">You finished the path.</p>
+                </div>
+              ) : (
+                <div className="bg-paper rounded-lg p-5 border border-line space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs uppercase font-semibold tracking-wide text-muted">Progress</span>
+                    <span className="text-2xl font-display font-semibold text-ink">{overall.percentage}%</span>
+                  </div>
+                  <ProgressBar
+                    percentage={overall.percentage}
+                    completed={overall.completed}
+                    total={overall.total}
+                    showLabel={false}
+                    size="lg"
+                  />
+                  <p className="text-xs text-muted pt-1 tabular-nums">
+                    {overall.completed} of {overall.total}
+                  </p>
+                </div>
+              )}
             </div>
 
-            {/* Overall Progress Widget */}
-            <div className="pt-2">
-              <div className="bg-paper rounded-lg p-5 border border-line space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs uppercase font-semibold tracking-wide text-muted flex items-center gap-1.5">
-                    <TrendingUp className="w-4 h-4 text-accent" />
-                    Overall Curriculum Progress
-                  </span>
-                  <span className="text-2xl font-display font-semibold text-ink">{overall.percentage}%</span>
-                </div>
-                <ProgressBar
-                  percentage={overall.percentage}
-                  completed={overall.completed}
-                  total={overall.total}
-                  showLabel={false}
-                  size="lg"
-                />
-                <div className="flex justify-between items-center text-xs text-muted pt-1">
-                  <span>{overall.completed} completed of {overall.total} total items</span>
-                  <span>{overall.total - overall.completed} remaining</span>
-                </div>
-              </div>
-            </div>
+            <StickyCheck className="hidden md:block w-28" />
           </div>
-      </GlowCard>
+        </GlowCard>
+      </div>
 
       {/* "Continue Where I Left Off" Signature Surface Card (Split Click Zones) */}
       {nextUp ? (
@@ -88,11 +113,8 @@ export default function DashboardPage() {
               </div>
               <div>
                 <h2 className="text-base font-display font-bold text-ink group-hover/hero-card:text-accent-dark transition-colors">
-                  Continue Where You Left Off
+                  Up next
                 </h2>
-                <p className="text-xs text-muted">
-                  Next up in your curriculum sequence
-                </p>
               </div>
             </div>
             <Link
@@ -138,77 +160,22 @@ export default function DashboardPage() {
 
       {/* Quick Navigation Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-2">
-        <GlowCard
-          as={Link}
-          href="/course"
-          className="p-5 rounded-xl bg-surface border border-line transition-colors flex items-center gap-4 group"
-        >
-          <div className="w-11 h-11 rounded-xl bg-accent-dark text-paper flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
-            <BookOpen className="w-5 h-5" />
-          </div>
-          <div>
+        {QUICK_NAV.map(({ href, label, count, icon: Icon }) => (
+          <GlowCard
+            key={href}
+            as={Link}
+            href={href}
+            className="p-5 rounded-xl bg-surface border border-line transition-colors flex items-center gap-4 group"
+          >
+            <div className="w-11 h-11 rounded-xl bg-accent-dark text-paper flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
+              <Icon className="w-5 h-5" />
+            </div>
             <h3 className="font-display font-bold text-sm text-ink group-hover:text-accent-dark transition-colors">
-              Curriculum View
+              {label}
+              {count && <span className="font-sans font-normal text-muted"> &middot; {count}</span>}
             </h3>
-            <p className="text-xs text-muted mt-0.5">
-              Structured Day-by-Day topics and task lists
-            </p>
-          </div>
-        </GlowCard>
-
-        <GlowCard
-          as={Link}
-          href="/schedule"
-          className="p-5 rounded-xl bg-surface border border-line transition-colors flex items-center gap-4 group"
-        >
-          <div className="w-11 h-11 rounded-xl bg-accent-dark text-paper flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
-            <Calendar className="w-5 h-5" />
-          </div>
-          <div>
-            <h3 className="font-display font-bold text-sm text-ink group-hover:text-accent-dark transition-colors">
-              Timeline Schedule
-            </h3>
-            <p className="text-xs text-muted mt-0.5">
-              Chronological 5-week program roadmap
-            </p>
-          </div>
-        </GlowCard>
-
-        <GlowCard
-          as={Link}
-          href="/resources"
-          className="p-5 rounded-xl bg-surface border border-line transition-colors flex items-center gap-4 group"
-        >
-          <div className="w-11 h-11 rounded-xl bg-accent-dark text-paper flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
-            <BookMarked className="w-5 h-5" />
-          </div>
-          <div>
-            <h3 className="font-display font-bold text-sm text-ink group-hover:text-accent-dark transition-colors">
-              Case Studies
-            </h3>
-            <p className="text-xs text-muted mt-0.5">
-              Real-world PM strategies & executive takeaways
-            </p>
-          </div>
-        </GlowCard>
-
-        <GlowCard
-          as={Link}
-          href="/live-sessions"
-          className="p-5 rounded-xl bg-surface border border-line transition-colors flex items-center gap-4 group"
-        >
-          <div className="w-11 h-11 rounded-xl bg-accent-dark text-paper flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
-            <Video className="w-5 h-5" />
-          </div>
-          <div>
-            <h3 className="font-display font-bold text-sm text-ink group-hover:text-accent-dark transition-colors">
-              Live Sessions
-            </h3>
-            <p className="text-xs text-muted mt-0.5">
-              Recorded masterclasses & speaker talks
-            </p>
-          </div>
-        </GlowCard>
+          </GlowCard>
+        ))}
       </div>
 
       {/* Progress Reset Tool */}

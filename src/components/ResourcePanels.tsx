@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { useProgress } from '@/context/ProgressContext';
-import { Check, WandSparkles } from 'lucide-react';
+import { Check, Lightbulb, AlignLeft } from 'lucide-react';
 
 const MAX_NOTE_LENGTH = 5000;
 
@@ -114,12 +114,12 @@ export const TaskHeader: React.FC<TaskHeaderProps> = ({ label, summary }) => {
                 ? 'text-accent-dark bg-accent-soft'
                 : 'text-muted hover:text-accent-dark hover:bg-accent-soft'
             }`}
-            title="AI summary of this task"
-            aria-label={`Show AI summary of ${label}`}
+            title="Overview of this task"
+            aria-label={`Overview of ${label}`}
             aria-expanded={open}
           >
-            <WandSparkles className="w-3.5 h-3.5" />
-            <span>Summary</span>
+            <AlignLeft className="w-3.5 h-3.5" />
+            <span>Overview</span>
           </button>
         )}
       </div>
@@ -139,8 +139,8 @@ interface SummaryPanelProps {
 export const SummaryPanel: React.FC<SummaryPanelProps> = ({ points }) => (
   <div className="space-y-2">
     <span className="inline-flex items-center gap-1.5 text-xs sm:text-[10px] font-bold uppercase tracking-wider text-accent-dark">
-      <WandSparkles className="w-3 h-3" />
-      AI Summary
+      <Lightbulb className="w-3 h-3" />
+      Key takeaways
     </span>
     <ul className="space-y-1.5 pl-4 list-disc text-xs text-muted border-l-2 border-accent/40 ml-1 py-1">
       {points.map((point, idx) => (

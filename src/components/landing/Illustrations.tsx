@@ -9,7 +9,7 @@ const INK = '#1F2430';
 // Draws its children twice: once as a solid ink shadow shifted by `offset`, then as themselves on top
 const Shadowed: React.FC<{ offset?: number; children: React.ReactNode }> = ({ offset = 4, children }) => (
   <>
-    <g transform={`translate(${offset} ${offset})`}>
+    <g className="illo-shadow" transform={`translate(${offset} ${offset})`}>
       {React.Children.map(children, (child) =>
         React.isValidElement<React.SVGProps<SVGElement>>(child)
           ? React.cloneElement(child, { fill: child.props.fill === 'none' ? 'none' : INK, stroke: INK })
@@ -63,7 +63,7 @@ export const MiniFlag: React.FC<{ className?: string }> = ({ className }) => (
       <Shadowed offset={3}>
         <path d="M9 5 L35 13 L9 21 Z" fill="#E8B04A" stroke={INK} strokeWidth="1.5" strokeLinejoin="round" />
       </Shadowed>
-      <line x1="9" y1="45" x2="9" y2="4" stroke={INK} strokeWidth="2.5" strokeLinecap="round" />
+      <line className="illo-line" x1="9" y1="45" x2="9" y2="4" stroke={INK} strokeWidth="2.5" strokeLinecap="round" />
     </g>
   </Illo>
 );
@@ -209,7 +209,7 @@ export const SummitHill: React.FC<{ className?: string }> = ({ className = '' })
     <path d="M70 180 C 100 162, 120 140, 140 120 C 152 104, 160 92, 170 80" fill="none" stroke="#F6F1E7" strokeWidth="3" strokeLinecap="round" strokeDasharray="0.1 9" />
     {/* Flag */}
     <g transform="rotate(3 172 72)">
-      <path d="M176 26 L208 36 L176 46 Z" fill="#0F0D0B" />
+      <path d="M176 26 L208 36 L176 46 Z" fill="#000000" fillOpacity="0.55" />
       <path d="M172 22 L204 32 L172 42 Z" fill="#E8B04A" stroke="#F6F1E7" strokeWidth="1.75" strokeLinejoin="round" />
       <line x1="172" y1="72" x2="172" y2="20" stroke="#F6F1E7" strokeWidth="2.5" strokeLinecap="round" />
     </g>
@@ -250,3 +250,109 @@ export const PencilIcon: React.FC<{ className?: string }> = ({ className }) => (
     </g>
   </Illo>
 );
+
+/* ---------- Signed-in pages ---------- */
+
+// Current-streak tile
+export const Flame: React.FC<{ className?: string }> = ({ className }) => (
+  <Illo viewBox="0 0 40 48" className={className}>
+    <g transform="rotate(-6 20 26)">
+      <Shadowed offset={3}>
+        <path d="M20 4 C 26 13, 34 18, 34 30 C 34 39, 28 44, 20 44 C 12 44, 6 39, 6 30 C 6 22, 12 18, 13 11 C 17 15, 18 18, 18 21 C 21 16, 21 10, 20 4 Z" fill="#E8B04A" {...iconOutline} />
+      </Shadowed>
+      <path d="M20 24 C 24 29, 27 32, 27 36 C 27 40, 24 42, 20 42 C 16 42, 13 40, 13 36 C 13 32, 17 30, 20 24 Z" fill="#C2603A" stroke={INK} strokeWidth="1.5" strokeLinejoin="round" />
+    </g>
+  </Illo>
+);
+
+// Empty state on the Activity page: a flag waiting on a bare little hill
+export const EmptyFlag: React.FC<{ className?: string }> = ({ className }) => (
+  <Illo viewBox="0 0 120 100" className={className}>
+    <Shadowed>
+      <path d="M8 92 C 26 66, 46 56, 62 56 C 80 56, 98 68, 112 92 Z" fill="#F3D9CC" {...outline} />
+    </Shadowed>
+    <g transform="rotate(4 60 56)">
+      <Shadowed offset={3}>
+        <path d="M61 14 L88 22 L61 30 Z" fill="#FBF8F1" stroke={INK} strokeWidth="2" strokeLinejoin="round" />
+      </Shadowed>
+      <line className="illo-line" x1="61" y1="57" x2="61" y2="12" stroke={INK} strokeWidth="2.5" strokeLinecap="round" />
+    </g>
+    <path className="illo-line" d="M30 92 C 38 84, 44 80, 52 74" fill="none" stroke={INK} strokeWidth="2.5" strokeLinecap="round" strokeDasharray="0.1 7" />
+  </Illo>
+);
+
+// Dashboard: the hero's sticky note with a check mark
+export const StickyCheck: React.FC<{ className?: string }> = ({ className }) => (
+  <Illo viewBox="0 0 112 112" className={className}>
+    <g transform="rotate(6 52 52)">
+      <Shadowed>
+        <rect x="6" y="6" width="96" height="96" rx="4" fill="#E8B04A" {...outline} />
+      </Shadowed>
+      <g fill="#9E4524">
+        <rect x="20" y="26" width="60" height="5" rx="2.5" />
+        <rect x="20" y="40" width="46" height="5" rx="2.5" />
+        <rect x="20" y="54" width="54" height="5" rx="2.5" />
+      </g>
+      <path d="M22 78 L29 85 L42 70" fill="none" stroke={INK} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+    </g>
+  </Illo>
+);
+
+// Small marks beside each week's title on the course page, keyed by the week's position (0-4)
+const WEEK_MARKS: React.ReactNode[] = [
+  // Week 1: seedling in a pot
+  <g key="seedling">
+    <path d="M24 30 C 24 22, 24 18, 24 14" fill="none" stroke={INK} strokeWidth="2" strokeLinecap="round" />
+    <path d="M24 20 C 16 20, 10 15, 10 8 C 18 8, 24 12, 24 20 Z" fill="#F3D9CC" {...iconOutline} />
+    <path d="M24 17 C 30 17, 37 13, 38 6 C 30 6, 24 10, 24 17 Z" fill="#E8B04A" {...iconOutline} />
+    <Shadowed offset={3}>
+      <path d="M13 29 L35 29 L32 43 L16 43 Z" fill="#C2603A" {...iconOutline} />
+    </Shadowed>
+  </g>,
+  // Week 2: bar chart
+  <g key="chart">
+    <Shadowed offset={3}>
+      <rect x="5" y="6" width="38" height="36" rx="4" fill="#FBF8F1" {...iconOutline} />
+    </Shadowed>
+    <rect x="11" y="27" width="6" height="9" rx="1.5" fill="#EBC3AE" stroke={INK} strokeWidth="1.25" />
+    <rect x="21" y="20" width="6" height="16" rx="1.5" fill="#C2603A" stroke={INK} strokeWidth="1.25" />
+    <rect x="31" y="13" width="6" height="23" rx="1.5" fill="#9E4524" stroke={INK} strokeWidth="1.25" />
+  </g>,
+  // Week 3: gear
+  <g key="gear">
+    <Shadowed offset={3}>
+      <path
+        d="M21 4 L27 4 L28 10 L32 12 L37 8 L41 12 L37 17 L39 21 L45 22 L45 28 L39 29 L37 33 L41 38 L37 42 L32 38 L28 40 L27 46 L21 46 L20 40 L16 38 L11 42 L7 38 L11 33 L9 29 L3 28 L3 22 L9 21 L11 17 L7 12 L11 8 L16 12 L20 10 Z"
+        fill="#E8B04A"
+        {...iconOutline}
+      />
+    </Shadowed>
+    <circle cx="24" cy="25" r="7" fill="#FBF8F1" stroke={INK} strokeWidth="1.75" />
+  </g>,
+  // Week 4: speech bubble
+  <g key="bubble">
+    <Shadowed offset={3}>
+      <path d="M6 8 L42 8 Q 44 8, 44 10 L44 32 Q 44 34, 42 34 L20 34 L11 42 L12 34 L8 34 Q 6 34, 6 32 L6 10 Q 6 8, 8 8 Z" fill="#F3D9CC" {...iconOutline} />
+    </Shadowed>
+    <circle cx="16" cy="21" r="2.5" fill="#9E4524" />
+    <circle cx="25" cy="21" r="2.5" fill="#9E4524" />
+    <circle cx="34" cy="21" r="2.5" fill="#9E4524" />
+  </g>,
+  // Week 5: sparkle
+  <g key="sparkle">
+    <Shadowed offset={3}>
+      <path d="M24 3 L29 19 L45 24 L29 29 L24 45 L19 29 L3 24 L19 19 Z" fill="#E8B04A" {...iconOutline} />
+    </Shadowed>
+    <path d="M40 4 L41.5 8.5 L46 10 L41.5 11.5 L40 16 L38.5 11.5 L34 10 L38.5 8.5 Z" fill="#FBF8F1" stroke={INK} strokeWidth="1.25" strokeLinejoin="round" />
+  </g>,
+];
+
+export const WeekMark: React.FC<{ index: number; className?: string }> = ({ index, className }) => {
+  const mark = WEEK_MARKS[index];
+  if (!mark) return null;
+  return (
+    <Illo viewBox={ICON_VIEWBOX} className={className}>
+      {mark}
+    </Illo>
+  );
+};

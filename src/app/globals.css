@@ -214,10 +214,14 @@
   --illo-ink: #1F2430;
   --illo-sky: #F6F1E7;
   --illo-sun: #F3D9CC;
+  --illo-shadow: #1F2430;
+  --illo-line: #1F2430;
 }
 
 .dark .illo {
   --illo-ink: #0F0D0B;
+  --illo-shadow: #000000;
+  --illo-line: #A29A8A; /* free-standing lines (flag poles, trails) that sit directly on the dark page */
   --illo-sky: #201D19;
   --illo-sun: #3A2418;
 }
@@ -228,6 +232,25 @@
 
 .illo [stroke='#1F2430'] {
   stroke: var(--illo-ink);
+}
+
+.illo .illo-shadow[fill='#1F2430'],
+.illo .illo-shadow [fill='#1F2430'] {
+  fill: var(--illo-shadow);
+}
+
+.illo .illo-shadow [stroke='#1F2430'] {
+  stroke: var(--illo-shadow);
+}
+
+/* Dark mode: a soft black shadow (55%) that still shows on the dark page. Opacity is set on the whole
+   shadow shape so its fill and outline don't double up where they overlap. */
+.dark .illo .illo-shadow {
+  opacity: 0.55;
+}
+
+.illo .illo-line {
+  stroke: var(--illo-line);
 }
 
 .illo .illo-sky {
@@ -279,6 +302,19 @@
     display: none;
   }
 }
+
+/* Activity heat map: five shades, lightest = least. Dark mode keeps the same order (brighter = more). */
+.heat-0 { background-color: rgb(var(--paper)); border: 1px solid rgb(var(--line)); }
+.heat-1 { background-color: #F3D9CC; }
+.heat-2 { background-color: #E8B9A3; }
+.heat-3 { background-color: #C2603A; }
+.heat-4 { background-color: #9E4524; }
+
+.dark .heat-0 { background-color: #1A1815; }
+.dark .heat-1 { background-color: #4A2E21; }
+.dark .heat-2 { background-color: #7A4128; }
+.dark .heat-3 { background-color: #B5582F; }
+.dark .heat-4 { background-color: #EE9067; }
 
 /* Respect the system "reduce motion" setting everywhere */
 @media (prefers-reduced-motion: reduce) {

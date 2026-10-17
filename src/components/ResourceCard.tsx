@@ -6,7 +6,7 @@ import { useProgress } from '@/context/ProgressContext';
 import { NotesPanel, SummaryPanel } from '@/components/ResourcePanels';
 import summariesData from '@/data/summaries.json';
 import { GlowCard } from '@/components/GlowCard';
-import { Video, FileText, ListVideo, ExternalLink, Check, Trash2, Sparkles, BookMarked, ChevronDown, ChevronUp, PenLine, WandSparkles } from 'lucide-react';
+import { Video, FileText, ListVideo, ExternalLink, Check, Trash2, Sparkles, BookMarked, ChevronDown, ChevronUp, PenLine, Lightbulb } from 'lucide-react';
 
 const summaries = summariesData.summaries as Record<string, string[]>;
 
@@ -35,11 +35,10 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({
     setOpenPanel((current) => (current === panel ? null : panel));
   };
 
+  // Quiet icon buttons: muted ink at rest, terracotta on hover or while their panel is open
   const actionButtonClass = (active: boolean) =>
-    `relative inline-flex items-center justify-center gap-1.5 min-h-10 min-w-10 px-3 sm:min-h-0 sm:min-w-0 sm:p-1.5 rounded-lg border border-line sm:border-transparent transition-colors ${
-      active
-        ? 'text-accent-dark bg-accent-soft'
-        : 'text-muted hover:text-accent-dark hover:bg-accent-soft'
+    `relative inline-flex items-center justify-center min-h-10 min-w-10 sm:min-h-0 sm:min-w-0 sm:p-1.5 rounded-lg transition-colors ${
+      active ? 'text-accent-dark' : 'text-muted hover:text-accent-dark'
     }`;
 
   const getIcon = () => {
@@ -147,11 +146,12 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({
                   : 'text-ink'
               }`}
             >
-              <span>{resource.title}</span>
+              <span id={`resource-title-${resource.id}`}>{resource.title}</span>
               <ExternalLink className="w-3.5 h-3.5 flex-shrink-0 opacity-60 group-hover:opacity-100 transition-opacity" />
             </a>
           ) : (
             <h4
+              id={`resource-title-${resource.id}`}
               className={`font-semibold text-sm ${
                 completed
                   ? 'line-through text-muted font-normal'
@@ -234,7 +234,7 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({
           )}
         </div>
 
-        {/* Actions: AI summary, notes, delete. Phones: labelled row along the bottom; larger screens: icons top-right */}
+        {/* Actions: key takeaways, notes, delete. Phones: a row along the bottom; larger screens: icons top-right */}
         <div className="order-last basis-full sm:order-none sm:basis-auto flex items-center justify-end gap-2 sm:gap-0.5 sm:self-start flex-shrink-0">
 
           {summaryPoints && summaryPoints.length > 0 && (
@@ -244,12 +244,12 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({
                 togglePanel('summary');
               }}
               className={actionButtonClass(openPanel === 'summary')}
-              title="AI summary"
-              aria-label={`Show AI summary of "${resource.title}"`}
+              title="Key takeaways"
+              aria-label="Key takeaways"
+              aria-describedby={`resource-title-${resource.id}`}
               aria-expanded={openPanel === 'summary'}
             >
-              <WandSparkles className="w-4 h-4" />
-              <span className="sm:hidden text-xs font-semibold">Summary</span>
+              <Lightbulb className="w-4 h-4" />
             </button>
           )}
 
@@ -259,14 +259,14 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({
               togglePanel('notes');
             }}
             className={actionButtonClass(openPanel === 'notes')}
-            title={hasNote ? 'View your notes' : 'Add notes'}
-            aria-label={`${hasNote ? 'View' : 'Add'} notes for "${resource.title}"`}
+            title={hasNote ? 'Your notes (saved)' : 'Your notes'}
+            aria-label={hasNote ? 'Your notes, saved' : 'Your notes'}
+            aria-describedby={`resource-title-${resource.id}`}
             aria-expanded={openPanel === 'notes'}
           >
             <PenLine className="w-4 h-4" />
-            <span className="sm:hidden text-xs font-semibold">Notes</span>
             {hasNote && (
-              <span className="absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-accent" aria-hidden="true" />
+              <span className="absolute top-1.5 right-1.5 sm:top-0.5 sm:right-0.5 w-2 h-2 rounded-full bg-accent ring-2 ring-surface" aria-hidden="true" />
             )}
           </button>
 

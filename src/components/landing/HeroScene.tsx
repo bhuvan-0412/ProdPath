@@ -66,7 +66,7 @@ export const HeroScene: React.FC<{ className?: string }> = ({ className = '' }) 
       {/* Kanban board */}
       <FloatingObject float={5} dur={6.4} delay={0}>
         <g transform="translate(30,50) rotate(-4 100 52)">
-          <rect x="4" y="4" width="200" height="104" rx="8" fill="#1F2430" />
+          <rect className="illo-shadow" x="4" y="4" width="200" height="104" rx="8" fill="#1F2430" />
           <rect x="0" y="0" width="200" height="104" rx="8" fill="#FBF8F1" stroke="#1F2430" strokeWidth="2" />
           <rect x="12" y="12" width="48" height="6" rx="3" fill="#C2603A" />
           <rect x="76" y="12" width="48" height="6" rx="3" fill="#E8B04A" />
@@ -83,7 +83,7 @@ export const HeroScene: React.FC<{ className?: string }> = ({ className = '' }) 
       {/* Sticky note */}
       <FloatingObject float={6} dur={5.2} delay={1.7}>
         <g transform="translate(300,30) rotate(7 48 48)">
-          <rect x="4" y="4" width="96" height="96" rx="4" fill="#1F2430" />
+          <rect className="illo-shadow" x="4" y="4" width="96" height="96" rx="4" fill="#1F2430" />
           <rect x="0" y="0" width="96" height="96" rx="4" fill="#E8B04A" stroke="#1F2430" strokeWidth="2" />
           <rect x="14" y="20" width="60" height="5" rx="2.5" fill="#9E4524" />
           <rect x="14" y="34" width="46" height="5" rx="2.5" fill="#9E4524" />
@@ -95,7 +95,7 @@ export const HeroScene: React.FC<{ className?: string }> = ({ className = '' }) 
       {/* Persona card (hidden on phones) */}
       <FloatingObject float={4} dur={7.6} delay={3.1} className="illo-hide-sm">
         <g transform="translate(455,40) rotate(3 75 42)">
-          <rect x="4" y="4" width="150" height="84" rx="8" fill="#1F2430" />
+          <rect className="illo-shadow" x="4" y="4" width="150" height="84" rx="8" fill="#1F2430" />
           <rect x="0" y="0" width="150" height="84" rx="8" fill="#FBF8F1" stroke="#1F2430" strokeWidth="2" />
           <circle cx="30" cy="34" r="18" fill="#F3D9CC" stroke="#1F2430" strokeWidth="1.5" />
           <circle cx="30" cy="29" r="5.5" fill="#1F2430" />
@@ -110,7 +110,7 @@ export const HeroScene: React.FC<{ className?: string }> = ({ className = '' }) 
       {/* Website wireframe (hidden on phones) */}
       <FloatingObject float={5} dur={8} delay={4.4} className="illo-hide-sm">
         <g transform="translate(36,190) rotate(-2 85 55)">
-          <rect x="4" y="4" width="170" height="110" rx="8" fill="#1F2430" />
+          <rect className="illo-shadow" x="4" y="4" width="170" height="110" rx="8" fill="#1F2430" />
           <rect x="0" y="0" width="170" height="110" rx="8" fill="#FBF8F1" stroke="#1F2430" strokeWidth="2" />
           <line x1="0" y1="22" x2="170" y2="22" stroke="#1F2430" strokeWidth="1.5" />
           <circle cx="14" cy="11" r="3.5" fill="#C2603A" />
@@ -126,7 +126,7 @@ export const HeroScene: React.FC<{ className?: string }> = ({ className = '' }) 
       {/* Bar chart */}
       <FloatingObject float={6} dur={6.8} delay={2.3}>
         <g transform="translate(480,190) rotate(2 75 55)">
-          <rect x="4" y="4" width="150" height="110" rx="8" fill="#1F2430" />
+          <rect className="illo-shadow" x="4" y="4" width="150" height="110" rx="8" fill="#1F2430" />
           <rect x="0" y="0" width="150" height="110" rx="8" fill="#FBF8F1" stroke="#1F2430" strokeWidth="2" />
           <rect x="20" y="76" width="20" height="24" rx="3" fill="#EBC3AE" stroke="#1F2430" strokeWidth="1.5" />
           <rect x="50" y="60" width="20" height="40" rx="3" fill="#D98E6C" stroke="#1F2430" strokeWidth="1.5" />
@@ -140,7 +140,7 @@ export const HeroScene: React.FC<{ className?: string }> = ({ className = '' }) 
       {/* MVP tag */}
       <FloatingObject float={4} dur={5.6} delay={0.9}>
         <g transform="translate(232,196) rotate(-8 26 11)">
-          <rect x="3" y="3" width="52" height="22" rx="11" fill="#1F2430" />
+          <rect className="illo-shadow" x="3" y="3" width="52" height="22" rx="11" fill="#1F2430" />
           <rect x="0" y="0" width="52" height="22" rx="11" fill="#9E4524" stroke="#1F2430" strokeWidth="1.5" />
           <text x="26" y="15" textAnchor="middle" fontFamily="Inter, sans-serif" fontSize="12" fontWeight="600" fill="#F6F1E7">
             MVP
