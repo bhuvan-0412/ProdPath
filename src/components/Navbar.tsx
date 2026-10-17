@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ThemeToggle } from './ThemeToggle';
+import { Logo } from './Logo';
 import { Menu, X, LogOut, MessageSquare } from 'lucide-react';
 import { useProgress } from '@/context/ProgressContext';
 import { signInWithGoogle } from './landing/GoogleSignIn';
@@ -38,11 +39,8 @@ export const Navbar: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between gap-4 h-16">
           {/* Brand */}
-          <Link
-            href={user ? '/dashboard' : '/'}
-            className="font-display text-xl font-semibold text-ink tracking-tight rounded-md"
-          >
-            ProdPath
+          <Link href={user ? '/dashboard' : '/'} className="flex-shrink-0 rounded-md">
+            <Logo size={28} showWordmark />
           </Link>
 
           {/* Desktop links (signed-in users only) */}

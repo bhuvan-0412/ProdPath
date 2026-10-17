@@ -2,7 +2,8 @@
 
 import React, { useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
-import { Compass, LogIn, ArrowLeft } from 'lucide-react';
+import { LogIn, ArrowLeft } from 'lucide-react';
+import { LogoMark } from '@/components/Logo';
 import Link from 'next/link';
 
 export default function LoginPage() {
@@ -49,9 +50,7 @@ export default function LoginPage() {
         {/* Login Card */}
         <div className="bg-surface md:bg-surface border border-line rounded-xl p-8 ">
           <div className="text-center mb-8">
-            <div className="w-12 h-12 rounded-xl bg-accent flex items-center justify-center text-paper mx-auto mb-4">
-              <Compass className="w-6 h-6 stroke-[2.2]" />
-            </div>
+            <LogoMark size={48} className="block mx-auto mb-4" />
             <h1 className="text-2xl font-bold tracking-tight text-ink mb-2">
               Welcome to ProdPath
             </h1>

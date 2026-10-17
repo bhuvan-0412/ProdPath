@@ -3,6 +3,7 @@
 import React from 'react';
 import { MessageSquare, Mail, ExternalLink } from 'lucide-react';
 import { useProgress } from '@/context/ProgressContext';
+import { Logo } from './Logo';
 
 export const Footer: React.FC = () => {
   const { openFeedbackModal } = useProgress();
@@ -13,7 +14,7 @@ export const Footer: React.FC = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 items-start">
           {/* Brand & Feedback Column */}
           <div className="space-y-3">
-            <span className="block font-display font-semibold text-lg text-ink">ProdPath</span>
+            <Logo size={26} showWordmark />
             <p className="text-xs text-muted leading-relaxed max-w-xs">
               Free 5-week product management path.
             </p>

@@ -6,6 +6,7 @@ import liveSessionsData from '@/data/liveSessions.json';
 import type { Week, ResourceType } from '@/types/curriculum';
 import { GoogleSignInButton, SignedInRedirect } from '@/components/landing/GoogleSignIn';
 import { TrailMap } from '@/components/landing/TrailMap';
+import { ContourLines } from '@/components/ContourLines';
 
 // Everything below is computed from the data files at build time, so the page updates when they change
 const weeks = (weeksData as { weeks: Week[] }).weeks;
@@ -55,6 +56,31 @@ const SmallLabel: React.FC<{ children: React.ReactNode; className?: string }> = 
   <p className={`text-xs font-semibold uppercase tracking-[0.12em] text-muted ${className}`}>{children}</p>
 );
 
+// Full-width background band; the content inside stays in the normal page column
+const BAND = 'relative mx-[calc(50%-50vw)]';
+const BAND_INNER = 'max-w-7xl mx-auto px-4 sm:px-6 lg:px-8';
+
+// A headline phrase that never breaks inside, with a loose hand-drawn underline beneath it.
+// The stroke keeps its width however the shape is stretched.
+const Underlined: React.FC<{ d: string; scribbleClassName?: string; children: React.ReactNode }> = ({
+  d,
+  scribbleClassName = '',
+  children,
+}) => (
+  <span className="relative inline-block whitespace-nowrap">
+    {children}
+    <svg
+      aria-hidden="true"
+      focusable="false"
+      viewBox="0 0 200 14"
+      preserveAspectRatio="none"
+      className={`pointer-events-none absolute left-0 top-[calc(100%-0.05em)] h-[0.22em] text-accent ${scribbleClassName}`}
+    >
+      <path d={d} fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" vectorEffect="non-scaling-stroke" />
+    </svg>
+  </span>
+);
+
 const FeatureHeading: React.FC<{ icon: React.ReactNode; children: React.ReactNode }> = ({ icon, children }) => (
   <div className="flex items-center gap-2 text-accent-dark">
     {icon}
@@ -68,10 +94,27 @@ export default function LandingPage() {
       <SignedInRedirect />
 
       {/* Hero */}
-      <section className="grid md:grid-cols-[minmax(0,1fr)_280px] lg:grid-cols-[minmax(0,1fr)_360px] gap-10 lg:gap-16 items-center pt-4 pb-16 sm:pt-10 sm:pb-24">
+      <section className={`${BAND} -mt-8 overflow-hidden`}>
+        <ContourLines className="right-0 bottom-0 w-[150%] sm:w-full md:w-[78%] max-w-[1100px] h-auto" />
+        <div className={`${BAND_INNER} relative grid md:grid-cols-[minmax(0,1fr)_280px] lg:grid-cols-[minmax(0,1fr)_360px] gap-10 lg:gap-16 items-center pt-12 pb-16 sm:pt-[4.5rem] sm:pb-24`}>
         <div className="max-w-3xl">
           <h1 className="text-[2.6rem] leading-[1.05] sm:text-6xl lg:text-7xl font-display font-semibold tracking-tight text-ink">
-            Become a product manager, <span className="text-accent-dark">one small step a day.</span>
+            Become a product manager,{' '}
+            <br className="hidden lg:inline" />
+            <span className="text-accent-dark">
+              <Underlined
+                d="M3 9 C 34 5.5, 70 8.5, 104 6.5 S 168 4, 197 7.5 M 12 11.5 C 60 9, 122 11, 186 9.5"
+                scribbleClassName="w-[calc(100%+0.3em)]"
+              >
+                one small step
+              </Underlined>{' '}
+              <Underlined
+                d="M2 6.5 C 40 9.5, 98 4.5, 140 7.5 S 186 9, 197 5 M 9 10.5 C 62 12, 120 8.5, 176 10.5"
+                scribbleClassName="w-full"
+              >
+                a day.
+              </Underlined>
+            </span>
           </h1>
           <p className="mt-6 text-base sm:text-lg text-muted leading-relaxed">
             Five weeks of structured PM learning, with an AI track. Free.
@@ -87,11 +130,12 @@ export default function LandingPage() {
         <div className="w-full max-w-sm mx-auto md:max-w-none">
           <TrailMap weekCount={weeks.length} />
         </div>
+        </div>
       </section>
 
       {/* The path, week by week */}
-      <section aria-labelledby="path-heading" className="reveal border-t border-line pt-14 pb-16 sm:pt-20 sm:pb-24">
-        <div className="grid lg:grid-cols-[280px_minmax(0,1fr)] gap-10 lg:gap-16">
+      <section aria-labelledby="path-heading" className={`${BAND} band-2 border-t border-line`}>
+        <div className={`${BAND_INNER} reveal grid lg:grid-cols-[280px_minmax(0,1fr)] gap-10 lg:gap-16 pt-14 pb-16 sm:pt-20 sm:pb-24`}>
           <div>
             <SmallLabel>The curriculum</SmallLabel>
             <h2 id="path-heading" className="mt-3 text-3xl sm:text-4xl font-display font-semibold text-ink">
@@ -120,8 +164,20 @@ export default function LandingPage() {
                     <div className="flex flex-wrap items-center gap-2">
                       <span className="text-xs font-semibold uppercase tracking-[0.12em] text-accent-dark">Week {i + 1}</span>
                       {ai && (
-                        <span className="text-[11px] font-semibold uppercase tracking-[0.1em] px-2 py-0.5 rounded bg-marigold text-[#1F2430]">
-                          AI PM track
+                        <span className="inline-flex items-center gap-1">
+                          <span className="text-[11px] font-semibold uppercase tracking-[0.1em] px-2 py-0.5 rounded bg-marigold text-[#1F2430]">
+                            AI PM track
+                          </span>
+                          {/* Hand-drawn sparkle */}
+                          <svg aria-hidden="true" focusable="false" viewBox="0 0 20 20" className="w-4 h-4 -mt-3 text-marigold">
+                            <path
+                              d="M10.3 2.2 C 10 6, 9.6 13, 9.8 17.6 M 2.4 9.6 C 7 10.2, 13 9.6, 17.5 10.1 M 4.6 4.4 C 7.4 7.4, 12.2 12.6, 15 15.4 M 15.2 4.8 C 12.4 7.6, 8 12.2, 4.9 15.3"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="1.8"
+                              strokeLinecap="round"
+                            />
+                          </svg>
                         </span>
                       )}
                     </div>
@@ -139,8 +195,8 @@ export default function LandingPage() {
 
       {/* A sample day */}
       {sampleDay && (
-        <section aria-labelledby="day-heading" className="reveal border-t border-line pt-14 pb-16 sm:pt-20 sm:pb-24">
-          <div className="grid lg:grid-cols-[280px_minmax(0,1fr)] gap-10 lg:gap-16 items-start">
+        <section aria-labelledby="day-heading" className={`${BAND} border-t border-line`}>
+          <div className={`${BAND_INNER} reveal grid lg:grid-cols-[280px_minmax(0,1fr)] gap-10 lg:gap-16 items-start pt-14 pb-16 sm:pt-20 sm:pb-24`}>
             <div>
               <SmallLabel>How it works</SmallLabel>
               <h2 id="day-heading" className="mt-3 text-3xl sm:text-4xl font-display font-semibold text-ink">
@@ -173,13 +229,30 @@ export default function LandingPage() {
                           const done = res.id === sampleResources[0]?.id;
                           return (
                             <li key={res.id} className="flex items-start gap-3 p-3 rounded-lg border border-line bg-paper/60">
-                              <span
-                                aria-hidden="true"
-                                className={`mt-0.5 w-5 h-5 rounded-md border-[1.5px] flex items-center justify-center flex-shrink-0 ${
-                                  done ? 'bg-accent border-accent text-paper' : 'border-ink/50 bg-surface'
-                                }`}
-                              >
-                                {done && <Check className="w-3.5 h-3.5 stroke-[3]" />}
+                              <span aria-hidden="true" className="relative mt-0.5 flex-shrink-0">
+                                <span
+                                  className={`w-5 h-5 rounded-md border-[1.5px] flex items-center justify-center ${
+                                    done ? 'bg-accent border-accent text-paper' : 'border-ink/50 bg-surface'
+                                  }`}
+                                >
+                                  {done && <Check className="w-3.5 h-3.5 stroke-[3]" />}
+                                </span>
+                                {/* Hand-drawn loop around the ticked box */}
+                                {done && (
+                                  <svg
+                                    viewBox="0 0 40 40"
+                                    focusable="false"
+                                    className="pointer-events-none absolute -left-[8px] -top-[8px] w-[36px] h-[36px] text-accent"
+                                  >
+                                    <path
+                                      d="M26.5 5.5 C 17 2.8, 5.6 7.6, 4.6 18.4 C 3.7 28.8, 12.4 36.2, 21.8 35.2 C 31.6 34.2, 36.8 26.4, 35.4 17 C 34.4 10.6, 29.4 6.4, 20.4 6.8"
+                                      fill="none"
+                                      stroke="currentColor"
+                                      strokeWidth="1.6"
+                                      strokeLinecap="round"
+                                    />
+                                  </svg>
+                                )}
                               </span>
                               <span className="min-w-0">
                                 <span className={`block text-sm font-medium ${done ? 'text-muted line-through' : 'text-ink'}`}>
@@ -205,7 +278,8 @@ export default function LandingPage() {
       )}
 
       {/* Everything in one place */}
-      <section aria-labelledby="features-heading" className="reveal border-t border-line pt-14 pb-16 sm:pt-20 sm:pb-24">
+      <section aria-labelledby="features-heading" className={`${BAND} band-2 border-t border-line`}>
+        <div className={`${BAND_INNER} reveal pt-14 pb-16 sm:pt-20 sm:pb-24`}>
         <SmallLabel>What&apos;s inside</SmallLabel>
         <h2 id="features-heading" className="mt-3 text-3xl sm:text-4xl font-display font-semibold text-ink">
           Everything in one place
@@ -253,14 +327,16 @@ export default function LandingPage() {
             </figure>
           </div>
         </div>
+        </div>
       </section>
 
       {/* Final call to action: a full-bleed ink band that sits on the footer */}
       <section
         aria-labelledby="cta-heading"
-        className="mx-[calc(50%-50vw)] -mb-8 bg-[#1F2430] border-y border-line text-[#F6F1E7]"
+        className={`${BAND} overflow-hidden -mb-8 bg-[#1F2430] border-y border-line text-[#F6F1E7]`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 flex flex-col md:flex-row md:items-center md:justify-between gap-8">
+        <ContourLines tone="cream" className="right-0 bottom-0 w-[160%] sm:w-full md:w-[70%] max-w-[1000px] h-auto" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 flex flex-col md:flex-row md:items-center md:justify-between gap-8">
           <h2 id="cta-heading" className="text-3xl sm:text-5xl font-display font-semibold">
             Start with Day 1 today.
           </h2>

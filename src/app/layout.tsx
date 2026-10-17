@@ -13,22 +13,42 @@ const fraunces = Fraunces({ subsets: ['latin'], weight: ['500', '600', '700'], v
 // Runs before the page paints so the saved theme is applied without a flash. Light is the default.
 const themeScript = `(function(){try{var t=localStorage.getItem('prodpath_theme')||localStorage.getItem('pm_hub_theme');if(t==='dark')document.documentElement.classList.add('dark');}catch(e){}})();`;
 
+const siteTitle = 'ProdPath | Learn Product Management in 5 Weeks';
+const siteDescription =
+  'A free, structured 5-week product management learning path with an AI PM track. Track your progress across devices.';
+
 export const metadata: Metadata = {
+  metadataBase: new URL('https://prodpath.vercel.app'),
   title: {
-    default: 'ProdPath | Learn Product Management in 5 Weeks',
+    default: siteTitle,
     template: '%s | ProdPath',
   },
-  description: 'A free, structured 5-week product management learning path with an AI PM track. Track your progress across devices.',
+  description: siteDescription,
   icons: {
     icon: [
       { url: '/favicon.ico', sizes: 'any'},
-      { url: '/icon.svg', type: 'image/svg+xml'},
+      { url: '/favicon.svg', type: 'image/svg+xml'},
       { url: '/favicon-32x32.png', type: 'image/png', sizes: '32x32'},
       { url: '/favicon-16x16.png', type: 'image/png', sizes: '16x16'},
+      { url: '/icon-192.png', type: 'image/png', sizes: '192x192'},
+      { url: '/icon-512.png', type: 'image/png', sizes: '512x512'},
     ],
     apple: [
       { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png'},
     ],
+  },
+  // The share image itself comes from app/opengraph-image.tsx and app/twitter-image.tsx
+  openGraph: {
+    type: 'website',
+    siteName: 'ProdPath',
+    title: siteTitle,
+    description: siteDescription,
+    url: '/',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: siteTitle,
+    description: siteDescription,
   },
 };
 

@@ -24,6 +24,7 @@ const config: Config = {
       },
       colors: {
         paper: token("paper"),
+        "paper-2": token("paper-2"),
         surface: token("surface"),
         ink: token("ink"),
         muted: token("muted"),
