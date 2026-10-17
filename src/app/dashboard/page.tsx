@@ -17,7 +17,6 @@ import {
   CalendarDays,
   Video,
   PlayCircle,
-  CheckCircle2,
   RotateCcw,
   BookMarked
 } from 'lucide-react';
@@ -104,7 +103,7 @@ export default function DashboardPage() {
       </div>
 
       {/* "Continue Where I Left Off" Signature Surface Card (Split Click Zones) */}
-      {nextUp ? (
+      {nextUp && (
         <GlowCard
           onClick={() => router.push(heroHref)}
           className="bg-surface border border-line rounded-xl p-6 cursor-pointer space-y-3.5 transition-colors duration-200 group/hero-card"
@@ -143,20 +142,6 @@ export default function DashboardPage() {
             <ResourceCard resource={nextUp} showWeekBadge={true} />
           </div>
         </GlowCard>
-      ) : (
-        <div className="bg-accent-soft rounded-xl p-6 border border-accent/40 flex items-center gap-4">
-          <div className="w-12 h-12 rounded-xl bg-accent-dark text-paper flex items-center justify-center flex-shrink-0">
-            <CheckCircle2 className="w-6 h-6" />
-          </div>
-          <div>
-            <h2 className="text-base font-display font-bold text-ink">
-              Congratulations! You&apos;ve completed all curriculum resources!
-            </h2>
-            <p className="text-xs text-accent-dark mt-1">
-              Add custom resources in the Resource Library or review case studies and masterclasses.
-            </p>
-          </div>
-        </div>
       )}
 
 
@@ -175,7 +160,7 @@ export default function DashboardPage() {
             </div>
             <h3 className="font-display font-bold text-sm text-ink group-hover:text-accent-dark transition-colors">
               {label}
-              {count && <span className="font-sans font-normal text-muted"> &middot; {count}</span>}
+              {count && <span className="font-sans font-normal text-muted whitespace-nowrap"> &middot; {count}</span>}
             </h3>
           </GlowCard>
         ))}

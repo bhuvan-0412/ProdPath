@@ -83,11 +83,11 @@ const TERMS = [
   'North Star metric',
   'A/B testing',
   'Product-market fit',
-  'OKRs',
+  'Go-to-market',
   'User stories',
   'Funnels',
   'Retention',
-  'Jobs to be done',
+  'Guesstimates',
   'MVP',
   'Prioritization',
 ];
@@ -151,8 +151,8 @@ export default function LandingPage() {
         <TrailSegment start bottom="a" />
         <div className={`${BAND_INNER} grid lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] gap-10 lg:gap-10 items-center pt-12 pb-14 sm:pt-[4.5rem] sm:pb-20`}>
           <div className="max-w-3xl">
-            <h1 className="text-[2.6rem] leading-[1.05] sm:text-6xl lg:text-[3.5rem] xl:text-[4.25rem] font-display font-semibold tracking-tight text-ink text-balance">
-              Learn the frameworks. <span className="text-accent-dark">Build the product sense.</span>
+            <h1 className="text-[2.35rem] leading-[1.08] sm:text-[3.25rem] lg:text-[2.9rem] xl:text-[3.6rem] font-display font-semibold tracking-tight text-ink text-balance">
+              Learn product management <span className="text-accent-dark">the way it&rsquo;s actually practiced.</span>
             </h1>
             <p className="mt-6 text-base sm:text-lg text-muted leading-relaxed">
               Five weeks of structured PM learning, with an AI track. Free.

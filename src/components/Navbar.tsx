@@ -37,7 +37,7 @@ export const Navbar: React.FC = () => {
   return (
     <header className="sticky top-0 z-40 w-full bg-paper border-b border-line">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between gap-4 h-16">
+        <div className="flex items-center justify-between gap-3 xl:gap-4 h-16">
           {/* Brand */}
           <Link href={user ? '/dashboard' : '/'} className="flex-shrink-0 rounded-md">
             <Logo size={28} showWordmark />
@@ -45,7 +45,7 @@ export const Navbar: React.FC = () => {
 
           {/* Desktop links (signed-in users only) */}
           {user && (
-            <nav className="hidden md:flex items-center gap-1" aria-label="Main">
+            <nav className="hidden lg:flex items-center gap-0.5 xl:gap-1" aria-label="Main">
               {navLinks.map((link) => {
                 const active = isActive(link.href);
                 return (
@@ -53,7 +53,7 @@ export const Navbar: React.FC = () => {
                     key={link.href}
                     href={link.href}
                     aria-current={active ? 'page' : undefined}
-                    className={`px-3 py-2 text-sm rounded-md transition-colors border-b-2 ${
+                    className={`px-2.5 xl:px-3 py-2 text-sm whitespace-nowrap rounded-md transition-colors border-b-2 ${
                       active
                         ? 'text-ink font-semibold border-accent rounded-b-none'
                         : 'text-muted font-medium border-transparent hover:text-ink'
@@ -71,10 +71,11 @@ export const Navbar: React.FC = () => {
             <button
               onClick={openFeedbackModal}
               title="Send Feedback"
-              className="hidden md:inline-flex items-center gap-1.5 h-10 px-3 rounded-lg text-sm font-medium text-muted hover:text-ink transition-colors"
+              aria-label="Send Feedback"
+              className="hidden md:inline-flex items-center gap-1.5 h-10 px-2.5 xl:px-3 rounded-lg text-sm font-medium text-muted hover:text-ink transition-colors"
             >
               <MessageSquare className="w-4 h-4" />
-              <span>Feedback</span>
+              <span className="hidden xl:inline">Feedback</span>
             </button>
 
             <ThemeToggle />
@@ -82,7 +83,7 @@ export const Navbar: React.FC = () => {
             {!isLoadingAuth && (
               <>
                 {user ? (
-                  <div className="hidden md:flex items-center gap-2">
+                  <div className="hidden lg:flex items-center gap-2">
                     <span
                       className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-accent-soft text-accent-dark font-display font-semibold text-sm border border-line"
                       title={`${userDisplayName} (${user.email})`}
@@ -115,7 +116,7 @@ export const Navbar: React.FC = () => {
             {user && (
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-lg border border-line text-ink"
+                className="lg:hidden inline-flex items-center justify-center w-10 h-10 rounded-lg border border-line text-ink"
                 aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
                 aria-expanded={mobileMenuOpen}
               >
@@ -128,7 +129,7 @@ export const Navbar: React.FC = () => {
 
       {/* Mobile menu */}
       {user && mobileMenuOpen && (
-        <div className="md:hidden border-t border-line bg-paper px-4 pt-2 pb-4 space-y-1">
+        <div className="lg:hidden border-t border-line bg-paper px-4 pt-2 pb-4 space-y-1">
           {user &&
             navLinks.map((link) => {
               const active = isActive(link.href);
