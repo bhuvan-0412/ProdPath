@@ -5,6 +5,7 @@ import { useProgress } from '@/context/ProgressContext';
 import { ResourceCard } from '@/components/ResourceCard';
 import { AddResourceModal } from '@/components/AddResourceModal';
 import { BookMarked, Search, Plus, Filter } from 'lucide-react';
+import { PageBackdrop } from '@/components/PageBackdrop';
 
 function ResourcesContent() {
   const { getAllResources, isCompleted, getCaseStudyStats } = useProgress();
@@ -181,6 +182,8 @@ function ResourcesContent() {
 
 export default function ResourcesPage() {
   return (
+    <>
+    <PageBackdrop variant="dots" />
     <Suspense
       fallback={
         <div className="p-8 text-center text-xs text-muted animate-pulse">
@@ -190,5 +193,6 @@ export default function ResourcesPage() {
     >
       <ResourcesContent />
     </Suspense>
+    </>
   );
 }

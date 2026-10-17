@@ -198,25 +198,6 @@ export const HeatGridIcon: React.FC<{ className?: string }> = ({ className }) =>
   </Illo>
 );
 
-/* ---------- Final call to action (always on the dark ink band) ---------- */
-
-export const SummitHill: React.FC<{ className?: string }> = ({ className = '' }) => (
-  <svg viewBox="0 0 320 180" aria-hidden="true" focusable="false" className={`pointer-events-none ${className}`}>
-    {/* Back hill, then the summit */}
-    <path d="M150 180 C 200 136, 250 118, 320 120" fill="none" stroke="#F6F1E7" strokeOpacity="0.35" strokeWidth="2" strokeLinecap="round" />
-    <path d="M10 182 C 60 140, 110 78, 172 72 C 232 66, 282 128, 330 168" fill="#2A303D" stroke="#F6F1E7" strokeWidth="2" strokeLinecap="round" />
-    {/* Dotted trail up to the summit */}
-    <path d="M70 180 C 100 162, 120 140, 140 120 C 152 104, 160 92, 170 80" fill="none" stroke="#F6F1E7" strokeWidth="3" strokeLinecap="round" strokeDasharray="0.1 9" />
-    {/* Flag */}
-    <g transform="rotate(3 172 72)">
-      <path d="M176 26 L208 36 L176 46 Z" fill="#000000" fillOpacity="0.55" />
-      <path d="M172 22 L204 32 L172 42 Z" fill="#E8B04A" stroke="#F6F1E7" strokeWidth="1.75" strokeLinejoin="round" />
-      <line x1="172" y1="72" x2="172" y2="20" stroke="#F6F1E7" strokeWidth="2.5" strokeLinecap="round" />
-    </g>
-    <circle cx="140" cy="120" r="5" fill="#2A303D" stroke="#F6F1E7" strokeWidth="2" />
-  </svg>
-);
-
 /* ---------- Trust strip ---------- */
 
 const smallOutline = { stroke: INK, strokeWidth: 1.5, strokeLinejoin: 'round' as const };

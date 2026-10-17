@@ -21,6 +21,7 @@ import {
   RotateCcw,
   BookMarked
 } from 'lucide-react';
+import { PageBackdrop } from '@/components/PageBackdrop';
 
 // Live counts for the quick-navigation cards, straight from the data files
 const weekCount = weeksData.weeks.length;
@@ -49,6 +50,8 @@ export default function DashboardPage() {
     : '/course';
 
   return (
+    <>
+    <PageBackdrop variant="icons" />
     <div className="space-y-8 animate-fade-in">
       {/* Welcome card, with a soft circle peeking out from behind it and a sticky note (768px and up) */}
       <div className="relative">
@@ -189,5 +192,6 @@ export default function DashboardPage() {
         </button>
       </div>
     </div>
+    </>
   );
 }

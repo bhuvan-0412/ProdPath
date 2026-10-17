@@ -15,6 +15,7 @@ import continuedLearningData from '@/data/continuedLearning.json';
 import { Week } from '@/types/curriculum';
 import { WeekMark } from '@/components/landing/Illustrations';
 import { Plus, Calendar, CheckCircle, Sparkles, ArrowRight, Bookmark, ExternalLink, Video, BookMarked } from 'lucide-react';
+import { PageBackdrop } from '@/components/PageBackdrop';
 
 const getTaskDomId = (weekId: string, dayNum: number, taskLabel: string) => {
   const n = weekId.replace('week-', '');
@@ -444,6 +445,8 @@ function CourseContent() {
 
 export default function CoursePage() {
   return (
+    <>
+    <PageBackdrop variant="dots" />
     <Suspense fallback={
       <div className="p-8 text-center text-xs text-muted animate-pulse">
         Loading curriculum...
@@ -451,5 +454,6 @@ export default function CoursePage() {
     }>
       <CourseContent />
     </Suspense>
+    </>
   );
 }

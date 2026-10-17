@@ -47,8 +47,9 @@
     -webkit-tap-highlight-color: transparent;
   }
 
+  /* No background on body: the page color comes from html, so PageBackdrop (z-index -10)
+     can sit between the page color and the content */
   body {
-    background-color: rgb(var(--paper));
     color: rgb(var(--ink));
     font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
     min-height: 100vh;
@@ -185,28 +186,6 @@
   }
 }
 
-/* Gentle fade-up as landing sections scroll into view (CSS only; skipped where unsupported) */
-@keyframes reveal {
-  from {
-    opacity: 0;
-    transform: translateY(16px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  @supports (animation-timeline: view()) {
-    .reveal {
-      animation: reveal linear both;
-      animation-timeline: view();
-      animation-range: entry 0% entry 35%;
-    }
-  }
-}
-
 /* ---------- Landing illustrations (flat shapes, ink outlines, hard offset shadows) ----------
    The SVGs are written with literal palette colors. Inside .illo, anything drawn in ink (#1F2430)
    reads its color from --illo-ink instead, so one SVG works in both themes. */
@@ -300,6 +279,103 @@
 @media (max-width: 639px) {
   .illo-hide-sm {
     display: none;
+  }
+}
+
+/* ---------- Landing page motion ----------
+   Motion (the JS library) drives entrances; these rules cover the CSS loops and the safety nets. */
+
+/* Anything animated by Motion carries .m-final / .m-final-path: with reduced motion it shows its
+   finished state immediately, whatever the script is doing. */
+@media (prefers-reduced-motion: reduce) {
+  .m-final {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .m-final-path {
+    stroke-dasharray: none !important;
+    stroke-dashoffset: 0 !important;
+  }
+}
+
+/* Loops stop while their element is off-screen (data-paused is set by an in-view check) */
+[data-paused] *,
+[data-paused] {
+  animation-play-state: paused !important;
+}
+
+/* Background icon field: a very slow wander */
+@keyframes icon-drift {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate(var(--dx, 6px), var(--dy, -8px)) rotate(var(--dr, 4deg));
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .icon-drift {
+    animation: icon-drift var(--dur, 18s) ease-in-out var(--delay, 0s) infinite;
+  }
+}
+
+/* PM-terms marquee: two copies of the list slide left forever; hover pauses */
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .marquee-track {
+    animation: marquee 60s linear infinite;
+  }
+
+  .marquee:hover .marquee-track {
+    animation-play-state: paused;
+  }
+}
+
+/* Sample activity grid: squares fill in a wave from left to right */
+@keyframes wave-in {
+  from {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.wave-ready > span {
+  opacity: 0;
+}
+
+.wave-on > span {
+  animation: wave-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--col, 0) * 45ms + var(--row, 0) * 12ms);
+}
+
+/* Summit flag on the final call to action */
+@keyframes flag-wave {
+  0%,
+  100% {
+    transform: skewY(0deg) scaleX(1);
+  }
+  50% {
+    transform: skewY(-5deg) scaleX(0.92);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .flag-wave {
+    transform-box: fill-box;
+    transform-origin: left center;
+    animation: flag-wave 2.8s ease-in-out infinite;
   }
 }
 

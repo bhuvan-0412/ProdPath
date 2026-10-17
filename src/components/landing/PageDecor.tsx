@@ -1,20 +1,22 @@
-import React from 'react';
+'use client';
 
-// Decorative, static landing-page details. Everything here is aria-hidden and ignores the pointer.
+import React, { useEffect, useId, useRef, useState } from 'react';
+import { motion, useMotionValue, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from 'motion/react';
+import './reducedMotion';
 
-/* ---------- The winding trail ---------- */
+// The winding trail in the left page margin (decorative, aria-hidden, ignores the pointer).
+// Each landing section draws its own piece; pieces start and end on the margin's centre line, so they join
+// at the section edges: a 240px weave at the top, a straight run, and a 240px weave at the bottom.
+// As the visitor scrolls, the piece draws itself and a small marigold dot travels along it.
+// With reduced motion the whole trail is simply shown, without the dot.
 
-// Each section draws its own piece of the trail in the left page margin. Pieces are drawn at 1:1 pixel scale
-// (never stretched), so the dots stay round. Every piece starts and ends at the same x (the margin's centre
-// line), so they join up at the section edges: a 240px weave at the top of a section, a straight run down
-// the middle, and a 240px weave at the bottom.
 const PIECE = 240;
 const WIDE = { width: 120, cx: 60 };
 const NARROW = { width: 24, cx: 12 };
 
 type Shape = 'a' | 'b' | 'c' | 'd';
 
-// Hand-shaped weaves for the wide margin (x 30..90 around the centre line at 60)
+// Hand-shaped weaves for the wide margin (x 30..90 around the centre line at 60), y from 0 to 240
 const SHAPES: Record<Shape, string> = {
   a: 'M60 0 C60 46 86 62 86 112 C86 162 52 176 56 214 C57 228 60 234 60 240',
   b: 'M60 0 C60 40 34 58 36 104 C38 150 82 160 80 200 C79 222 60 230 60 240',
@@ -23,106 +25,115 @@ const SHAPES: Record<Shape, string> = {
 };
 // The last piece stops short so the flag can stand at its end
 const END_SHAPE = 'M60 0 C60 44 84 64 82 108 C80 150 56 160 60 196';
+const END_Y = 196;
 
-// Narrow margins (768-1407px wide screens): the same weave squeezed to a gentle wobble.
-// Only the path's x coordinates move; the dots themselves are never scaled.
+const PAIR = /(-?\d+(?:\.\d+)?) (-?\d+(?:\.\d+)?)/g;
+const shiftY = (d: string, dy: number) => d.replace(PAIR, (_, x: string, y: string) => `${x} ${Number(y) + dy}`);
+// Narrow margins (768-1407px): the same weave squeezed to a gentle wobble (only x moves)
 const narrow = (d: string) =>
-  d.replace(/(-?\d+(?:\.\d+)?) (-?\d+(?:\.\d+)?)/g, (_, x: string, y: string) =>
-    `${Math.round((NARROW.cx + (Number(x) - WIDE.cx) * 0.2) * 10) / 10} ${y}`
-  );
+  d.replace(PAIR, (_, x: string, y: string) => `${Math.round((NARROW.cx + (Number(x) - WIDE.cx) * 0.2) * 10) / 10} ${y}`);
 
-const DOTS = {
-  fill: 'none',
-  stroke: 'currentColor',
-  strokeWidth: 2.5,
-  strokeLinecap: 'round' as const,
-  strokeDasharray: '0 9',
-};
-
-interface TrailSegmentProps {
-  /** Weave at the top of the section (omit for the first section, where the trail begins) */
+interface TrailProps {
+  /** Weave at the top of the section (omit where the trail runs straight in, or for the first section) */
   top?: Shape;
-  /** Weave at the bottom of the section; "end" finishes the trail with a flag */
-  bottom: Shape | 'end';
-  /** Start the trail with a dot at the top of the bottom weave (first section only) */
+  /** Weave at the bottom; "end" finishes the trail with a flag; omit for a straight run */
+  bottom?: Shape | 'end';
+  /** The trail begins here, at the top of the bottom weave (first section only) */
   start?: boolean;
 }
 
-const TrailPieces: React.FC<TrailSegmentProps & { wide: boolean }> = ({ top, bottom, start, wide }) => {
+const buildPath = ({ top, bottom, start }: TrailProps, height: number) => {
+  const bottomShape = bottom === 'end' ? END_SHAPE : bottom ? SHAPES[bottom] : null;
+  const bottomAt = height - PIECE;
+  if (start && bottomShape) return shiftY(bottomShape, bottomAt);
+
+  let d = top ? SHAPES[top] : `M${WIDE.cx} 0`;
+  const straightEnd = bottomShape ? bottomAt : height;
+  if (straightEnd > (top ? PIECE : 0)) d += ` L${WIDE.cx} ${straightEnd}`;
+  if (bottomShape) d += ' ' + shiftY(bottomShape, bottomAt).replace(/^M/, 'L');
+  return d;
+};
+
+const TrailPiece: React.FC<TrailProps & { wide: boolean; className: string }> = ({ wide, className, ...props }) => {
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const pathRef = useRef<SVGPathElement>(null);
+  const [height, setHeight] = useState(0);
+  const maskId = useId();
+  const reduce = useReducedMotion();
   const { width, cx } = wide ? WIDE : NARROW;
-  const shape = (d: string) => (wide ? d : narrow(d));
-  const bottomPath = bottom === 'end' ? END_SHAPE : SHAPES[bottom];
+
+  useEffect(() => {
+    const el = wrapRef.current;
+    if (!el) return;
+    const observer = new ResizeObserver(() => setHeight(Math.round(el.clientHeight)));
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  // 0 when the section's top reaches the middle of the screen, 1 when its bottom does
+  const { scrollYProgress } = useScroll({ target: wrapRef, offset: ['start 55%', 'end 55%'] });
+  const dotX = useMotionValue(0);
+  const dotY = useMotionValue(0);
+  const dotOpacity = useTransform(scrollYProgress, [0, 0.01, 0.99, 1], [0, 1, 1, 0]);
+  const flagOpacity = useTransform(scrollYProgress, [0.9, 1], [0, 1]);
+
+  useMotionValueEvent(scrollYProgress, 'change', (v) => {
+    const path = pathRef.current;
+    if (!path) return;
+    const point = path.getPointAtLength(v * path.getTotalLength());
+    dotX.set(point.x);
+    dotY.set(point.y);
+  });
+
+  const valid = height >= (props.top && props.bottom ? PIECE * 2 : PIECE) || (!props.top && !props.bottom && height > 0);
+  const d = valid ? (wide ? buildPath(props, height) : narrow(buildPath(props, height))) : '';
+  const endY = height - PIECE + END_Y;
 
   return (
-    <>
-      {top && (
-        <svg focusable="false" width={width} height={PIECE} viewBox={`0 0 ${width} ${PIECE}`} overflow="visible" className="absolute top-0 left-0">
-          <path d={shape(SHAPES[top])} {...DOTS} className="text-accent/25" />
+    <div ref={wrapRef} aria-hidden="true" className={`pointer-events-none absolute inset-y-0 ${className}`}>
+      {valid && (
+        <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} overflow="visible" focusable="false" className="block">
+          {!reduce && (
+            <defs>
+              <mask id={maskId} maskUnits="userSpaceOnUse" x={-20} y={-20} width={width + 40} height={height + 40}>
+                <motion.path d={d} fill="none" stroke="white" strokeWidth="16" strokeLinecap="butt" style={{ pathLength: scrollYProgress }} />
+              </mask>
+            </defs>
+          )}
+          <path
+            ref={pathRef}
+            d={d}
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeDasharray="0 9"
+            mask={reduce ? undefined : `url(#${maskId})`}
+            className="text-accent/30"
+          />
           {/* Milestone ring where this section meets the one above */}
-          <circle cx={cx} cy={0} r={wide ? 5 : 4} strokeWidth="1.5" className="fill-paper stroke-accent/50" />
+          {props.top && <circle cx={cx} cy={0} r={wide ? 5 : 4} strokeWidth="1.5" className="fill-paper stroke-accent/50" />}
+          {props.start && <circle cx={cx} cy={height - PIECE} r={3.5} className="fill-accent/40" />}
+          {props.bottom === 'end' && (
+            <motion.g style={{ opacity: reduce ? 1 : flagOpacity }}>
+              <line x1={cx} y1={endY} x2={cx} y2={endY - 26} strokeWidth="1.5" strokeLinecap="round" className="stroke-ink/40" />
+              <path d={`M${cx} ${endY - 26} L${cx + 14} ${endY - 20.5} L${cx} ${endY - 15} Z`} className="fill-marigold" />
+            </motion.g>
+          )}
+          {/* The traveller: marks how far down the page the visitor is */}
+          {!reduce && (
+            <motion.circle cx={0} cy={0} r={wide ? 4.5 : 3.5} className="fill-marigold stroke-ink/30" strokeWidth="1" style={{ x: dotX, y: dotY, opacity: dotOpacity }} />
+          )}
         </svg>
       )}
-      {top && (
-        <svg focusable="false" width={width} className="absolute left-0" style={{ top: PIECE, bottom: PIECE, height: `calc(100% - ${PIECE * 2}px)` }}>
-          <line x1={cx} y1="0" x2={cx} y2="100%" {...DOTS} className="text-accent/25" />
-        </svg>
-      )}
-      <svg focusable="false" width={width} height={PIECE} viewBox={`0 0 ${width} ${PIECE}`} overflow="visible" className="absolute bottom-0 left-0">
-        <path d={shape(bottomPath)} {...DOTS} className="text-accent/25" />
-        {start && <circle cx={cx} cy={0} r={3.5} className="fill-accent/40" />}
-        {bottom === 'end' && (
-          <>
-            <line x1={cx} y1={196} x2={cx} y2={170} strokeWidth="1.5" strokeLinecap="round" className="stroke-ink/40" />
-            <path d={`M${cx} 170 L${cx + 14} 175.5 L${cx} 181 Z`} className="fill-marigold" />
-          </>
-        )}
-      </svg>
-    </>
+    </div>
   );
 };
 
 // Hidden under 768px. Sits in the left page margin, so it never crosses text or cards.
-export const TrailSegment: React.FC<TrailSegmentProps> = (props) => (
+export const TrailSegment: React.FC<TrailProps> = (props) => (
   <>
-    <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 left-0 w-6 hidden md:block min-[1408px]:hidden">
-      <TrailPieces {...props} wide={false} />
-    </div>
-    <div
-      aria-hidden="true"
-      className="pointer-events-none absolute inset-y-0 w-[120px] hidden min-[1408px]:block left-[calc((100%_-_1216px)/4_-_60px)]"
-    >
-      <TrailPieces {...props} wide />
-    </div>
+    <TrailPiece {...props} wide={false} className="left-0 w-6 hidden md:block min-[1408px]:hidden" />
+    <TrailPiece {...props} wide className="w-[120px] hidden min-[1408px]:block left-[calc((100%_-_1216px)/4_-_60px)]" />
   </>
-);
-
-// A straight run of the trail for slim strips (shorter than one weave), joining the pieces above and below
-export const TrailStraight: React.FC = () => (
-  <>
-    <svg aria-hidden="true" focusable="false" className="pointer-events-none absolute inset-y-0 left-0 h-full hidden md:block min-[1408px]:hidden" width={NARROW.width}>
-      <line x1={NARROW.cx} y1="0" x2={NARROW.cx} y2="100%" {...DOTS} className="text-accent/25" />
-    </svg>
-    <svg
-      aria-hidden="true"
-      focusable="false"
-      className="pointer-events-none absolute inset-y-0 h-full hidden min-[1408px]:block left-[calc((100%_-_1216px)/4_-_60px)]"
-      width={WIDE.width}
-    >
-      <line x1={WIDE.cx} y1="0" x2={WIDE.cx} y2="100%" {...DOTS} className="text-accent/25" />
-    </svg>
-  </>
-);
-
-/* ---------- Notebook dots ---------- */
-
-// A very faint 24px dot grid, drawn with an SVG pattern
-export const NotebookDots: React.FC = () => (
-  <svg aria-hidden="true" focusable="false" className="pointer-events-none absolute inset-0 w-full h-full text-ink/[0.08]">
-    <defs>
-      <pattern id="notebook-dots" width="24" height="24" patternUnits="userSpaceOnUse">
-        <circle cx="12" cy="12" r="0.75" fill="currentColor" />
-      </pattern>
-    </defs>
-    <rect width="100%" height="100%" fill="url(#notebook-dots)" />
-  </svg>
 );

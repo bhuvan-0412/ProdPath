@@ -63,7 +63,7 @@ export default function RootLayout({
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
-      <body className="antialiased flex flex-col min-h-screen relative bg-paper text-ink transition-colors duration-200">
+      <body className="antialiased flex flex-col min-h-screen relative text-ink">
         <ProgressProvider>
           <Navbar />
           <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 relative">

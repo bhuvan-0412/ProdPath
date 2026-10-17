@@ -7,6 +7,7 @@ import { ProgressBar } from '@/components/ProgressBar';
 import liveSessionsData from '@/data/liveSessions.json';
 import { LiveSession } from '@/types/curriculum';
 import { Video, Check, ExternalLink, User, Tv, CheckCircle2 } from 'lucide-react';
+import { PageBackdrop } from '@/components/PageBackdrop';
 
 export default function LiveSessionsPage() {
   const { isCompleted, toggleCompleted, getLiveSessionStats } = useProgress();
@@ -14,6 +15,8 @@ export default function LiveSessionsPage() {
   const sessions = liveSessionsData.liveSessions as LiveSession[];
 
   return (
+    <>
+    <PageBackdrop variant="icons" />
     <div className="space-y-8 animate-fade-in">
       {/* Header Banner */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-line pb-6">
@@ -135,5 +138,6 @@ export default function LiveSessionsPage() {
         })}
       </div>
     </div>
+    </>
   );
 }

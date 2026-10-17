@@ -9,6 +9,7 @@ import { Check, ArrowRight } from 'lucide-react';
 import { HeatMap } from '@/components/activity/HeatMap';
 import { Flame, EmptyFlag } from '@/components/landing/Illustrations';
 import { countByDay, getActivityStats, buildHeatMap } from '@/lib/activity';
+import { PageBackdrop } from '@/components/PageBackdrop';
 
 const scheduleList = scheduleData.schedule as ScheduleItem[];
 
@@ -85,6 +86,8 @@ export default function ActivityPage() {
   };
 
   return (
+    <>
+    <PageBackdrop variant="contours" />
     <div className="space-y-8 animate-fade-in">
       <h1 className="text-3xl sm:text-4xl font-display font-semibold text-ink">Activity</h1>
 
@@ -169,5 +172,6 @@ export default function ActivityPage() {
         </ol>
       </section>
     </div>
+    </>
   );
 }

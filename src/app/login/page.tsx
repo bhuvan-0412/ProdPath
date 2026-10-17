@@ -5,6 +5,7 @@ import { createClient } from '@/lib/supabase/client';
 import { LogIn, ArrowLeft } from 'lucide-react';
 import { LogoMark } from '@/components/Logo';
 import Link from 'next/link';
+import { PageBackdrop } from '@/components/PageBackdrop';
 
 export default function LoginPage() {
   const [loading, setLoading] = useState(false);
@@ -36,6 +37,8 @@ export default function LoginPage() {
   };
 
   return (
+    <>
+    <PageBackdrop variant="contours" />
     <div className="min-h-[85vh] flex flex-col justify-center items-center px-4 py-12">
       <div className="w-full max-w-md">
         {/* Back Link */}
@@ -104,5 +107,6 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
+    </>
   );
 }

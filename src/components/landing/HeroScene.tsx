@@ -1,157 +1,242 @@
-import React from 'react';
+'use client';
 
-// The hero illustration: a PM's desk floating over terracotta hills, with a dotted trail up to a flag.
-// Pure decoration (aria-hidden). Colors swap for dark mode through the .illo variables in globals.css.
-// Each object floats on its own timing (outer <g>) while keeping its tilt (inner <g transform>).
+import React, { useEffect, useRef } from 'react';
+import { motion, useInView, useMotionValue, useSpring, useTransform, useReducedMotion, type MotionValue } from 'motion/react';
+import './reducedMotion';
+import {
+  SwotCard,
+  AarrrCard,
+  HeartCard,
+  FiveCsCard,
+  LoopCard,
+  MvpCard,
+  SWOT_SIZE,
+  AARRR_SIZE,
+  HEART_SIZE,
+  FIVE_CS_SIZE,
+  LOOP_SIZE,
+  MVP_SIZE,
+  type CardProps,
+} from './FrameworkCards';
 
-type Float = { float: number; dur: number; delay: number };
+// The hero illustration: six PM framework cards floating over terracotta hills, with a dotted trail up to a
+// summit flag. Decorative only (aria-hidden). Two layouts: six cards from 640px up, four on phones.
+//
+// Motion, all transform/opacity: the cards pop in one after another, then each runs its own little
+// animation; afterwards they float (CSS, paused off-screen) and drift a few pixels against a mouse pointer.
+// Reduced motion: globals.css pins everything in its final state and the pointer effect is skipped.
 
-const floatStyle = ({ float, dur, delay }: Float) =>
-  ({ '--float': `${-float}px`, '--dur': `${dur}s`, '--delay': `${-delay}s` }) as React.CSSProperties;
+type CardComponent = React.FC<CardProps>;
 
-const FloatingObject: React.FC<Float & { className?: string; children: React.ReactNode }> = ({
-  className = '',
-  children,
-  ...timing
-}) => (
-  <g className={`illo-float ${className}`} style={floatStyle(timing)}>
-    {children}
-  </g>
-);
+interface Placement {
+  key: string;
+  Card: CardComponent;
+  size: { w: number; h: number };
+  x: number;
+  y: number;
+  rot: number;
+  /** How strongly it shifts against the pointer (px at the screen edge) */
+  depth: number;
+  float: { px: number; dur: number; delay: number };
+}
+
+interface Layout {
+  viewBox: { w: number; h: number };
+  sun: { cx: number; cy: number; r: number };
+  hills: [string, string, string];
+  trail: string;
+  stops: [number, number][];
+  flag: { x: number; y: number };
+  cards: Placement[];
+  sparkles: { x: number; y: number; s: number }[];
+}
+
+const DESKTOP: Layout = {
+  viewBox: { w: 680, h: 440 },
+  sun: { cx: 560, cy: 118, r: 64 },
+  hills: [
+    'M0 330 C 90 300, 170 300, 250 320 C 320 338, 350 255, 410 250 C 470 246, 520 300, 600 305 C 640 308, 660 300, 680 296 L680 440 L0 440 Z',
+    'M0 385 C 90 335, 200 345, 290 368 C 400 398, 500 345, 680 362 L680 440 L0 440 Z',
+    'M0 420 C 120 392, 260 406, 360 416 C 460 426, 580 398, 680 408 L680 440 L0 440 Z',
+  ],
+  trail: 'M110 410 C 160 402, 210 408, 245 386 C 290 360, 330 352, 360 320 C 380 298, 395 272, 410 252',
+  stops: [
+    [245, 386],
+    [360, 320],
+  ],
+  flag: { x: 410, y: 252 },
+  cards: [
+    { key: 'swot', Card: SwotCard, size: SWOT_SIZE, x: 26, y: 26, rot: -4, depth: 7, float: { px: 5, dur: 6.4, delay: 0 } },
+    { key: 'aarrr', Card: AarrrCard, size: AARRR_SIZE, x: 202, y: 18, rot: 3, depth: 4, float: { px: 6, dur: 5.4, delay: 1.6 } },
+    { key: 'heart', Card: HeartCard, size: HEART_SIZE, x: 406, y: 22, rot: -2, depth: 8, float: { px: 4, dur: 7.4, delay: 3 } },
+    { key: '5cs', Card: FiveCsCard, size: FIVE_CS_SIZE, x: 30, y: 184, rot: 2, depth: 5, float: { px: 5, dur: 8, delay: 4.2 } },
+    { key: 'loop', Card: LoopCard, size: LOOP_SIZE, x: 472, y: 150, rot: -3, depth: 6, float: { px: 6, dur: 6.8, delay: 2.2 } },
+    { key: 'mvp', Card: MvpCard, size: MVP_SIZE, x: 226, y: 184, rot: -5, depth: 3, float: { px: 4, dur: 5.8, delay: 0.8 } },
+  ],
+  sparkles: [
+    { x: 206, y: 168, s: 0.75 },
+    { x: 452, y: 138, s: 0.9 },
+    { x: 664, y: 132, s: 0.7 },
+  ],
+};
+
+const PHONE: Layout = {
+  viewBox: { w: 400, h: 470 },
+  sun: { cx: 330, cy: 160, r: 54 },
+  hills: [
+    'M0 384 C 60 364, 120 366, 180 376 C 230 384, 270 342, 316 340 C 352 338, 378 356, 400 352 L400 470 L0 470 Z',
+    'M0 420 C 80 395, 160 405, 230 418 C 300 430, 350 405, 400 412 L400 470 L0 470 Z',
+    'M0 452 C 90 438, 200 446, 260 450 C 320 454, 370 440, 400 444 L400 470 L0 470 Z',
+  ],
+  trail: 'M60 456 C 110 446, 170 444, 210 426 C 250 408, 290 372, 316 340',
+  stops: [
+    [210, 426],
+    [281, 384],
+  ],
+  flag: { x: 316, y: 340 },
+  cards: [
+    { key: 'swot', Card: SwotCard, size: SWOT_SIZE, x: 14, y: 20, rot: -4, depth: 0, float: { px: 5, dur: 6.4, delay: 0 } },
+    { key: 'aarrr', Card: AarrrCard, size: AARRR_SIZE, x: 204, y: 16, rot: 3, depth: 0, float: { px: 6, dur: 5.4, delay: 1.6 } },
+    { key: 'loop', Card: LoopCard, size: LOOP_SIZE, x: 16, y: 178, rot: -3, depth: 0, float: { px: 6, dur: 6.8, delay: 2.2 } },
+    { key: 'mvp', Card: MvpCard, size: MVP_SIZE, x: 224, y: 178, rot: 4, depth: 0, float: { px: 4, dur: 5.8, delay: 0.8 } },
+  ],
+  sparkles: [
+    { x: 192, y: 168, s: 0.75 },
+    { x: 388, y: 290, s: 0.7 },
+    { x: 214, y: 322, s: 0.85 },
+  ],
+};
 
 const SPARKLE = 'M0 -10 L3 -3 L10 0 L3 3 L0 10 L-3 3 L-10 0 L-3 -3 Z';
+const EASE = [0.22, 1, 0.36, 1] as const;
 
-const Sparkle: React.FC<{ at: string; dur: number; delay: number }> = ({ at, dur, delay }) => (
-  <g transform={at}>
-    <path
-      className="illo-twinkle"
-      style={{ '--dur': `${dur}s`, '--delay': `${-delay}s` } as React.CSSProperties}
-      d={SPARKLE}
-      fill="#E8B04A"
-      stroke="#1F2430"
-      strokeWidth="1.2"
-      strokeLinejoin="round"
-    />
-  </g>
-);
+const CardSlot: React.FC<{
+  placement: Placement;
+  index: number;
+  on: boolean;
+  pointer: { x: MotionValue<number>; y: MotionValue<number> };
+}> = ({ placement, index, on, pointer }) => {
+  const { Card, size, x, y, rot, depth, float } = placement;
+  // Shift against the pointer: pointer right -> card left
+  const px = useTransform(pointer.x, (v) => -v * depth);
+  const py = useTransform(pointer.y, (v) => -v * depth * 0.6);
+  const enter = 0.15 + index * 0.14;
 
-export const HeroScene: React.FC<{ className?: string }> = ({ className = '' }) => (
-  <svg
-    viewBox="0 0 680 440"
-    xmlns="http://www.w3.org/2000/svg"
-    aria-hidden="true"
-    focusable="false"
-    className={`illo block w-full h-auto ${className}`}
-  >
-    <defs>
-      <clipPath id="hero-scene-clip">
-        <rect x="0" y="0" width="680" height="440" rx="12" />
-      </clipPath>
-    </defs>
-    <g clipPath="url(#hero-scene-clip)">
-      {/* Sky, sun and hills */}
-      <rect className="illo-sky" x="0" y="0" width="680" height="440" fill="#F6F1E7" />
-      <circle className="illo-sun" cx="550" cy="120" r="64" fill="#F3D9CC" />
-      <path d="M0 330 C 90 300, 170 300, 250 320 C 320 338, 350 255, 410 250 C 470 246, 520 300, 600 305 C 640 308, 660 300, 680 296 L680 440 L0 440 Z" fill="#EBC3AE" />
-      <path d="M0 385 C 90 335, 200 345, 290 368 C 400 398, 500 345, 680 362 L680 440 L0 440 Z" fill="#D98E6C" />
-      <path d="M0 420 C 120 392, 260 406, 360 416 C 460 426, 580 398, 680 408 L680 440 L0 440 Z" fill="#9E4524" />
-
-      {/* Trail up to the summit flag */}
-      <path d="M110 410 C 160 402, 210 408, 245 386 C 290 360, 330 352, 360 320 C 380 298, 395 272, 410 252" fill="none" stroke="#1F2430" strokeWidth="3.5" strokeLinecap="round" strokeDasharray="0.1 9" />
-      <circle cx="245" cy="386" r="6" fill="#FBF8F1" stroke="#1F2430" strokeWidth="2" />
-      <circle cx="360" cy="320" r="6" fill="#FBF8F1" stroke="#1F2430" strokeWidth="2" />
-      <line x1="410" y1="252" x2="410" y2="206" stroke="#1F2430" strokeWidth="2.5" strokeLinecap="round" />
-      <path d="M410 206 L438 216 L410 226 Z" fill="#E8B04A" stroke="#1F2430" strokeWidth="1.5" strokeLinejoin="round" />
-
-      {/* Kanban board */}
-      <FloatingObject float={5} dur={6.4} delay={0}>
-        <g transform="translate(30,50) rotate(-4 100 52)">
-          <rect className="illo-shadow" x="4" y="4" width="200" height="104" rx="8" fill="#1F2430" />
-          <rect x="0" y="0" width="200" height="104" rx="8" fill="#FBF8F1" stroke="#1F2430" strokeWidth="2" />
-          <rect x="12" y="12" width="48" height="6" rx="3" fill="#C2603A" />
-          <rect x="76" y="12" width="48" height="6" rx="3" fill="#E8B04A" />
-          <rect x="140" y="12" width="48" height="6" rx="3" fill="#1F2430" />
-          <rect x="12" y="28" width="48" height="16" rx="4" fill="#F3D9CC" stroke="#1F2430" strokeWidth="1.5" />
-          <rect x="12" y="50" width="48" height="16" rx="4" fill="#F3D9CC" stroke="#1F2430" strokeWidth="1.5" />
-          <rect x="12" y="72" width="48" height="16" rx="4" fill="#F3D9CC" stroke="#1F2430" strokeWidth="1.5" />
-          <rect x="76" y="28" width="48" height="16" rx="4" fill="#F3D9CC" stroke="#1F2430" strokeWidth="1.5" />
-          <rect x="76" y="50" width="48" height="16" rx="4" fill="#F3D9CC" stroke="#1F2430" strokeWidth="1.5" />
-          <rect x="140" y="28" width="48" height="16" rx="4" fill="#E8B04A" stroke="#1F2430" strokeWidth="1.5" />
+  return (
+    <motion.g
+      data-card={placement.key}
+      className="m-final"
+      initial={{ opacity: 0, scale: 0.86, y: 14 }}
+      animate={on ? { opacity: 1, scale: 1, y: 0 } : undefined}
+      transition={{ delay: enter, duration: 0.5, ease: EASE }}
+    >
+      <motion.g style={{ x: px, y: py }}>
+        <g
+          className="illo-float"
+          style={{ '--float': `${-float.px}px`, '--dur': `${float.dur}s`, '--delay': `${-float.delay}s` } as React.CSSProperties}
+        >
+          <g transform={`translate(${x} ${y}) rotate(${rot} ${size.w / 2} ${size.h / 2})`}>
+            <Card on={on} delay={enter + 0.4} />
+          </g>
         </g>
-      </FloatingObject>
+      </motion.g>
+    </motion.g>
+  );
+};
 
-      {/* Sticky note */}
-      <FloatingObject float={6} dur={5.2} delay={1.7}>
-        <g transform="translate(300,30) rotate(7 48 48)">
-          <rect className="illo-shadow" x="4" y="4" width="96" height="96" rx="4" fill="#1F2430" />
-          <rect x="0" y="0" width="96" height="96" rx="4" fill="#E8B04A" stroke="#1F2430" strokeWidth="2" />
-          <rect x="14" y="20" width="60" height="5" rx="2.5" fill="#9E4524" />
-          <rect x="14" y="34" width="46" height="5" rx="2.5" fill="#9E4524" />
-          <rect x="14" y="48" width="54" height="5" rx="2.5" fill="#9E4524" />
-          <path d="M16 72 L23 79 L36 64" fill="none" stroke="#1F2430" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-        </g>
-      </FloatingObject>
+const Scene: React.FC<{
+  layout: Layout;
+  className: string;
+  pointer: { x: MotionValue<number>; y: MotionValue<number> };
+}> = ({ layout, className, pointer }) => {
+  const ref = useRef<SVGSVGElement>(null);
+  const entered = useInView(ref, { once: true, amount: 0.25 });
+  const visible = useInView(ref);
+  const { w, h } = layout.viewBox;
+  const clipId = `hero-clip-${w}`;
 
-      {/* Persona card (hidden on phones) */}
-      <FloatingObject float={4} dur={7.6} delay={3.1} className="illo-hide-sm">
-        <g transform="translate(455,40) rotate(3 75 42)">
-          <rect className="illo-shadow" x="4" y="4" width="150" height="84" rx="8" fill="#1F2430" />
-          <rect x="0" y="0" width="150" height="84" rx="8" fill="#FBF8F1" stroke="#1F2430" strokeWidth="2" />
-          <circle cx="30" cy="34" r="18" fill="#F3D9CC" stroke="#1F2430" strokeWidth="1.5" />
-          <circle cx="30" cy="29" r="5.5" fill="#1F2430" />
-          <path d="M20 47 C 20 39, 40 39, 40 47 Z" fill="#1F2430" />
-          <rect x="58" y="22" width="76" height="6" rx="3" fill="#1F2430" />
-          <rect x="58" y="36" width="54" height="5" rx="2.5" fill="#E8B9A3" />
-          <rect x="14" y="62" width="40" height="12" rx="6" fill="#C2603A" />
-          <rect x="60" y="62" width="34" height="12" rx="6" fill="#E8B04A" />
-        </g>
-      </FloatingObject>
+  return (
+    <svg
+      ref={ref}
+      viewBox={`0 0 ${w} ${h}`}
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+      focusable="false"
+      data-paused={visible ? undefined : ''}
+      className={`illo block w-full h-auto ${className}`}
+    >
+      <defs>
+        <clipPath id={clipId}>
+          <rect x="0" y="0" width={w} height={h} rx="12" />
+        </clipPath>
+      </defs>
+      <g clipPath={`url(#${clipId})`}>
+        <rect className="illo-sky" x="0" y="0" width={w} height={h} fill="#F6F1E7" />
+        <circle className="illo-sun" cx={layout.sun.cx} cy={layout.sun.cy} r={layout.sun.r} fill="#F3D9CC" />
+        <path d={layout.hills[0]} fill="#EBC3AE" />
+        <path d={layout.hills[1]} fill="#D98E6C" />
+        <path d={layout.hills[2]} fill="#9E4524" />
 
-      {/* Website wireframe (hidden on phones) */}
-      <FloatingObject float={5} dur={8} delay={4.4} className="illo-hide-sm">
-        <g transform="translate(36,190) rotate(-2 85 55)">
-          <rect className="illo-shadow" x="4" y="4" width="170" height="110" rx="8" fill="#1F2430" />
-          <rect x="0" y="0" width="170" height="110" rx="8" fill="#FBF8F1" stroke="#1F2430" strokeWidth="2" />
-          <line x1="0" y1="22" x2="170" y2="22" stroke="#1F2430" strokeWidth="1.5" />
-          <circle cx="14" cy="11" r="3.5" fill="#C2603A" />
-          <circle cx="26" cy="11" r="3.5" fill="#E8B04A" />
-          <circle cx="38" cy="11" r="3.5" fill="#1F2430" />
-          <rect x="12" y="32" width="146" height="32" rx="4" fill="#F3D9CC" stroke="#1F2430" strokeWidth="1.5" />
-          <rect x="20" y="46" width="40" height="10" rx="5" fill="#9E4524" />
-          <rect x="12" y="72" width="68" height="28" rx="4" fill="#EFE8D8" stroke="#1F2430" strokeWidth="1.5" />
-          <rect x="90" y="72" width="68" height="28" rx="4" fill="#EFE8D8" stroke="#1F2430" strokeWidth="1.5" />
-        </g>
-      </FloatingObject>
+        {/* Trail up to the summit flag */}
+        <path d={layout.trail} fill="none" stroke="#1F2430" strokeWidth="3.5" strokeLinecap="round" strokeDasharray="0.1 9" />
+        {layout.stops.map(([cx, cy]) => (
+          <circle key={`${cx}-${cy}`} cx={cx} cy={cy} r="6" fill="#FBF8F1" stroke="#1F2430" strokeWidth="2" />
+        ))}
+        <line x1={layout.flag.x} y1={layout.flag.y} x2={layout.flag.x} y2={layout.flag.y - 46} stroke="#1F2430" strokeWidth="2.5" strokeLinecap="round" />
+        <path
+          d={`M${layout.flag.x} ${layout.flag.y - 46} L${layout.flag.x + 28} ${layout.flag.y - 36} L${layout.flag.x} ${layout.flag.y - 26} Z`}
+          fill="#E8B04A"
+          stroke="#1F2430"
+          strokeWidth="1.5"
+          strokeLinejoin="round"
+        />
 
-      {/* Bar chart */}
-      <FloatingObject float={6} dur={6.8} delay={2.3}>
-        <g transform="translate(480,190) rotate(2 75 55)">
-          <rect className="illo-shadow" x="4" y="4" width="150" height="110" rx="8" fill="#1F2430" />
-          <rect x="0" y="0" width="150" height="110" rx="8" fill="#FBF8F1" stroke="#1F2430" strokeWidth="2" />
-          <rect x="20" y="76" width="20" height="24" rx="3" fill="#EBC3AE" stroke="#1F2430" strokeWidth="1.5" />
-          <rect x="50" y="60" width="20" height="40" rx="3" fill="#D98E6C" stroke="#1F2430" strokeWidth="1.5" />
-          <rect x="80" y="42" width="20" height="58" rx="3" fill="#C2603A" stroke="#1F2430" strokeWidth="1.5" />
-          <rect x="110" y="22" width="20" height="78" rx="3" fill="#9E4524" stroke="#1F2430" strokeWidth="1.5" />
-          <line x1="12" y1="100" x2="138" y2="100" stroke="#1F2430" strokeWidth="2" strokeLinecap="round" />
-          <circle cx="120" cy="14" r="6" fill="#E8B04A" stroke="#1F2430" strokeWidth="1.5" />
-        </g>
-      </FloatingObject>
+        {layout.cards.map((placement, i) => (
+          <CardSlot key={placement.key} placement={placement} index={i} on={entered} pointer={pointer} />
+        ))}
 
-      {/* MVP tag */}
-      <FloatingObject float={4} dur={5.6} delay={0.9}>
-        <g transform="translate(232,196) rotate(-8 26 11)">
-          <rect className="illo-shadow" x="3" y="3" width="52" height="22" rx="11" fill="#1F2430" />
-          <rect x="0" y="0" width="52" height="22" rx="11" fill="#9E4524" stroke="#1F2430" strokeWidth="1.5" />
-          <text x="26" y="15" textAnchor="middle" fontFamily="Inter, sans-serif" fontSize="12" fontWeight="600" fill="#F6F1E7">
-            MVP
-          </text>
-        </g>
-      </FloatingObject>
+        {layout.sparkles.map((s, i) => (
+          <g key={i} transform={`translate(${s.x} ${s.y}) scale(${s.s})`}>
+            <path
+              className="illo-twinkle"
+              style={{ '--dur': `${3.4 + i * 0.5}s`, '--delay': `${-i * 1.3}s` } as React.CSSProperties}
+              d={SPARKLE}
+              fill="#E8B04A"
+              stroke="#1F2430"
+              strokeWidth="1.2"
+              strokeLinejoin="round"
+            />
+          </g>
+        ))}
+      </g>
+    </svg>
+  );
+};
 
-      {/* Sparkles */}
-      <Sparkle at="translate(300,176)" dur={3.4} delay={0} />
-      <Sparkle at="translate(256,40) scale(0.7)" dur={4.1} delay={1.4} />
-      <Sparkle at="translate(648,170) scale(0.8)" dur={3.7} delay={2.6} />
-    </g>
-  </svg>
-);
+export const HeroScene: React.FC<{ className?: string }> = ({ className = '' }) => {
+  const reduce = useReducedMotion();
+  const rawX = useMotionValue(0);
+  const rawY = useMotionValue(0);
+  const x = useSpring(rawX, { stiffness: 60, damping: 18, mass: 0.6 });
+  const y = useSpring(rawY, { stiffness: 60, damping: 18, mass: 0.6 });
+
+  // Pointer parallax: desktop mice only, never on touch screens or with reduced motion
+  useEffect(() => {
+    if (reduce || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    const onMove = (e: PointerEvent) => {
+      if (e.pointerType !== 'mouse') return;
+      rawX.set((e.clientX / window.innerWidth) * 2 - 1);
+      rawY.set((e.clientY / window.innerHeight) * 2 - 1);
+    };
+    window.addEventListener('pointermove', onMove, { passive: true });
+    return () => window.removeEventListener('pointermove', onMove);
+  }, [reduce, rawX, rawY]);
+
+  const pointer = { x, y };
+  return (
+    <div className={className}>
+      <Scene layout={DESKTOP} className="hidden sm:block" pointer={pointer} />
+      <Scene layout={PHONE} className="sm:hidden" pointer={pointer} />
+    </div>
+  );
+};
