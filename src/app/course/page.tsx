@@ -16,6 +16,8 @@ import { Week } from '@/types/curriculum';
 import { WeekMark } from '@/components/landing/Illustrations';
 import { Plus, Calendar, CheckCircle, Sparkles, ArrowRight, Bookmark, ExternalLink, Video, BookMarked } from 'lucide-react';
 import { PageBackdrop } from '@/components/PageBackdrop';
+import { PageIcons } from '@/components/decor/BackgroundIcons';
+import { COURSE_ICONS } from '@/components/decor/iconLayouts';
 
 const getTaskDomId = (weekId: string, dayNum: number, taskLabel: string) => {
   const n = weekId.replace('week-', '');
@@ -447,6 +449,7 @@ export default function CoursePage() {
   return (
     <>
     <PageBackdrop variant="dots" />
+    <PageIcons icons={COURSE_ICONS} />
     <Suspense fallback={
       <div className="p-8 text-center text-xs text-muted animate-pulse">
         Loading curriculum...

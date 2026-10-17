@@ -379,6 +379,64 @@
   }
 }
 
+/* Landing scroll trail: a soft pulse around the travelling dot, and labels that fade in */
+@keyframes trail-pulse {
+  from {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  to {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+}
+
+@keyframes trail-label {
+  from {
+    opacity: 0;
+    transform: translate(6px, -50%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(0, -50%);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .trail-pulse {
+    animation: trail-pulse 1.8s ease-out infinite;
+  }
+
+  .trail-label {
+    animation: trail-label 0.25s ease-out both;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .trail-pulse {
+    display: none;
+  }
+}
+
+/* Background icons: soft color inside some outlines */
+.bgi-soft {
+  fill: rgb(var(--accent-soft));
+  fill-opacity: 0.75;
+}
+
+.bgi-gold {
+  fill: #E8B04A;
+  fill-opacity: 0.22;
+}
+
+.dark .bgi-soft {
+  fill-opacity: 0.9;
+}
+
+.dark .bgi-gold {
+  fill-opacity: 0.16;
+}
+
 /* Activity heat map: five shades, lightest = least. Dark mode keeps the same order (brighter = more). */
 .heat-0 { background-color: rgb(var(--paper)); border: 1px solid rgb(var(--line)); }
 .heat-1 { background-color: #F3D9CC; }

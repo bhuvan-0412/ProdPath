@@ -198,40 +198,6 @@ export const HeatGridIcon: React.FC<{ className?: string }> = ({ className }) =>
   </Illo>
 );
 
-/* ---------- Trust strip ---------- */
-
-const smallOutline = { stroke: INK, strokeWidth: 1.5, strokeLinejoin: 'round' as const };
-
-export const TagIcon: React.FC<{ className?: string }> = ({ className }) => (
-  <Illo viewBox="0 0 24 24" className={className}>
-    <Shadowed offset={1.5}>
-      <path d="M3 4 L12 4 L21 13 L13 21 L3 11 Z" fill="#E8B04A" {...smallOutline} />
-    </Shadowed>
-    <circle cx="8" cy="8.5" r="1.8" fill="#FBF8F1" stroke={INK} strokeWidth="1.25" />
-  </Illo>
-);
-
-export const SmallBookIcon: React.FC<{ className?: string }> = ({ className }) => (
-  <Illo viewBox="0 0 24 24" className={className}>
-    <Shadowed offset={1.5}>
-      <path d="M11.5 6 C 8.5 4, 5 4, 2 5 L2 18 C 5 17, 8.5 17, 11.5 19 Z" fill="#FBF8F1" {...smallOutline} />
-      <path d="M11.5 6 C 14.5 4, 18 4, 21 5 L21 18 C 18 17, 14.5 17, 11.5 19 Z" fill="#F3D9CC" {...smallOutline} />
-    </Shadowed>
-  </Illo>
-);
-
-export const PencilIcon: React.FC<{ className?: string }> = ({ className }) => (
-  <Illo viewBox="0 0 24 24" className={className}>
-    <g transform="rotate(45 12 12)">
-      <Shadowed offset={1.5}>
-        <path d="M9 2 L15 2 L15 17 L12 22 L9 17 Z" fill="#C2603A" {...smallOutline} />
-      </Shadowed>
-      <path d="M9 17 L15 17 L12 22 Z" fill="#F3D9CC" {...smallOutline} />
-      <rect x="9" y="2" width="6" height="3.5" fill="#E8B04A" {...smallOutline} />
-    </g>
-  </Illo>
-);
-
 /* ---------- Signed-in pages ---------- */
 
 // Current-streak tile

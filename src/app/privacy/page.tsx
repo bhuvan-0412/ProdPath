@@ -2,6 +2,8 @@ import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { NoteCard } from '@/components/landing/Illustrations';
+import { PageIcons } from '@/components/decor/BackgroundIcons';
+import { PRIVACY_ICONS } from '@/components/decor/iconLayouts';
 
 export const metadata: Metadata = {
   title: 'Privacy',
@@ -32,6 +34,8 @@ const Mail = () => (
 // and admin email routes, the Supabase schema and the root layout). Update it when any of those change.
 export default function PrivacyPage() {
   return (
+    <>
+    <PageIcons icons={PRIVACY_ICONS} reserveLeft={0} />
     <div className="animate-fade-in relative max-w-2xl mx-auto py-6 sm:py-10">
       <NoteCard className="hidden lg:block absolute -right-40 top-8 w-24" />
 
@@ -131,5 +135,6 @@ export default function PrivacyPage() {
         </Link>
       </p>
     </div>
+    </>
   );
 }

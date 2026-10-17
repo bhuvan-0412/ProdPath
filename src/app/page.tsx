@@ -15,12 +15,10 @@ import {
   SearchDocIcon,
   PlayScreenIcon,
   HeatGridIcon,
-  TagIcon,
-  SmallBookIcon,
-  PencilIcon,
 } from '@/components/landing/Illustrations';
 import { GlowCard } from '@/components/GlowCard';
-import { TrailSegment } from '@/components/landing/PageDecor';
+import { ScrollTrail } from '@/components/landing/ScrollTrail';
+import { HERO_ICONS, PATH_ICONS, DAY_ICONS, FEATURE_ICONS } from '@/components/decor/iconLayouts';
 import { SampleDay } from '@/components/landing/SampleDay';
 import {
   Reveal,
@@ -31,7 +29,6 @@ import {
   ActivityWave,
   FrameworkFigure,
   CtaSummit,
-  type FieldIcon,
 } from '@/components/landing/Motion';
 
 // Everything below is computed from the data files at build time, so the page updates when they change
@@ -92,31 +89,6 @@ const TERMS = [
   'Prioritization',
 ];
 
-// Faint background icons: 15 on desktop, 6 on phones (the ones marked phone)
-const HERO_ICONS: FieldIcon[] = [
-  { kind: 'lightbulb', x: 2, y: 10, size: 34, rot: -10, speed: 30, phone: true },
-  { kind: 'target', x: 41, y: 6, size: 30, rot: 0, speed: 50 },
-  { kind: 'chat', x: 34, y: 82, size: 30, rot: 6, speed: 40, phone: true },
-  { kind: 'cursor', x: 6, y: 74, size: 26, rot: -6, speed: 60 },
-  { kind: 'puzzle', x: 47, y: 58, size: 30, rot: 12, speed: 35 },
-  { kind: 'chart', x: 94, y: 5, size: 30, rot: 0, speed: 45 },
-  { kind: 'note', x: 93, y: 86, size: 30, rot: -8, speed: 30, phone: true },
-  { kind: 'search', x: 22, y: 44, size: 28, rot: 10, speed: 55 },
-  { kind: 'flag', x: 62, y: 92, size: 28, rot: 0, speed: 40 },
-];
-const PATH_ICONS: FieldIcon[] = [
-  { kind: 'target', x: 4, y: 74, size: 32, rot: 8, speed: 40, phone: true },
-  { kind: 'puzzle', x: 93, y: 12, size: 30, rot: -10, speed: 30 },
-];
-const DAY_ICONS: FieldIcon[] = [
-  { kind: 'note', x: 6, y: 70, size: 30, rot: 6, speed: 35 },
-  { kind: 'lightbulb', x: 92, y: 16, size: 30, rot: 10, speed: 45, phone: true },
-];
-const FEATURE_ICONS: FieldIcon[] = [
-  { kind: 'chart', x: 3, y: 12, size: 30, rot: -6, speed: 40 },
-  { kind: 'chat', x: 94, y: 78, size: 30, rot: 4, speed: 30, phone: true },
-];
-
 const SmallLabel: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className = '' }) => (
   <p className={`text-xs font-semibold uppercase tracking-[0.12em] text-muted ${className}`}>{children}</p>
 );
@@ -134,21 +106,17 @@ const FeatureHeading: React.FC<{ icon: React.ReactNode; children: React.ReactNod
 
 const FEATURE_ICON = 'w-11 h-11 flex-shrink-0';
 
-const TrustDot = () => (
-  <li aria-hidden="true" className="hidden lg:block text-muted">
-    &middot;
-  </li>
-);
-
 export default function LandingPage() {
   return (
+    <>
+    {/* Outside the fading wrapper: a transformed parent would stop "fixed" from pinning it to the screen */}
+    <ScrollTrail />
     <div className="animate-fade-in">
       <SignedInRedirect />
 
       {/* Hero */}
-      <section className={`${BAND} -mt-8 overflow-hidden`}>
-        <IconField icons={HERO_ICONS} tone="hero" />
-        <TrailSegment start bottom="a" />
+      <section data-milestone="Start" data-icon-scope className={`${BAND} -mt-8 overflow-hidden`}>
+        <IconField icons={HERO_ICONS} />
         <div className={`${BAND_INNER} grid lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] gap-10 lg:gap-10 items-center pt-12 pb-14 sm:pt-[4.5rem] sm:pb-20`}>
           <div className="max-w-3xl">
             <h1 className="text-[2.35rem] leading-[1.08] sm:text-[3.25rem] lg:text-[2.9rem] xl:text-[3.6rem] font-display font-semibold tracking-tight text-ink text-balance">
@@ -169,42 +137,9 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Trust strip: plain facts only */}
-      <section aria-label="About ProdPath" className={`${BAND} border-t border-line bg-surface`}>
-        <TrailSegment />
-        <ul className={`${BAND_INNER} flex flex-col lg:flex-row items-center justify-center gap-x-4 gap-y-2.5 py-4 text-[13px] sm:text-sm text-ink/85`}>
-          <li className="inline-flex items-center gap-2">
-            <TagIcon className="w-5 h-5 flex-shrink-0" />
-            Free, no ads
-          </li>
-          <TrustDot />
-          <li className="inline-flex items-center gap-2 text-center">
-            <SmallBookIcon className="w-5 h-5 flex-shrink-0" />
-            <span>
-              Curated with{' '}
-              <a
-                href="https://product-matters.ecelliitg.in/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-semibold text-accent-dark underline decoration-accent/40 underline-offset-2 hover:decoration-accent"
-              >
-                Product Matters, E-Cell IIT Guwahati
-                <span className="sr-only"> (opens in a new tab)</span>
-              </a>
-            </span>
-          </li>
-          <TrustDot />
-          <li className="inline-flex items-center gap-2">
-            <PencilIcon className="w-5 h-5 flex-shrink-0" />
-            Built by Bhuvan, BITS Pilani Goa
-          </li>
-        </ul>
-      </section>
-
-      {/* PM terms marquee: pauses on hover, off-screen and with reduced motion */}
+      {/* PM terms marquee, directly under the hero: pauses on hover, off-screen and with reduced motion */}
       <section aria-label="PM topics" className={`${BAND} band-2 border-t border-line overflow-hidden`}>
-        <TrailSegment />
-        <InViewPause className="marquee py-3.5">
+        <InViewPause className="marquee overflow-hidden py-3.5 mr-2 lg:mr-[calc(max(0px,(100vw-1280px)/2)+3.5rem)]">
           <div className="marquee-track flex w-max">
             {[0, 1].map((copy) => (
               <ul key={copy} aria-hidden={copy === 1 ? true : undefined} className="flex items-center shrink-0">
@@ -223,9 +158,8 @@ export default function LandingPage() {
       </section>
 
       {/* The path, week by week */}
-      <section aria-labelledby="path-heading" className={`${BAND} band-2 border-t border-line`}>
+      <section aria-labelledby="path-heading" data-milestone="The path" data-icon-scope className={`${BAND} band-2 border-t border-line`}>
         <IconField icons={PATH_ICONS} />
-        <TrailSegment top="b" bottom="c" />
         <div className={`${BAND_INNER} grid lg:grid-cols-[280px_minmax(0,1fr)] gap-10 lg:gap-16 pt-14 pb-16 sm:pt-20 sm:pb-24`}>
           <Reveal className="relative">
             <SmallLabel>The curriculum</SmallLabel>
@@ -296,9 +230,8 @@ export default function LandingPage() {
 
       {/* A sample day */}
       {sampleDay && (
-        <section aria-labelledby="day-heading" className={`${BAND} border-t border-line`}>
+        <section aria-labelledby="day-heading" data-milestone="A day" data-icon-scope className={`${BAND} border-t border-line`}>
           <IconField icons={DAY_ICONS} />
-          <TrailSegment top="d" bottom="a" />
           <div className={`${BAND_INNER} grid lg:grid-cols-[280px_minmax(0,1fr)] gap-10 lg:gap-16 items-start pt-14 pb-16 sm:pt-20 sm:pb-24`}>
             <Reveal className="relative">
               <SmallLabel>How it works</SmallLabel>
@@ -330,9 +263,8 @@ export default function LandingPage() {
       )}
 
       {/* Everything in one place */}
-      <section aria-labelledby="features-heading" className={`${BAND} band-2 border-t border-line`}>
+      <section aria-labelledby="features-heading" data-milestone="Inside" data-icon-scope className={`${BAND} band-2 border-t border-line`}>
         <IconField icons={FEATURE_ICONS} />
-        <TrailSegment top="b" bottom="end" />
         <div className={`${BAND_INNER} pt-14 pb-16 sm:pt-20 sm:pb-24`}>
           <Rocket className="hidden md:block absolute right-4 sm:right-6 lg:right-10 top-12 sm:top-14 w-[4.5rem]" />
           <Reveal>
@@ -399,6 +331,7 @@ export default function LandingPage() {
       {/* Final call to action: a full-bleed ink band that sits on the footer */}
       <section
         aria-labelledby="cta-heading"
+        data-milestone="Go"
         className={`${BAND} overflow-hidden -mb-8 bg-[#1F2430] border-y border-line text-[#F6F1E7]`}
       >
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
@@ -413,5 +346,6 @@ export default function LandingPage() {
         </div>
       </section>
     </div>
+    </>
   );
 }

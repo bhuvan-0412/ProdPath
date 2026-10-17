@@ -1,29 +1,14 @@
 import React from 'react';
-import { ICON_PATHS, type IconKind } from '@/components/pmIcons';
 
-// A fixed, very faint decorative layer behind a signed-in page. Static (no animation), aria-hidden and
+// A fixed, very faint texture (dots or contour lines) behind a signed-in page; the page's background icons
+// come from decor/BackgroundIcons on top of it. Static (no animation), aria-hidden and
 // ignores the pointer. It sits under everything (-z-10), so cards, inputs, the navbar and the footer keep
 // their solid backgrounds on top of it. Drawn in the ink color, which turns cream in dark mode.
 //
 // Place it outside the page's animate-fade-in wrapper: an animated (transformed) parent would stop
 // "fixed" from pinning it to the screen.
 
-export type BackdropVariant = 'icons' | 'dots' | 'contours';
-
-// Scattered icons, in percent of the screen; the ones marked `phone` also show on small screens
-const ICONS: { kind: IconKind; x: number; y: number; size: number; rot: number; phone?: boolean }[] = [
-  { kind: 'lightbulb', x: 4, y: 16, size: 34, rot: -10, phone: true },
-  { kind: 'target', x: 90, y: 12, size: 32, rot: 0, phone: true },
-  { kind: 'chart', x: 46, y: 6, size: 28, rot: 4 },
-  { kind: 'chat', x: 94, y: 48, size: 30, rot: 6 },
-  { kind: 'puzzle', x: 2, y: 52, size: 30, rot: 12, phone: true },
-  { kind: 'note', x: 30, y: 88, size: 30, rot: -6 },
-  { kind: 'cursor', x: 68, y: 92, size: 26, rot: -8, phone: true },
-  { kind: 'search', x: 92, y: 82, size: 30, rot: 10 },
-  { kind: 'flag', x: 6, y: 86, size: 28, rot: 0 },
-  { kind: 'target', x: 60, y: 40, size: 26, rot: 0 },
-  { kind: 'lightbulb', x: 24, y: 34, size: 26, rot: 8 },
-];
+export type BackdropVariant = 'dots' | 'contours';
 
 // Hand-shaped, gently wandering lines (drawn on a 1440 x 900 canvas, stretched to the screen)
 const CONTOURS = [
@@ -40,7 +25,7 @@ const CONTOURS = [
 const TRAIL = 'M14 0 C14 40 22 60 22 100 C22 140 8 150 9 190 C10 230 20 250 19 290 C18 330 10 350 12 390 C13 410 14 420 14 440';
 
 export const PageBackdrop: React.FC<{ variant: BackdropVariant }> = ({ variant }) => (
-  <div aria-hidden="true" className="pointer-events-none fixed inset-0 -z-10 overflow-hidden text-ink">
+  <div aria-hidden="true" data-decor="" className="pointer-events-none fixed inset-0 -z-10 overflow-hidden text-ink">
     {variant === 'dots' && (
       <svg className="absolute inset-0 w-full h-full opacity-[0.08]" focusable="false">
         <defs>
@@ -58,29 +43,6 @@ export const PageBackdrop: React.FC<{ variant: BackdropVariant }> = ({ variant }
           <path key={d} d={d} fill="none" stroke="currentColor" strokeWidth="1.25" vectorEffect="non-scaling-stroke" />
         ))}
       </svg>
-    )}
-
-    {variant === 'icons' && (
-      <div className="absolute inset-0 opacity-[0.06]">
-        {ICONS.map((icon, i) => (
-          <svg
-            key={i}
-            viewBox="0 0 24 24"
-            width={icon.size}
-            height={icon.size}
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.6"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            focusable="false"
-            className={`absolute ${icon.phone ? '' : 'hidden md:block'}`}
-            style={{ left: `${icon.x}%`, top: `${icon.y}%`, transform: `rotate(${icon.rot}deg)` }}
-          >
-            {ICON_PATHS[icon.kind]}
-          </svg>
-        ))}
-      </div>
     )}
 
     <svg className="absolute left-1 top-28 hidden xl:block opacity-[0.12]" width="28" height="460" viewBox="0 0 28 460" focusable="false">

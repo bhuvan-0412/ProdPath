@@ -21,6 +21,8 @@ import {
   BookMarked
 } from 'lucide-react';
 import { PageBackdrop } from '@/components/PageBackdrop';
+import { PageIcons } from '@/components/decor/BackgroundIcons';
+import { DASHBOARD_ICONS } from '@/components/decor/iconLayouts';
 
 // Live counts for the quick-navigation cards, straight from the data files
 const weekCount = weeksData.weeks.length;
@@ -50,7 +52,8 @@ export default function DashboardPage() {
 
   return (
     <>
-    <PageBackdrop variant="icons" />
+    <PageBackdrop variant="contours" />
+    <PageIcons icons={DASHBOARD_ICONS} />
     <div className="space-y-8 animate-fade-in">
       {/* Welcome card, with a soft circle peeking out from behind it and a sticky note (768px and up) */}
       <div className="relative">

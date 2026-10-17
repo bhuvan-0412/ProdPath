@@ -6,6 +6,8 @@ import { LogIn, ArrowLeft } from 'lucide-react';
 import { LogoMark } from '@/components/Logo';
 import Link from 'next/link';
 import { PageBackdrop } from '@/components/PageBackdrop';
+import { PageIcons } from '@/components/decor/BackgroundIcons';
+import { LOGIN_ICONS } from '@/components/decor/iconLayouts';
 
 export default function LoginPage() {
   const [loading, setLoading] = useState(false);
@@ -39,6 +41,7 @@ export default function LoginPage() {
   return (
     <>
     <PageBackdrop variant="contours" />
+    <PageIcons icons={LOGIN_ICONS} />
     <div className="min-h-[85vh] flex flex-col justify-center items-center px-4 py-12">
       <div className="w-full max-w-md">
         {/* Back Link */}

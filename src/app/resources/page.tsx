@@ -6,6 +6,8 @@ import { ResourceCard } from '@/components/ResourceCard';
 import { AddResourceModal } from '@/components/AddResourceModal';
 import { BookMarked, Search, Plus, Filter } from 'lucide-react';
 import { PageBackdrop } from '@/components/PageBackdrop';
+import { PageIcons } from '@/components/decor/BackgroundIcons';
+import { CASE_STUDY_ICONS } from '@/components/decor/iconLayouts';
 
 function ResourcesContent() {
   const { getAllResources, isCompleted, getCaseStudyStats } = useProgress();
@@ -184,6 +186,7 @@ export default function ResourcesPage() {
   return (
     <>
     <PageBackdrop variant="dots" />
+    <PageIcons icons={CASE_STUDY_ICONS} />
     <Suspense
       fallback={
         <div className="p-8 text-center text-xs text-muted animate-pulse">

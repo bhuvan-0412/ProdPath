@@ -10,6 +10,8 @@ import { HeatMap } from '@/components/activity/HeatMap';
 import { Flame, EmptyFlag } from '@/components/landing/Illustrations';
 import { countByDay, getActivityStats, buildHeatMap } from '@/lib/activity';
 import { PageBackdrop } from '@/components/PageBackdrop';
+import { PageIcons } from '@/components/decor/BackgroundIcons';
+import { ACTIVITY_ICONS } from '@/components/decor/iconLayouts';
 
 const scheduleList = scheduleData.schedule as ScheduleItem[];
 
@@ -88,6 +90,7 @@ export default function ActivityPage() {
   return (
     <>
     <PageBackdrop variant="contours" />
+    <PageIcons icons={ACTIVITY_ICONS} />
     <div className="space-y-8 animate-fade-in">
       <h1 className="text-3xl sm:text-4xl font-display font-semibold text-ink">Activity</h1>
 

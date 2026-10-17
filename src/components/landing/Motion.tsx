@@ -1,12 +1,10 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { animate, motion, useInView, useReducedMotion, useScroll, useTransform, type MotionValue } from 'motion/react';
 import './reducedMotion';
 import { RoadmapCard, JourneyCard, ROADMAP_SIZE, JOURNEY_SIZE } from './FrameworkCards';
-import { ICON_PATHS, type IconKind } from '@/components/pmIcons';
-
-export type { IconKind };
+import { BackgroundIcons, IconWrapperContext, type BgIcon } from '@/components/decor/BackgroundIcons';
 
 // Small client-side motion helpers for the (server-rendered) landing page. All animate transform/opacity
 // only, start once when scrolled into view, and carry .m-final so reduced motion shows the final state.
@@ -96,75 +94,34 @@ export const InViewPause: React.FC<{ children: React.ReactNode; className?: stri
 
 /* ---------- Background icon field ---------- */
 
+// The shared background icons (placed clear of all content), plus a slow drift and a little scroll
+// parallax on the landing page. Each section passes its own hand-placed list; the section element
+// carries data-icon-scope so the icons are checked against that section's content.
 
-export interface FieldIcon {
-  kind: IconKind;
-  /** Position inside the section, in percent */
-  x: number;
-  y: number;
-  size: number;
-  rot: number;
-  /** Scroll parallax strength (px of travel across the section) */
-  speed: number;
-  /** Shown on phones too (about 6 in total across the page) */
-  phone?: boolean;
-}
+const TRAVEL = 12; // px of parallax travel either way
+const ProgressContext = createContext<{ progress: MotionValue<number>; still: boolean } | null>(null);
 
-const FieldIconItem: React.FC<{ icon: FieldIcon; index: number; progress: MotionValue<number>; still: boolean }> = ({
-  icon,
-  index,
-  progress,
-  still,
-}) => {
-  const y = useTransform(progress, [0, 1], [icon.speed, -icon.speed]);
-  return (
-    <motion.div
-      className={`absolute ${icon.phone ? '' : 'hidden md:block'}`}
-      style={{ left: `${icon.x}%`, top: `${icon.y}%`, y: still ? 0 : y }}
-    >
-      <svg
-        viewBox="0 0 24 24"
-        width={icon.size}
-        height={icon.size}
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="icon-drift block"
-        style={
-          {
-            rotate: `${icon.rot}deg`,
-            '--dur': `${16 + (index % 4) * 3}s`,
-            '--delay': `${-index * 2.3}s`,
-            '--dx': `${index % 2 ? 7 : -6}px`,
-            '--dy': `${index % 3 ? -9 : 7}px`,
-          } as React.CSSProperties
-        }
-      >
-        {ICON_PATHS[icon.kind]}
-      </svg>
-    </motion.div>
-  );
+const ParallaxIcon: React.FC<{ index: number; style: React.CSSProperties; children: React.ReactNode }> = ({ index, style, children }) => {
+  const ctx = useContext(ProgressContext)!;
+  const speed = 0.5 + (index % 4) * 0.25;
+  const y = useTransform(ctx.progress, [0, 1], [TRAVEL * speed, -TRAVEL * speed]);
+  return <motion.div style={{ ...style, y: ctx.still ? 0 : y }}>{children}</motion.div>;
 };
 
-// Faint outline icons behind a section's content. `tone` sets the strength: "hero" ~10%, "soft" lighter.
-export const IconField: React.FC<{ icons: FieldIcon[]; tone?: 'hero' | 'soft' }> = ({ icons, tone = 'soft' }) => {
+export const IconField: React.FC<{ icons: BgIcon[] }> = ({ icons }) => {
   const ref = useRef<HTMLDivElement>(null);
   const visible = useInView(ref);
   const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      data-paused={visible ? undefined : ''}
-      className={`pointer-events-none absolute inset-0 overflow-hidden text-ink ${tone === 'hero' ? 'opacity-[0.10]' : 'opacity-[0.07]'}`}
-    >
-      {icons.map((icon, i) => (
-        <FieldIconItem key={i} icon={icon} index={i} progress={scrollYProgress} still={!!reduce} />
-      ))}
+    <div ref={ref} aria-hidden="true" data-decor="" data-paused={visible ? undefined : ''} className="pointer-events-none absolute inset-0 overflow-hidden">
+      <ProgressContext.Provider value={{ progress: scrollYProgress, still: !!reduce }}>
+        <IconWrapperContext.Provider value={ParallaxIcon}>
+          {/* Keep clear of the scroll trail on the right edge */}
+          <BackgroundIcons icons={icons} animated travel={TRAVEL} reserveRight={48} />
+        </IconWrapperContext.Provider>
+      </ProgressContext.Provider>
     </div>
   );
 };
