@@ -22,7 +22,7 @@
 
   .dark {
     --paper: 23 21 18;          /* #171512 */
-    --paper-2: 28 25 21;        /* #1C1915 */
+    --paper-2: 34 30 25;        /* #221E19 */
     --surface: 32 29 25;        /* #201D19 */
     --ink: 237 230 216;         /* #EDE6D8 */
     --muted: 162 154 138;       /* #A29A8A */
@@ -112,6 +112,77 @@
 
 .dark .band-2 {
   --muted: 162 154 138;
+}
+
+/* Hover-glow border (GlowCard). At rest the card keeps its own flat 1px border.
+   --mx/--my hold the pointer position, set by GlowCard.tsx. */
+.glow-card {
+  --mx: 50%;
+  --my: 50%;
+  position: relative;
+  isolation: isolate;
+}
+
+.glow-card::before,
+.glow-card::after {
+  content: '';
+  position: absolute;
+  inset: -1px; /* sits exactly over the card's 1px border */
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 200ms ease-out;
+}
+
+/* Faint, short terracotta glow around the card */
+.glow-card::before {
+  z-index: -1;
+  box-shadow: 0 0 16px 0 rgb(var(--accent) / 0.2);
+}
+
+/* The border itself, brightest at the pointer and fading around the edge.
+   The mask cuts away everything except the 1px border ring. */
+.glow-card::after {
+  z-index: 1;
+  padding: 1.5px;
+  background: radial-gradient(
+    240px circle at var(--mx) var(--my),
+    rgb(var(--accent)) 0%,
+    rgb(var(--accent) / 0.75) 35%,
+    rgb(var(--accent) / 0) 100%
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
+
+/* Only on devices with a real pointer; touch screens get no effect */
+@media (hover: hover) and (pointer: fine) {
+  .glow-card:hover::before,
+  .glow-card:hover::after {
+    opacity: 1;
+  }
+}
+
+/* Keyboard users: the whole border turns terracotta while the card or something in it has focus */
+.glow-card:focus-visible,
+.glow-card:has(:focus-visible) {
+  border-color: rgb(var(--accent));
+}
+
+/* Reduced motion: no following or fading, just a terracotta border on hover */
+@media (prefers-reduced-motion: reduce) {
+  .glow-card::before,
+  .glow-card::after {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) and (hover: hover) and (pointer: fine) {
+  .glow-card:hover {
+    border-color: rgb(var(--accent));
+  }
 }
 
 /* Gentle fade-up as landing sections scroll into view (CSS only; skipped where unsupported) */

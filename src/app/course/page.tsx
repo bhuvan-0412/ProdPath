@@ -8,6 +8,7 @@ import { ResourceCard } from '@/components/ResourceCard';
 import { ProgressBar } from '@/components/ProgressBar';
 import { AddResourceModal } from '@/components/AddResourceModal';
 import { TaskHeader } from '@/components/ResourcePanels';
+import { GlowCard } from '@/components/GlowCard';
 import weeksData from '@/data/weeks.json';
 import taskSummariesData from '@/data/taskSummaries.json';
 import continuedLearningData from '@/data/continuedLearning.json';
@@ -183,14 +184,13 @@ function CourseContent() {
           const isDone = stats.total > 0 && stats.completed === stats.total;
 
           return (
-            <button
+            <GlowCard
+              as="button"
               key={w.id}
               onClick={() => handleSelectWeekTab(w.id)}
               data-week-tab={w.id}
-              className={`snap-start shrink-0 w-[44%] sm:w-auto p-4 rounded-xl text-left transition-all duration-200 flex flex-col justify-between space-y-3 relative overflow-hidden ${
-                isActive
-                  ? 'bg-surface border border-line ring-2 ring-accent/50'
-                  : 'bg-surface border border-line hover:border-line'
+              className={`snap-start shrink-0 w-[44%] sm:w-auto p-4 rounded-xl text-left transition-colors duration-200 flex flex-col justify-between space-y-3 bg-surface border border-line ${
+                isActive ? 'ring-2 ring-accent/50' : ''
               }`}
             >
               <div className="flex items-center justify-between">
@@ -227,14 +227,15 @@ function CourseContent() {
                   {isDone && <CheckCircle className="w-3 h-3 text-accent" />}
                 </div>
               </div>
-            </button>
+            </GlowCard>
           );
         })}
 
         {/* Live Sessions Navigation Tab */}
-        <Link
+        <GlowCard
+          as={Link}
           href="/live-sessions"
-          className="snap-start shrink-0 w-[44%] sm:w-auto p-4 rounded-xl text-left bg-accent-soft border border-accent/40 hover:border-accent hover:shadow-offset transition-all duration-200 flex flex-col justify-between space-y-3 group"
+          className="snap-start shrink-0 w-[44%] sm:w-auto p-4 rounded-xl text-left bg-accent-soft border border-accent/40 transition-colors duration-200 flex flex-col justify-between space-y-3 group"
         >
           <div className="flex items-center justify-between">
             <span className="text-xs sm:text-[10px] font-semibold px-2 py-0.5 rounded-md uppercase tracking-wider bg-accent-dark text-paper flex items-center gap-1">
@@ -252,12 +253,13 @@ function CourseContent() {
           <div className="pt-1 text-xs sm:text-[10px] text-muted">
             <span>Speaker talks &rarr;</span>
           </div>
-        </Link>
+        </GlowCard>
 
         {/* Case Studies Navigation Tab */}
-        <Link
+        <GlowCard
+          as={Link}
           href="/resources"
-          className="snap-start shrink-0 w-[44%] sm:w-auto p-4 rounded-xl text-left bg-accent-soft border border-accent/40 hover:border-accent hover:shadow-offset transition-all duration-200 flex flex-col justify-between space-y-3 group"
+          className="snap-start shrink-0 w-[44%] sm:w-auto p-4 rounded-xl text-left bg-accent-soft border border-accent/40 transition-colors duration-200 flex flex-col justify-between space-y-3 group"
         >
           <div className="flex items-center justify-between">
             <span className="text-xs sm:text-[10px] font-semibold px-2 py-0.5 rounded-md uppercase tracking-wider bg-accent-dark text-paper flex items-center gap-1">
@@ -275,7 +277,7 @@ function CourseContent() {
           <div className="pt-1 text-xs sm:text-[10px] text-muted">
             <span>Teardowns &amp; Strategy &rarr;</span>
           </div>
-        </Link>
+        </GlowCard>
       </div>
 
       {/* Active Week Details Header */}
@@ -301,7 +303,7 @@ function CourseContent() {
       {/* Day-by-Day Vertical List under Active Tab */}
       <div className="space-y-6">
         {activeWeek.days.map((day) => (
-          <div
+          <GlowCard
             key={day.day}
             id={getDayDomId(activeWeek.id, day.day)}
             className="bg-surface rounded-xl p-4 sm:p-6 border border-line space-y-4 scroll-mt-24"
@@ -344,7 +346,7 @@ function CourseContent() {
                 </div>
               ))}
             </div>
-          </div>
+          </GlowCard>
         ))}
 
         {/* Custom Resources Section if any */}
@@ -394,9 +396,9 @@ function CourseContent() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {continuedLearningData.continuedLearning.map((item) => (
-            <div
+            <GlowCard
               key={item.id}
-              className="bg-surface rounded-xl p-5 border border-line hover:border-accent transition-all flex flex-col justify-between space-y-3"
+              className="bg-surface rounded-xl p-5 border border-line transition-colors flex flex-col justify-between space-y-3"
             >
               <div className="space-y-2">
                 <div className="flex items-center justify-between gap-2">
@@ -423,7 +425,7 @@ function CourseContent() {
                   <ExternalLink className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
                 </a>
               </div>
-            </div>
+            </GlowCard>
           ))}
         </div>
       </div>

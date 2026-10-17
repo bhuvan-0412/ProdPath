@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { GlowCard } from '@/components/GlowCard';
 import { useProgress } from '@/context/ProgressContext';
 import { ProgressBar } from '@/components/ProgressBar';
 import liveSessionsData from '@/data/liveSessions.json';
@@ -71,12 +72,10 @@ export default function LiveSessionsPage() {
           const completed = isCompleted(itemId);
 
           return (
-            <div
+            <GlowCard
               key={session.sessionNumber}
-              className={`group relative flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 sm:p-5 rounded-xl border transition-all duration-200 ${
-                completed
-                  ? 'bg-paper border-line'
-                  : 'bg-surface border-line hover:border-accent '
+              className={`group relative flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 sm:p-5 rounded-xl border transition-colors duration-200 ${
+                completed ? 'bg-paper border-line' : 'bg-surface border-line'
               }`}
             >
               <div className="flex items-start sm:items-center gap-3.5 flex-1 min-w-0">
@@ -131,7 +130,7 @@ export default function LiveSessionsPage() {
                   <ExternalLink className="w-3.5 h-3.5 opacity-80" />
                 </a>
               </div>
-            </div>
+            </GlowCard>
           );
         })}
       </div>

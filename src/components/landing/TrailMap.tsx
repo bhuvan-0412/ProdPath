@@ -1,4 +1,5 @@
 import React from 'react';
+import { GlowCard } from '@/components/GlowCard';
 
 interface TrailMapProps {
   weekCount: number;
@@ -29,7 +30,7 @@ export const TrailMap: React.FC<TrailMapProps> = ({ weekCount }) => {
   const last = stops.length - 1;
 
   return (
-    <figure className="relative rounded-card border border-line bg-surface p-4 sm:p-5">
+    <GlowCard as="figure" className="relative rounded-card border border-line bg-surface p-4 sm:p-5">
       <svg
         viewBox="0 0 350 440"
         className="w-full h-auto font-sans"
@@ -95,6 +96,6 @@ export const TrailMap: React.FC<TrailMapProps> = ({ weekCount }) => {
           );
         })}
       </svg>
-    </figure>
+    </GlowCard>
   );
 };

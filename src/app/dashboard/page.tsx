@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useProgress } from '@/context/ProgressContext';
 import { ProgressBar } from '@/components/ProgressBar';
 import { ResourceCard } from '@/components/ResourceCard';
+import { GlowCard } from '@/components/GlowCard';
 import weeksData from '@/data/weeks.json';
 import {
   ArrowRight,
@@ -32,8 +33,11 @@ export default function DashboardPage() {
   return (
     <div className="space-y-8 animate-fade-in">
       {/* Hero Welcome Banner */}
-      <Link href={heroHref} className="group block cursor-pointer rounded-xl">
-        <div className="rounded-xl bg-surface border border-line group-hover:border-ink group-hover:shadow-offset p-6 sm:p-8 text-ink transition-all duration-200">
+      <GlowCard
+        as={Link}
+        href={heroHref}
+        className="group block cursor-pointer rounded-xl bg-surface border border-line p-6 sm:p-8 text-ink transition-colors duration-200"
+      >
           <div className="max-w-3xl space-y-4">
             <div className="flex items-center justify-between gap-4">
               <h1 className="text-3xl sm:text-4xl font-display font-semibold text-ink">
@@ -69,14 +73,13 @@ export default function DashboardPage() {
               </div>
             </div>
           </div>
-        </div>
-      </Link>
+      </GlowCard>
 
       {/* "Continue Where I Left Off" Signature Surface Card (Split Click Zones) */}
       {nextUp ? (
-        <div
+        <GlowCard
           onClick={() => router.push(heroHref)}
-          className="bg-surface border border-line rounded-xl p-6 hover:shadow-offset hover:border-ink cursor-pointer space-y-3.5 transition-all duration-200 group/hero-card"
+          className="bg-surface border border-line rounded-xl p-6 cursor-pointer space-y-3.5 transition-colors duration-200 group/hero-card"
         >
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
@@ -114,7 +117,7 @@ export default function DashboardPage() {
           >
             <ResourceCard resource={nextUp} showWeekBadge={true} />
           </div>
-        </div>
+        </GlowCard>
       ) : (
         <div className="bg-accent-soft rounded-xl p-6 border border-accent/40 flex items-center gap-4">
           <div className="w-12 h-12 rounded-xl bg-accent-dark text-paper flex items-center justify-center flex-shrink-0">
@@ -135,9 +138,10 @@ export default function DashboardPage() {
 
       {/* Quick Navigation Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-2">
-        <Link
+        <GlowCard
+          as={Link}
           href="/course"
-          className="p-5 rounded-xl bg-surface border border-line hover:border-accent transition-all flex items-center gap-4 group"
+          className="p-5 rounded-xl bg-surface border border-line transition-colors flex items-center gap-4 group"
         >
           <div className="w-11 h-11 rounded-xl bg-accent-dark text-paper flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
             <BookOpen className="w-5 h-5" />
@@ -150,11 +154,12 @@ export default function DashboardPage() {
               Structured Day-by-Day topics and task lists
             </p>
           </div>
-        </Link>
+        </GlowCard>
 
-        <Link
+        <GlowCard
+          as={Link}
           href="/schedule"
-          className="p-5 rounded-xl bg-surface border border-line hover:border-accent transition-all flex items-center gap-4 group"
+          className="p-5 rounded-xl bg-surface border border-line transition-colors flex items-center gap-4 group"
         >
           <div className="w-11 h-11 rounded-xl bg-accent-dark text-paper flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
             <Calendar className="w-5 h-5" />
@@ -167,11 +172,12 @@ export default function DashboardPage() {
               Chronological 5-week program roadmap
             </p>
           </div>
-        </Link>
+        </GlowCard>
 
-        <Link
+        <GlowCard
+          as={Link}
           href="/resources"
-          className="p-5 rounded-xl bg-surface border border-line hover:border-accent transition-all flex items-center gap-4 group"
+          className="p-5 rounded-xl bg-surface border border-line transition-colors flex items-center gap-4 group"
         >
           <div className="w-11 h-11 rounded-xl bg-accent-dark text-paper flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
             <BookMarked className="w-5 h-5" />
@@ -184,11 +190,12 @@ export default function DashboardPage() {
               Real-world PM strategies & executive takeaways
             </p>
           </div>
-        </Link>
+        </GlowCard>
 
-        <Link
+        <GlowCard
+          as={Link}
           href="/live-sessions"
-          className="p-5 rounded-xl bg-surface border border-line hover:border-accent transition-all flex items-center gap-4 group"
+          className="p-5 rounded-xl bg-surface border border-line transition-colors flex items-center gap-4 group"
         >
           <div className="w-11 h-11 rounded-xl bg-accent-dark text-paper flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
             <Video className="w-5 h-5" />
@@ -201,7 +208,7 @@ export default function DashboardPage() {
               Recorded masterclasses & speaker talks
             </p>
           </div>
-        </Link>
+        </GlowCard>
       </div>
 
       {/* Progress Reset Tool */}

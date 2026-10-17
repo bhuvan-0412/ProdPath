@@ -5,6 +5,7 @@ import { Resource } from '@/types/curriculum';
 import { useProgress } from '@/context/ProgressContext';
 import { NotesPanel, SummaryPanel } from '@/components/ResourcePanels';
 import summariesData from '@/data/summaries.json';
+import { GlowCard } from '@/components/GlowCard';
 import { Video, FileText, ListVideo, ExternalLink, Check, Trash2, Sparkles, BookMarked, ChevronDown, ChevronUp, PenLine, WandSparkles } from 'lucide-react';
 
 const summaries = summariesData.summaries as Record<string, string[]>;
@@ -13,12 +14,15 @@ interface ResourceCardProps {
   resource: Resource;
   showWeekBadge?: boolean;
   defaultExpandedTakeaways?: boolean;
+  /** Pointer-following border glow (used for the Case Studies grid) */
+  glow?: boolean;
 }
 
 export const ResourceCard: React.FC<ResourceCardProps> = ({
   resource,
   showWeekBadge = false,
   defaultExpandedTakeaways = false,
+  glow = false,
 }) => {
   const { isCompleted, toggleCompleted, deleteCustomResource, getNote } = useProgress();
   const completed = isCompleted(resource.id);
@@ -69,11 +73,14 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({
   const isExternalLink = resource.url && resource.url !== '#' && /^https?:\/\//i.test(resource.url);
 
   return (
-    <div
+    <GlowCard
+      glow={glow}
       id={`resource-${resource.id}`}
       className={`group relative flex flex-col justify-between gap-3 p-4 rounded-card border scroll-mt-24 transition-all duration-200 ${
         completed
           ? 'bg-paper border-line text-muted'
+          : glow
+          ? 'bg-surface border-line'
           : 'bg-surface border-line hover:border-ink hover:shadow-offset'
       }`}
     >
@@ -292,6 +299,6 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({
           )}
         </div>
       )}
-    </div>
+    </GlowCard>
   );
 };

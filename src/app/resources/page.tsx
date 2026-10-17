@@ -158,7 +158,7 @@ function ResourcesContent() {
       {filteredCaseStudies.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {filteredCaseStudies.map((res) => (
-            <ResourceCard key={res.id} resource={res} showWeekBadge={true} />
+            <ResourceCard key={res.id} resource={res} showWeekBadge={true} glow />
           ))}
         </div>
       ) : (

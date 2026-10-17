@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { GlowCard } from '@/components/GlowCard';
 import scheduleData from '@/data/schedule.json';
 import { ScheduleItem } from '@/types/curriculum';
 import { useProgress } from '@/context/ProgressContext';
@@ -111,11 +112,9 @@ export default function SchedulePage() {
               </div>
 
               {/* Timeline Node Content Card */}
-              <div
-                className={`flex-1 p-4 sm:p-5 rounded-xl border transition-all duration-200 space-y-2 ${
-                  isDone
-                    ? 'bg-paper border-line'
-                    : 'bg-surface border-line hover:border-accent'
+              <GlowCard
+                className={`flex-1 p-4 sm:p-5 rounded-xl border transition-colors duration-200 space-y-2 ${
+                  isDone ? 'bg-paper border-line' : 'bg-surface border-line'
                 }`}
               >
                 <div className="flex items-center justify-between gap-2 flex-wrap">
@@ -136,7 +135,7 @@ export default function SchedulePage() {
                 >
                   {item.topic}
                 </h3>
-              </div>
+              </GlowCard>
             </div>
           );
         })}
