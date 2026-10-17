@@ -207,6 +207,79 @@
   }
 }
 
+/* ---------- Landing illustrations (flat shapes, ink outlines, hard offset shadows) ----------
+   The SVGs are written with literal palette colors. Inside .illo, anything drawn in ink (#1F2430)
+   reads its color from --illo-ink instead, so one SVG works in both themes. */
+.illo {
+  --illo-ink: #1F2430;
+  --illo-sky: #F6F1E7;
+  --illo-sun: #F3D9CC;
+}
+
+.dark .illo {
+  --illo-ink: #0F0D0B;
+  --illo-sky: #201D19;
+  --illo-sun: #3A2418;
+}
+
+.illo [fill='#1F2430'] {
+  fill: var(--illo-ink);
+}
+
+.illo [stroke='#1F2430'] {
+  stroke: var(--illo-ink);
+}
+
+.illo .illo-sky {
+  fill: var(--illo-sky);
+}
+
+.illo .illo-sun {
+  fill: var(--illo-sun);
+}
+
+/* Idle float and twinkle. Only when motion is welcome; otherwise everything stays still. */
+@keyframes illo-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(var(--float, -5px));
+  }
+}
+
+@keyframes illo-twinkle {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.45;
+    transform: scale(0.78);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .illo-float {
+    animation: illo-float var(--dur, 6s) ease-in-out var(--delay, 0s) infinite;
+  }
+
+  .illo-twinkle {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: illo-twinkle var(--dur, 3.2s) ease-in-out var(--delay, 0s) infinite;
+  }
+}
+
+/* Hero scene on phones: drop the two busiest objects so it stays clean */
+@media (max-width: 639px) {
+  .illo-hide-sm {
+    display: none;
+  }
+}
+
 /* Respect the system "reduce motion" setting everywhere */
 @media (prefers-reduced-motion: reduce) {
   *,

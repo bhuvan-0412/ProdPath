@@ -95,7 +95,11 @@ export default function LoginPage() {
           </div>
 
           <p className="text-xs sm:text-[11px] text-muted text-center mt-6">
-            By signing in, you accept our standard terms and privacy defaults.
+            By signing in, you agree to our{' '}
+            <Link href="/privacy" className="font-semibold text-accent-dark underline underline-offset-2">
+              Privacy Policy
+            </Link>
+            .
           </p>
         </div>
       </div>

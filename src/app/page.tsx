@@ -1,14 +1,29 @@
 import React from 'react';
-import { BookOpen, BookMarked, Video, TrendingUp, Check } from 'lucide-react';
+import { Check } from 'lucide-react';
 import weeksData from '@/data/weeks.json';
 import caseStudiesData from '@/data/caseStudies.json';
 import liveSessionsData from '@/data/liveSessions.json';
 import type { Week, ResourceType } from '@/types/curriculum';
 import { GoogleSignInButton, SignedInRedirect } from '@/components/landing/GoogleSignIn';
-import { TrailMap } from '@/components/landing/TrailMap';
+import { HeroScene } from '@/components/landing/HeroScene';
+import {
+  Compass,
+  MiniFlag,
+  CoffeeMug,
+  NoteCard,
+  Rocket,
+  BookIcon,
+  SearchDocIcon,
+  PlayScreenIcon,
+  HeatGridIcon,
+  SummitHill,
+  TagIcon,
+  SmallBookIcon,
+  PencilIcon,
+} from '@/components/landing/Illustrations';
 import { ContourLines } from '@/components/ContourLines';
 import { GlowCard } from '@/components/GlowCard';
-import { TrailSegment, NotebookDots, Doodle } from '@/components/landing/PageDecor';
+import { TrailSegment, TrailStraight, NotebookDots } from '@/components/landing/PageDecor';
 
 // Everything below is computed from the data files at build time, so the page updates when they change
 const weeks = (weeksData as { weeks: Week[] }).weeks;
@@ -63,10 +78,18 @@ const BAND = 'relative mx-[calc(50%-50vw)]';
 const BAND_INNER = 'relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8';
 
 const FeatureHeading: React.FC<{ icon: React.ReactNode; children: React.ReactNode }> = ({ icon, children }) => (
-  <div className="flex items-center gap-2 text-accent-dark">
+  <div className="flex items-center gap-3 text-accent-dark">
     {icon}
     <h3 className="font-sans text-sm font-semibold uppercase tracking-[0.12em]">{children}</h3>
   </div>
+);
+
+const FEATURE_ICON = 'w-11 h-11 flex-shrink-0';
+
+const TrustDot = () => (
+  <li aria-hidden="true" className="hidden lg:block text-muted">
+    &middot;
+  </li>
 );
 
 export default function LandingPage() {
@@ -76,11 +99,10 @@ export default function LandingPage() {
 
       {/* Hero */}
       <section className={`${BAND} -mt-8 overflow-hidden`}>
-        <ContourLines className="right-0 bottom-0 w-[150%] sm:w-full md:w-[78%] max-w-[1100px] h-auto" />
         <TrailSegment start bottom="a" />
-        <div className={`${BAND_INNER} grid md:grid-cols-[minmax(0,1fr)_280px] lg:grid-cols-[minmax(0,1fr)_360px] gap-10 lg:gap-16 items-center pt-12 pb-16 sm:pt-[4.5rem] sm:pb-24`}>
+        <div className={`${BAND_INNER} grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-10 lg:gap-12 items-center pt-12 pb-14 sm:pt-[4.5rem] sm:pb-20`}>
         <div className="max-w-3xl">
-          <h1 className="text-[2.6rem] leading-[1.05] sm:text-6xl lg:text-7xl font-display font-semibold tracking-tight text-ink text-balance">
+          <h1 className="text-[2.6rem] leading-[1.05] sm:text-6xl lg:text-[3.5rem] xl:text-[4.25rem] font-display font-semibold tracking-tight text-ink text-balance">
             Become a product manager, <span className="text-accent-dark">one small step a day.</span>
           </h1>
           <p className="mt-6 text-base sm:text-lg text-muted leading-relaxed">
@@ -94,10 +116,40 @@ export default function LandingPage() {
           </div>
         </div>
 
-        <div className="w-full max-w-sm mx-auto md:max-w-none">
-          <TrailMap weekCount={weeks.length} />
+        <HeroScene className="max-w-[680px] mx-auto lg:max-w-none" />
         </div>
-        </div>
+      </section>
+
+      {/* Trust strip: plain facts only */}
+      <section aria-label="About ProdPath" className={`${BAND} border-t border-line bg-surface`}>
+        <TrailStraight />
+        <ul className={`${BAND_INNER} flex flex-col lg:flex-row items-center justify-center gap-x-4 gap-y-2.5 py-4 text-[13px] sm:text-sm text-ink/85`}>
+          <li className="inline-flex items-center gap-2">
+            <TagIcon className="w-5 h-5 flex-shrink-0" />
+            Free, no ads
+          </li>
+          <TrustDot />
+          <li className="inline-flex items-center gap-2 text-center">
+            <SmallBookIcon className="w-5 h-5 flex-shrink-0" />
+            <span>
+              Curated with{' '}
+              <a
+                href="https://product-matters.ecelliitg.in/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-accent-dark underline decoration-accent/40 underline-offset-2 hover:decoration-accent"
+              >
+                Product Matters, E-Cell IIT Guwahati
+                <span className="sr-only"> (opens in a new tab)</span>
+              </a>
+            </span>
+          </li>
+          <TrustDot />
+          <li className="inline-flex items-center gap-2">
+            <PencilIcon className="w-5 h-5 flex-shrink-0" />
+            Built by Bhuvan, BITS Pilani Goa
+          </li>
+        </ul>
       </section>
 
       {/* The path, week by week */}
@@ -110,7 +162,7 @@ export default function LandingPage() {
             <h2 id="path-heading" className="mt-3 text-3xl sm:text-4xl font-display font-semibold text-ink">
               Your {weeks.length}-week path
             </h2>
-            <Doodle kind="check" className="left-1 top-36 w-9 text-accent" />
+            <Compass className="hidden lg:block mt-10 ml-1 w-24" />
           </div>
 
           <ol className="relative">
@@ -130,7 +182,8 @@ export default function LandingPage() {
                         : 'left-0 top-[6px] w-[15px] h-[15px] bg-paper border-ink'
                     }`}
                   />
-                  <div className={ai ? 'rounded-card border border-ink/80 bg-surface p-5 sm:p-6' : ''}>
+                  <div className={ai ? 'relative rounded-card border border-ink/80 bg-surface p-5 sm:p-6' : ''}>
+                    {ai && <MiniFlag className="absolute -top-8 right-5 w-8" />}
                     <div className="flex flex-wrap items-center gap-2">
                       <span className="text-xs font-semibold uppercase tracking-[0.12em] text-accent-dark">Week {i + 1}</span>
                       {ai && (
@@ -167,7 +220,6 @@ export default function LandingPage() {
       {sampleDay && (
         <section aria-labelledby="day-heading" className={`${BAND} border-t border-line`}>
           <NotebookDots />
-          <ContourLines set="rightEdge" className="right-0 top-1/2 -translate-y-1/2 h-[92%] w-auto max-w-[40%] sm:max-w-none" />
           <TrailSegment top="d" bottom="a" />
           <div className={`${BAND_INNER} reveal grid lg:grid-cols-[280px_minmax(0,1fr)] gap-10 lg:gap-16 items-start pt-14 pb-16 sm:pt-20 sm:pb-24`}>
             <div className="relative">
@@ -175,10 +227,12 @@ export default function LandingPage() {
               <h2 id="day-heading" className="mt-3 text-3xl sm:text-4xl font-display font-semibold text-ink">
                 A day on ProdPath
               </h2>
-              <Doodle kind="arrow" className="left-28 top-[8.5rem] w-16 text-accent" />
+              <NoteCard className="hidden lg:block mt-10 w-24" />
             </div>
 
-            <figure className="max-w-2xl">
+            <figure className="relative max-w-2xl">
+              {/* Beside the card, only where there is room for it */}
+              <CoffeeMug className="hidden xl:block absolute left-[calc(100%+2.5rem)] bottom-16 w-24" />
               <div className="rounded-card border border-line bg-surface">
                 <div className="px-5 py-4 border-b border-line flex items-start justify-between gap-4">
                   <div>
@@ -256,7 +310,7 @@ export default function LandingPage() {
         <ContourLines set="wideMound" className="left-0 bottom-0 w-[95%] sm:w-[75%] lg:w-[55%] max-w-[820px] h-auto" />
         <TrailSegment top="b" bottom="end" />
         <div className={`${BAND_INNER} reveal pt-14 pb-16 sm:pt-20 sm:pb-24`}>
-        <Doodle kind="star" className="right-8 top-16 sm:top-[5.5rem] w-7 text-marigold" />
+        <Rocket className="hidden md:block absolute right-4 sm:right-6 lg:right-10 top-12 sm:top-14 w-[4.5rem]" />
         <SmallLabel>What&apos;s inside</SmallLabel>
         <h2 id="features-heading" className="mt-3 text-3xl sm:text-4xl font-display font-semibold text-ink">
           Everything in one place
@@ -265,7 +319,7 @@ export default function LandingPage() {
         {/* Two rows: curriculum + case studies, then masterclasses + progress */}
         <div className="mt-10 grid gap-4 md:grid-cols-3">
           <GlowCard className="md:col-span-2 rounded-card border border-line bg-surface p-6 sm:p-8">
-            <FeatureHeading icon={<BookOpen className="w-5 h-5" aria-hidden="true" />}>The curriculum</FeatureHeading>
+            <FeatureHeading icon={<BookIcon className={FEATURE_ICON} />}>The curriculum</FeatureHeading>
             <p className="mt-6 font-display font-semibold text-ink leading-none">
               <span className="text-6xl sm:text-7xl">{allResources.length}</span>
               <span className="ml-3 text-2xl sm:text-3xl">resources</span>
@@ -274,20 +328,20 @@ export default function LandingPage() {
           </GlowCard>
 
           <GlowCard className="rounded-card border border-line bg-paper p-6 sm:p-8">
-            <FeatureHeading icon={<BookMarked className="w-5 h-5" aria-hidden="true" />}>Case Studies</FeatureHeading>
+            <FeatureHeading icon={<SearchDocIcon className={FEATURE_ICON} />}>Case Studies</FeatureHeading>
             <p className="mt-6 font-display text-6xl font-semibold text-ink leading-none">{caseStudies.length}</p>
             <p className="mt-4 text-muted">Real product teardowns</p>
           </GlowCard>
 
           <GlowCard className="rounded-card border border-line bg-paper p-6 sm:p-8">
-            <FeatureHeading icon={<Video className="w-5 h-5" aria-hidden="true" />}>Speaker Masterclasses</FeatureHeading>
+            <FeatureHeading icon={<PlayScreenIcon className={FEATURE_ICON} />}>Speaker Masterclasses</FeatureHeading>
             <p className="mt-6 font-display text-6xl font-semibold text-ink leading-none">{liveSessions.length}</p>
             <p className="mt-4 text-muted">Talks from PM leaders</p>
           </GlowCard>
 
           <GlowCard className="md:col-span-2 rounded-card border border-line bg-surface p-6 sm:p-8 grid lg:grid-cols-[minmax(0,0.7fr)_minmax(0,1.3fr)] gap-6 lg:gap-8 items-center">
             <div>
-              <FeatureHeading icon={<TrendingUp className="w-5 h-5" aria-hidden="true" />}>Progress tracking</FeatureHeading>
+              <FeatureHeading icon={<HeatGridIcon className={FEATURE_ICON} />}>Progress tracking</FeatureHeading>
               <p className="mt-4 text-muted">Streaks and a heat map</p>
             </div>
             <figure className="w-full max-w-[460px] lg:justify-self-end">
@@ -312,12 +366,13 @@ export default function LandingPage() {
         aria-labelledby="cta-heading"
         className={`${BAND} overflow-hidden -mb-8 bg-[#1F2430] border-y border-line text-[#F6F1E7]`}
       >
-        <ContourLines tone="cream" className="right-0 bottom-0 w-[160%] sm:w-full md:w-[70%] max-w-[1000px] h-auto" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 flex flex-col md:flex-row md:items-center md:justify-between gap-8">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
           <h2 id="cta-heading" className="text-3xl sm:text-5xl font-display font-semibold">
             Start with Day 1 today.
           </h2>
-          <GoogleSignInButton variant="onDark" className="w-full sm:w-auto flex-shrink-0" />
+          <GoogleSignInButton variant="onDark" className="mt-8 w-full sm:w-auto" />
+          {/* Summit flag on a small hill, sitting on the bottom edge of the band */}
+          <SummitHill className="hidden lg:block absolute right-8 bottom-0 w-[300px]" />
         </div>
       </section>
     </div>

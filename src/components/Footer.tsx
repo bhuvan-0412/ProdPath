@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
 import { MessageSquare, Mail, ExternalLink } from 'lucide-react';
 import { useProgress } from '@/context/ProgressContext';
 import { Logo } from './Logo';
@@ -66,8 +67,11 @@ export const Footer: React.FC = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-line pt-6 text-center sm:text-left text-xs text-muted">
+        <div className="border-t border-line pt-6 flex flex-col sm:flex-row items-center sm:justify-between gap-2 text-xs text-muted">
           <span>&copy; {new Date().getFullYear()} ProdPath. All rights reserved.</span>
+          <Link href="/privacy" className="font-semibold text-accent-dark hover:underline py-2 sm:py-0">
+            Privacy
+          </Link>
         </div>
       </div>
     </footer>

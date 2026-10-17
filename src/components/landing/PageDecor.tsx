@@ -96,6 +96,23 @@ export const TrailSegment: React.FC<TrailSegmentProps> = (props) => (
   </>
 );
 
+// A straight run of the trail for slim strips (shorter than one weave), joining the pieces above and below
+export const TrailStraight: React.FC = () => (
+  <>
+    <svg aria-hidden="true" focusable="false" className="pointer-events-none absolute inset-y-0 left-0 h-full hidden md:block min-[1408px]:hidden" width={NARROW.width}>
+      <line x1={NARROW.cx} y1="0" x2={NARROW.cx} y2="100%" {...DOTS} className="text-accent/25" />
+    </svg>
+    <svg
+      aria-hidden="true"
+      focusable="false"
+      className="pointer-events-none absolute inset-y-0 h-full hidden min-[1408px]:block left-[calc((100%_-_1216px)/4_-_60px)]"
+      width={WIDE.width}
+    >
+      <line x1={WIDE.cx} y1="0" x2={WIDE.cx} y2="100%" {...DOTS} className="text-accent/25" />
+    </svg>
+  </>
+);
+
 /* ---------- Notebook dots ---------- */
 
 // A very faint 24px dot grid, drawn with an SVG pattern
@@ -107,30 +124,5 @@ export const NotebookDots: React.FC = () => (
       </pattern>
     </defs>
     <rect width="100%" height="100%" fill="url(#notebook-dots)" />
-  </svg>
-);
-
-/* ---------- Margin doodles (desktop only) ---------- */
-
-const DOODLES = {
-  check: { viewBox: '0 0 32 24', d: 'M3 13 C5.5 14.6 7.8 17.4 10.2 20.6 C14 13.4 19.6 7.2 29 2.6' },
-  arrow: {
-    viewBox: '0 0 64 40',
-    d: 'M3 6 C10 20 26 30 52 27.5 M44.5 19.5 C47.6 22.4 50.4 25 53 27.6 C49.4 29.8 46.4 32.6 43.6 35.6',
-  },
-  star: {
-    viewBox: '0 0 30 30',
-    d: 'M15 2.5 C15.8 7 16.6 10.2 18 12.6 C21.6 12.4 24.8 12.6 27.6 13.4 C25 15.4 22.4 17.2 20 18.8 C21 22.2 21.8 25.2 22.4 28 C19.8 26 17.4 24.2 15 22.8 C12.4 24.6 9.6 26.6 6.8 28.4 C8 25.2 9 22.2 9.8 19 C7 17.2 4.4 15.4 2.4 13.4 C5.6 12.8 8.8 12.6 12 12.6 C13 9.4 14 6 15 2.5',
-  },
-};
-
-export const Doodle: React.FC<{ kind: keyof typeof DOODLES; className?: string }> = ({ kind, className = '' }) => (
-  <svg
-    aria-hidden="true"
-    focusable="false"
-    viewBox={DOODLES[kind].viewBox}
-    className={`pointer-events-none absolute hidden lg:block ${className}`}
-  >
-    <path d={DOODLES[kind].d} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
