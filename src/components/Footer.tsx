@@ -15,7 +15,7 @@ export const Footer: React.FC = () => {
           <div className="space-y-3">
             <span className="block font-display font-semibold text-lg text-ink">ProdPath</span>
             <p className="text-xs text-muted leading-relaxed max-w-xs">
-              A free 5-week product management learning path, with an AI PM track.
+              Free 5-week product management path.
             </p>
             <button
               onClick={openFeedbackModal}

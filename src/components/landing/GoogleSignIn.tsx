@@ -68,16 +68,3 @@ export const GoogleSignInButton: React.FC<GoogleButtonProps> = ({ variant = 'pri
   );
 };
 
-// Quiet text version of the same action, for returning learners
-export const ReturningLearnerLink: React.FC = () => (
-  <p className="text-sm text-muted">
-    Already learning?{' '}
-    <button
-      type="button"
-      onClick={signInWithGoogle}
-      className="font-medium text-ink underline decoration-line underline-offset-4 hover:decoration-accent transition-colors rounded-sm"
-    >
-      Your progress is waiting.
-    </button>
-  </p>
-);

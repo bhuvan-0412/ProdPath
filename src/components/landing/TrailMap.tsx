@@ -2,8 +2,6 @@ import React from 'react';
 
 interface TrailMapProps {
   weekCount: number;
-  dayCount: number;
-  resourceCount: number;
 }
 
 // Milestones climb from Week 1 (bottom) to Week 5 (top), alternating sides like switchbacks
@@ -26,7 +24,7 @@ const CONTOURS = [
   'M-10 96 C70 80 130 118 210 92 S320 50 380 76',
 ];
 
-export const TrailMap: React.FC<TrailMapProps> = ({ weekCount, dayCount, resourceCount }) => {
+export const TrailMap: React.FC<TrailMapProps> = ({ weekCount }) => {
   const stops = STOPS.slice(0, weekCount);
   const last = stops.length - 1;
 
@@ -97,14 +95,6 @@ export const TrailMap: React.FC<TrailMapProps> = ({ weekCount, dayCount, resourc
           );
         })}
       </svg>
-
-      {/* Map legend, computed from the curriculum */}
-      <figcaption className="mt-2 pt-3 border-t border-line flex items-center justify-between gap-3 text-[11px] font-semibold uppercase tracking-wider text-muted">
-        <span className="md:hidden lg:inline">The trail</span>
-        <span>
-          {weekCount} weeks &middot; {dayCount} days &middot; {resourceCount} resources
-        </span>
-      </figcaption>
     </figure>
   );
 };

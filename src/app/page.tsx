@@ -4,7 +4,7 @@ import weeksData from '@/data/weeks.json';
 import caseStudiesData from '@/data/caseStudies.json';
 import liveSessionsData from '@/data/liveSessions.json';
 import type { Week, ResourceType } from '@/types/curriculum';
-import { GoogleSignInButton, ReturningLearnerLink, SignedInRedirect } from '@/components/landing/GoogleSignIn';
+import { GoogleSignInButton, SignedInRedirect } from '@/components/landing/GoogleSignIn';
 import { TrailMap } from '@/components/landing/TrailMap';
 
 // Everything below is computed from the data files at build time, so the page updates when they change
@@ -14,18 +14,10 @@ const liveSessions = liveSessionsData.liveSessions;
 
 const allResources = weeks.flatMap((w) => w.days.flatMap((d) => d.tasks.flatMap((t) => t.resources)));
 const totalDays = weeks.reduce((sum, w) => sum + w.days.length, 0);
-const countByType = (type: ResourceType) => allResources.filter((r) => r.type === type).length;
-const resourceMix = [
-  { label: 'Videos', count: countByType('video'), className: 'bg-accent' },
-  { label: 'Articles', count: countByType('article'), className: 'bg-ink' },
-  { label: 'Playlists', count: countByType('playlist'), className: 'bg-marigold' },
-  { label: 'Case studies', count: countByType('case-study'), className: 'bg-accent-soft' },
-].filter((m) => m.count > 0);
-
-const weekResourceCount = (w: Week) => w.days.reduce((s, d) => s + d.tasks.reduce((t, task) => t + task.resources.length, 0), 0);
 // "Week 1: PM Foundations" -> "PM Foundations"
 const weekName = (w: Week) => w.title.replace(/^Week\s*\d+\s*[:\-–]\s*/i, '');
-const isAiTrack = (w: Week) => /AI Product Management/i.test(w.title);
+// The AI PM track is the final week of the path
+const isAiTrack = (index: number) => index === weeks.length - 1;
 
 const sampleWeek = weeks[0];
 const sampleDay = sampleWeek?.days[0];
@@ -63,6 +55,13 @@ const SmallLabel: React.FC<{ children: React.ReactNode; className?: string }> = 
   <p className={`text-xs font-semibold uppercase tracking-[0.12em] text-muted ${className}`}>{children}</p>
 );
 
+const FeatureHeading: React.FC<{ icon: React.ReactNode; children: React.ReactNode }> = ({ icon, children }) => (
+  <div className="flex items-center gap-2 text-accent-dark">
+    {icon}
+    <h3 className="font-sans text-sm font-semibold uppercase tracking-[0.12em]">{children}</h3>
+  </div>
+);
+
 export default function LandingPage() {
   return (
     <div className="animate-fade-in">
@@ -71,21 +70,22 @@ export default function LandingPage() {
       {/* Hero */}
       <section className="grid md:grid-cols-[minmax(0,1fr)_280px] lg:grid-cols-[minmax(0,1fr)_360px] gap-10 lg:gap-16 items-center pt-4 pb-16 sm:pt-10 sm:pb-24">
         <div className="max-w-3xl">
-          <p className="text-sm font-medium text-muted">Free {weeks.length}-week product management path</p>
-          <h1 className="mt-4 text-[2.6rem] leading-[1.05] sm:text-6xl lg:text-7xl font-display font-semibold tracking-tight text-ink">
+          <h1 className="text-[2.6rem] leading-[1.05] sm:text-6xl lg:text-7xl font-display font-semibold tracking-tight text-ink">
             Become a product manager, <span className="text-accent-dark">one small step a day.</span>
           </h1>
-          <p className="mt-6 text-base sm:text-lg text-muted leading-relaxed max-w-[44rem]">
-            A structured path through PM foundations, metrics, tech, interview prep and AI product management. Free, and your progress saves across devices.
+          <p className="mt-6 text-base sm:text-lg text-muted leading-relaxed">
+            Five weeks of structured PM learning, with an AI track. Free.
           </p>
           <div className="mt-8 space-y-4">
             <GoogleSignInButton className="w-full sm:w-auto" />
-            <ReturningLearnerLink />
+            <p className="text-sm text-muted">
+              {weeks.length} weeks &middot; {totalDays} days &middot; {allResources.length} resources
+            </p>
           </div>
         </div>
 
         <div className="w-full max-w-sm mx-auto md:max-w-none">
-          <TrailMap weekCount={weeks.length} dayCount={totalDays} resourceCount={allResources.length} />
+          <TrailMap weekCount={weeks.length} />
         </div>
       </section>
 
@@ -97,17 +97,13 @@ export default function LandingPage() {
             <h2 id="path-heading" className="mt-3 text-3xl sm:text-4xl font-display font-semibold text-ink">
               Your {weeks.length}-week path
             </h2>
-            <p className="mt-4 text-muted leading-relaxed">
-              {totalDays} days of reading, watching and practising, in order. Each day builds on the one before.
-            </p>
           </div>
 
           <ol className="relative">
             {/* The trail line */}
             <span aria-hidden="true" className="absolute left-[7px] top-3 bottom-3 w-px bg-line" />
             {weeks.map((week, i) => {
-              const ai = isAiTrack(week);
-              const remaining = week.days.length - 3;
+              const ai = isAiTrack(i);
               return (
                 <li key={week.id} className={`relative pl-10 ${i < weeks.length - 1 ? 'pb-10' : ''}`}>
                   <span
@@ -120,40 +116,19 @@ export default function LandingPage() {
                         : 'left-0 top-[6px] w-[15px] h-[15px] bg-paper border-ink'
                     }`}
                   />
-                  <div
-                    className={`grid sm:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] gap-x-8 gap-y-3 ${
-                      ai ? 'rounded-card border border-ink/80 bg-surface p-5 sm:p-6' : ''
-                    }`}
-                  >
-                    <div>
-                      <div className="flex flex-wrap items-center gap-2">
-                        <span className="text-xs font-semibold uppercase tracking-[0.12em] text-accent-dark">Week {i + 1}</span>
-                        {ai && (
-                          <span className="text-[11px] font-semibold uppercase tracking-[0.1em] px-2 py-0.5 rounded bg-marigold text-[#1F2430]">
-                            AI PM track
-                          </span>
-                        )}
-                      </div>
-                      <h3 className={`mt-1.5 font-display font-semibold text-ink ${ai ? 'text-2xl sm:text-3xl' : 'text-xl sm:text-2xl'}`}>
-                        {weekName(week)}
-                      </h3>
-                      <p className="mt-1 text-sm text-muted">
-                        {week.days.length} days &middot; {weekResourceCount(week)} resources
-                      </p>
-                    </div>
-                    <ul className="space-y-1.5 text-sm text-ink/90 sm:pt-6">
-                      {week.days.slice(0, 3).map((day) => (
-                        <li key={day.day} className="flex gap-3">
-                          <span className="w-12 flex-shrink-0 text-muted tabular-nums">Day {day.day}</span>
-                          <span>{day.brief}</span>
-                        </li>
-                      ))}
-                      {remaining > 0 && (
-                        <li className="pl-[3.75rem] text-muted">
-                          and {remaining} more {remaining === 1 ? 'day' : 'days'}
-                        </li>
+                  <div className={ai ? 'rounded-card border border-ink/80 bg-surface p-5 sm:p-6' : ''}>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="text-xs font-semibold uppercase tracking-[0.12em] text-accent-dark">Week {i + 1}</span>
+                      {ai && (
+                        <span className="text-[11px] font-semibold uppercase tracking-[0.1em] px-2 py-0.5 rounded bg-marigold text-[#1F2430]">
+                          AI PM track
+                        </span>
                       )}
-                    </ul>
+                    </div>
+                    <h3 className={`mt-1.5 font-display font-semibold text-ink ${ai ? 'text-2xl sm:text-3xl' : 'text-xl sm:text-2xl'}`}>
+                      {weekName(week)}
+                    </h3>
+                    <p className="mt-1 text-sm text-muted">{week.days.length} days</p>
                   </div>
                 </li>
               );
@@ -165,35 +140,15 @@ export default function LandingPage() {
       {/* A sample day */}
       {sampleDay && (
         <section aria-labelledby="day-heading" className="reveal border-t border-line pt-14 pb-16 sm:pt-20 sm:pb-24">
-          <div className="grid lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] gap-10 lg:gap-16 items-start">
-            <div className="lg:order-2">
+          <div className="grid lg:grid-cols-[280px_minmax(0,1fr)] gap-10 lg:gap-16 items-start">
+            <div>
               <SmallLabel>How it works</SmallLabel>
               <h2 id="day-heading" className="mt-3 text-3xl sm:text-4xl font-display font-semibold text-ink">
                 A day on ProdPath
               </h2>
-              <ol className="mt-8 space-y-6">
-                {[
-                  ["Do today's resources", 'Articles, videos and case studies, picked and put in order for you.'],
-                  ['Check them off', 'Tick each one as you finish and watch your progress fill in.'],
-                  ['Pick up on any device', 'Your progress saves to your account, right where you left off.'],
-                ].map(([title, body], i) => (
-                  <li key={title} className="flex gap-5">
-                    <span className="font-display text-3xl font-semibold leading-none text-accent-dark w-6 flex-shrink-0" aria-hidden="true">
-                      {i + 1}
-                    </span>
-                    <div>
-                      <h3 className="font-sans font-semibold text-ink tracking-normal">
-                        <span className="sr-only">Step {i + 1}: </span>
-                        {title}
-                      </h3>
-                      <p className="mt-1 text-sm text-muted leading-relaxed">{body}</p>
-                    </div>
-                  </li>
-                ))}
-              </ol>
             </div>
 
-            <figure className="lg:order-1">
+            <figure className="max-w-2xl">
               <div className="rounded-card border border-line bg-surface">
                 <div className="px-5 py-4 border-b border-line flex items-start justify-between gap-4">
                   <div>
@@ -242,7 +197,7 @@ export default function LandingPage() {
                 </div>
               </div>
               <figcaption className="mt-3 text-sm text-muted">
-                Sample from Week 1 - sign in to start checking things off.
+                Check things off, and your progress syncs across devices.
               </figcaption>
             </figure>
           </div>
@@ -256,87 +211,35 @@ export default function LandingPage() {
           Everything in one place
         </h2>
 
-        <div className="mt-10 grid gap-4 lg:grid-cols-3">
-          {/* Curriculum: the large block */}
-          <div className="lg:col-span-2 lg:row-span-2 rounded-card border border-line bg-surface p-6 sm:p-8 flex flex-col">
-            <div className="flex items-center gap-2 text-accent-dark">
-              <BookOpen className="w-5 h-5" aria-hidden="true" />
-              <h3 className="font-sans text-sm font-semibold uppercase tracking-[0.12em]">The curriculum</h3>
-            </div>
+        {/* Two rows: curriculum + case studies, then masterclasses + progress */}
+        <div className="mt-10 grid gap-4 md:grid-cols-3">
+          <div className="md:col-span-2 rounded-card border border-line bg-surface p-6 sm:p-8">
+            <FeatureHeading icon={<BookOpen className="w-5 h-5" aria-hidden="true" />}>The curriculum</FeatureHeading>
             <p className="mt-6 font-display font-semibold text-ink leading-none">
               <span className="text-6xl sm:text-7xl">{allResources.length}</span>
               <span className="ml-3 text-2xl sm:text-3xl">resources</span>
             </p>
-            <p className="mt-4 max-w-md text-muted leading-relaxed">
-              Hand-picked articles, videos and playlists, arranged into {totalDays} days across {weeks.length} weeks, so you always know what to do next.
-            </p>
-
-            <div className="mt-auto pt-10">
-              <div className="flex h-3 rounded-sm overflow-hidden border border-line" aria-hidden="true">
-                {resourceMix.map((m) => (
-                  <span key={m.label} className={m.className} style={{ width: `${(m.count / allResources.length) * 100}%` }} />
-                ))}
-              </div>
-              <ul className="mt-3 flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted">
-                {resourceMix.map((m) => (
-                  <li key={m.label} className="flex items-center gap-2">
-                    <span aria-hidden="true" className={`w-2.5 h-2.5 rounded-sm border border-line ${m.className}`} />
-                    <span>
-                      <span className="font-semibold text-ink tabular-nums">{m.count}</span> {m.label.toLowerCase()}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <p className="mt-4 text-muted">A daily path, Week 1 to Week {weeks.length}</p>
           </div>
 
-          {/* Case studies */}
-          <div className="rounded-card border border-line bg-surface p-6">
-            <div className="flex items-baseline justify-between gap-3">
-              <h3 className="font-display text-xl font-semibold text-ink">Case Studies</h3>
-              <BookMarked className="w-5 h-5 text-accent-dark flex-shrink-0" aria-hidden="true" />
-            </div>
-            <p className="mt-1 text-sm text-muted">
-              <span className="font-semibold text-ink">{caseStudies.length}</span> strategy teardowns with key takeaways
-            </p>
-            <ul className="mt-4 space-y-1.5 text-sm text-ink/90 border-t border-line pt-4">
-              {caseStudies.slice(0, 3).map((cs) => (
-                <li key={cs.id} className="truncate">{cs.title}</li>
-              ))}
-            </ul>
+          <div className="rounded-card border border-line bg-paper p-6 sm:p-8">
+            <FeatureHeading icon={<BookMarked className="w-5 h-5" aria-hidden="true" />}>Case Studies</FeatureHeading>
+            <p className="mt-6 font-display text-6xl font-semibold text-ink leading-none">{caseStudies.length}</p>
+            <p className="mt-4 text-muted">Real product teardowns</p>
           </div>
 
-          {/* Speaker masterclasses */}
-          <div className="rounded-card border border-line bg-paper p-6">
-            <div className="flex items-baseline justify-between gap-3">
-              <h3 className="font-display text-xl font-semibold text-ink">Speaker Masterclasses</h3>
-              <Video className="w-5 h-5 text-accent-dark flex-shrink-0" aria-hidden="true" />
-            </div>
-            <p className="mt-1 text-sm text-muted">
-              <span className="font-semibold text-ink">{liveSessions.length}</span> recorded sessions with product leaders
-            </p>
-            <ul className="mt-4 space-y-1.5 text-sm text-ink/90 border-t border-line pt-4">
-              {liveSessions.slice(0, 3).map((s) => (
-                <li key={s.sessionNumber} className="truncate">{s.topic}</li>
-              ))}
-            </ul>
+          <div className="rounded-card border border-line bg-paper p-6 sm:p-8">
+            <FeatureHeading icon={<Video className="w-5 h-5" aria-hidden="true" />}>Speaker Masterclasses</FeatureHeading>
+            <p className="mt-6 font-display text-6xl font-semibold text-ink leading-none">{liveSessions.length}</p>
+            <p className="mt-4 text-muted">Talks from PM leaders</p>
           </div>
 
-          {/* Progress tracking */}
-          <div className="lg:col-span-3 rounded-card border border-line bg-surface p-6 sm:p-8 grid md:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] gap-8 items-center">
+          <div className="md:col-span-2 rounded-card border border-line bg-surface p-6 sm:p-8 grid lg:grid-cols-[minmax(0,0.7fr)_minmax(0,1.3fr)] gap-6 lg:gap-8 items-center">
             <div>
-              <div className="flex items-center gap-2 text-accent-dark">
-                <TrendingUp className="w-5 h-5" aria-hidden="true" />
-                <h3 className="font-sans text-sm font-semibold uppercase tracking-[0.12em]">Progress tracking</h3>
-              </div>
-              <p className="mt-4 font-display text-2xl sm:text-3xl font-semibold text-ink leading-snug">
-                See every day you showed up.
-              </p>
-              <p className="mt-3 text-muted leading-relaxed">
-                Each resource you check off is saved with the date, and syncs to your account on every device.
-              </p>
+              <FeatureHeading icon={<TrendingUp className="w-5 h-5" aria-hidden="true" />}>Progress tracking</FeatureHeading>
+              <p className="mt-4 text-muted">Streaks and a heat map</p>
             </div>
-            <figure className="w-full max-w-[460px] md:justify-self-end">
+            <figure className="w-full max-w-[460px] lg:justify-self-end">
               <div
                 aria-hidden="true"
                 className="grid gap-[3px]"
@@ -346,9 +249,7 @@ export default function LandingPage() {
                   <span key={i} className={`aspect-square rounded-[2px] ${activityShade[level]}`} />
                 ))}
               </div>
-              <figcaption className="mt-3 text-xs text-muted">
-                Sample activity - your own heat map fills in as you learn.
-              </figcaption>
+              <figcaption className="mt-3 text-xs text-muted">Sample activity</figcaption>
             </figure>
           </div>
         </div>
@@ -360,14 +261,9 @@ export default function LandingPage() {
         className="mx-[calc(50%-50vw)] -mb-8 bg-[#1F2430] border-y border-line text-[#F6F1E7]"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 flex flex-col md:flex-row md:items-center md:justify-between gap-8">
-          <div>
-            <h2 id="cta-heading" className="text-3xl sm:text-5xl font-display font-semibold">
-              Start with Day 1 today.
-            </h2>
-            <p className="mt-3 text-[#F6F1E7]/80">
-              Free, no setup. Sign in and your first day is ready.
-            </p>
-          </div>
+          <h2 id="cta-heading" className="text-3xl sm:text-5xl font-display font-semibold">
+            Start with Day 1 today.
+          </h2>
           <GoogleSignInButton variant="onDark" className="w-full sm:w-auto flex-shrink-0" />
         </div>
       </section>
