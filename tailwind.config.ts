@@ -1,5 +1,9 @@
 import type { Config } from "tailwindcss";
 
+// Colors are CSS variables (RGB channels, defined in globals.css) so they switch with
+// light/dark mode automatically and still support opacity modifiers like bg-accent/10.
+const token = (name: string) => `rgb(var(--${name}) / <alpha-value>)`;
+
 const config: Config = {
   darkMode: "class",
   // Hover styles only apply on devices that can truly hover, so they don't stick after a tap on phones
@@ -15,28 +19,34 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        display: ['var(--font-display)', 'Space Grotesk', 'sans-serif'],
+        display: ['var(--font-display)', 'Georgia', 'serif'],
         sans: ['var(--font-inter)', 'Inter', 'system-ui', 'sans-serif'],
-        mono: ['var(--font-mono)', 'JetBrains Mono', 'monospace'],
       },
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
-        surface: "var(--surface)",
-        'surface-border': "var(--surface-border)",
+        paper: token("paper"),
+        "paper-2": token("paper-2"),
+        surface: token("surface"),
+        ink: token("ink"),
+        muted: token("muted"),
+        line: token("line"),
         accent: {
-          50: "#f5f3ff",
-          100: "#ede9fe",
-          200: "#ddd6fe",
-          300: "#c4b5fd",
-          400: "#a78bfa",
-          500: "#8b5cf6",
-          600: "#7c3aed",
-          700: "#6d28d9",
-          800: "#5b21b6",
-          900: "#4c1d95",
-          950: "#2e1065",
+          DEFAULT: token("accent"),
+          // Stronger shade: use for accent-colored text and filled buttons so text meets WCAG AA
+          dark: token("accent-dark"),
+          soft: token("accent-soft"),
         },
+        // Milestones and streaks only
+        marigold: token("marigold"),
+        // Status messages (errors / saved confirmations)
+        danger: token("danger"),
+        success: token("success"),
+      },
+      borderRadius: {
+        card: "10px",
+      },
+      boxShadow: {
+        // Subtle hard-offset shadow, used on card hover
+        offset: "3px 3px 0 0 rgb(var(--line))",
       },
       animation: {
         'pop': 'pop 0.3s cubic-bezier(0.16, 1, 0.3, 1)',

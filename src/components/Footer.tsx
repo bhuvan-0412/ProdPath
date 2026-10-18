@@ -1,30 +1,27 @@
 'use client';
 
 import React from 'react';
-import { Compass, MessageSquare, Mail, ExternalLink } from 'lucide-react';
+import Link from 'next/link';
+import { MessageSquare, Mail, ExternalLink } from 'lucide-react';
 import { useProgress } from '@/context/ProgressContext';
+import { Logo } from './Logo';
 
 export const Footer: React.FC = () => {
   const { openFeedbackModal } = useProgress();
 
   return (
-    <footer className="w-full border-t border-zinc-200/80 dark:border-zinc-800/80 bg-white/40 dark:bg-[#0a0a0f]/40 py-10 transition-colors mt-auto">
+    <footer className="w-full border-t border-line bg-surface py-10 transition-colors mt-auto">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 items-start">
           {/* Brand & Feedback Column */}
           <div className="space-y-3">
-            <div className="flex items-center gap-2">
-              <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-violet-600 to-indigo-500 flex items-center justify-center text-white shadow-xs">
-                <Compass className="w-4 h-4 stroke-[2.2]" />
-              </div>
-              <span className="font-display font-bold text-sm text-zinc-900 dark:text-zinc-100">ProdPath</span>
-            </div>
-            <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed max-w-xs">
-              Personal AI Product Management learning hub and progress tracker.
+            <Logo size={26} showWordmark />
+            <p className="text-xs text-muted leading-relaxed max-w-xs">
+              Free 5-week product management path.
             </p>
             <button
               onClick={openFeedbackModal}
-              className="hover:underline text-violet-600 dark:text-violet-400 text-xs font-semibold inline-flex items-center gap-1.5 transition-colors min-h-10 sm:min-h-0"
+              className="hover:underline text-accent-dark text-xs font-semibold inline-flex items-center gap-1.5 transition-colors min-h-10 sm:min-h-0"
             >
               <MessageSquare className="w-3.5 h-3.5" />
               <span>Send Feedback</span>
@@ -33,16 +30,16 @@ export const Footer: React.FC = () => {
 
           {/* Contact Section */}
           <div className="space-y-2.5">
-            <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-zinc-800 dark:text-zinc-200">
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-ink">
               Contact
             </h3>
-            <ul className="space-y-2 text-xs text-zinc-500 dark:text-zinc-400">
+            <ul className="space-y-2 text-xs text-muted">
               <li>
                 <a
                   href="mailto:thotabhuvan@gmail.com"
-                  className="inline-flex items-center gap-2 min-h-10 sm:min-h-0 hover:text-violet-600 dark:hover:text-violet-300 transition-colors group"
+                  className="inline-flex items-center gap-2 min-h-10 sm:min-h-0 hover:text-accent-dark transition-colors group"
                 >
-                  <Mail className="w-3.5 h-3.5 text-violet-500 flex-shrink-0 group-hover:scale-110 transition-transform" />
+                  <Mail className="w-3.5 h-3.5 flex-shrink-0" />
                   <span className="hover:underline">thotabhuvan@gmail.com</span>
                 </a>
               </li>
@@ -50,8 +47,8 @@ export const Footer: React.FC = () => {
           </div>
 
           {/* Curriculum Credit & Attribution */}
-          <div className="space-y-2 text-xs text-zinc-500 dark:text-zinc-400 md:text-right">
-            <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-zinc-800 dark:text-zinc-200">
+          <div className="space-y-2 text-xs text-muted md:text-right">
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-ink">
               Reference
             </h3>
             <p className="leading-relaxed">
@@ -60,7 +57,7 @@ export const Footer: React.FC = () => {
                 href="https://product-matters.ecelliitg.in/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:underline text-violet-600 dark:text-violet-400 font-semibold inline-flex items-center gap-1 py-2 sm:py-0"
+                className="hover:underline text-accent-dark font-semibold inline-flex items-center gap-1 py-2 sm:py-0"
               >
                 <span>Product Matters by E-Cell IIT Guwahati</span>
                 <ExternalLink className="w-3 h-3 inline" />
@@ -70,8 +67,11 @@ export const Footer: React.FC = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-zinc-200/60 dark:border-zinc-800/60 pt-6 text-center sm:text-left text-xs sm:text-[11px] font-mono text-zinc-400">
+        <div className="border-t border-line pt-6 flex flex-col sm:flex-row items-center sm:justify-between gap-2 text-xs text-muted">
           <span>&copy; {new Date().getFullYear()} ProdPath. All rights reserved.</span>
+          <Link href="/privacy" className="font-semibold text-accent-dark hover:underline py-2 sm:py-0">
+            Privacy
+          </Link>
         </div>
       </div>
     </footer>

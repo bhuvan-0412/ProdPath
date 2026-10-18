@@ -8,11 +8,17 @@ import { ResourceCard } from '@/components/ResourceCard';
 import { ProgressBar } from '@/components/ProgressBar';
 import { AddResourceModal } from '@/components/AddResourceModal';
 import { TaskHeader } from '@/components/ResourcePanels';
+import { GlowCard } from '@/components/GlowCard';
 import weeksData from '@/data/weeks.json';
 import taskSummariesData from '@/data/taskSummaries.json';
 import continuedLearningData from '@/data/continuedLearning.json';
 import { Week } from '@/types/curriculum';
+import { WeekMark } from '@/components/landing/Illustrations';
 import { Plus, Calendar, CheckCircle, Sparkles, ArrowRight, Bookmark, ExternalLink, Video, BookMarked } from 'lucide-react';
+import { PageBackdrop } from '@/components/PageBackdrop';
+import { PageSkeleton } from '@/components/Skeleton';
+import { PageIcons } from '@/components/decor/BackgroundIcons';
+import { COURSE_ICONS } from '@/components/decor/iconLayouts';
 
 const getTaskDomId = (weekId: string, dayNum: number, taskLabel: string) => {
   const n = weekId.replace('week-', '');
@@ -149,23 +155,23 @@ function CourseContent() {
   return (
     <div className="space-y-8 animate-fade-in">
       {/* Page Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-200 dark:border-zinc-800/80 pb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-line pb-6">
         <div>
-          <div className="inline-flex items-center gap-2 text-xs font-mono font-semibold text-violet-600 dark:text-violet-400 mb-1">
+          <div className="inline-flex items-center gap-2 text-xs font-semibold text-accent-dark mb-1">
             <Calendar className="w-3.5 h-3.5" />
             <span>5-Week Structured Curriculum</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-display font-extrabold text-zinc-900 dark:text-zinc-100">
+          <h1 className="text-2xl sm:text-3xl font-display font-extrabold text-ink">
             Weekly Curriculum
           </h1>
-          <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">
+          <p className="text-sm text-muted mt-1">
             Select a week to navigate daily topics, task lists, and learning resources.
           </p>
         </div>
 
         <button
           onClick={() => handleOpenAddModal(activeWeekId)}
-          className="inline-flex items-center gap-2 min-h-11 sm:min-h-0 px-4 py-2.5 rounded-xl bg-violet-600 hover:bg-violet-700 text-white text-xs font-bold shadow-xs transition-all self-start sm:self-center"
+          className="inline-flex items-center gap-2 min-h-11 sm:min-h-0 px-4 py-2.5 rounded-xl bg-accent-dark hover:bg-accent-dark/90 text-paper text-xs font-bold transition-all self-start sm:self-center"
         >
           <Plus className="w-4 h-4" />
           <span>Add Resource</span>
@@ -183,29 +189,28 @@ function CourseContent() {
           const isDone = stats.total > 0 && stats.completed === stats.total;
 
           return (
-            <button
+            <GlowCard
+              as="button"
               key={w.id}
               onClick={() => handleSelectWeekTab(w.id)}
               data-week-tab={w.id}
-              className={`snap-start shrink-0 w-[44%] sm:w-auto p-4 rounded-2xl text-left transition-all duration-200 flex flex-col justify-between space-y-3 relative overflow-hidden ${
-                isActive
-                  ? 'glass-signature shadow-md ring-2 ring-violet-500/50'
-                  : 'bg-white dark:bg-[#12121a] border border-zinc-200 dark:border-zinc-800/80 hover:border-zinc-300 dark:hover:border-zinc-700'
+              className={`snap-start shrink-0 w-[44%] sm:w-auto p-4 rounded-xl text-left transition-colors duration-200 flex flex-col justify-between space-y-3 bg-surface border border-line ${
+                isActive ? 'ring-2 ring-accent/50' : ''
               }`}
             >
               <div className="flex items-center justify-between">
                 <span
-                  className={`text-xs sm:text-[10px] font-mono font-semibold px-2 py-0.5 rounded-md uppercase ${
+                  className={`text-xs sm:text-[10px] font-semibold px-2 py-0.5 rounded-md uppercase tracking-wider ${
                     isActive
-                      ? 'bg-violet-600 text-white'
+                      ? 'bg-accent-dark text-paper'
                       : isDone
-                      ? 'bg-emerald-500 text-white'
-                      : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300'
+                      ? 'bg-accent text-paper'
+                      : 'bg-paper text-muted'
                   }`}
                 >
                   {w.id.replace('week-', 'Week ')}
                 </span>
-                <span className="text-xs font-mono font-semibold text-zinc-500 dark:text-zinc-400">
+                <span className="text-xs font-semibold text-muted">
                   {stats.completed}/{stats.total}
                 </span>
               </div>
@@ -213,7 +218,7 @@ function CourseContent() {
               <div>
                 <h3
                   className={`font-display font-bold text-sm line-clamp-1 ${
-                    isActive ? 'text-violet-600 dark:text-violet-300' : 'text-zinc-900 dark:text-zinc-100'
+                    isActive ? 'text-accent-dark' : 'text-ink'
                   }`}
                 >
                   {w.title.split(': ')[1] || w.title}
@@ -222,71 +227,74 @@ function CourseContent() {
 
               <div className="space-y-1 pt-1">
                 <ProgressBar percentage={stats.percentage} showLabel={false} size="sm" />
-                <div className="flex justify-between items-center text-xs sm:text-[10px] font-mono text-zinc-400">
+                <div className="flex justify-between items-center text-xs sm:text-[10px] text-muted">
                   <span>{stats.percentage}% done</span>
-                  {isDone && <CheckCircle className="w-3 h-3 text-emerald-500" />}
+                  {isDone && <CheckCircle className="w-3 h-3 text-accent" />}
                 </div>
               </div>
-            </button>
+            </GlowCard>
           );
         })}
 
         {/* Live Sessions Navigation Tab */}
-        <Link
+        <GlowCard
+          as={Link}
           href="/live-sessions"
-          className="snap-start shrink-0 w-[44%] sm:w-auto p-4 rounded-2xl text-left bg-rose-50/40 dark:bg-rose-950/20 border border-rose-200/60 dark:border-rose-900/40 hover:border-rose-500/50 hover:shadow-md transition-all duration-200 flex flex-col justify-between space-y-3 group"
+          className="snap-start shrink-0 w-[44%] sm:w-auto p-4 rounded-xl text-left bg-accent-soft border border-accent/40 transition-colors duration-200 flex flex-col justify-between space-y-3 group"
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs sm:text-[10px] font-mono font-semibold px-2 py-0.5 rounded-md uppercase bg-rose-600 text-white flex items-center gap-1">
+            <span className="text-xs sm:text-[10px] font-semibold px-2 py-0.5 rounded-md uppercase tracking-wider bg-accent-dark text-paper flex items-center gap-1">
               Live <Video className="w-2.5 h-2.5" />
             </span>
-            <ExternalLink className="w-3.5 h-3.5 text-rose-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            <ExternalLink className="w-3.5 h-3.5 text-accent-dark group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
           </div>
 
           <div>
-            <h3 className="font-display font-bold text-sm text-zinc-900 dark:text-zinc-100 group-hover:text-rose-600 dark:group-hover:text-rose-300 line-clamp-1">
+            <h3 className="font-display font-bold text-sm text-ink group-hover:text-accent-dark line-clamp-1">
               Live Sessions
             </h3>
           </div>
 
-          <div className="pt-1 text-xs sm:text-[10px] font-mono text-zinc-400">
+          <div className="pt-1 text-xs sm:text-[10px] text-muted">
             <span>Speaker talks &rarr;</span>
           </div>
-        </Link>
+        </GlowCard>
 
         {/* Case Studies Navigation Tab */}
-        <Link
+        <GlowCard
+          as={Link}
           href="/resources"
-          className="snap-start shrink-0 w-[44%] sm:w-auto p-4 rounded-2xl text-left bg-indigo-50/40 dark:bg-indigo-950/20 border border-indigo-200/60 dark:border-indigo-900/40 hover:border-indigo-500/50 hover:shadow-md transition-all duration-200 flex flex-col justify-between space-y-3 group"
+          className="snap-start shrink-0 w-[44%] sm:w-auto p-4 rounded-xl text-left bg-accent-soft border border-accent/40 transition-colors duration-200 flex flex-col justify-between space-y-3 group"
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs sm:text-[10px] font-mono font-semibold px-2 py-0.5 rounded-md uppercase bg-indigo-600 text-white flex items-center gap-1">
+            <span className="text-xs sm:text-[10px] font-semibold px-2 py-0.5 rounded-md uppercase tracking-wider bg-accent-dark text-paper flex items-center gap-1">
               Library <BookMarked className="w-2.5 h-2.5" />
             </span>
-            <ExternalLink className="w-3.5 h-3.5 text-indigo-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            <ExternalLink className="w-3.5 h-3.5 text-accent-dark group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
           </div>
 
           <div>
-            <h3 className="font-display font-bold text-sm text-zinc-900 dark:text-zinc-100 group-hover:text-indigo-600 dark:group-hover:text-indigo-300 line-clamp-1">
+            <h3 className="font-display font-bold text-sm text-ink group-hover:text-accent-dark line-clamp-1">
               Case Studies
             </h3>
           </div>
 
-          <div className="pt-1 text-xs sm:text-[10px] font-mono text-zinc-400">
+          <div className="pt-1 text-xs sm:text-[10px] text-muted">
             <span>Teardowns &amp; Strategy &rarr;</span>
           </div>
-        </Link>
+        </GlowCard>
       </div>
 
       {/* Active Week Details Header */}
-      <div className="bg-white dark:bg-[#12121a] rounded-2xl p-4 sm:p-6 border border-zinc-200 dark:border-zinc-800/80 space-y-3">
+      <div className="bg-surface rounded-xl p-4 sm:p-6 border border-line space-y-3">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <span className="text-xs font-mono font-semibold uppercase text-violet-600 dark:text-violet-400">
+            <span className="text-xs font-semibold uppercase tracking-wider text-accent-dark">
               Active Module &bull; {activeWeek.id.replace('-', ' ')}
             </span>
-            <h2 className="text-xl font-display font-bold text-zinc-900 dark:text-zinc-100 mt-0.5">
-              {activeWeek.title}
+            <h2 className="text-xl font-display font-bold text-ink mt-1 flex items-center gap-3">
+              <WeekMark index={weeks.indexOf(activeWeek)} className="w-9 h-9 flex-shrink-0" />
+              <span>{activeWeek.title}</span>
             </h2>
           </div>
 
@@ -301,17 +309,17 @@ function CourseContent() {
       {/* Day-by-Day Vertical List under Active Tab */}
       <div className="space-y-6">
         {activeWeek.days.map((day) => (
-          <div
+          <GlowCard
             key={day.day}
             id={getDayDomId(activeWeek.id, day.day)}
-            className="bg-white dark:bg-[#12121a] rounded-2xl p-4 sm:p-6 border border-zinc-200 dark:border-zinc-800/80 space-y-4 shadow-xs scroll-mt-24"
+            className="bg-surface rounded-xl p-4 sm:p-6 border border-line space-y-4 scroll-mt-24"
           >
             {/* Day Header */}
-            <div className="flex items-center gap-3 pb-3 border-b border-zinc-100 dark:border-zinc-800/80">
-              <span className="px-2.5 py-1 rounded-lg bg-violet-600 text-white font-mono font-bold text-xs">
+            <div className="flex items-center gap-3 pb-3 border-b border-line">
+              <span className="px-2.5 py-1 rounded-lg bg-accent-dark text-paper font-bold text-xs">
                 Day {day.day}
               </span>
-              <h3 className="font-display font-bold text-zinc-900 dark:text-zinc-100 text-base">
+              <h3 className="font-display font-bold text-ink text-base">
                 {day.brief}
               </h3>
             </div>
@@ -344,15 +352,15 @@ function CourseContent() {
                 </div>
               ))}
             </div>
-          </div>
+          </GlowCard>
         ))}
 
         {/* Custom Resources Section if any */}
         {activeCustomResources.length > 0 && (
-          <div className="bg-amber-50/40 dark:bg-amber-950/20 rounded-2xl p-5 border border-amber-200/50 dark:border-amber-900/30 space-y-3">
+          <div className="bg-marigold/15 rounded-xl p-5 border border-marigold/40 space-y-3">
             <div className="flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-amber-500" />
-              <h4 className="font-display font-bold text-amber-900 dark:text-amber-200 text-sm">
+              <Sparkles className="w-4 h-4 text-marigold" />
+              <h4 className="font-display font-bold text-ink text-sm">
                 Custom Resources Added to {activeWeek.title.split(':')[0]}
               </h4>
             </div>
@@ -368,7 +376,7 @@ function CourseContent() {
         <div className="flex justify-end pt-2">
           <button
             onClick={() => handleOpenAddModal(activeWeek.id)}
-            className="inline-flex items-center gap-1.5 min-h-10 sm:min-h-0 text-xs font-semibold text-violet-600 dark:text-violet-400 hover:underline"
+            className="inline-flex items-center gap-1.5 min-h-10 sm:min-h-0 text-xs font-semibold text-accent-dark hover:underline"
           >
             <Plus className="w-3.5 h-3.5" />
             <span>Add extra resource to {activeWeek.id.replace('-', ' ')}</span>
@@ -377,16 +385,16 @@ function CourseContent() {
       </div>
 
       {/* Continued Learning Section (Independent Subscriptions) */}
-      <div className="pt-6 border-t border-zinc-200 dark:border-zinc-800/80 space-y-4">
+      <div className="pt-6 border-t border-line space-y-4">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
+          <div className="w-8 h-8 rounded-xl bg-accent-soft text-accent-dark flex items-center justify-center">
             <Bookmark className="w-4 h-4" />
           </div>
           <div>
-            <h2 className="text-lg font-display font-bold text-zinc-900 dark:text-zinc-100">
+            <h2 className="text-lg font-display font-bold text-ink">
               Continued Learning &amp; Subscriptions
             </h2>
-            <p className="text-xs text-zinc-500 dark:text-zinc-400">
+            <p className="text-xs text-muted">
               Ongoing publications, newsletters, and podcasts for continuous AI Product Management growth.
             </p>
           </div>
@@ -394,20 +402,20 @@ function CourseContent() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {continuedLearningData.continuedLearning.map((item) => (
-            <div
+            <GlowCard
               key={item.id}
-              className="bg-white dark:bg-[#12121a] rounded-2xl p-5 border border-zinc-200 dark:border-zinc-800/80 hover:border-violet-500/40 transition-all flex flex-col justify-between space-y-3 shadow-xs"
+              className="bg-surface rounded-xl p-5 border border-line transition-colors flex flex-col justify-between space-y-3"
             >
               <div className="space-y-2">
                 <div className="flex items-center justify-between gap-2">
-                  <h3 className="font-display font-bold text-base text-zinc-900 dark:text-zinc-100">
+                  <h3 className="font-display font-bold text-base text-ink">
                     {item.title}
                   </h3>
-                  <span className="px-2.5 py-0.5 rounded-md bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-300 border border-indigo-200/50 dark:border-indigo-800/40 text-xs sm:text-[10px] font-mono font-semibold uppercase">
+                  <span className="px-2.5 py-0.5 rounded-md bg-accent-soft text-accent-dark border border-accent/40 text-xs sm:text-[10px] font-semibold uppercase tracking-wider">
                     {item.cadence}
                   </span>
                 </div>
-                <p className="text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed">
+                <p className="text-xs text-muted leading-relaxed">
                   {item.description}
                 </p>
               </div>
@@ -417,13 +425,13 @@ function CourseContent() {
                   href={item.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 min-h-10 sm:min-h-0 px-3.5 py-2 rounded-xl bg-zinc-100 dark:bg-zinc-800/80 hover:bg-violet-600 hover:text-white dark:hover:bg-violet-600 text-zinc-700 dark:text-zinc-300 text-xs font-semibold transition-all group"
+                  className="inline-flex items-center gap-1.5 min-h-10 sm:min-h-0 px-3.5 py-2 rounded-xl bg-paper hover:bg-accent-dark/90 hover:text-paper text-ink/80 text-xs font-semibold transition-all group"
                 >
                   <span>Visit Publication</span>
                   <ExternalLink className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
                 </a>
               </div>
-            </div>
+            </GlowCard>
           ))}
         </div>
       </div>
@@ -440,12 +448,12 @@ function CourseContent() {
 
 export default function CoursePage() {
   return (
-    <Suspense fallback={
-      <div className="p-8 text-center font-mono text-xs text-zinc-500 animate-pulse">
-        Loading curriculum...
-      </div>
-    }>
+    <>
+    <PageBackdrop variant="dots" />
+    <PageIcons icons={COURSE_ICONS} />
+    <Suspense fallback={<PageSkeleton label="Loading curriculum" />}>
       <CourseContent />
     </Suspense>
+    </>
   );
 }

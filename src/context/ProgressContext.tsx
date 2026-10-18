@@ -281,7 +281,7 @@ export const ProgressProvider: React.FC<{ children: React.ReactNode }> = ({ chil
           particleCount: 35,
           spread: 60,
           origin: { y: 0.8 },
-          colors: ['#8b5cf6', '#22c55e', '#a78bfa'],
+          colors: ['#C2603A', '#F3D9CC', '#E8B04A'],
         });
       } else {
         next.delete(id);
