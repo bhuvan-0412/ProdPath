@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useId, useMemo, useRef } from 'react';
+import React, { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { motion, useInView, useMotionValue, useSpring, useTransform, useReducedMotion, type MotionValue } from 'motion/react';
 import './reducedMotion';
 import {
@@ -19,15 +19,18 @@ import {
   GTM_SIZE,
   HEART_SIZE,
   AI_SIZE,
+  LABEL,
+  MIN_LABEL_PX,
   type CardProps,
 } from './FrameworkCards';
 
 // The hero illustration: the product lifecycle as a climb. A dotted trail zig-zags from the foot of the hill up
 // a mountain to the gold summit flag, passing seven framework cards in order (Discover -> AI PM), with the
 // AI card as the high point beside the flag. Decorative only (aria-hidden). Two layouts: all seven cards
-// from 640px up; Persona, Wireframe, HEART and the AI card on phones. The small inner labels (step names,
-// tags, column headers) only show from 1280px, where the scene is drawn near 1:1 and they stay 11px or
-// larger; below that each card keeps its title and drawings.
+// from 640px up; Persona, Wireframe, HEART and the AI card on phones. The scene scales with the space it
+// gets (on desktops the hero limits its height to fit the first screen). The small inner labels (step
+// names, tags, column headers) only show while the rendered scene keeps them 11px or larger, measured from
+// its actual width; otherwise each card keeps its title and drawings.
 //
 // Animation (transform/opacity, plus the trail's reveal mask): the trail draws itself and each card pops in
 // as the line reaches it, over about 3.2s; then the flag waves once. Afterwards the cards float (CSS, paused
@@ -347,11 +350,23 @@ export const HeroScene: React.FC<{ className?: string }> = ({ className = '' }) 
     return () => window.removeEventListener('pointermove', onMove);
   }, [reduce, rawX, rawY]);
 
+  // Inner labels on only while the desktop scene is drawn large enough for them to stay 11px or larger
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const [labels, setLabels] = useState(false);
+  useEffect(() => {
+    const el = wrapRef.current;
+    if (!el) return;
+    const check = () => setLabels((el.getBoundingClientRect().width / DESKTOP.viewBox.w) * LABEL >= MIN_LABEL_PX);
+    check();
+    const observer = new ResizeObserver(check);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   const pointer = { x, y };
   return (
-    <div className={className}>
-      <Scene layout={DESKTOP} className="hidden xl:block" labels pointer={pointer} />
-      <Scene layout={DESKTOP} className="hidden sm:block xl:hidden" pointer={pointer} />
+    <div ref={wrapRef} className={className}>
+      <Scene layout={DESKTOP} className="hidden sm:block" labels={labels} pointer={pointer} />
       <Scene layout={PHONE} className="sm:hidden" pointer={pointer} />
     </div>
   );

@@ -117,15 +117,15 @@ export default function LandingPage() {
       {/* Hero */}
       <section data-milestone="Start" data-icon-scope className={`${BAND} -mt-8 overflow-hidden`}>
         <IconField icons={HERO_ICONS} />
-        <div className={`${BAND_INNER} grid lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] gap-10 lg:gap-10 items-center pt-12 pb-14 sm:pt-[4.5rem] sm:pb-20`}>
+        <div className={`${BAND_INNER} hero-fit grid lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] gap-10 lg:gap-10 items-center pt-12 pb-14 sm:pt-[4.5rem] sm:pb-20`}>
           <div className="max-w-3xl">
-            <h1 className="text-[2.35rem] leading-[1.08] sm:text-[3.25rem] lg:text-[2.9rem] xl:text-[3.6rem] font-display font-semibold tracking-tight text-ink text-balance">
+            <h1 className="hero-title text-[2.35rem] leading-[1.08] sm:text-[3.25rem] lg:text-[2.9rem] xl:text-[3.6rem] font-display font-semibold tracking-tight text-ink text-balance">
               Learn product management <span className="text-accent-dark">the way it&rsquo;s actually practiced.</span>
             </h1>
-            <p className="mt-6 text-base sm:text-lg text-muted leading-relaxed text-balance">
+            <p className="hero-lede mt-6 text-base sm:text-lg text-muted leading-relaxed text-balance">
               Five weeks of structured PM learning, with an AI&nbsp;track.&nbsp;Free.
             </p>
-            <div className="mt-8 space-y-4">
+            <div className="hero-cta mt-8 space-y-4">
               <GoogleSignInButton className="w-full sm:w-auto" />
               <p className="text-sm text-muted">
                 {weeks.length} weeks &middot; {totalDays} days &middot; {allResources.length} resources
@@ -133,7 +133,7 @@ export default function LandingPage() {
             </div>
           </div>
 
-          <HeroScene className="w-full max-w-[680px] mx-auto lg:max-w-none" />
+          <HeroScene className="hero-scene w-full max-w-[680px] mx-auto lg:max-w-none" />
         </div>
       </section>
 
