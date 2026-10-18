@@ -122,8 +122,8 @@ export default function LandingPage() {
             <h1 className="text-[2.35rem] leading-[1.08] sm:text-[3.25rem] lg:text-[2.9rem] xl:text-[3.6rem] font-display font-semibold tracking-tight text-ink text-balance">
               Learn product management <span className="text-accent-dark">the way it&rsquo;s actually practiced.</span>
             </h1>
-            <p className="mt-6 text-base sm:text-lg text-muted leading-relaxed">
-              Five weeks of structured PM learning, with an AI track. Free.
+            <p className="mt-6 text-base sm:text-lg text-muted leading-relaxed text-balance">
+              Five weeks of structured PM learning, with an AI&nbsp;track.&nbsp;Free.
             </p>
             <div className="mt-8 space-y-4">
               <GoogleSignInButton className="w-full sm:w-auto" />

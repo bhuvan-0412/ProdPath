@@ -20,12 +20,13 @@ export interface CardProps {
   delay: number;
 }
 
-const Frame: React.FC<{ w: number; h: number; title: string; step?: string; titleSize?: number; children?: React.ReactNode }> = ({
+const Frame: React.FC<{ w: number; h: number; title: string; step?: string; titleSize?: number; stepSize?: number; children?: React.ReactNode }> = ({
   w,
   h,
   title,
   step,
   titleSize = 14,
+  stepSize = 8,
   children,
 }) => {
   const [num, ...words] = (step || '').split(' ');
@@ -38,7 +39,7 @@ const Frame: React.FC<{ w: number; h: number; title: string; step?: string; titl
       </text>
       {/* Lifecycle step, e.g. "1 Discover" */}
       {step && (
-        <text x={w - 10} y="20" textAnchor="end" style={SANS} fontSize="8" fontWeight="600" fill="#9E4524">
+        <text x={w - 10} y={stepSize > 8 ? 24 : 20} textAnchor="end" style={SANS} fontSize={stepSize} fontWeight="600" fill="#9E4524">
           <tspan fontWeight="800">{num}</tspan> {words.join(' ')}
         </text>
       )}
@@ -60,12 +61,12 @@ const Pop: React.FC<CardProps & { children: React.ReactNode; from?: number }> = 
 );
 
 // Draws a line in
-const Draw: React.FC<CardProps & React.SVGProps<SVGPathElement>> = ({ on, delay, ...path }) => (
+const Draw: React.FC<CardProps & { duration?: number } & React.SVGProps<SVGPathElement>> = ({ on, delay, duration = 0.3, ...path }) => (
   <motion.path
     className="m-final-path"
     initial={{ pathLength: 0 }}
     animate={on ? { pathLength: 1 } : undefined}
-    transition={{ delay, duration: 0.3, ease: 'easeOut' }}
+    transition={{ delay, duration, ease: 'easeOut' }}
     {...(path as object)}
   />
 );
@@ -101,30 +102,62 @@ export const PersonaCard: React.FC<CardProps> = ({ on, delay }) => (
   </Frame>
 );
 
-/* ---------- 2 Strategy: SWOT ---------- */
+/* ---------- 3 Strategy: North Star metric ---------- */
 
-export const SWOT_SIZE = { w: 150, h: 128 };
-const SWOT_CELLS = [
-  { letter: 'S', x: 12, y: 32, fill: '#F3D9CC', text: INK },
-  { letter: 'W', x: 78, y: 32, fill: '#EFE8D8', text: INK },
-  { letter: 'O', x: 12, y: 78, fill: '#E8B04A', text: INK },
-  { letter: 'T', x: 78, y: 78, fill: '#C2603A', text: '#F6F1E7' },
+// Small arrowhead at (x2, y2), pointing along the line from (x1, y1)
+const arrowHead = (x1: number, y1: number, x2: number, y2: number, size = 4) => {
+  const a = Math.atan2(y2 - y1, x2 - x1);
+  const wing = (turn: number) => `${(x2 - size * Math.cos(a + turn)).toFixed(1)} ${(y2 - size * Math.sin(a + turn)).toFixed(1)}`;
+  return `M${wing(0.55)} L${x2} ${y2} L${wing(-0.55)}`;
+};
+
+const starPath = (cx: number, cy: number, outer: number, inner: number) =>
+  Array.from({ length: 10 }, (_, i) => {
+    const r = i % 2 ? inner : outer;
+    const a = -Math.PI / 2 + (i * Math.PI) / 5;
+    return `${i ? 'L' : 'M'}${(cx + r * Math.cos(a)).toFixed(1)} ${(cy + r * Math.sin(a)).toFixed(1)}`;
+  }).join(' ') + ' Z';
+
+export const NORTH_STAR_SIZE = { w: 156, h: 124 };
+// Three input metrics (blank bars, no figures), each pushing up into the one key metric
+const NS_INPUTS = [
+  { x: 34, fill: '#F3D9CC', to: [64, 73] },
+  { x: 78, fill: '#C2603A', to: [78, 71] },
+  { x: 122, fill: '#E8B04A', to: [92, 73] },
 ];
 
-export const SwotCard: React.FC<CardProps> = ({ on, delay }) => (
-  <Frame {...SWOT_SIZE} title="SWOT" step="2 Strategy">
-    {SWOT_CELLS.map((cell, i) => (
-      <Pop key={cell.letter} on={on} delay={delay + i * 0.12}>
-        <rect x={cell.x} y={cell.y} width="60" height="40" rx="5" fill={cell.fill} stroke={INK} strokeWidth="1.5" />
-        <text x={cell.x + 30} y={cell.y + 27} textAnchor="middle" style={DISPLAY} fontSize="20" fontWeight="600" fill={cell.text}>
-          {cell.letter}
+export const NorthStarCard: React.FC<CardProps> = ({ on, delay }) => (
+  <Frame {...NORTH_STAR_SIZE} title="North Star" step="3 Strategy">
+    {/* A soft glow that blooms once behind the star (it ends invisible, so reduced motion simply skips it) */}
+    <motion.circle
+      cx="78"
+      cy="55"
+      r="24"
+      fill="#E8B04A"
+      fillOpacity="0.4"
+      initial={{ opacity: 0, scale: 0.6 }}
+      animate={on ? { opacity: [0, 1, 0], scale: [0.6, 1.2, 1.35] } : undefined}
+      transition={{ delay: delay + 0.75, duration: 0.9, ease: 'easeOut' }}
+    />
+    <motion.g className="m-final" animate={on ? { scale: [1, 1.16, 1] } : undefined} transition={{ delay: delay + 0.75, duration: 0.6, ease: 'easeInOut' }}>
+      <path d={starPath(78, 55, 19, 8)} fill="#E8B04A" stroke={INK} strokeWidth="2" strokeLinejoin="round" />
+    </motion.g>
+    {NS_INPUTS.map((input, i) => (
+      <g key={input.x}>
+        <g fill="none" stroke={INK} strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round">
+          <Draw on={on} delay={delay + i * 0.12} d={`M${input.x} 89 L${input.to[0]} ${input.to[1]}`} />
+          <Draw on={on} delay={delay + i * 0.12 + 0.25} d={arrowHead(input.x, 89, input.to[0], input.to[1])} />
+        </g>
+        <rect x={input.x - 18} y="92" width="36" height="9" rx="4.5" fill={input.fill} stroke={INK} strokeWidth="1.25" />
+        <text x={input.x} y="114" textAnchor="middle" style={SANS} fontSize="8" fontWeight="600" fill={INK}>
+          Input
         </text>
-      </Pop>
+      </g>
     ))}
   </Frame>
 );
 
-/* ---------- 3 Prioritize: RICE ---------- */
+/* ---------- 4 Prioritize: RICE ---------- */
 
 export const RICE_SIZE = { w: 172, h: 104 };
 const RICE_COLUMNS = [
@@ -142,7 +175,7 @@ const RICE_ROWS = [
 ];
 
 export const RiceCard: React.FC<CardProps> = ({ on, delay }) => (
-  <Frame {...RICE_SIZE} title="RICE" step="3 Prioritize">
+  <Frame {...RICE_SIZE} title="RICE" step="4 Prioritize">
     {/* The winning row lights up marigold */}
     <motion.rect
       className="m-final"
@@ -190,13 +223,13 @@ export const RiceCard: React.FC<CardProps> = ({ on, delay }) => (
   </Frame>
 );
 
-/* ---------- 4 Design: wireframe + user flow ---------- */
+/* ---------- 2 Design: wireframe + user flow ---------- */
 
 export const WIREFLOW_SIZE = { w: 176, h: 100 };
 const PHONES = [14, 70, 126];
 
 export const WireflowCard: React.FC<CardProps> = ({ on, delay }) => (
-  <Frame {...WIREFLOW_SIZE} title="Wireframe" step="4 Design">
+  <Frame {...WIREFLOW_SIZE} title="Wireframe" step="2 Design">
     {PHONES.map((x, i) => (
       <g key={x}>
         <rect x={x} y="32" width="36" height="58" rx="5" fill={i === 1 ? '#F3D9CC' : '#FBF8F1'} stroke={INK} strokeWidth="1.5" />
@@ -231,46 +264,7 @@ export const WireflowCard: React.FC<CardProps> = ({ on, delay }) => (
   </Frame>
 );
 
-/* ---------- 5 Build: kanban ---------- */
-
-export const KANBAN_SIZE = { w: 176, h: 108 };
-const KANBAN_COLUMNS = [
-  { title: 'To do', x: 10 },
-  { title: 'Doing', x: 64 },
-  { title: 'Done', x: 118 },
-];
-
-export const KanbanCard: React.FC<CardProps> = ({ on, delay }) => (
-  <Frame {...KANBAN_SIZE} title="Kanban" step="5 Build">
-    {KANBAN_COLUMNS.map((col) => (
-      <g key={col.title}>
-        <rect x={col.x} y="30" width="48" height="70" rx="4" fill="#F6F1E7" stroke={INK} strokeWidth="1.25" />
-        <text x={col.x + 6} y="41" style={SANS} fontSize="7.5" fontWeight="700" fill={INK}>
-          {col.title}
-        </text>
-      </g>
-    ))}
-    {/* Cards resting in their columns */}
-    <rect x="15" y="47" width="38" height="11" rx="2.5" fill="#F3D9CC" stroke={INK} strokeWidth="1" />
-    <rect x="15" y="62" width="38" height="11" rx="2.5" fill="#EFE8D8" stroke={INK} strokeWidth="1" />
-    <rect x="69" y="47" width="38" height="11" rx="2.5" fill="#E8B04A" stroke={INK} strokeWidth="1" />
-    <rect x="123" y="47" width="38" height="11" rx="2.5" fill="#D98E6C" stroke={INK} strokeWidth="1" />
-    {/* The card on the move from Doing to Done */}
-    <motion.g
-      className="m-final"
-      initial={{ x: -28, opacity: 0.6 }}
-      animate={on ? { x: 0, opacity: 1 } : undefined}
-      transition={{ delay, duration: 0.7, ease: EASE }}
-    >
-      <g transform="rotate(-6 115 74)">
-        <rect className="illo-shadow" x="98" y="71" width="38" height="11" rx="2.5" fill={INK} />
-        <rect x="96" y="69" width="38" height="11" rx="2.5" fill="#C2603A" stroke={INK} strokeWidth="1.25" />
-      </g>
-    </motion.g>
-  </Frame>
-);
-
-/* ---------- 6 Launch: GTM plan ---------- */
+/* ---------- 5 Launch: GTM plan ---------- */
 
 export const GTM_SIZE = { w: 170, h: 100 };
 const GTM_ROWS = [
@@ -280,7 +274,7 @@ const GTM_ROWS = [
 ];
 
 export const GtmCard: React.FC<CardProps> = ({ on, delay }) => (
-  <Frame {...GTM_SIZE} title="GTM plan" step="6 Launch">
+  <Frame {...GTM_SIZE} title="GTM plan" step="5 Launch">
     {/* A small rocket that lifts a little */}
     <motion.g
       className="m-final"
@@ -320,7 +314,7 @@ export const GtmCard: React.FC<CardProps> = ({ on, delay }) => (
   </Frame>
 );
 
-/* ---------- 7 Measure: HEART ---------- */
+/* ---------- 6 Measure: HEART ---------- */
 
 export const HEART_SIZE = { w: 238, h: 100 };
 const iconStroke = { fill: 'none', stroke: INK, strokeWidth: 1.5, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const };
@@ -359,7 +353,7 @@ const HEART_TILES: { letter: string; fill: string; icon: React.ReactNode }[] = [
 ];
 
 export const HeartCard: React.FC<CardProps> = ({ on, delay }) => (
-  <Frame {...HEART_SIZE} title="HEART" step="7 Measure">
+  <Frame {...HEART_SIZE} title="HEART" step="6 Measure">
     {HEART_TILES.map((tile, i) => (
       <g key={tile.letter} transform={`translate(${12 + i * 44} 32)`}>
         <Pop on={on} delay={delay + i * 0.1} from={0.6}>
@@ -373,6 +367,109 @@ export const HeartCard: React.FC<CardProps> = ({ on, delay }) => (
     ))}
   </Frame>
 );
+
+/* ---------- 7 AI PM: an LLM workflow ---------- */
+
+// Course terms only: Week 5 covers LLMs, prompting and evals (not retrieval or agents), so the pipeline is
+// Docs -> Prompt -> LLM -> Answer, with an eval loop from the LLM back to the prompt.
+export const AI_SIZE = { w: 308, h: 152 };
+const AI_LABELS = [
+  { label: 'Docs', x: 44 },
+  { label: 'Prompt', x: 118 },
+  { label: 'LLM', x: 192 },
+  { label: 'Answer', x: 266 },
+];
+// Arrows between the nodes, along y = 94
+const AI_ARROWS = [
+  [66, 92],
+  [142, 164],
+  [219, 239],
+];
+
+const AI_NODES: React.ReactNode[] = [
+  // Docs: a small stack of pages
+  <g key="docs">
+    <rect x="39" y="74" width="22" height="28" rx="2.5" fill="#EFE8D8" stroke={INK} strokeWidth="1.5" />
+    <rect x="35" y="79" width="22" height="28" rx="2.5" fill="#F6F1E7" stroke={INK} strokeWidth="1.5" />
+    <path d="M 31 84 H 47 L 53 90 V 112 H 31 Z" fill="#FBF8F1" stroke={INK} strokeWidth="1.5" strokeLinejoin="round" />
+    <path d="M 47 84 V 90 H 53" fill="none" stroke={INK} strokeWidth="1.25" strokeLinejoin="round" />
+    <path d="M 35 96 H 48 M 35 101 H 45 M 35 106 H 47" stroke={INK} strokeWidth="1.25" strokeLinecap="round" opacity="0.6" />
+  </g>,
+  // Prompt: a text box with a caret
+  <g key="prompt">
+    <rect x="98" y="78" width="40" height="32" rx="5" fill="#F3D9CC" stroke={INK} strokeWidth="1.5" />
+    <path d="M 105 89 L 110 94 L 105 99" fill="none" stroke={INK} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M 114 99 H 124" stroke={INK} strokeWidth="1.5" strokeLinecap="round" />
+    <rect x="127" y="92" width="3" height="8" rx="1" fill="#9E4524" />
+  </g>,
+  // LLM: a terracotta chip with a cream sparkle that twinkles slowly (paused off-screen)
+  <g key="llm">
+    <path
+      d="M 184 71 V 76 M 192 71 V 76 M 200 71 V 76 M 184 112 V 117 M 192 112 V 117 M 200 112 V 117 M 169 86 H 174 M 169 102 H 174 M 210 86 H 215 M 210 102 H 215"
+      stroke={INK}
+      strokeWidth="1.5"
+      strokeLinecap="round"
+    />
+    <rect x="174" y="76" width="36" height="36" rx="7" fill="#C2603A" stroke={INK} strokeWidth="1.5" />
+    <g transform="translate(192 94) scale(0.95)">
+      <path className="illo-twinkle" style={{ '--dur': '4.8s', '--delay': '0s' } as React.CSSProperties} d="M0 -10 L3 -3 L10 0 L3 3 L0 10 L-3 3 L-10 0 L-3 -3 Z" fill="#F6F1E7" />
+    </g>
+  </g>,
+  // Answer: a chat bubble with two lines and a check
+  <g key="answer">
+    <path
+      d="M 248 79 H 284 A 4 4 0 0 1 288 83 V 105 A 4 4 0 0 1 284 109 H 258 L 250 115 V 109 H 248 A 4 4 0 0 1 244 105 V 83 A 4 4 0 0 1 248 79 Z"
+      fill="#FBF8F1"
+      stroke={INK}
+      strokeWidth="1.5"
+      strokeLinejoin="round"
+    />
+    <rect x="251" y="86" width="24" height="3.5" rx="1.75" fill={INK} opacity="0.55" />
+    <rect x="251" y="93" width="16" height="3.5" rx="1.75" fill={INK} opacity="0.55" />
+    <circle cx="281" cy="102" r="6" fill="#E8B04A" stroke={INK} strokeWidth="1.25" />
+    <path d="M 278 102 L 280.3 104.3 L 284.2 99.8" fill="none" stroke={INK} strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+  </g>,
+];
+
+export const AiCard: React.FC<CardProps> = ({ on, delay }) => {
+  const step = 0.28;
+  return (
+    <Frame {...AI_SIZE} title="AI workflow" titleSize={17} step="7 AI PM" stepSize={14.2}>
+      {/* "AI track" pill in the header */}
+      <rect x="128" y="8" width="74" height="22" rx="11" fill="#E8B04A" stroke={INK} strokeWidth="1.25" />
+      <text x="165" y="24" textAnchor="middle" style={SANS} fontSize="14.2" fontWeight="700" fill={INK}>
+        AI track
+      </text>
+
+      {/* The pipeline lights up node by node */}
+      {AI_NODES.map((node, i) => (
+        <Pop key={AI_LABELS[i].label} on={on} delay={delay + i * step} from={0.6}>
+          {node}
+          <text x={AI_LABELS[i].x} y="141" textAnchor="middle" style={SANS} fontSize="14.5" fontWeight="600" fill={INK}>
+            {AI_LABELS[i].label}
+          </text>
+        </Pop>
+      ))}
+      {AI_ARROWS.map(([x1, x2], i) => (
+        <g key={x1} fill="none" stroke={INK} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <Draw on={on} delay={delay + i * step + 0.14} d={`M${x1} 94 L${x2} 94`} />
+          <Draw on={on} delay={delay + i * step + 0.3} d={`M${x2 - 4} 90.5 L${x2} 94 L${x2 - 4} 97.5`} />
+        </g>
+      ))}
+
+      {/* Eval loop: from the LLM back to the prompt, drawn last */}
+      <g fill="none" stroke="#9E4524" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <Draw on={on} delay={delay + 4 * step + 0.1} duration={0.6} d="M190 68 C 184 48, 126 48, 120 74" />
+        <Draw on={on} delay={delay + 4 * step + 0.65} d={arrowHead(121, 66, 120, 74, 5)} />
+      </g>
+      <Pop on={on} delay={delay + 4 * step + 0.4} from={0.8}>
+        <text x="155" y="47" textAnchor="middle" style={SANS} fontSize="14.2" fontWeight="700" fill="#9E4524">
+          Eval loop
+        </text>
+      </Pop>
+    </Frame>
+  );
+};
 
 /* ---------- Path section: product roadmap and user journey ---------- */
 
