@@ -76,22 +76,6 @@ export const CountUp: React.FC<{ value: number }> = ({ value }) => {
   return <span ref={ref}>{value}</span>;
 };
 
-/* ---------- Pause CSS loops off-screen ---------- */
-
-export const InViewPause: React.FC<{ children: React.ReactNode; className?: string } & React.HTMLAttributes<HTMLDivElement>> = ({
-  children,
-  className = '',
-  ...rest
-}) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const visible = useInView(ref);
-  return (
-    <div ref={ref} data-paused={visible ? undefined : ''} className={className} {...rest}>
-      {children}
-    </div>
-  );
-};
-
 /* ---------- Background icon field ---------- */
 
 // The shared background icons (placed clear of all content), plus a slow drift and a little scroll

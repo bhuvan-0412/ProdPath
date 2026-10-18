@@ -20,11 +20,11 @@ import { GlowCard } from '@/components/GlowCard';
 import { ScrollTrail } from '@/components/landing/ScrollTrail';
 import { HERO_ICONS, PATH_ICONS, DAY_ICONS, FEATURE_ICONS } from '@/components/decor/iconLayouts';
 import { SampleDay } from '@/components/landing/SampleDay';
+import { ScrollCue } from '@/components/landing/ScrollCue';
 import {
   Reveal,
   RevealItem,
   CountUp,
-  InViewPause,
   IconField,
   ActivityWave,
   FrameworkFigure,
@@ -74,21 +74,6 @@ const activityShade = [
   'bg-[#9E4524] dark:bg-accent',
 ];
 
-// PM terms for the marquee band
-const TERMS = [
-  'RICE',
-  'North Star metric',
-  'A/B testing',
-  'Product-market fit',
-  'Go-to-market',
-  'User stories',
-  'Funnels',
-  'Retention',
-  'Guesstimates',
-  'MVP',
-  'Prioritization',
-];
-
 const SmallLabel: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className = '' }) => (
   <p className={`text-xs font-semibold uppercase tracking-[0.12em] text-muted ${className}`}>{children}</p>
 );
@@ -135,30 +120,11 @@ export default function LandingPage() {
 
           <HeroScene className="hero-scene w-full max-w-[680px] mx-auto lg:max-w-none" />
         </div>
+        <ScrollCue targetId="curriculum" />
       </section>
 
-      {/* PM terms marquee, directly under the hero: pauses on hover, off-screen and with reduced motion */}
-      <section aria-label="PM topics" className={`${BAND} band-2 border-t border-line overflow-hidden`}>
-        <InViewPause className="marquee overflow-hidden py-3.5 mr-2 xl:mr-[calc(max(0px,(100vw-1280px)/2)+3.5rem)]">
-          <div className="marquee-track flex w-max">
-            {[0, 1].map((copy) => (
-              <ul key={copy} aria-hidden={copy === 1 ? true : undefined} className="flex items-center shrink-0">
-                {TERMS.map((term) => (
-                  <li key={term} className="flex items-center">
-                    <span className="px-5 text-sm font-medium text-ink whitespace-nowrap">{term}</span>
-                    <svg aria-hidden="true" focusable="false" viewBox="-10 -10 20 20" className="w-3 h-3 flex-shrink-0">
-                      <path d="M0 -10 L3 -3 L10 0 L3 3 L0 10 L-3 3 L-10 0 L-3 -3 Z" className="fill-marigold" />
-                    </svg>
-                  </li>
-                ))}
-              </ul>
-            ))}
-          </div>
-        </InViewPause>
-      </section>
-
-      {/* The path, week by week */}
-      <section aria-labelledby="path-heading" data-milestone="The path" data-icon-scope className={`${BAND} band-2 border-t border-line`}>
+      {/* The path, week by week (the hero's scroll cue lands here, just below the navbar) */}
+      <section id="curriculum" aria-labelledby="path-heading" data-milestone="The path" data-icon-scope className={`${BAND} band-2 border-t border-line scroll-mt-16`}>
         <IconField icons={PATH_ICONS} />
         <div className={`${BAND_INNER} grid lg:grid-cols-[280px_minmax(0,1fr)] gap-10 lg:gap-16 pt-14 pb-16 sm:pt-20 sm:pb-24`}>
           <Reveal className="relative">
