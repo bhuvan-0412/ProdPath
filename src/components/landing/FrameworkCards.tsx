@@ -532,7 +532,7 @@ export const RoadmapCard: React.FC<CardProps> = ({ on, delay }) => (
       return (
         <g key={column.title}>
           <rect x={x} y="32" width="84" height="134" rx="5" fill="#F6F1E7" stroke={INK} strokeWidth="1.25" />
-          <text x={x + 8} y="46" style={SANS} fontSize="9" fontWeight="700" fill={INK}>
+          <text x={x + 8} y="46" style={SANS} fontSize={LABEL} fontWeight="700" fill={INK}>
             {column.title}
           </text>
           {column.cards.map((card, i) => {
@@ -587,7 +587,7 @@ export const JourneyCard: React.FC<CardProps> = ({ on, delay }) => (
         <Pop on={on} delay={delay + 0.2 + i * 0.25}>
           <circle cx={stop.x} cy={stop.y} r="5.5" fill={i === 3 ? '#E8B04A' : '#FBF8F1'} stroke={INK} strokeWidth="1.5" />
         </Pop>
-        <text x={stop.x} y="136" textAnchor="middle" style={SANS} fontSize="9" fontWeight="600" fill={INK}>
+        <text x={stop.x} y="137" textAnchor="middle" style={SANS} fontSize={LABEL} fontWeight="600" fill={INK}>
           {stop.label}
         </text>
       </g>

@@ -169,7 +169,7 @@ export default function LandingPage() {
             <Compass className="hidden lg:block mt-10 ml-1 w-24" />
           </Reveal>
 
-          <div className="xl:grid xl:grid-cols-[minmax(0,1fr)_280px] xl:gap-12 items-start">
+          <div className="xl:grid xl:grid-cols-[minmax(0,1fr)_312px] xl:gap-12 items-start">
             <ol className="relative">
               {/* The trail line */}
               <span aria-hidden="true" className="absolute left-[7px] top-3 bottom-3 w-px bg-line" />
@@ -219,7 +219,8 @@ export default function LandingPage() {
               })}
             </ol>
 
-            {/* Beside the list on wide screens: a product roadmap and a user journey */}
+            {/* Beside the list from 1280px only: a product roadmap and a user journey. The 312px column draws them at
+                full size so their labels stay 11px or larger; below 1280px they are hidden, labels and all */}
             <div className="hidden xl:block space-y-8 pt-1">
               <FrameworkFigure kind="roadmap" />
               <FrameworkFigure kind="journey" />
