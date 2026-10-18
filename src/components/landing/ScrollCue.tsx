@@ -1,9 +1,11 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import { goToSection } from './sectionNav';
 
 // Down-arrow at the bottom of the full-screen hero (desktops and laptops only: see .hero-cue in
-// globals.css). Clicking it scrolls to the section with targetId. It fades out once the page has
+// globals.css). Clicking it scrolls to the section with targetId, the same way the section navigator
+// does (its top lands just below the navbar). It fades out once the page has
 // scrolled a little, and its slow bounce is off under prefers-reduced-motion.
 
 const HIDE_AFTER = 40; // px scrolled
@@ -18,15 +20,10 @@ export const ScrollCue: React.FC<{ targetId: string }> = ({ targetId }) => {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const go = () => {
-    const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    document.getElementById(targetId)?.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'start' });
-  };
-
   return (
     <button
       type="button"
-      onClick={go}
+      onClick={() => goToSection(targetId)}
       aria-label="Scroll to the curriculum"
       aria-hidden={hidden || undefined}
       tabIndex={hidden ? -1 : undefined}

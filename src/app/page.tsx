@@ -94,13 +94,11 @@ const FEATURE_ICON = 'w-11 h-11 flex-shrink-0';
 export default function LandingPage() {
   return (
     <>
-    {/* Outside the fading wrapper: a transformed parent would stop "fixed" from pinning it to the screen */}
-    <ScrollTrail />
     <div className="animate-fade-in">
       <SignedInRedirect />
 
       {/* Hero */}
-      <section data-milestone="Start" data-icon-scope className={`${BAND} -mt-8 overflow-hidden`}>
+      <section id="start" data-milestone="Start" data-icon-scope className={`${BAND} -mt-8 overflow-hidden`}>
         <IconField icons={HERO_ICONS} />
         <div className={`${BAND_INNER} hero-fit grid lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] gap-10 lg:gap-10 items-center pt-12 pb-14 sm:pt-[4.5rem] sm:pb-20`}>
           <div className="max-w-3xl">
@@ -120,29 +118,32 @@ export default function LandingPage() {
 
           <HeroScene className="hero-scene w-full max-w-[680px] mx-auto lg:max-w-none" />
         </div>
-        <ScrollCue targetId="curriculum" />
+        <ScrollCue targetId="path" />
       </section>
 
       {/* The path, week by week (the hero's scroll cue lands here, just below the navbar) */}
-      <section id="curriculum" aria-labelledby="path-heading" data-milestone="The path" data-icon-scope className={`${BAND} band-2 border-t border-line scroll-mt-16`}>
+      <section id="path" aria-labelledby="path-heading" data-milestone={`Your ${weeks.length}-week path`} data-icon-scope className={`${BAND} band-2 border-t border-line scroll-mt-16 screen-fit`}>
         <IconField icons={PATH_ICONS} />
-        <div className={`${BAND_INNER} grid lg:grid-cols-[280px_minmax(0,1fr)] gap-10 lg:gap-16 pt-14 pb-16 sm:pt-20 sm:pb-24`}>
-          <Reveal className="relative">
-            <SmallLabel>The curriculum</SmallLabel>
-            <h2 id="path-heading" className="mt-3 text-3xl sm:text-4xl font-display font-semibold text-ink">
-              Your {weeks.length}-week path
-            </h2>
-            <Compass className="hidden lg:block mt-10 ml-1 w-24" />
-          </Reveal>
+        {/* Wide rather than tall: heading and weeks on the left, the two drawings side by side on the right */}
+        <div className={`${BAND_INNER} screen-inner grid xl:grid-cols-[minmax(0,1fr)_656px] gap-10 xl:gap-12 items-center pt-14 pb-16 sm:pt-20 sm:pb-24`}>
+          <div>
+            <Reveal className="relative flex items-start justify-between gap-6">
+              <div>
+                <SmallLabel>The curriculum</SmallLabel>
+                <h2 id="path-heading" className="mt-3 text-3xl sm:text-4xl font-display font-semibold text-ink">
+                  Your {weeks.length}-week path
+                </h2>
+              </div>
+              <Compass className="path-compass hidden lg:block w-24 flex-shrink-0" />
+            </Reveal>
 
-          <div className="xl:grid xl:grid-cols-[minmax(0,1fr)_312px] xl:gap-12 items-start">
-            <ol className="relative">
+            <ol className="path-list relative mt-10">
               {/* The trail line */}
               <span aria-hidden="true" className="absolute left-[7px] top-3 bottom-3 w-px bg-line" />
               {weeks.map((week, i) => {
                 const ai = isAiTrack(i);
                 return (
-                  <RevealItem key={week.id} index={i} className={`relative pl-10 ${i < weeks.length - 1 ? 'pb-10' : ''}`}>
+                  <RevealItem key={week.id} index={i} className={`relative pl-10 ${i < weeks.length - 1 ? 'path-week pb-10' : ''}`}>
                     <span
                       aria-hidden="true"
                       className={`absolute rounded-full border-[1.5px] ${
@@ -153,7 +154,7 @@ export default function LandingPage() {
                           : 'left-0 top-[6px] w-[15px] h-[15px] bg-paper border-ink'
                       }`}
                     />
-                    <div className={ai ? 'relative rounded-card border border-ink/80 bg-surface p-5 sm:p-6' : ''}>
+                    <div className={ai ? 'path-ai relative rounded-card border border-ink/80 bg-surface p-5 sm:p-6' : ''}>
                       {ai && <MiniFlag className="absolute -top-8 right-5 w-8" />}
                       <div className="flex flex-wrap items-center gap-2">
                         <span className="text-xs font-semibold uppercase tracking-[0.12em] text-accent-dark">Week {i + 1}</span>
@@ -175,7 +176,7 @@ export default function LandingPage() {
                           </span>
                         )}
                       </div>
-                      <h3 className={`mt-1.5 font-display font-semibold text-ink ${ai ? 'text-2xl sm:text-3xl' : 'text-xl sm:text-2xl'}`}>
+                      <h3 className={`path-week-title mt-1.5 font-display font-semibold text-ink ${ai ? 'text-2xl sm:text-3xl' : 'text-xl sm:text-2xl'}`}>
                         {weekName(week)}
                       </h3>
                       <p className="mt-1 text-sm text-muted">{week.days.length} days</p>
@@ -184,22 +185,22 @@ export default function LandingPage() {
                 );
               })}
             </ol>
+          </div>
 
-            {/* Beside the list from 1280px only: a product roadmap and a user journey. The 312px column draws them at
-                full size so their labels stay 11px or larger; below 1280px they are hidden, labels and all */}
-            <div className="hidden xl:block space-y-8 pt-1">
-              <FrameworkFigure kind="roadmap" />
-              <FrameworkFigure kind="journey" />
-            </div>
+          {/* From 1280px only: a product roadmap and a user journey, side by side. Each is drawn 312px wide (full
+              size) so their labels stay 11px or larger; below 1280px they are hidden, labels and all */}
+          <div className="hidden xl:grid grid-cols-2 gap-8 items-start">
+            <FrameworkFigure kind="roadmap" />
+            <FrameworkFigure kind="journey" className="mt-6" />
           </div>
         </div>
       </section>
 
       {/* A sample day */}
       {sampleDay && (
-        <section aria-labelledby="day-heading" data-milestone="A day" data-icon-scope className={`${BAND} border-t border-line`}>
+        <section id="day" aria-labelledby="day-heading" data-milestone="A day on ProdPath" data-icon-scope className={`${BAND} border-t border-line screen-fit`}>
           <IconField icons={DAY_ICONS} />
-          <div className={`${BAND_INNER} grid lg:grid-cols-[280px_minmax(0,1fr)] gap-10 lg:gap-16 items-start pt-14 pb-16 sm:pt-20 sm:pb-24`}>
+          <div className={`${BAND_INNER} screen-inner grid lg:grid-cols-[280px_minmax(0,1fr)] gap-10 lg:gap-16 items-start pt-14 pb-16 sm:pt-20 sm:pb-24`}>
             <Reveal className="relative">
               <SmallLabel>How it works</SmallLabel>
               <h2 id="day-heading" className="mt-3 text-3xl sm:text-4xl font-display font-semibold text-ink">
@@ -230,9 +231,9 @@ export default function LandingPage() {
       )}
 
       {/* Everything in one place */}
-      <section aria-labelledby="features-heading" data-milestone="Inside" data-icon-scope className={`${BAND} band-2 border-t border-line`}>
+      <section id="inside" aria-labelledby="features-heading" data-milestone="Everything in one place" data-icon-scope className={`${BAND} band-2 border-t border-line screen-fit`}>
         <IconField icons={FEATURE_ICONS} />
-        <div className={`${BAND_INNER} pt-14 pb-16 sm:pt-20 sm:pb-24`}>
+        <div className={`${BAND_INNER} screen-inner pt-14 pb-16 sm:pt-20 sm:pb-24`}>
           <Rocket className="hidden md:block absolute right-4 sm:right-6 lg:right-10 top-12 sm:top-14 w-[4.5rem]" />
           <Reveal>
             <SmallLabel>What&apos;s inside</SmallLabel>
@@ -242,7 +243,7 @@ export default function LandingPage() {
           </Reveal>
 
           {/* Two rows: curriculum + case studies, then masterclasses + progress */}
-          <Reveal delay={0.1} className="mt-10 grid gap-4 md:grid-cols-3">
+          <Reveal delay={0.1} className="features-grid mt-10 grid gap-4 md:grid-cols-3">
             <GlowCard className="md:col-span-2 rounded-card border border-line bg-surface p-6 sm:p-8">
               <FeatureHeading icon={<BookIcon className={FEATURE_ICON} />}>The curriculum</FeatureHeading>
               <p className="mt-6 font-display font-semibold text-ink leading-none">
@@ -297,8 +298,9 @@ export default function LandingPage() {
 
       {/* Final call to action: a full-bleed ink band that sits on the footer */}
       <section
+        id="cta"
         aria-labelledby="cta-heading"
-        data-milestone="Go"
+        data-milestone="Start today"
         className={`${BAND} overflow-hidden -mb-8 bg-[#1F2430] border-y border-line text-[#F6F1E7]`}
       >
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
@@ -313,6 +315,9 @@ export default function LandingPage() {
         </div>
       </section>
     </div>
+    {/* Section navigator: outside the fading wrapper (a transformed parent would stop "fixed" from pinning
+        it to the screen), and after the content so keyboard users reach the page's own buttons first */}
+    <ScrollTrail />
     </>
   );
 }
