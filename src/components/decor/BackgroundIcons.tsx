@@ -5,10 +5,14 @@ import React, { createContext, useCallback, useContext, useEffect, useRef, useSt
 // Faint, hand-placed PM icons behind page content (decorative: aria-hidden, ignores the pointer).
 //
 // Each page passes a hand-placed list of candidate spots (percent of the decor layer) with a fixed size,
-// tilt and fill. After layout, every candidate is checked against the content actually on screen: an icon is
-// only shown if it keeps a clear margin from every piece of text, card, button, input or illustration, stays
-// inside the screen, and isn't crowding another icon. So icons fill gaps and margins at any width, and simply
-// drop out where there is no room (most do on phones). The check re-runs when the page changes size.
+// tilt and fill. After layout, every candidate is checked against the content actually on screen:
+// - Solid surfaces (cards, the navbar, inputs, buttons) paint over the icon layer, so an icon may sit partly
+//   behind one: up to half of it may be hidden behind a card edge.
+// - Text that sits right on the page background keeps a clear gap (at least 16px).
+// - Anything else that draws but doesn't cover (illustrations, see-through boxes, borders) keeps a small gap.
+// Icons also stay inside the screen and apart from each other. Whole pages (PageIcons) add extra spots
+// wherever there is room and aim for a set number per screen width, spread evenly. The check re-runs when
+// the page changes size.
 
 export type IconKind =
   | 'lightbulb' | 'target' | 'flag' | 'barChart' | 'lineChart' | 'pieChart' | 'note' | 'cursor'
@@ -99,60 +103,144 @@ export const IconWrapperContext = createContext<React.FC<{ index: number; style:
 
 const MIN_WIDTH = { md: 768, lg: 1024 };
 const REPLACED = new Set(['svg', 'img', 'input', 'textarea', 'select', 'button', 'video', 'canvas', 'iframe', 'picture']);
+// Drawings and media: never treated as a solid surface, even with a background color
+const MEDIA = new Set(['svg', 'img', 'video', 'canvas', 'iframe', 'picture']);
 
 type Box = { l: number; t: number; r: number; b: number };
+
+// What the icons have to work around, sorted by how strict the rule is
+interface Obstacles {
+  /** Solid boxes (cards, inputs, buttons, bars): an icon may sit partly behind them, as they cover it fully */
+  surfaces: Box[];
+  /** Lines of text that sit right on the page background: keep a clear gap */
+  text: Box[];
+  /** Everything else that draws (illustrations, see-through boxes, borders): keep a small gap */
+  paint: Box[];
+}
+
+const alphaOf = (color: string) => {
+  if (!color || color === 'transparent') return 0;
+  const m = color.match(/\(([^)]*)\)/);
+  if (!m) return 1;
+  const parts = m[1].split(/[\s,/]+/).filter(Boolean);
+  return parts.length >= 4 ? parseFloat(parts[3]) : 1;
+};
+
+const hasBorder = (cs: CSSStyleDeclaration) =>
+  parseFloat(cs.borderTopWidth) + parseFloat(cs.borderBottomWidth) + parseFloat(cs.borderLeftWidth) + parseFloat(cs.borderRightWidth) > 0;
 
 // A box, border, shadow or replaced element (text is handled separately, by its glyph boxes)
 const hasPaint = (el: Element, cs: CSSStyleDeclaration) => {
   if (REPLACED.has(el.tagName.toLowerCase())) return true;
-  const bg = cs.backgroundColor;
-  if (bg && bg !== 'transparent' && !/rgba\(.*,\s*0\)$/.test(bg)) return true;
+  if (alphaOf(cs.backgroundColor) > 0) return true;
   if (cs.backgroundImage !== 'none') return true;
-  if (parseFloat(cs.borderTopWidth) + parseFloat(cs.borderBottomWidth) + parseFloat(cs.borderLeftWidth) + parseFloat(cs.borderRightWidth) > 0) return true;
+  if (hasBorder(cs)) return true;
   return cs.boxShadow !== 'none';
 };
 
-// Everything inside `scope` that actually draws something on screen, except decoration layers
-const collectObstacles = (scope: Element, layer: Element): Box[] => {
-  const boxes: Box[] = [];
-  const walk = (el: Element) => {
+const inside = (a: Box, b: Box) => a.l >= b.l - 1 && a.t >= b.t - 1 && a.r <= b.r + 1 && a.b <= b.b + 1;
+
+// Everything inside `scope` that draws something on screen, except decoration layers
+const collectObstacles = (scope: Element, layer: Element): Obstacles => {
+  const out: Obstacles = { surfaces: [], text: [], paint: [] };
+  // `cover` is the nearest solid surface around the element: anything fully inside it is hidden with it
+  const walk = (el: Element, cover: Box | null) => {
     for (const child of el.children) {
       if (child === layer) continue;
       if (child.hasAttribute('data-decor') && !child.hasAttribute('data-obstacle')) continue;
       const cs = getComputedStyle(child);
       if (cs.display === 'none' || cs.visibility === 'hidden') continue;
       const rect = child.getBoundingClientRect();
+      const box = { l: rect.left, t: rect.top, r: rect.right, b: rect.bottom };
+      const tag = child.tagName.toLowerCase();
+      const covered = !!cover && inside(box, cover);
+      let childCover = cover;
       if (hasPaint(child, cs) && rect.width > 0 && rect.height > 0 && cs.opacity !== '0') {
-        boxes.push({ l: rect.left, t: rect.top, r: rect.right, b: rect.bottom });
-        if (child.tagName.toLowerCase() === 'svg') continue; // its drawing is inside its box
+        const solid =
+          !MEDIA.has(tag) && alphaOf(cs.backgroundColor) >= 0.98 && cs.opacity === '1' && rect.width >= 24 && rect.height >= 24;
+        if (solid) {
+          if (!covered) out.surfaces.push(box);
+          childCover = covered ? cover : box;
+        } else if (!covered) {
+          const clear = alphaOf(cs.backgroundColor) === 0 && cs.backgroundImage === 'none' && cs.boxShadow === 'none' && !REPLACED.has(tag);
+          if (clear) {
+            // Border only: just the drawn edges count, not the empty middle
+            const w = (s: string) => parseFloat(cs.getPropertyValue(`border-${s}-width`)) || 0;
+            if (w('top')) out.paint.push({ ...box, b: box.t + w('top') });
+            if (w('bottom')) out.paint.push({ ...box, t: box.b - w('bottom') });
+            if (w('left')) out.paint.push({ ...box, r: box.l + w('left') });
+            if (w('right')) out.paint.push({ ...box, l: box.r - w('right') });
+          } else {
+            out.paint.push(box);
+          }
+        }
+        if (tag === 'svg') continue; // its drawing is inside its box
       }
-      // Text: one box per line of actual glyphs
+      // Text: one box per line of actual glyphs, unless a solid surface already hides that spot
       for (const node of child.childNodes) {
         if (node.nodeType !== 3 || !node.textContent || !node.textContent.trim()) continue;
         const range = document.createRange();
         range.selectNodeContents(node);
         for (const line of range.getClientRects()) {
-          if (line.width > 0 && line.height > 0) boxes.push({ l: line.left, t: line.top, r: line.right, b: line.bottom });
+          if (line.width <= 0 || line.height <= 0) continue;
+          const lineBox = { l: line.left, t: line.top, r: line.right, b: line.bottom };
+          if (childCover && inside(lineBox, childCover)) continue;
+          out.text.push(lineBox);
         }
       }
-      walk(child);
+      walk(child, childCover);
     }
   };
-  walk(scope);
-  return boxes;
+  walk(scope, null);
+  return out;
 };
+
+// How much of a square (centre cx, cy, side s) is behind solid surfaces, from 0 to 1
+const hiddenShare = (cx: number, cy: number, s: number, surfaces: Box[]) => {
+  const half = s / 2;
+  const near = surfaces.filter((o) => o.l < cx + half && o.r > cx - half && o.t < cy + half && o.b > cy - half);
+  if (!near.length) return 0;
+  const N = 8;
+  let hidden = 0;
+  for (let i = 0; i < N; i++) {
+    for (let j = 0; j < N; j++) {
+      const x = cx - half + ((i + 0.5) / N) * s;
+      const y = cy - half + ((j + 0.5) / N) * s;
+      if (near.some((o) => x >= o.l && x <= o.r && y >= o.t && y <= o.b)) hidden++;
+    }
+  }
+  return hidden / (N * N);
+};
+
+// How many icons a whole page should show at this screen width: [at least, at most]
+const pageTarget = (w: number): [number, number] =>
+  w >= 1440 ? [12, 18] : w >= 1280 ? [10, 14] : w >= 1024 ? [8, 12] : w >= 768 ? [6, 8] : [3, 5];
+
+// Small repeatable "random" numbers, so the extra spots are the same on every visit
+const hash = (n: number) => {
+  const x = Math.sin(n * 127.1 + 311.7) * 43758.5453;
+  return x - Math.floor(x);
+};
+
+interface Placed extends BgIcon {
+  key: string;
+}
 
 interface BackgroundIconsProps {
   icons: BgIcon[];
   /** Positioning of the decor layer inside its parent */
   className?: string;
-  /** Minimum gap between an icon and any content, in px */
+  /** Minimum gap between an icon and text on the page background, in px (never under 16) */
   clearance?: number;
   /** Extra gap for icons that move (parallax), in px */
   travel?: number;
   /** Keep this many px free along the screen's right / left edge (e.g. for the landing scroll trail) */
   reserveRight?: number;
   reserveLeft?: number;
+  /** Only keep reserveLeft free from this screen width up (where the thing it makes room for shows) */
+  reserveLeftFrom?: number;
+  /** Whole-page layer: add extra spots wherever there is room and aim for a set number per screen width */
+  fill?: boolean;
   /** Slow drift (landing page only) */
   animated?: boolean;
   /** Outline strength (0-1); fills are a little stronger */
@@ -166,11 +254,13 @@ export const BackgroundIcons: React.FC<BackgroundIconsProps> = ({
   travel = 0,
   reserveRight = 0,
   reserveLeft = 0,
+  reserveLeftFrom = 0,
+  fill = false,
   animated = false,
   strength = 0.17,
 }) => {
   const layerRef = useRef<HTMLDivElement>(null);
-  const [shown, setShown] = useState<boolean[] | null>(null);
+  const [shown, setShown] = useState<Placed[] | null>(null);
   const Wrapper = useContext(IconWrapperContext);
 
   const place = useCallback(() => {
@@ -179,34 +269,102 @@ export const BackgroundIcons: React.FC<BackgroundIconsProps> = ({
     const scope = layer.closest('[data-icon-scope]') || layer.parentElement;
     if (!scope) return;
     const area = layer.getBoundingClientRect();
+    if (area.width <= 0 || area.height <= 0) return;
     const screenW = document.documentElement.clientWidth;
-    const obstacles = collectObstacles(scope, layer);
-    // A little tighter on small screens, where the only gaps are small
+    const { surfaces, text, paint } = collectObstacles(scope, layer);
     const small = screenW < 1024;
     // Moving icons need extra room: parallax travel (half of it counts on small screens) and the slow drift
-    const pad = (screenW < 640 ? Math.min(clearance, 10) : small ? Math.min(clearance, 16) : clearance) + (small ? travel / 2 : travel) + (animated ? 8 : 0);
-    const reserveR = small ? Math.min(reserveRight, 8) : reserveRight;
-    const accepted: { x: number; y: number; s: number }[] = [];
+    const motion = (small ? travel / 2 : travel) + (animated ? 8 : 0);
+    const textPad = Math.max(16, small ? 16 : clearance) + motion;
+    const paintPad = 10 + motion;
+    // Moving icons stay a little further out from behind cards, so the drift never tucks them in too far
+    const maxHidden = animated || travel ? 0.4 : 0.5;
+    // Under 1280px the landing scroll trail is a thin line on the very edge
+    const reserveR = screenW < 1280 ? Math.min(reserveRight, 8) : reserveRight;
+    const reserveL = screenW >= reserveLeftFrom ? reserveLeft : 0;
+    const phone = screenW < 640;
 
-    const result = icons.map((icon) => {
-      if (icon.from && screenW < MIN_WIDTH[icon.from]) return false;
-      const size = icon.s * 1.12; // room for the tilt
-      const cx = area.left + (icon.x / 100) * area.width;
-      const cy = area.top + (icon.y / 100) * area.height;
-      const box = { l: cx - size / 2, t: cy - size / 2, r: cx + size / 2, b: cy + size / 2 };
-      if (box.l < 6 + reserveLeft || box.r > screenW - 6 - reserveR) return false;
-      // Clear of the section's own edges too (the next band may be a different color)
-      if (box.t < area.top + pad || box.b > area.bottom - pad) return false;
-      const near = obstacles.some((o) => box.l < o.r + pad && box.r > o.l - pad && box.t < o.b + pad && box.b > o.t - pad);
-      if (near) return false;
-      // No clusters: keep a gap between neighbouring icons
-      const crowded = accepted.some((a) => Math.hypot(a.x - cx, a.y - cy) < (a.s + icon.s) / 2 + 28);
-      if (crowded) return false;
-      accepted.push({ x: cx, y: cy, s: icon.s });
-      return true;
+    const fits = (cx: number, cy: number, s: number) => {
+      const half = (s * 1.12) / 2; // room for the tilt
+      const box = { l: cx - half, t: cy - half, r: cx + half, b: cy + half };
+      if (box.l < 6 + reserveL || box.r > screenW - 6 - reserveR) return false;
+      // Phones: only along the left and right edges
+      if (phone && cx > screenW * 0.25 && cx < screenW * 0.75) return false;
+      // Clear of the layer's own top and bottom (the next band may be a different color)
+      if (box.t < area.top + paintPad || box.b > area.bottom - paintPad) return false;
+      const near = (pad: number) => (o: Box) => box.l < o.r + pad && box.r > o.l - pad && box.t < o.b + pad && box.b > o.t - pad;
+      if (text.some(near(textPad))) return false;
+      if (paint.some(near(paintPad))) return false;
+      return hiddenShare(cx, cy, s * 1.12, surfaces) <= maxHidden;
+    };
+
+    // Candidates: the hand-placed spots first, then (whole pages) a spread of extra spots
+    type Cand = { icon: BgIcon; cx: number; cy: number; key: string };
+    const cands: Cand[] = [];
+    icons.forEach((icon, i) => {
+      if (icon.from && screenW < MIN_WIDTH[icon.from]) return;
+      cands.push({ icon, cx: area.left + (icon.x / 100) * area.width, cy: area.top + (icon.y / 100) * area.height, key: `h${i}` });
     });
-    setShown(result);
-  }, [icons, clearance, travel, reserveRight, reserveLeft, animated]);
+
+    const [minCount, maxCount] = fill ? pageTarget(screenW) : [0, Infinity];
+    if (fill) {
+      const kinds = [...new Set(icons.map((icon) => icon.k))];
+      const sizes = phone ? [20, 24, 28] : small ? [22, 26, 30, 34] : [22, 26, 30, 36, 42];
+      const tilts = [-10, 8, -4, 12, -12, 6, 10, -8];
+      const fills = ['soft', undefined, undefined, 'gold', undefined, undefined] as const;
+      const step = Math.max(40, Math.min(120, Math.sqrt((area.width * area.height) / 1500)));
+      const extra: Cand[] = [];
+      let n = 0;
+      for (let y = step / 2; y < area.height; y += step) {
+        for (let x = step / 2; x < area.width; x += step) {
+          n++;
+          const cx = area.left + x + (hash(n) - 0.5) * step * 0.8;
+          const cy = area.top + y + (hash(n + 7919) - 0.5) * step * 0.8;
+          const icon: BgIcon = {
+            k: kinds[n % kinds.length],
+            x: ((cx - area.left) / area.width) * 100,
+            y: ((cy - area.top) / area.height) * 100,
+            s: sizes[Math.floor(hash(n + 31) * sizes.length)],
+            r: tilts[n % tilts.length],
+            f: fills[n % fills.length],
+          };
+          extra.push({ icon, cx, cy, key: `g${n}` });
+        }
+      }
+      // Shuffled (repeatably), so picking in order spreads icons over the whole page
+      extra.sort((a, b) => hash(Number(a.key.slice(1)) + 104729) - hash(Number(b.key.slice(1)) + 104729));
+      cands.push(...extra);
+    }
+
+    const valid = cands.filter((c) => fits(c.cx, c.cy, c.icon.s));
+
+    // Even spread: a generous gap between icons first, then smaller ones if the page is short of its target
+    const accepted: Cand[] = [];
+    const spread = fill ? 0.6 * Math.sqrt((area.width * area.height) / maxCount) : 0;
+    const pass = (gap: number, upTo: number) => {
+      for (const c of valid) {
+        if (accepted.length >= upTo) return;
+        if (accepted.includes(c)) continue;
+        const crowded = accepted.some((a) => Math.hypot(a.cx - c.cx, a.cy - c.cy) < Math.max(gap, (a.icon.s + c.icon.s) / 2 + 28));
+        if (!crowded) accepted.push(c);
+      }
+    };
+    pass(spread, maxCount);
+    if (fill) {
+      pass(spread * 0.6, Math.round((minCount + maxCount) / 2));
+      pass(0, minCount);
+    }
+
+    // Vary the kind of neighbouring extra icons
+    const kinds = [...new Set(icons.map((icon) => icon.k))];
+    setShown(
+      accepted.map((c, i) => ({
+        ...c.icon,
+        k: c.key.startsWith('g') ? kinds[(i * 5) % kinds.length] : c.icon.k,
+        key: c.key,
+      }))
+    );
+  }, [icons, clearance, travel, reserveRight, reserveLeft, reserveLeftFrom, fill, animated]);
 
   useEffect(() => {
     let timer = 0;
@@ -234,8 +392,7 @@ export const BackgroundIcons: React.FC<BackgroundIconsProps> = ({
   return (
     <div ref={layerRef} aria-hidden="true" data-decor="" className={`pointer-events-none ${className}`}>
       {shown &&
-        icons.map((icon, i) => {
-          if (!shown[i]) return null;
+        shown.map((icon, i) => {
           const style: React.CSSProperties = {
             position: 'absolute',
             left: `${icon.x}%`,
@@ -278,11 +435,11 @@ export const BackgroundIcons: React.FC<BackgroundIconsProps> = ({
             </svg>
           );
           return Wrapper ? (
-            <Wrapper key={i} index={i} style={style}>
+            <Wrapper key={icon.key} index={i} style={style}>
               {svg}
             </Wrapper>
           ) : (
-            <div key={i} style={style}>
+            <div key={icon.key} style={style}>
               {svg}
             </div>
           );
@@ -292,8 +449,15 @@ export const BackgroundIcons: React.FC<BackgroundIconsProps> = ({
 };
 
 // Background icons for a whole page: a layer as wide as the screen and as tall as the page content.
-// Place it next to PageBackdrop, outside the page's animate-fade-in wrapper. reserveLeft keeps the icons
-// clear of PageBackdrop's short trail on the left edge.
+// Place it next to PageBackdrop, outside the page's animate-fade-in wrapper. Extra spots are added wherever
+// there is room, aiming for a set number of icons per screen width. reserveLeft keeps the icons clear of
+// PageBackdrop's short trail on the left edge, which only shows from 1280px up.
 export const PageIcons: React.FC<{ icons: BgIcon[]; reserveLeft?: number }> = ({ icons, reserveLeft = 36 }) => (
-  <BackgroundIcons icons={icons} reserveLeft={reserveLeft} className="absolute inset-y-0 left-[calc(50%-50vw)] w-screen -z-10" />
+  <BackgroundIcons
+    icons={icons}
+    fill
+    reserveLeft={reserveLeft}
+    reserveLeftFrom={1280}
+    className="absolute inset-y-0 left-[calc(50%-50vw)] w-screen -z-10"
+  />
 );

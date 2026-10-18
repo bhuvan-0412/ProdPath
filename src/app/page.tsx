@@ -139,7 +139,7 @@ export default function LandingPage() {
 
       {/* PM terms marquee, directly under the hero: pauses on hover, off-screen and with reduced motion */}
       <section aria-label="PM topics" className={`${BAND} band-2 border-t border-line overflow-hidden`}>
-        <InViewPause className="marquee overflow-hidden py-3.5 mr-2 lg:mr-[calc(max(0px,(100vw-1280px)/2)+3.5rem)]">
+        <InViewPause className="marquee overflow-hidden py-3.5 mr-2 xl:mr-[calc(max(0px,(100vw-1280px)/2)+3.5rem)]">
           <div className="marquee-track flex w-max">
             {[0, 1].map((copy) => (
               <ul key={copy} aria-hidden={copy === 1 ? true : undefined} className="flex items-center shrink-0">

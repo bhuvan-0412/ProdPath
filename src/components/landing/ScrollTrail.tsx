@@ -5,11 +5,11 @@ import { motion, useMotionValue, useMotionValueEvent, useScroll, useTransform } 
 import './reducedMotion';
 
 // Scroll trail on the right edge of the landing page (decorative: hidden from screen readers).
-// 1024px and up: a rail just inside the right margin. The stretch already scrolled past is a solid
+// 1280px and up: a rail just inside the right margin. The stretch already scrolled past is a solid
 // terracotta line, the stretch ahead stays dotted. A marigold dot travels with the scroll position; each
 // landing section has a milestone ring that fills when the dot reaches it, with a short label beside the
 // dot when there is room in the margin. Clicking a ring scrolls to its section. At the bottom, a flag waves.
-// Under 1024px: a thin progress line along the right edge with the dot at its tip, no rings or labels.
+// Under 1280px: a thin progress line along the right edge with the dot at its tip, no rings or labels.
 //
 // Sections opt in with data-milestone="Label". Where the margin is too narrow for the rail to sit clear of
 // the hero illustration, the rail starts just below the hero.
@@ -88,7 +88,7 @@ export const ScrollTrail: React.FC = () => {
   const fullHeight = rail.height;
   const usable = useTransform(railTop, (t) => Math.max(0, TOP + fullHeight - t));
   const dotY = useTransform([scrollYProgress, railTop, usable], ([p, t, h]: number[]) => t - TOP + p * h);
-  // Thin line (under 1024px): the dot rides at the tip of the fill
+  // Thin line (under 1280px): the dot rides at the tip of the fill
   const thinDotY = useTransform(scrollYProgress, (p) => p * Math.max(0, (typeof window === 'undefined' ? 0 : window.innerHeight) - 65 - 10));
   const railOffset = useTransform(railTop, (t) => t - TOP);
 
@@ -128,9 +128,9 @@ export const ScrollTrail: React.FC = () => {
 
   return (
     <div aria-hidden="true" data-decor="">
-      {/* 1024px and up: the rail */}
+      {/* 1280px and up: the rail */}
       {fullHeight > 0 && (
-        <div className="hidden lg:block fixed z-30 pointer-events-none" style={{ top: TOP, right: LINE_FROM_RIGHT - 14, width: 28, height: fullHeight }}>
+        <div className="hidden xl:block fixed z-30 pointer-events-none" style={{ top: TOP, right: LINE_FROM_RIGHT - 14, width: 28, height: fullHeight }}>
           <motion.div className="absolute inset-x-0 bottom-0" style={{ top: railOffset }}>
             {/* Ahead: dotted ink */}
             <svg className="absolute left-[12px] top-0 h-full w-[4px] overflow-visible" focusable="false">
@@ -179,8 +179,8 @@ export const ScrollTrail: React.FC = () => {
         </div>
       )}
 
-      {/* Under 1024px: a thin progress line along the right edge */}
-      <div className="lg:hidden fixed right-0 top-[65px] bottom-0 z-30 w-[3px] pointer-events-none">
+      {/* Under 1280px: a thin progress line along the right edge */}
+      <div className="xl:hidden fixed right-0 top-[65px] bottom-0 z-30 w-[3px] pointer-events-none">
         <div className="absolute inset-0 bg-ink/10" />
         <motion.div className="absolute inset-0 bg-accent origin-top" style={{ scaleY: scrollYProgress }} />
         <motion.span
