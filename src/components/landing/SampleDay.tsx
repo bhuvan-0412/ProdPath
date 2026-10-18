@@ -67,17 +67,17 @@ export const SampleDay: React.FC<SampleDayProps> = ({ dayNumber, brief, tasks })
           style={{ transform: `scaleX(${total ? done / total : 0})` }}
         />
       </div>
-      <div className="p-5 space-y-5">
+      <div className="p-4 space-y-3">
         {tasks.map((task) => (
           <div key={task.label}>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-muted mb-2">{task.label}</p>
-            <ul className="space-y-2">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-muted mb-1.5">{task.label}</p>
+            <ul className="space-y-1.5">
               {task.resources.map((res) => {
                 const ticked = isDone(res.id);
                 const first = res.id === order[0];
                 return (
-                  <li key={res.id} className="flex items-start gap-3 p-3 rounded-lg border border-line bg-paper/60">
-                    <span aria-hidden="true" className="relative mt-0.5 flex-shrink-0">
+                  <li key={res.id} className="flex items-center gap-3 px-3 py-2 rounded-lg border border-line bg-paper/60">
+                    <span aria-hidden="true" className="relative flex-shrink-0">
                       <span
                         className={`w-5 h-5 rounded-md border-[1.5px] flex items-center justify-center transition-colors duration-200 ${
                           ticked ? 'bg-accent border-accent text-paper' : 'border-ink/50 bg-surface'
@@ -98,12 +98,13 @@ export const SampleDay: React.FC<SampleDayProps> = ({ dayNumber, brief, tasks })
                         </svg>
                       )}
                     </span>
-                    <span className="min-w-0">
-                      <span className={`block text-sm font-medium transition-colors ${ticked ? 'text-muted line-through' : 'text-ink'}`}>
+                    {/* Title, with its type on the same line to the right */}
+                    <span className="min-w-0 flex-1 flex items-baseline justify-between gap-3">
+                      <span className={`min-w-0 text-sm font-medium transition-colors ${ticked ? 'text-muted line-through' : 'text-ink'}`}>
                         {res.title}
                         {ticked && <span className="sr-only"> (done)</span>}
                       </span>
-                      <span className="block text-xs text-muted mt-0.5">{res.typeLabel}</span>
+                      <span className="flex-shrink-0 text-xs text-muted">{res.typeLabel}</span>
                     </span>
                   </li>
                 );
