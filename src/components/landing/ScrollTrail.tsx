@@ -1,186 +1,257 @@
 'use client';
 
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { motion, useMotionValue, useMotionValueEvent, useScroll, useTransform } from 'motion/react';
+import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { motion, useScroll, useTransform } from 'motion/react';
 import './reducedMotion';
+import { SECTION_NAV_EVENT, goToSection, navbarHeight } from './sectionNav';
 
-// Scroll trail on the right edge of the landing page (decorative: hidden from screen readers).
-// 1280px and up: a rail just inside the right margin. The stretch already scrolled past is a solid
-// terracotta line, the stretch ahead stays dotted. A marigold dot travels with the scroll position; each
-// landing section has a milestone ring that fills when the dot reaches it, with a short label beside the
-// dot when there is room in the margin. Clicking a ring scrolls to its section. At the bottom, a flag waves.
-// Under 1280px: a thin progress line along the right edge with the dot at its tip, no rings or labels.
-//
-// Sections opt in with data-milestone="Label". Where the margin is too narrow for the rail to sit clear of
-// the hero illustration, the rail starts just below the hero.
+// Section navigator on the right edge of the landing page.
+// 1280px and up: one circle per section (data-milestone="Name" plus an id), spaced evenly down a rail.
+// The marigold dot sits on the active section (the one filling most of the screen; always the first at
+// the very top and the last at the very bottom) and glides to the next circle when that changes. The rail
+// is solid terracotta down to the active circle and dotted below it. Clicking a circle scrolls its section
+// to just below the navbar. A small label shows on hover/focus and briefly when a new section becomes
+// active, only when every label fits between the content and the rail.
+// Under 1280px: a thin progress line along the right edge (decorative), no circles or labels.
 
-const TOP = 88; // below the navbar
+const TOP = 88; // first circle, below the navbar
 const BOTTOM = 28;
-const LINE_FROM_RIGHT = 20; // px from the screen's right edge to the line
+const LINE_FROM_RIGHT = 18; // px from the screen's right edge to the line
+const HIT = 24; // clickable size of each circle
+const LABEL_GAP = 10; // between a label and the circle's hit area
+const ARRIVAL_MS = 1500;
+const SETTLE_MS = 160; // a click-scroll counts as finished after this long without scrolling
 const CONTENT_MAX = 1280;
 
-interface Milestone {
+interface Section {
+  id: string;
   label: string;
   el: HTMLElement;
-  frac: number;
 }
 
+// Right edge of the page content (inside its side padding)
 const contentRight = (screenW: number) => (screenW + Math.min(screenW, CONTENT_MAX)) / 2 - (screenW >= 1024 ? 32 : screenW >= 640 ? 24 : 16);
 
 export const ScrollTrail: React.FC = () => {
-  const { scrollY, scrollYProgress } = useScroll();
-  const [milestones, setMilestones] = useState<Milestone[]>([]);
-  const [rail, setRail] = useState({ top: TOP, height: 0, roomForLabels: 0, followHero: false });
-  const [reached, setReached] = useState(-1);
-  const [label, setLabel] = useState<{ index: number; key: number } | null>(null);
-  const labelTimer = useRef(0);
-  const heroRef = useRef<HTMLElement | null>(null);
+  const { scrollYProgress } = useScroll();
+  const [sections, setSections] = useState<Section[]>([]);
+  const [railH, setRailH] = useState(0);
+  const [labelRoom, setLabelRoom] = useState(0);
+  const [labelW, setLabelW] = useState(Infinity);
+  const [active, setActive] = useState(0);
+  const [ready, setReady] = useState(false);
+  const [hovered, setHovered] = useState<number | null>(null);
+  const [arrival, setArrival] = useState<{ index: number; key: number } | null>(null);
 
-  // Measure the rail and where each section sits along it
-  const measure = useCallback(() => {
-    const screenW = document.documentElement.clientWidth;
-    const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-    const sections = [...document.querySelectorAll<HTMLElement>('[data-milestone]')];
-    heroRef.current = sections[0] || null;
-    setMilestones(
-      sections.map((el, i) => {
-        const top = el.getBoundingClientRect().top + window.scrollY;
-        // A section counts as reached once its top is about a third of the way up the screen
-        const frac = i === 0 ? 0 : Math.min(1, Math.max(0, (top - window.innerHeight * 0.35) / maxScroll));
-        return { label: el.dataset.milestone || '', el, frac };
-      })
-    );
-    const lineX = screenW - LINE_FROM_RIGHT;
-    const margin = screenW - contentRight(screenW);
-    setRail((r) => ({
-      ...r,
-      height: window.innerHeight - TOP - BOTTOM,
-      // Space between the content edge and the dot, for a label
-      roomForLabels: lineX - 7 - 10 - contentRight(screenW),
-      // Narrow margins put the rail right beside the hero illustration: start it below the hero instead
-      followHero: margin < 64,
-    }));
+  const sectionsRef = useRef<Section[]>([]);
+  const activeRef = useRef(-1);
+  const arrivalTimer = useRef(0);
+  const frame = useRef(0);
+  const measureRef = useRef<HTMLDivElement>(null);
+  // While a click-scroll runs, the dot stays on its target
+  const lock = useRef<{ settle: number; max: number; top: number } | null>(null);
+
+  const show = useCallback((index: number) => {
+    if (index === activeRef.current) return;
+    const first = activeRef.current === -1;
+    activeRef.current = index;
+    setActive(index);
+    if (first) return;
+    window.clearTimeout(arrivalTimer.current);
+    setArrival({ index, key: Date.now() });
+    arrivalTimer.current = window.setTimeout(() => setArrival(null), ARRIVAL_MS);
   }, []);
+
+  // The section filling most of the screen below the navbar (the footer counts as part of the last one)
+  const computeActive = useCallback(() => {
+    const list = sectionsRef.current;
+    if (!list.length) return 0;
+    const doc = document.documentElement;
+    const vh = window.innerHeight;
+    if (window.scrollY <= 2) return 0;
+    if (window.scrollY + vh >= doc.scrollHeight - 2) return list.length - 1;
+    const navB = navbarHeight();
+    let best = 0;
+    let bestVisible = -Infinity;
+    list.forEach((s, i) => {
+      const r = s.el.getBoundingClientRect();
+      const bottom = i === list.length - 1 ? doc.scrollHeight - window.scrollY : r.bottom;
+      const visible = Math.min(bottom, vh) - Math.max(r.top, navB);
+      if (visible > bestVisible) {
+        bestVisible = visible;
+        best = i;
+      }
+    });
+    return best;
+  }, []);
+
+  const measure = useCallback(() => {
+    const list = [...document.querySelectorAll<HTMLElement>('[data-milestone]')]
+      .filter((el) => el.id)
+      .map((el) => ({ id: el.id, label: el.dataset.milestone || '', el }));
+    sectionsRef.current = list;
+    setSections(list);
+    const screenW = document.documentElement.clientWidth;
+    setRailH(Math.max(0, window.innerHeight - TOP - BOTTOM));
+    setLabelRoom(screenW - LINE_FROM_RIGHT - HIT / 2 - LABEL_GAP - contentRight(screenW));
+    if (!lock.current) show(computeActive());
+  }, [computeActive, show]);
 
   useEffect(() => {
     measure();
+    const raf = requestAnimationFrame(() => setReady(true));
     const observer = new ResizeObserver(measure);
     observer.observe(document.body);
     window.addEventListener('resize', measure);
     return () => {
+      cancelAnimationFrame(raf);
       observer.disconnect();
       window.removeEventListener('resize', measure);
     };
   }, [measure]);
 
-  // Rail top: fixed below the navbar, or just below the hero while the hero is on screen (narrow margins)
-  const railTop = useMotionValue(TOP);
-  const updateTop = useCallback(() => {
-    if (!rail.followHero || !heroRef.current) {
-      railTop.set(TOP);
-      return;
-    }
-    railTop.set(Math.max(TOP, heroRef.current.getBoundingClientRect().bottom + 16));
-  }, [rail.followHero, railTop]);
-  useEffect(updateTop, [updateTop, milestones]);
-  useMotionValueEvent(scrollY, 'change', updateTop);
+  // Follow the scroll, at most once per frame
+  useEffect(() => {
+    // When the click-scroll settles, the dot keeps its target, unless the page ended up somewhere else
+    // (the user scrolled meanwhile): then it follows the screen again
+    const release = () => {
+      if (!lock.current) return;
+      window.clearTimeout(lock.current.settle);
+      window.clearTimeout(lock.current.max);
+      const landed = Math.abs(window.scrollY - lock.current.top) <= 2;
+      lock.current = null;
+      if (!landed) show(computeActive());
+    };
+    const onScroll = () => {
+      if (lock.current) {
+        window.clearTimeout(lock.current.settle);
+        lock.current.settle = window.setTimeout(release, SETTLE_MS);
+        return;
+      }
+      if (frame.current) return;
+      frame.current = requestAnimationFrame(() => {
+        frame.current = 0;
+        show(computeActive());
+      });
+    };
+    const onNav = (e: Event) => {
+      const detail = (e as CustomEvent<{ id: string; top: number }>).detail;
+      const index = sectionsRef.current.findIndex((s) => s.id === detail?.id);
+      if (index < 0) return;
+      release();
+      lock.current = { settle: window.setTimeout(release, SETTLE_MS * 2), max: window.setTimeout(release, 2000), top: detail.top };
+      show(index);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('scrollend', release);
+    window.addEventListener(SECTION_NAV_EVENT, onNav);
+    return () => {
+      release();
+      cancelAnimationFrame(frame.current);
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('scrollend', release);
+      window.removeEventListener(SECTION_NAV_EVENT, onNav);
+      window.clearTimeout(arrivalTimer.current);
+    };
+  }, [computeActive, show]);
 
-  const fullHeight = rail.height;
-  const usable = useTransform(railTop, (t) => Math.max(0, TOP + fullHeight - t));
-  const dotY = useTransform([scrollYProgress, railTop, usable], ([p, t, h]: number[]) => t - TOP + p * h);
+  // Labels only show when the longest one fits between the content and the rail
+  useLayoutEffect(() => {
+    const measureLabels = () => {
+      const spans = measureRef.current ? [...measureRef.current.children] : [];
+      setLabelW(spans.length ? Math.max(...spans.map((s) => (s as HTMLElement).offsetWidth)) : Infinity);
+    };
+    measureLabels();
+    document.fonts?.ready.then(measureLabels).catch(() => {});
+  }, [sections]);
+
+  const n = sections.length;
+  const pos = (i: number) => (n > 1 ? (i / (n - 1)) * railH : 0);
+  const labelsFit = labelW <= labelRoom;
+  const labelIndex = hovered ?? arrival?.index ?? null;
+  const labelKey = hovered !== null ? `h${hovered}` : `a${arrival?.key}`;
+
   // Thin line (under 1280px): the dot rides at the tip of the fill
   const thinDotY = useTransform(scrollYProgress, (p) => p * Math.max(0, (typeof window === 'undefined' ? 0 : window.innerHeight) - 65 - 10));
-  const railOffset = useTransform(railTop, (t) => t - TOP);
 
-  // Which milestone has the dot passed? Show its label briefly when it changes (and on arrival).
-  const sync = useCallback(
-    (p: number) => {
-      let index = -1;
-      milestones.forEach((m, i) => {
-        if (p >= m.frac - 0.001) index = i;
-      });
-      setReached((current) => {
-        if (index !== current && index >= 0) {
-          window.clearTimeout(labelTimer.current);
-          setLabel({ index, key: Date.now() });
-          labelTimer.current = window.setTimeout(() => setLabel(null), 1800);
-        }
-        return index;
-      });
-    },
-    [milestones]
-  );
-  useMotionValueEvent(scrollYProgress, 'change', sync);
-  useEffect(() => {
-    if (milestones.length) sync(scrollYProgress.get());
-  }, [milestones, sync, scrollYProgress]);
-  useEffect(() => () => window.clearTimeout(labelTimer.current), []);
-
-  const atEnd = reached === milestones.length - 1 && milestones.length > 0;
-  const labelText = label ? milestones[label.index]?.label : '';
-  const labelFits = labelText ? labelText.length * 6.6 + 18 <= rail.roomForLabels : false;
-
-  const goTo = (m: Milestone) => {
-    const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const top = m.el.getBoundingClientRect().top + window.scrollY - 72;
-    window.scrollTo({ top: Math.max(0, top), behavior: smooth ? 'smooth' : 'auto' });
-  };
+  const pill = 'whitespace-nowrap rounded-full border border-line bg-paper px-2.5 py-1 font-sans text-xs font-medium leading-none text-ink';
 
   return (
-    <div aria-hidden="true" data-decor="">
-      {/* 1280px and up: the rail */}
-      {fullHeight > 0 && (
-        <div className="hidden xl:block fixed z-30 pointer-events-none" style={{ top: TOP, right: LINE_FROM_RIGHT - 14, width: 28, height: fullHeight }}>
-          <motion.div className="absolute inset-x-0 bottom-0" style={{ top: railOffset }}>
-            {/* Ahead: dotted ink */}
-            <svg className="absolute left-[12px] top-0 h-full w-[4px] overflow-visible" focusable="false">
-              <line x1="2" y1="0" x2="2" y2="100%" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeDasharray="0 9" className="text-ink/35" />
-            </svg>
-            {/* Behind: solid terracotta */}
-            <motion.div className="absolute left-[12.5px] top-0 h-full w-[3px] rounded-full bg-accent origin-top" style={{ scaleY: scrollYProgress }} />
+    <>
+      {/* 1280px and up: the section navigator */}
+      {railH > 0 && n > 0 && (
+        <nav
+          aria-label="Page sections"
+          className={`hidden xl:block fixed z-30 ${ready ? 'rail-ready' : ''}`}
+          style={{ top: TOP, right: LINE_FROM_RIGHT - HIT / 2, width: HIT, height: railH }}
+        >
+          {/* Ahead: dotted ink */}
+          <svg aria-hidden="true" focusable="false" className="pointer-events-none absolute left-[10px] top-0 h-full w-[4px] overflow-visible">
+            <line x1="2" y1="0" x2="2" y2="100%" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeDasharray="0 9" className="text-ink/35" />
+          </svg>
+          {/* Behind: solid terracotta down to the active circle */}
+          <div aria-hidden="true" className="rail-glide pointer-events-none absolute left-[10.5px] top-0 w-[3px] rounded-full bg-accent" style={{ height: pos(active) }} />
 
-            {/* Milestones */}
-            {milestones.map((m, i) => (
-              <button
-                key={m.label}
-                type="button"
-                tabIndex={-1}
-                aria-label={`Scroll to ${m.label}`}
-                onClick={() => goTo(m)}
-                className={`pointer-events-auto absolute left-[7px] w-[14px] h-[14px] -mt-[7px] rounded-full border-2 transition-colors duration-200 cursor-pointer hover:scale-110 ${
-                  i <= reached ? 'bg-accent border-accent' : 'bg-paper border-ink/50'
-                }`}
-                style={{ top: `${m.frac * 100}%` }}
-              />
+          <ol className="m-0 list-none p-0">
+            {sections.map((s, i) => (
+              <li key={s.id} className="absolute left-0" style={{ top: pos(i) - HIT / 2, width: HIT, height: HIT }}>
+                <button
+                  type="button"
+                  aria-label={`Go to: ${s.label}`}
+                  aria-current={i === active ? 'true' : undefined}
+                  onClick={() => goToSection(s.id)}
+                  onMouseEnter={() => setHovered(i)}
+                  onMouseLeave={() => setHovered((h) => (h === i ? null : h))}
+                  onFocus={() => setHovered(i)}
+                  onBlur={() => setHovered((h) => (h === i ? null : h))}
+                  className="group flex h-6 w-6 cursor-pointer items-center justify-center rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
+                >
+                  <span
+                    aria-hidden="true"
+                    className={`block h-[14px] w-[14px] rounded-full border-2 transition-[background-color,border-color,transform] duration-200 group-hover:scale-110 ${
+                      i <= active ? 'border-accent bg-accent' : 'border-ink/50 bg-paper'
+                    }`}
+                  />
+                </button>
+              </li>
             ))}
+          </ol>
 
-            {/* The flag at the end of the trail */}
-            <svg className="absolute left-[13px] -bottom-1 w-5 h-6 overflow-visible" viewBox="0 0 20 24" focusable="false">
-              <line x1="1.5" y1="24" x2="1.5" y2="2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="text-ink/60" />
-              <g className={atEnd ? 'flag-wave' : undefined}>
-                <path d="M1.5 2 L17 7 L1.5 12 Z" fill="#E8B04A" stroke="#1F2430" strokeWidth="1.25" strokeLinejoin="round" />
-              </g>
-            </svg>
-          </motion.div>
-
-          {/* The traveller */}
-          <motion.div className="absolute left-[7px] top-0 w-[14px] h-[14px] -mt-[7px]" style={{ y: dotY }}>
+          {/* The traveller: sits on the active circle (clicks pass through to the circle) */}
+          <div
+            aria-hidden="true"
+            className="rail-glide pointer-events-none absolute left-[5px] top-0 -mt-[7px] h-[14px] w-[14px]"
+            style={{ transform: `translateY(${pos(active)}px)` }}
+          >
             <span className="trail-pulse absolute inset-0 rounded-full bg-marigold" />
-            <span className="absolute inset-0 rounded-full bg-marigold border-2 border-[#1F2430]" />
-            {label && labelFits && (
-              <span
-                key={label.key}
-                className="trail-label absolute right-[22px] top-1/2 -translate-y-1/2 whitespace-nowrap rounded-full bg-ink px-2.5 py-1 text-[11px] font-semibold leading-none text-paper"
-              >
-                {labelText}
+            <span className="absolute inset-0 rounded-full border-2 border-[#1F2430] bg-marigold" />
+          </div>
+
+          {/* Label beside a circle */}
+          {labelsFit && labelIndex !== null && sections[labelIndex] && (
+            <span
+              key={labelKey}
+              aria-hidden="true"
+              className={`trail-label pointer-events-none absolute ${pill}`}
+              style={{ top: pos(labelIndex), right: HIT + LABEL_GAP, transform: 'translateY(-50%)' }}
+            >
+              {sections[labelIndex].label}
+            </span>
+          )}
+
+          {/* Off-screen copies, to measure whether the labels fit */}
+          <div ref={measureRef} aria-hidden="true" className="invisible pointer-events-none absolute right-0 top-0 flex flex-col items-end">
+            {sections.map((s) => (
+              <span key={s.id} className={pill}>
+                {s.label}
               </span>
-            )}
-          </motion.div>
-        </div>
+            ))}
+          </div>
+        </nav>
       )}
 
       {/* Under 1280px: a thin progress line along the right edge */}
-      <div className="xl:hidden fixed right-0 top-[65px] bottom-0 z-30 w-[3px] pointer-events-none">
+      <div aria-hidden="true" data-decor="" className="xl:hidden fixed right-0 top-[65px] bottom-0 z-30 w-[3px] pointer-events-none">
         <div className="absolute inset-0 bg-ink/10" />
         <motion.div className="absolute inset-0 bg-accent origin-top" style={{ scaleY: scrollYProgress }} />
         <motion.span
@@ -188,6 +259,6 @@ export const ScrollTrail: React.FC = () => {
           style={{ y: thinDotY }}
         />
       </div>
-    </div>
+    </>
   );
 };

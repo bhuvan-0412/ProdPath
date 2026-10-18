@@ -362,7 +362,7 @@
   }
 }
 
-/* Landing scroll trail: a soft pulse around the travelling dot, and labels that fade in */
+/* Landing section navigator: a soft pulse around the dot, and labels that fade in */
 @keyframes trail-pulse {
   from {
     transform: scale(1);
@@ -398,6 +398,15 @@
 @media (prefers-reduced-motion: reduce) {
   .trail-pulse {
     display: none;
+  }
+}
+
+/* The dot and the solid line glide to the active circle (instant with reduced motion, and on first paint) */
+@media (prefers-reduced-motion: no-preference) {
+  .rail-ready .rail-glide {
+    transition:
+      transform 350ms cubic-bezier(0.22, 1, 0.36, 1),
+      height 350ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 }
 

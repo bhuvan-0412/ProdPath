@@ -94,13 +94,11 @@ const FEATURE_ICON = 'w-11 h-11 flex-shrink-0';
 export default function LandingPage() {
   return (
     <>
-    {/* Outside the fading wrapper: a transformed parent would stop "fixed" from pinning it to the screen */}
-    <ScrollTrail />
     <div className="animate-fade-in">
       <SignedInRedirect />
 
       {/* Hero */}
-      <section data-milestone="Start" data-icon-scope className={`${BAND} -mt-8 overflow-hidden`}>
+      <section id="start" data-milestone="Start" data-icon-scope className={`${BAND} -mt-8 overflow-hidden`}>
         <IconField icons={HERO_ICONS} />
         <div className={`${BAND_INNER} hero-fit grid lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] gap-10 lg:gap-10 items-center pt-12 pb-14 sm:pt-[4.5rem] sm:pb-20`}>
           <div className="max-w-3xl">
@@ -120,11 +118,11 @@ export default function LandingPage() {
 
           <HeroScene className="hero-scene w-full max-w-[680px] mx-auto lg:max-w-none" />
         </div>
-        <ScrollCue targetId="curriculum" />
+        <ScrollCue targetId="path" />
       </section>
 
       {/* The path, week by week (the hero's scroll cue lands here, just below the navbar) */}
-      <section id="curriculum" aria-labelledby="path-heading" data-milestone="The path" data-icon-scope className={`${BAND} band-2 border-t border-line scroll-mt-16`}>
+      <section id="path" aria-labelledby="path-heading" data-milestone={`Your ${weeks.length}-week path`} data-icon-scope className={`${BAND} band-2 border-t border-line scroll-mt-16`}>
         <IconField icons={PATH_ICONS} />
         <div className={`${BAND_INNER} grid lg:grid-cols-[280px_minmax(0,1fr)] gap-10 lg:gap-16 pt-14 pb-16 sm:pt-20 sm:pb-24`}>
           <Reveal className="relative">
@@ -197,7 +195,7 @@ export default function LandingPage() {
 
       {/* A sample day */}
       {sampleDay && (
-        <section aria-labelledby="day-heading" data-milestone="A day" data-icon-scope className={`${BAND} border-t border-line`}>
+        <section id="day" aria-labelledby="day-heading" data-milestone="A day on ProdPath" data-icon-scope className={`${BAND} border-t border-line`}>
           <IconField icons={DAY_ICONS} />
           <div className={`${BAND_INNER} grid lg:grid-cols-[280px_minmax(0,1fr)] gap-10 lg:gap-16 items-start pt-14 pb-16 sm:pt-20 sm:pb-24`}>
             <Reveal className="relative">
@@ -230,7 +228,7 @@ export default function LandingPage() {
       )}
 
       {/* Everything in one place */}
-      <section aria-labelledby="features-heading" data-milestone="Inside" data-icon-scope className={`${BAND} band-2 border-t border-line`}>
+      <section id="inside" aria-labelledby="features-heading" data-milestone="Everything in one place" data-icon-scope className={`${BAND} band-2 border-t border-line`}>
         <IconField icons={FEATURE_ICONS} />
         <div className={`${BAND_INNER} pt-14 pb-16 sm:pt-20 sm:pb-24`}>
           <Rocket className="hidden md:block absolute right-4 sm:right-6 lg:right-10 top-12 sm:top-14 w-[4.5rem]" />
@@ -297,8 +295,9 @@ export default function LandingPage() {
 
       {/* Final call to action: a full-bleed ink band that sits on the footer */}
       <section
+        id="cta"
         aria-labelledby="cta-heading"
-        data-milestone="Go"
+        data-milestone="Start today"
         className={`${BAND} overflow-hidden -mb-8 bg-[#1F2430] border-y border-line text-[#F6F1E7]`}
       >
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
@@ -313,6 +312,9 @@ export default function LandingPage() {
         </div>
       </section>
     </div>
+    {/* Section navigator: outside the fading wrapper (a transformed parent would stop "fixed" from pinning
+        it to the screen), and after the content so keyboard users reach the page's own buttons first */}
+    <ScrollTrail />
     </>
   );
 }
