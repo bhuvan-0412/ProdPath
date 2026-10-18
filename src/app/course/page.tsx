@@ -16,6 +16,7 @@ import { Week } from '@/types/curriculum';
 import { WeekMark } from '@/components/landing/Illustrations';
 import { Plus, Calendar, CheckCircle, Sparkles, ArrowRight, Bookmark, ExternalLink, Video, BookMarked } from 'lucide-react';
 import { PageBackdrop } from '@/components/PageBackdrop';
+import { PageSkeleton } from '@/components/Skeleton';
 import { PageIcons } from '@/components/decor/BackgroundIcons';
 import { COURSE_ICONS } from '@/components/decor/iconLayouts';
 
@@ -450,11 +451,7 @@ export default function CoursePage() {
     <>
     <PageBackdrop variant="dots" />
     <PageIcons icons={COURSE_ICONS} />
-    <Suspense fallback={
-      <div className="p-8 text-center text-xs text-muted animate-pulse">
-        Loading curriculum...
-      </div>
-    }>
+    <Suspense fallback={<PageSkeleton label="Loading curriculum" />}>
       <CourseContent />
     </Suspense>
     </>

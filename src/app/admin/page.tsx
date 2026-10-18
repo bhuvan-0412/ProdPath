@@ -4,7 +4,8 @@ import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import { useProgress } from '@/context/ProgressContext';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
-import { Users, MailCheck, ShieldCheck, Send, CheckCircle2, AlertTriangle, RefreshCw, X, Award } from 'lucide-react';
+import { Send, CheckCircle2, AlertTriangle, RefreshCw, X } from 'lucide-react';
+import { Skeleton } from '@/components/Skeleton';
 import weeksData from '@/data/weeks.json';
 import liveSessionsData from '@/data/liveSessions.json';
 import caseStudiesData from '@/data/caseStudies.json';
@@ -19,6 +20,19 @@ interface AdminUserDetail {
   completed_count: number;
   completion_percentage: number;
 }
+
+// Plain stat tile: label, big number, optional note
+const StatTile: React.FC<{ label: string; value: React.ReactNode; note?: string; loading: boolean }> = ({ label, value, note, loading }) => (
+  <div className="rounded-card border border-line bg-surface p-5">
+    <p className="text-sm text-muted">{label}</p>
+    {loading ? (
+      <Skeleton className="mt-2 h-9 w-20" />
+    ) : (
+      <p className="mt-1 font-display text-4xl font-semibold text-ink tabular-nums leading-tight">{value}</p>
+    )}
+    {note && !loading && <p className="mt-1 text-xs text-muted">{note}</p>}
+  </div>
+);
 
 export default function AdminPage() {
   const { user, isAdmin, isLoadingAuth } = useProgress();
@@ -162,11 +176,20 @@ export default function AdminPage() {
     }
   };
 
+  const avgCompletion =
+    usersList.length > 0 ? Math.round(usersList.reduce((acc, u) => acc + u.completion_percentage, 0) / usersList.length) : 0;
+  const peopleLabel = `${optedInCount} ${optedInCount === 1 ? 'person' : 'people'}`;
+
   if (isLoadingAuth || (!isAdmin && user)) {
     return (
-      <div className="min-h-[60vh] flex flex-col items-center justify-center gap-3">
-        <RefreshCw className="w-8 h-8 text-accent-dark animate-spin" />
-        <p className="text-xs text-muted font-medium">Verifying admin access...</p>
+      <div role="status" aria-label="Checking admin access" className="space-y-6">
+        <Skeleton className="h-9 w-40" />
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <Skeleton className="h-28" />
+          <Skeleton className="h-28" />
+          <Skeleton className="h-28" />
+        </div>
+        <Skeleton className="h-80" />
       </div>
     );
   }
@@ -174,176 +197,126 @@ export default function AdminPage() {
   if (!isAdmin) return null;
 
   return (
-    <div className="space-y-8 pb-12">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-line pb-6">
-        <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent-soft text-accent-dark text-xs font-bold mb-2">
-            <ShieldCheck className="w-3.5 h-3.5" />
-            <span>Admin Control Panel</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-ink">
-            User Analytics & Communication
-          </h1>
-        </div>
-
+    <div className="space-y-8 pb-12 animate-fade-in">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+        <h1 className="text-3xl sm:text-4xl font-display font-semibold tracking-tight text-ink">Admin</h1>
         <button
+          type="button"
           onClick={loadAdminData}
           disabled={loadingStats}
-          className="self-start sm:self-auto flex items-center gap-2 px-3.5 py-2 rounded-xl bg-paper hover:bg-line/70 text-ink/80 text-xs font-semibold transition-colors disabled:opacity-50"
+          className="self-start sm:self-auto inline-flex items-center gap-2 min-h-10 px-4 rounded-full border border-line bg-surface text-sm font-semibold text-ink hover:border-ink transition-colors disabled:opacity-50"
         >
-          <RefreshCw className={`w-3.5 h-3.5 ${loadingStats ? 'animate-spin' : ''}`} />
-          <span>Refresh Data</span>
+          <RefreshCw className={`w-4 h-4 ${loadingStats ? 'animate-spin' : ''}`} aria-hidden="true" />
+          Refresh
         </button>
       </div>
 
       {errorMsg && (
-        <div className="p-4 rounded-xl bg-danger/10 border border-danger/30 text-danger text-xs font-medium flex items-center justify-between">
+        <div role="alert" className="p-4 rounded-card bg-danger/10 border border-danger/30 text-danger text-sm flex items-center justify-between gap-3">
           <div className="flex items-center gap-2">
-            <AlertTriangle className="w-4 h-4 shrink-0" />
+            <AlertTriangle className="w-4 h-4 shrink-0" aria-hidden="true" />
             <span>{errorMsg}</span>
           </div>
-          <button onClick={() => setErrorMsg(null)} className="p-1 hover:opacity-80">
+          <button type="button" onClick={() => setErrorMsg(null)} className="p-1 hover:opacity-80" aria-label="Dismiss">
             <X className="w-4 h-4" />
           </button>
         </div>
       )}
 
       {emailSuccessMsg && (
-        <div className="p-4 rounded-xl bg-success/10 border border-success/30 text-success text-xs font-medium flex items-center justify-between">
+        <div role="status" className="p-4 rounded-card bg-success/10 border border-success/30 text-success text-sm flex items-center justify-between gap-3">
           <div className="flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 shrink-0" />
+            <CheckCircle2 className="w-4 h-4 shrink-0" aria-hidden="true" />
             <span>{emailSuccessMsg}</span>
           </div>
-          <button onClick={() => setEmailSuccessMsg(null)} className="p-1 hover:opacity-80">
+          <button type="button" onClick={() => setEmailSuccessMsg(null)} className="p-1 hover:opacity-80" aria-label="Dismiss">
             <X className="w-4 h-4" />
           </button>
         </div>
       )}
 
-      {/* Metrics Cards Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-        <div className="bg-surface border border-line rounded-xl p-6">
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-xs font-semibold text-muted uppercase tracking-wide">
-              Total Registered Users
-            </span>
-            <div className="w-9 h-9 rounded-xl bg-accent-soft text-accent-dark flex items-center justify-center">
-              <Users className="w-5 h-5" />
-            </div>
-          </div>
-          <p className="text-3xl font-extrabold text-ink">
-            {loadingStats ? '...' : usersList.length}
-          </p>
-          <p className="text-xs sm:text-[11px] text-muted mt-1">Google OAuth authenticated</p>
-        </div>
-
-        <div className="bg-surface border border-line rounded-xl p-6">
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-xs font-semibold text-muted uppercase tracking-wide">
-              Marketing Opt-ins
-            </span>
-            <div className="w-9 h-9 rounded-xl bg-accent-soft text-accent-dark flex items-center justify-center">
-              <MailCheck className="w-5 h-5" />
-            </div>
-          </div>
-          <p className="text-3xl font-extrabold text-ink">
-            {loadingStats ? '...' : optedInCount}
-          </p>
-          <p className="text-xs sm:text-[11px] text-muted mt-1">
-            {usersList.length > 0 ? Math.round((optedInCount / usersList.length) * 100) : 0}% opt-in rate
-          </p>
-        </div>
-
-        <div className="bg-surface border border-line rounded-xl p-6">
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-xs font-semibold text-muted uppercase tracking-wide">
-              Avg. Completion Rate
-            </span>
-            <div className="w-9 h-9 rounded-xl bg-success/10 text-success flex items-center justify-center">
-              <Award className="w-5 h-5" />
-            </div>
-          </div>
-          <p className="text-3xl font-extrabold text-ink">
-            {loadingStats
-              ? '...'
-              : usersList.length > 0
-              ? Math.round(usersList.reduce((acc, u) => acc + u.completion_percentage, 0) / usersList.length) + '%'
-              : '0%'}
-          </p>
-          <p className="text-xs sm:text-[11px] text-muted mt-1">Across all registered accounts</p>
-        </div>
+      {/* Stat tiles */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <StatTile label="Registered users" value={usersList.length} loading={loadingStats} />
+        <StatTile label="Average completion" value={`${avgCompletion}%`} loading={loadingStats} />
+        <StatTile
+          label="Opted into emails"
+          value={optedInCount}
+          note={usersList.length > 0 ? `${Math.round((optedInCount / usersList.length) * 100)}% of users` : undefined}
+          loading={loadingStats}
+        />
       </div>
 
-      {/* Main Grid: User Table & Email Broadcast */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* User Table */}
-        <div className="lg:col-span-2 bg-surface border border-line rounded-xl p-6 space-y-4">
-          <h2 className="text-lg font-bold text-ink flex items-center gap-2">
-            <Users className="w-5 h-5 text-accent-dark" />
-            <span>Registered Users Directory</span>
-          </h2>
-
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+        {/* Users table: scrolls sideways inside its own box on small screens */}
+        <section className="lg:col-span-2 min-w-0 rounded-card border border-line bg-surface">
+          <h2 className="px-5 pt-5 pb-3 text-lg font-display font-semibold text-ink">Users</h2>
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs">
+            <table className="w-full min-w-[560px] text-left text-sm">
               <thead>
-                <tr className="border-b border-line text-muted uppercase font-semibold text-xs sm:text-[10px]">
-                  <th className="pb-3 px-2">User</th>
-                  <th className="pb-3 px-2">Joined</th>
-                  <th className="pb-3 px-2">Progress</th>
-                  <th className="pb-3 px-2 text-right">Marketing</th>
+                <tr className="border-y border-line bg-paper text-xs uppercase tracking-[0.08em] text-muted">
+                  <th scope="col" className="py-3 px-5 font-semibold">User</th>
+                  <th scope="col" className="py-3 px-3 font-semibold">Joined</th>
+                  <th scope="col" className="py-3 px-3 font-semibold">Progress</th>
+                  <th scope="col" className="py-3 px-5 font-semibold text-right">Emails</th>
                 </tr>
               </thead>
-              <tbody className="divide-y border-line">
+              <tbody className="divide-y divide-line">
                 {usersList.length === 0 ? (
-                  <tr>
-                    <td colSpan={4} className="py-8 text-center text-muted">
-                      {loadingStats ? 'Loading users...' : 'No registered users found.'}
-                    </td>
-                  </tr>
+                  loadingStats ? (
+                    [0, 1, 2].map((i) => (
+                      <tr key={i}>
+                        <td colSpan={4} className="py-4 px-5">
+                          <Skeleton className="h-8 w-full" />
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan={4} className="py-10 text-center text-muted">
+                        No registered users yet.
+                      </td>
+                    </tr>
+                  )
                 ) : (
                   usersList.map((u) => (
-                    <tr key={u.id} className="hover:bg-line/40 transition-colors">
-                      <td className="py-3 px-2">
+                    <tr key={u.id} className="hover:bg-paper/70 transition-colors">
+                      <td className="py-4 px-5">
                         <div className="font-semibold text-ink">
-                          {u.full_name || 'Anonymous User'}
+                          {u.full_name || 'Anonymous user'}
                           {u.is_admin && (
-                            <span className="ml-2 px-1.5 py-0.5 rounded text-[9px] font-bold bg-marigold/15 text-ink">
-                              ADMIN
-                            </span>
+                            <span className="ml-2 align-middle px-2 py-0.5 rounded-full text-xs font-semibold bg-marigold/20 text-ink">Admin</span>
                           )}
                         </div>
-                        <div className="text-xs sm:text-[11px] text-muted">{u.email}</div>
+                        <div className="text-xs text-muted mt-0.5">{u.email}</div>
                       </td>
-                      <td className="py-3 px-2 text-muted whitespace-nowrap">
+                      <td className="py-4 px-3 text-muted whitespace-nowrap">
                         {new Date(u.created_at).toLocaleDateString('en-GB', {
                           day: 'numeric',
                           month: 'short',
                           year: 'numeric',
                         })}
                       </td>
-                      <td className="py-3 px-2 whitespace-nowrap">
-                        <div className="flex items-center gap-2">
-                          <div className="w-16 h-1.5 rounded-full bg-line overflow-hidden">
-                            <div
-                              className="h-full bg-accent-dark rounded-full transition-all"
-                              style={{ width: `${u.completion_percentage}%` }}
-                            />
+                      <td className="py-4 px-3 whitespace-nowrap">
+                        <div className="flex items-center gap-2.5">
+                          <div
+                            className="w-24 h-1.5 rounded-full bg-line overflow-hidden"
+                            role="progressbar"
+                            aria-valuenow={u.completion_percentage}
+                            aria-valuemin={0}
+                            aria-valuemax={100}
+                            aria-label={`${u.full_name || u.email} progress`}
+                          >
+                            <div className="h-full bg-accent rounded-full" style={{ width: `${u.completion_percentage}%` }} />
                           </div>
-                          <span className="font-bold text-ink/80">
-                            {u.completion_percentage}%
-                          </span>
+                          <span className="text-ink tabular-nums">{u.completion_percentage}%</span>
                         </div>
                       </td>
-                      <td className="py-3 px-2 text-right whitespace-nowrap">
+                      <td className="py-4 px-5 text-right whitespace-nowrap">
                         {u.marketing_opt_in ? (
-                          <span className="px-2.5 py-1 rounded-full bg-success/10 text-success text-xs sm:text-[10px] font-bold">
-                            Opted In
-                          </span>
+                          <span className="inline-block px-2.5 py-0.5 rounded-full bg-success/10 text-success text-xs font-semibold">Yes</span>
                         ) : (
-                          <span className="px-2.5 py-1 rounded-full bg-paper text-muted text-xs sm:text-[10px] font-medium">
-                            Opted Out
-                          </span>
+                          <span className="inline-block px-2.5 py-0.5 rounded-full border border-line text-muted text-xs font-semibold">No</span>
                         )}
                       </td>
                     </tr>
@@ -352,17 +325,12 @@ export default function AdminPage() {
               </tbody>
             </table>
           </div>
-        </div>
+        </section>
 
-        {/* Email Broadcast Form */}
-        <div className="bg-surface border border-line rounded-xl p-6 flex flex-col">
-          <h2 className="text-lg font-bold text-ink flex items-center gap-2 mb-2">
-            <Send className="w-5 h-5 text-accent-dark" />
-            <span>Send Email Campaign</span>
-          </h2>
-          <p className="text-xs text-muted mb-6">
-            Broadcast a manual update via Resend to all users who opted into marketing communications.
-          </p>
+        {/* Email broadcast */}
+        <section className="rounded-card border border-line bg-surface p-5">
+          <h2 className="text-lg font-display font-semibold text-ink">Email broadcast</h2>
+          <p className="mt-1 text-sm text-muted">Only goes to users who opted into emails ({peopleLabel} right now).</p>
 
           <form
             onSubmit={(e) => {
@@ -373,106 +341,84 @@ export default function AdminPage() {
               }
               setShowConfirmModal(true);
             }}
-            className="space-y-4 flex-1 flex flex-col"
+            className="mt-5 space-y-4"
           >
             <div>
-              <label className="block text-xs font-semibold text-ink/80 mb-1.5">
-                Subject Line
+              <label htmlFor="broadcast-subject" className="block text-sm font-semibold text-ink mb-1.5">
+                Subject
               </label>
               <input
+                id="broadcast-subject"
                 type="text"
                 required
                 value={emailSubject}
                 onChange={(e) => setEmailSubject(e.target.value)}
-                placeholder="e.g. New Product Management Case Studies Available!"
-                className="w-full px-3.5 py-2.5 rounded-xl text-base sm:text-xs bg-paper border border-line text-ink focus:outline-none focus:ring-2 focus:ring-accent"
+                className="w-full px-3.5 py-2.5 rounded-lg text-base sm:text-sm bg-paper border border-line text-ink focus:outline-none focus:border-accent"
               />
             </div>
 
-            <div className="flex-1 flex flex-col">
-              <label className="block text-xs font-semibold text-ink/80 mb-1.5">
-                Message Body
+            <div>
+              <label htmlFor="broadcast-message" className="block text-sm font-semibold text-ink mb-1.5">
+                Message
               </label>
               <textarea
+                id="broadcast-message"
                 required
-                rows={6}
+                rows={7}
                 value={emailMessage}
                 onChange={(e) => setEmailMessage(e.target.value)}
-                placeholder="Write your broadcast update message here..."
-                className="w-full px-3.5 py-2.5 rounded-xl text-base sm:text-xs bg-paper border border-line text-ink focus:outline-none focus:ring-2 focus:ring-accent resize-none flex-1"
+                className="w-full px-3.5 py-2.5 rounded-lg text-base sm:text-sm bg-paper border border-line text-ink focus:outline-none focus:border-accent resize-y"
               />
             </div>
 
-            <div className="pt-2">
-              <button
-                type="submit"
-                disabled={sendingEmail || !emailSubject || !emailMessage || optedInCount === 0}
-                className="w-full py-3 px-4 bg-accent-dark hover:bg-accent-dark/90 text-paper font-semibold text-xs rounded-xl transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                <Send className="w-4 h-4" />
-                <span>Prepare Campaign ({optedInCount} Opted-In)</span>
-              </button>
-            </div>
+            <button
+              type="submit"
+              disabled={sendingEmail || !emailSubject || !emailMessage || optedInCount === 0}
+              className="w-full min-h-11 px-4 rounded-full bg-accent-dark hover:bg-accent-dark/90 text-paper text-sm font-semibold transition-colors inline-flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <Send className="w-4 h-4" aria-hidden="true" />
+              Review and send
+            </button>
           </form>
-        </div>
+        </section>
       </div>
 
-      {/* Confirmation Modal before Sending Email */}
+      {/* Confirmation step before anything is sent */}
       {showConfirmModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-ink/60 animate-fade-in">
-          <div className="bg-surface border border-line rounded-xl p-6 sm:p-8 max-w-md w-full relative">
-            <button
-              onClick={() => setShowConfirmModal(false)}
-              className="absolute top-4 right-4 p-2 text-muted hover:text-muted rounded-full transition-colors"
-            >
-              <X className="w-5 h-5" />
-            </button>
+          <div role="dialog" aria-modal="true" aria-labelledby="confirm-send-title" className="bg-surface border border-line rounded-card p-6 max-w-md w-full">
+            <h2 id="confirm-send-title" className="text-xl font-display font-semibold text-ink">
+              Send to {peopleLabel}?
+            </h2>
+            <p className="mt-2 text-sm text-muted">
+              Subject: <span className="font-medium text-ink">&ldquo;{emailSubject}&rdquo;</span>
+            </p>
+            <p className="mt-1 text-sm text-muted">Once sent, it can&rsquo;t be taken back.</p>
 
-            <div className="flex items-center gap-3.5 mb-4">
-              <div className="w-10 h-10 rounded-xl bg-marigold/15 flex items-center justify-center text-ink">
-                <AlertTriangle className="w-5 h-5" />
-              </div>
-              <div>
-                <h2 className="text-lg font-bold text-ink">
-                  Confirm Email Campaign
-                </h2>
-                <p className="text-xs text-muted">
-                  Manual broadcast trigger
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-xl bg-accent-soft border border-accent/40 mb-6 text-xs text-accent-dark space-y-2">
-              <p className="font-semibold text-sm">
-                This will email {optedInCount} opted-in user{optedInCount === 1 ? '' : 's'}.
-              </p>
-              <p className="text-accent-dark">
-                Subject: <span className="font-medium text-ink">&quot;{emailSubject}&quot;</span>
-              </p>
-            </div>
-
-            <div className="flex items-center justify-end gap-3">
+            <div className="mt-6 flex items-center justify-end gap-3">
               <button
+                type="button"
                 onClick={() => setShowConfirmModal(false)}
                 disabled={sendingEmail}
-                className="py-2.5 px-4 bg-paper hover:bg-line/70 text-ink/80 font-semibold text-xs rounded-xl transition-colors disabled:opacity-50"
+                className="min-h-10 px-4 rounded-full border border-line text-sm font-semibold text-ink hover:border-ink transition-colors disabled:opacity-50"
               >
                 Cancel
               </button>
               <button
+                type="button"
                 onClick={handleSendEmail}
                 disabled={sendingEmail}
-                className="py-2.5 px-4 bg-accent-dark hover:bg-accent-dark/90 text-paper font-semibold text-xs rounded-xl transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+                className="min-h-10 px-4 rounded-full bg-accent-dark hover:bg-accent-dark/90 text-paper text-sm font-semibold transition-colors inline-flex items-center gap-2 disabled:opacity-50"
               >
                 {sendingEmail ? (
                   <>
-                    <RefreshCw className="w-4 h-4 animate-spin" />
-                    <span>Sending...</span>
+                    <RefreshCw className="w-4 h-4 animate-spin" aria-hidden="true" />
+                    Sending...
                   </>
                 ) : (
                   <>
-                    <Send className="w-4 h-4" />
-                    <span>Confirm & Send Now</span>
+                    <Send className="w-4 h-4" aria-hidden="true" />
+                    Send
                   </>
                 )}
               </button>

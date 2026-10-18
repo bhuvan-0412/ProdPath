@@ -54,10 +54,10 @@ export default function LoginPage() {
         </Link>
 
         {/* Login Card */}
-        <div className="bg-surface md:bg-surface border border-line rounded-xl p-8 ">
+        <div className="bg-surface border border-line rounded-card p-8">
           <div className="text-center mb-8">
             <LogoMark size={48} className="block mx-auto mb-4" />
-            <h1 className="text-2xl font-bold tracking-tight text-ink mb-2">
+            <h1 className="text-3xl font-display font-semibold tracking-tight text-ink mb-2">
               Welcome to ProdPath
             </h1>
             <p className="text-xs text-muted max-w-xs mx-auto">

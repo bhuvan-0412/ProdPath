@@ -303,3 +303,55 @@ export const WeekMark: React.FC<{ index: number; className?: string }> = ({ inde
     </Illo>
   );
 };
+
+// Empty search result: a magnifying glass with nothing under its lens
+export const EmptySearch: React.FC<{ className?: string }> = ({ className }) => (
+  <Illo viewBox="0 0 96 96" className={className}>
+    <g transform="rotate(-8 48 48)">
+      <line x1="58" y1="58" x2="78" y2="78" stroke={INK} strokeWidth="9" strokeLinecap="round" />
+      <line x1="62" y1="62" x2="76" y2="76" stroke="#C2603A" strokeWidth="5" strokeLinecap="round" />
+      <Shadowed>
+        <circle cx="40" cy="40" r="25" fill="#E8B04A" {...outline} />
+      </Shadowed>
+      <circle cx="40" cy="40" r="17" fill="#FBF8F1" stroke={INK} strokeWidth="1.75" />
+      <path d="M30 34 A 11 11 0 0 1 38 28" fill="none" stroke="#F3D9CC" strokeWidth="3" strokeLinecap="round" />
+    </g>
+  </Illo>
+);
+
+// 404 page: the hills with a dotted trail that wanders off and stops at a question-mark sign
+export const LostTrail: React.FC<{ className?: string }> = ({ className }) => (
+  <Illo viewBox="0 0 320 180" className={className}>
+    <defs>
+      <clipPath id="lost-trail-clip">
+        <rect x="0" y="0" width="320" height="180" rx="12" />
+      </clipPath>
+    </defs>
+    <circle className="illo-sun" cx="262" cy="40" r="22" fill="#F3D9CC" />
+    <g clipPath="url(#lost-trail-clip)">
+    <path d="M0 180 L0 120 C 60 96, 120 60, 176 54 C 230 60, 280 96, 320 110 L320 180 Z" fill="#EBC3AE" />
+    <path d="M0 150 C 70 136, 150 142, 220 150 C 260 154, 296 146, 320 148 L320 180 L0 180 Z" fill="#D98E6C" />
+    <path d="M0 168 C 80 160, 170 166, 240 170 C 280 172, 304 166, 320 167 L320 180 L0 180 Z" fill="#9E4524" />
+    </g>
+    {/* The trail climbs, loops back on itself and fades out */}
+    <path
+      d="M40 166 C 70 150, 96 140, 112 124 C 130 106, 160 112, 152 128 C 144 142, 118 126, 134 104 C 146 88, 170 84, 190 82"
+      fill="none"
+      stroke={INK}
+      strokeWidth="3"
+      strokeLinecap="round"
+      strokeDasharray="0.1 8"
+    />
+    <circle cx="40" cy="166" r="3.5" fill={INK} />
+    {/* Signpost with a question mark */}
+    <line x1="214" y1="94" x2="214" y2="54" stroke={INK} strokeWidth="2.5" strokeLinecap="round" />
+    <g transform="rotate(-6 214 46)">
+      <Shadowed offset={3}>
+        <path d="M196 34 L228 34 L236 44 L228 54 L196 54 Z" fill="#E8B04A" {...outline} />
+      </Shadowed>
+      <text x="213" y="50" textAnchor="middle" fontFamily="var(--font-display), Georgia, serif" fontSize="16" fontWeight="700" fill={INK}>
+        ?
+      </text>
+    </g>
+  </Illo>
+);

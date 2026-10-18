@@ -2,22 +2,34 @@
 
 import React, { useState, useMemo, Suspense } from 'react';
 import { useProgress } from '@/context/ProgressContext';
-import { ResourceCard } from '@/components/ResourceCard';
+import { CaseStudyCard } from '@/components/CaseStudyCard';
 import { AddResourceModal } from '@/components/AddResourceModal';
-import { BookMarked, Search, Plus, Filter } from 'lucide-react';
+import { EmptySearch } from '@/components/landing/Illustrations';
+import { PageSkeleton } from '@/components/Skeleton';
+import weeksData from '@/data/weeks.json';
+import { Search, Plus, ChevronDown } from 'lucide-react';
 import { PageBackdrop } from '@/components/PageBackdrop';
 import { PageIcons } from '@/components/decor/BackgroundIcons';
 import { CASE_STUDY_ICONS } from '@/components/decor/iconLayouts';
 
+// Quiet pill-style controls for the search box and filters
+const PILL =
+  'h-11 sm:h-10 rounded-full border border-line bg-surface text-base sm:text-sm text-ink placeholder:text-muted [&::-webkit-search-cancel-button]:appearance-none focus:outline-none focus-visible:border-accent focus:border-accent transition-colors';
+// Native selects with the browser arrow hidden and a small chevron drawn on top instead
+const SELECT = 'appearance-none cursor-pointer w-full sm:w-auto pl-4 pr-10';
+const CHEVRON = 'w-4 h-4 text-muted absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none';
+
+// "Week 1: PM Foundations" -> "Week 1"
+const WEEK_OPTIONS = weeksData.weeks.map((w) => ({ id: w.id, label: w.title.split(':')[0].trim() }));
+
 function ResourcesContent() {
-  const { getAllResources, isCompleted, getCaseStudyStats } = useProgress();
+  const { getAllResources, isCompleted, isLoadingAuth } = useProgress();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedWeek, setSelectedWeek] = useState<string>('all');
   const [selectedStatus, setSelectedStatus] = useState<string>('all');
   const [modalOpen, setModalOpen] = useState(false);
 
   const allResources = getAllResources();
-  const caseStats = getCaseStudyStats();
 
   // Filter ONLY case studies (from caseStudies.json and any custom case studies)
   const caseStudiesOnly = useMemo(() => {
@@ -56,127 +68,88 @@ function ResourcesContent() {
     });
   }, [caseStudiesOnly, searchQuery, selectedWeek, selectedStatus, isCompleted]);
 
-  return (
-    <div className="space-y-8 animate-fade-in">
-      {/* Header */}
-      <div className="rounded-xl bg-surface border border-line p-6 sm:p-8 text-ink">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div>
-            <div className="inline-flex items-center gap-2 text-xs font-semibold text-accent-dark mb-1">
-              <BookMarked className="w-3.5 h-3.5" />
-              <span>PM Strategy & Case Analysis</span>
-            </div>
-            <h1 className="text-2xl sm:text-3xl font-display font-semibold text-ink">
-              Case Studies
-            </h1>
-            <p className="text-sm text-muted mt-1 max-w-xl">
-              Analyze real-world product decisions, breakthrough strategic frameworks, and actionable executive takeaways.
-            </p>
-          </div>
+  // Progress arrives with the sign-in check; show placeholder blocks until then
+  if (isLoadingAuth) return <PageSkeleton label="Loading case studies" />;
 
-          <button
-            onClick={() => setModalOpen(true)}
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-accent-dark hover:bg-accent-dark/90 text-paper text-xs font-bold transition-all self-start sm:self-center"
-          >
-            <Plus className="w-4 h-4" />
-            <span>Add Custom Case Study</span>
-          </button>
-        </div>
+  const filtersActive = Boolean(searchQuery) || selectedWeek !== 'all' || selectedStatus !== 'all';
+
+  return (
+    <div className="space-y-6 animate-fade-in">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+        <h1 className="text-3xl sm:text-4xl font-display font-semibold tracking-tight text-ink">Case Studies</h1>
+        <button
+          type="button"
+          onClick={() => setModalOpen(true)}
+          className="inline-flex items-center justify-center gap-2 self-start sm:self-auto min-h-11 sm:min-h-10 px-4 rounded-full border border-ink/70 bg-surface text-ink text-sm font-semibold hover:shadow-offset hover:border-ink transition-all"
+        >
+          <Plus className="w-4 h-4" aria-hidden="true" />
+          Add custom case study
+        </button>
       </div>
 
-      {/* Control Bar: Search & Week/Status Filters */}
-      <div className="bg-surface p-4 rounded-xl border border-line space-y-4">
-        {/* Search Input */}
-        <div className="relative">
-          <Search className="w-4 h-4 text-muted absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+      {/* Search and filters: one row from 640px, stacked on phones */}
+      <div className="flex flex-col sm:flex-row sm:items-center gap-2.5">
+        <label className="relative flex-1 min-w-0">
+          <span className="sr-only">Search case studies</span>
+          <Search className="w-4 h-4 text-muted absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none" aria-hidden="true" />
           <input
-            type="text"
-            placeholder="Search case studies by title, summary, or takeaway (e.g. First Principles, Growth, Strategy)..."
+            type="search"
+            placeholder="Search case studies"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 rounded-xl text-base sm:text-sm bg-paper border border-line text-ink placeholder-muted focus:outline-none focus:ring-2 focus:ring-accent transition-all"
+            className={`${PILL} w-full pl-10 pr-4`}
           />
-        </div>
-
-        {/* Filter Badges */}
-        <div className="flex flex-wrap items-center gap-3 pt-1 text-xs">
-          <div className="flex items-center gap-1.5 font-bold text-muted mr-1">
-            <Filter className="w-3.5 h-3.5" />
-            <span>Filters:</span>
-          </div>
-
-          {/* Week Selector */}
-          <select
-            value={selectedWeek}
-            onChange={(e) => setSelectedWeek(e.target.value)}
-            className="min-h-10 sm:min-h-0 px-3 py-1.5 rounded-lg text-base sm:text-xs bg-paper text-ink/80 border border-line font-medium focus:outline-none focus:ring-1 focus:ring-accent"
-          >
-            <option value="all">All Weeks</option>
-            <option value="week-1">Week 1 (PM Foundations)</option>
-            <option value="week-2">Week 2 (Metrics, MVP & Strategy)</option>
-            <option value="week-3">Week 3 (Tech & AI Tools)</option>
-            <option value="week-4">Week 4 (Interview Prep)</option>
-            <option value="custom">Custom Added</option>
+        </label>
+        <label className="relative sm:w-auto">
+          <span className="sr-only">Filter by week</span>
+          <ChevronDown className={CHEVRON} aria-hidden="true" />
+          <select value={selectedWeek} onChange={(e) => setSelectedWeek(e.target.value)} className={`${PILL} ${SELECT}`}>
+            <option value="all">All weeks</option>
+            {WEEK_OPTIONS.map((w) => (
+              <option key={w.id} value={w.id}>
+                {w.label}
+              </option>
+            ))}
+            <option value="custom">Custom added</option>
           </select>
-
-          {/* Status Selector */}
-          <select
-            value={selectedStatus}
-            onChange={(e) => setSelectedStatus(e.target.value)}
-            className="min-h-10 sm:min-h-0 px-3 py-1.5 rounded-lg text-base sm:text-xs bg-paper text-ink/80 border border-line font-medium focus:outline-none focus:ring-1 focus:ring-accent"
-          >
-            <option value="all">All Statuses</option>
-            <option value="pending">Uncompleted</option>
+        </label>
+        <label className="relative sm:w-auto">
+          <span className="sr-only">Filter by completion</span>
+          <ChevronDown className={CHEVRON} aria-hidden="true" />
+          <select value={selectedStatus} onChange={(e) => setSelectedStatus(e.target.value)} className={`${PILL} ${SELECT}`}>
+            <option value="all">Any status</option>
+            <option value="pending">Not completed</option>
             <option value="completed">Completed</option>
           </select>
-
-          {/* Reset Filters */}
-          {(searchQuery || selectedWeek !== 'all' || selectedStatus !== 'all') && (
-            <button
-              onClick={() => {
-                setSearchQuery('');
-                setSelectedWeek('all');
-                setSelectedStatus('all');
-              }}
-              className="text-xs text-accent-dark hover:underline font-semibold ml-auto"
-            >
-              Reset Filters
-            </button>
-          )}
-        </div>
+        </label>
+        {filtersActive && (
+          <button
+            type="button"
+            onClick={() => {
+              setSearchQuery('');
+              setSelectedWeek('all');
+              setSelectedStatus('all');
+            }}
+            className="self-start sm:self-auto min-h-10 px-2 text-sm font-semibold text-accent-dark hover:underline underline-offset-2"
+          >
+            Clear
+          </button>
+        )}
       </div>
 
-      {/* Case Study Counter Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-muted px-1">
-        <span>
-          Showing <strong className="text-ink">{filteredCaseStudies.length}</strong> case studies
-        </span>
-        <div className="inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-lg bg-accent-soft text-accent-dark border border-accent/40 self-start sm:self-auto">
-          <BookMarked className="w-3.5 h-3.5" />
-          <span>Case Studies Progress: {caseStats.completed}/{caseStats.total} ({caseStats.percentage}%)</span>
-        </div>
-      </div>
-
-      {/* Grid of Case Study Cards */}
       {filteredCaseStudies.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {filteredCaseStudies.map((res) => (
-            <ResourceCard key={res.id} resource={res} showWeekBadge={true} glow />
+            <CaseStudyCard key={res.id} resource={res} />
           ))}
         </div>
       ) : (
-        <div className="bg-surface rounded-xl p-12 text-center border border-line space-y-3">
-          <BookMarked className="w-10 h-10 text-muted mx-auto opacity-60" />
-          <h3 className="font-display text-base font-bold text-ink">
-            No case studies match your filter
-          </h3>
-          <p className="text-xs text-muted max-w-sm mx-auto">
-            Try adjusting your search query or reset filters to view all PM case studies.
-          </p>
+        <div className="flex flex-col items-center text-center gap-3 py-14">
+          <EmptySearch className="w-20 h-20" />
+          <p className="text-sm text-muted">No case studies match that search.</p>
         </div>
       )}
 
-      {/* Add Custom Resource Modal */}
       <AddResourceModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
     </div>
   );
@@ -188,11 +161,7 @@ export default function ResourcesPage() {
     <PageBackdrop variant="dots" />
     <PageIcons icons={CASE_STUDY_ICONS} />
     <Suspense
-      fallback={
-        <div className="p-8 text-center text-xs text-muted animate-pulse">
-          Loading case studies...
-        </div>
-      }
+      fallback={<PageSkeleton label="Loading case studies" />}
     >
       <ResourcesContent />
     </Suspense>

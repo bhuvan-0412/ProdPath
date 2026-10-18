@@ -10,6 +10,7 @@ import { HeatMap } from '@/components/activity/HeatMap';
 import { Flame, EmptyFlag } from '@/components/landing/Illustrations';
 import { countByDay, getActivityStats, buildHeatMap } from '@/lib/activity';
 import { PageBackdrop } from '@/components/PageBackdrop';
+import { Skeleton } from '@/components/Skeleton';
 import { PageIcons } from '@/components/decor/BackgroundIcons';
 import { ACTIVITY_ICONS } from '@/components/decor/iconLayouts';
 
@@ -24,7 +25,7 @@ const StatTile: React.FC<{ value: number | null; label: string; children?: React
 );
 
 export default function ActivityPage() {
-  const { isCompleted, toggleCompleted, completedDates, getAllResources } = useProgress();
+  const { isCompleted, toggleCompleted, completedDates, getAllResources, isLoadingAuth } = useProgress();
   const allResources = getAllResources();
 
   // "Today" is only known in the browser (the page is pre-rendered), so wait for it before drawing
@@ -116,9 +117,9 @@ export default function ActivityPage() {
         <h2 id="heatmap-heading" className="text-xs font-semibold uppercase tracking-[0.12em] text-muted mb-4">
           Last 12 weeks
         </h2>
-        {heatMap ? <HeatMap data={heatMap} /> : <div className="h-[230px]" aria-hidden="true" />}
+        {heatMap && !isLoadingAuth ? <HeatMap data={heatMap} /> : <Skeleton className="h-[230px]" />}
 
-        {now && isEmpty && (
+        {now && !isLoadingAuth && isEmpty && (
           <div className="mt-6 pt-6 border-t border-line flex flex-col sm:flex-row items-center gap-4 sm:gap-6 text-center sm:text-left">
             <EmptyFlag className="w-24 flex-shrink-0" />
             <div className="space-y-3">

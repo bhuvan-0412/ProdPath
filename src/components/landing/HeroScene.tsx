@@ -11,6 +11,7 @@ import {
   GtmCard,
   HeartCard,
   AiCard,
+  CardLabels,
   PERSONA_SIZE,
   WIREFLOW_SIZE,
   NORTH_STAR_SIZE,
@@ -24,7 +25,9 @@ import {
 // The hero illustration: the product lifecycle as a climb. A dotted trail zig-zags from the foot of the hill up
 // a mountain to the gold summit flag, passing seven framework cards in order (Discover -> AI PM), with the
 // AI card as the high point beside the flag. Decorative only (aria-hidden). Two layouts: all seven cards
-// from 640px up; Persona, Wireframe, HEART and the AI card on phones.
+// from 640px up; Persona, Wireframe, HEART and the AI card on phones. The small inner labels (step names,
+// tags, column headers) only show from 1280px, where the scene is drawn near 1:1 and they stay 11px or
+// larger; below that each card keeps its title and drawings.
 //
 // Animation (transform/opacity, plus the trail's reveal mask): the trail draws itself and each card pops in
 // as the line reaches it, over about 3.2s; then the flag waves once. Afterwards the cards float (CSS, paused
@@ -80,7 +83,7 @@ const DESKTOP: Layout = {
   ],
   flag: [352, 92],
   cards: [
-    { key: 'persona', Card: PersonaCard, size: PERSONA_SIZE, x: 12, y: 500, rot: -3, stop: 0, depth: 6, float: { px: 5, dur: 6.4, delay: 0 } },
+    { key: 'persona', Card: PersonaCard, size: PERSONA_SIZE, x: 12, y: 494, rot: -3, stop: 0, depth: 6, float: { px: 5, dur: 6.4, delay: 0 } },
     { key: 'wireflow', Card: WireflowCard, size: WIREFLOW_SIZE, x: 492, y: 430, rot: 2, stop: 1, depth: 5, float: { px: 5, dur: 6.8, delay: 3.4 } },
     { key: 'northstar', Card: NorthStarCard, size: NORTH_STAR_SIZE, x: 12, y: 336, rot: 2, stop: 2, depth: 7, float: { px: 4, dur: 7.2, delay: 1.2 } },
     { key: 'rice', Card: RiceCard, size: RICE_SIZE, x: 496, y: 268, rot: -2, stop: 3, depth: 6, float: { px: 6, dur: 5.6, delay: 2.4 } },
@@ -218,8 +221,9 @@ const CardSlot: React.FC<{
 const Scene: React.FC<{
   layout: Layout;
   className: string;
+  labels?: boolean;
   pointer: { x: MotionValue<number>; y: MotionValue<number> };
-}> = ({ layout, className, pointer }) => {
+}> = ({ layout, className, labels = false, pointer }) => {
   const ref = useRef<SVGSVGElement>(null);
   const entered = useInView(ref, { once: true, amount: 0.25 });
   const visible = useInView(ref);
@@ -258,6 +262,7 @@ const Scene: React.FC<{
           />
         </mask>
       </defs>
+      <CardLabels.Provider value={labels}>
       <g clipPath={`url(#${id}-clip)`}>
         <rect className="illo-sky" x="0" y="0" width={w} height={h} fill="#F6F1E7" />
         <circle className="illo-sun" cx={layout.sun.cx} cy={layout.sun.cy} r={layout.sun.r} fill="#F3D9CC" />
@@ -318,6 +323,7 @@ const Scene: React.FC<{
           </g>
         ))}
       </g>
+      </CardLabels.Provider>
     </svg>
   );
 };
@@ -344,7 +350,8 @@ export const HeroScene: React.FC<{ className?: string }> = ({ className = '' }) 
   const pointer = { x, y };
   return (
     <div className={className}>
-      <Scene layout={DESKTOP} className="hidden sm:block" pointer={pointer} />
+      <Scene layout={DESKTOP} className="hidden xl:block" labels pointer={pointer} />
+      <Scene layout={DESKTOP} className="hidden sm:block xl:hidden" pointer={pointer} />
       <Scene layout={PHONE} className="sm:hidden" pointer={pointer} />
     </div>
   );

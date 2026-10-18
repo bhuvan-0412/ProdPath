@@ -20,26 +20,46 @@ export interface CardProps {
   delay: number;
 }
 
-const Frame: React.FC<{ w: number; h: number; title: string; step?: string; titleSize?: number; stepSize?: number; children?: React.ReactNode }> = ({
+// Whether the small inner labels (step names, tags, column headers) are drawn. The hero turns them off
+// below 1280px, where the scene renders too small for them to stay readable; titles and drawings remain.
+export const CardLabels = React.createContext(true);
+// Inner labels are 11.5 units: the hero renders at about 1:1 from 1280px, so they stay at least 11px
+const LABEL = 11.5;
+
+const Frame: React.FC<{
+  w: number;
+  h: number;
+  title: string;
+  step?: string;
+  titleSize?: number;
+  stepSize?: number;
+  /** Show the step even when inner labels are off (the AI card's large step stays readable everywhere) */
+  keepStep?: boolean;
+  children?: React.ReactNode;
+}> = ({
   w,
   h,
   title,
   step,
-  titleSize = 14,
-  stepSize = 8,
+  titleSize,
+  stepSize = LABEL,
+  keepStep = false,
   children,
 }) => {
+  const labels = React.useContext(CardLabels);
+  // Without labels the scene can render at under 80% scale (1024px), so titles go up a size to stay 11px+
+  const titleFont = titleSize ?? (labels ? 14 : 15);
   const [num, ...words] = (step || '').split(' ');
   return (
     <>
       <rect className="illo-shadow" x="4" y="4" width={w} height={h} rx="8" fill={INK} />
       <rect x="0" y="0" width={w} height={h} rx="8" fill="#FBF8F1" stroke={INK} strokeWidth="2" />
-      <text x="12" y="22" style={DISPLAY} fontSize={titleSize} fontWeight="600" fill={INK}>
+      <text x="12" y="22" style={DISPLAY} fontSize={titleFont} fontWeight="600" fill={INK}>
         {title}
       </text>
       {/* Lifecycle step, e.g. "1 Discover" */}
-      {step && (
-        <text x={w - 10} y={stepSize > 8 ? 24 : 20} textAnchor="end" style={SANS} fontSize={stepSize} fontWeight="600" fill="#9E4524">
+      {step && (labels || keepStep) && (
+        <text x={w - 10} y={stepSize > 12 ? 24 : 22} textAnchor="end" style={SANS} fontSize={stepSize} fontWeight="600" fill="#9E4524">
           <tspan fontWeight="800">{num}</tspan> {words.join(' ')}
         </text>
       )}
@@ -71,32 +91,41 @@ const Draw: React.FC<CardProps & { duration?: number } & React.SVGProps<SVGPathE
   />
 );
 
-const Tag: React.FC<{ x: number; y: number; w: number; label: string; tone: 'goal' | 'pain' }> = ({ x, y, w, label, tone }) => (
-  <g>
-    <rect x={x} y={y} width={w} height="15" rx="7.5" fill={tone === 'goal' ? '#F3D9CC' : '#C2603A'} stroke={INK} strokeWidth="1.25" />
-    <text x={x + w / 2} y={y + 10.5} textAnchor="middle" style={SANS} fontSize="8" fontWeight="600" fill={tone === 'goal' ? INK : '#F6F1E7'}>
-      {label}
-    </text>
-  </g>
-);
+// A pill with a goal or pain point; without labels it stays as a blank pill with a short text bar
+const Tag: React.FC<{ x: number; y: number; w: number; label: string; tone: 'goal' | 'pain' }> = ({ x, y, w, label, tone }) => {
+  const labels = React.useContext(CardLabels);
+  const textFill = tone === 'goal' ? INK : '#F6F1E7';
+  return (
+    <g>
+      <rect x={x} y={y} width={w} height="19" rx="9.5" fill={tone === 'goal' ? '#F3D9CC' : '#C2603A'} stroke={INK} strokeWidth="1.25" />
+      {labels ? (
+        <text x={x + w / 2} y={y + 13.5} textAnchor="middle" style={SANS} fontSize={LABEL} fontWeight="600" fill={textFill}>
+          {label}
+        </text>
+      ) : (
+        <rect x={x + 12} y={y + 7.75} width={w - 24} height="3.5" rx="1.75" fill={textFill} opacity="0.55" />
+      )}
+    </g>
+  );
+};
 
 /* ---------- 1 Discover: user persona ---------- */
 
-export const PERSONA_SIZE = { w: 176, h: 100 };
+export const PERSONA_SIZE = { w: 180, h: 108 };
 
 export const PersonaCard: React.FC<CardProps> = ({ on, delay }) => (
   <Frame {...PERSONA_SIZE} title="Persona" step="1 Discover">
     {/* Silhouette avatar: no name, no age */}
-    <circle cx="36" cy="62" r="20" fill="#F3D9CC" stroke={INK} strokeWidth="1.5" />
-    <circle cx="36" cy="56" r="6.5" fill={INK} />
-    <path d="M24 77 C 24 66, 48 66, 48 77" fill={INK} />
+    <circle cx="36" cy="67" r="20" fill="#F3D9CC" stroke={INK} strokeWidth="1.5" />
+    <circle cx="36" cy="61" r="6.5" fill={INK} />
+    <path d="M24 82 C 24 71, 48 71, 48 82" fill={INK} />
     {[
-      { y: 34, w: 64, label: 'Learn fast', tone: 'goal' as const },
-      { y: 54, w: 68, label: 'Land a role', tone: 'goal' as const },
-      { y: 74, w: 52, label: 'No time', tone: 'pain' as const },
+      { y: 34, w: 80, label: 'Learn fast', tone: 'goal' as const },
+      { y: 57, w: 86, label: 'Land a role', tone: 'goal' as const },
+      { y: 80, w: 64, label: 'No time', tone: 'pain' as const },
     ].map((tag, i) => (
       <Pop key={tag.label} on={on} delay={delay + i * 0.12} from={0.6}>
-        <Tag x={68} {...tag} />
+        <Tag x={70} {...tag} />
       </Pop>
     ))}
   </Frame>
@@ -118,19 +147,21 @@ const starPath = (cx: number, cy: number, outer: number, inner: number) =>
     return `${i ? 'L' : 'M'}${(cx + r * Math.cos(a)).toFixed(1)} ${(cy + r * Math.sin(a)).toFixed(1)}`;
   }).join(' ') + ' Z';
 
-export const NORTH_STAR_SIZE = { w: 156, h: 124 };
+export const NORTH_STAR_SIZE = { w: 166, h: 128 };
 // Three input metrics (blank bars, no figures), each pushing up into the one key metric
 const NS_INPUTS = [
-  { x: 34, fill: '#F3D9CC', to: [64, 73] },
-  { x: 78, fill: '#C2603A', to: [78, 71] },
-  { x: 122, fill: '#E8B04A', to: [92, 73] },
+  { x: 37, fill: '#F3D9CC', to: [69, 73] },
+  { x: 83, fill: '#C2603A', to: [83, 71] },
+  { x: 129, fill: '#E8B04A', to: [97, 73] },
 ];
 
-export const NorthStarCard: React.FC<CardProps> = ({ on, delay }) => (
+export const NorthStarCard: React.FC<CardProps> = ({ on, delay }) => {
+  const labels = React.useContext(CardLabels);
+  return (
   <Frame {...NORTH_STAR_SIZE} title="North Star" step="3 Strategy">
     {/* A soft glow that blooms once behind the star (it ends invisible, so reduced motion simply skips it) */}
     <motion.circle
-      cx="78"
+      cx="83"
       cy="55"
       r="24"
       fill="#E8B04A"
@@ -140,7 +171,7 @@ export const NorthStarCard: React.FC<CardProps> = ({ on, delay }) => (
       transition={{ delay: delay + 0.75, duration: 0.9, ease: 'easeOut' }}
     />
     <motion.g className="m-final" animate={on ? { scale: [1, 1.16, 1] } : undefined} transition={{ delay: delay + 0.75, duration: 0.6, ease: 'easeInOut' }}>
-      <path d={starPath(78, 55, 19, 8)} fill="#E8B04A" stroke={INK} strokeWidth="2" strokeLinejoin="round" />
+      <path d={starPath(83, 55, 19, 8)} fill="#E8B04A" stroke={INK} strokeWidth="2" strokeLinejoin="round" />
     </motion.g>
     {NS_INPUTS.map((input, i) => (
       <g key={input.x}>
@@ -149,17 +180,20 @@ export const NorthStarCard: React.FC<CardProps> = ({ on, delay }) => (
           <Draw on={on} delay={delay + i * 0.12 + 0.25} d={arrowHead(input.x, 89, input.to[0], input.to[1])} />
         </g>
         <rect x={input.x - 18} y="92" width="36" height="9" rx="4.5" fill={input.fill} stroke={INK} strokeWidth="1.25" />
-        <text x={input.x} y="114" textAnchor="middle" style={SANS} fontSize="8" fontWeight="600" fill={INK}>
-          Input
-        </text>
+        {labels && (
+          <text x={input.x} y="117" textAnchor="middle" style={SANS} fontSize={LABEL} fontWeight="600" fill={INK}>
+            Input
+          </text>
+        )}
       </g>
     ))}
   </Frame>
-);
+  );
+};
 
 /* ---------- 4 Prioritize: RICE ---------- */
 
-export const RICE_SIZE = { w: 172, h: 104 };
+export const RICE_SIZE = { w: 172, h: 110 };
 const RICE_COLUMNS = [
   { label: 'R', x: 24 },
   { label: 'I', x: 50 },
@@ -174,13 +208,15 @@ const RICE_ROWS = [
   [12, 7, 11, 15, 14],
 ];
 
-export const RiceCard: React.FC<CardProps> = ({ on, delay }) => (
+export const RiceCard: React.FC<CardProps> = ({ on, delay }) => {
+  const labels = React.useContext(CardLabels);
+  return (
   <Frame {...RICE_SIZE} title="RICE" step="4 Prioritize">
     {/* The winning row lights up marigold */}
     <motion.rect
       className="m-final"
       x="8"
-      y="43"
+      y="49"
       width="156"
       height="17"
       rx="4"
@@ -191,12 +227,13 @@ export const RiceCard: React.FC<CardProps> = ({ on, delay }) => (
       animate={on ? { opacity: 1 } : undefined}
       transition={{ delay: delay + 0.45, duration: 0.3 }}
     />
-    {RICE_COLUMNS.map((col) => (
-      <text key={col.label} x={col.x} y="38" textAnchor="middle" style={SANS} fontSize="8" fontWeight="700" fill={INK}>
-        {col.label}
-      </text>
-    ))}
-    <line x1="10" y1="41" x2="162" y2="41" stroke={INK} strokeWidth="1" opacity="0.4" />
+    {labels &&
+      RICE_COLUMNS.map((col) => (
+        <text key={col.label} x={col.x} y="42" textAnchor="middle" style={SANS} fontSize={LABEL} fontWeight="700" fill={INK}>
+          {col.label}
+        </text>
+      ))}
+    <line x1="10" y1="46" x2="162" y2="46" stroke={INK} strokeWidth="1" opacity="0.4" />
     {RICE_ROWS.map((row, r) =>
       row.map((w, c) => {
         const cx = RICE_COLUMNS[c].x;
@@ -206,7 +243,7 @@ export const RiceCard: React.FC<CardProps> = ({ on, delay }) => (
             key={`${r}-${c}`}
             className="m-final"
             x={cx - w / 2}
-            y={49 + r * 18}
+            y={55 + r * 18}
             width={w}
             height="5"
             rx="2.5"
@@ -221,7 +258,8 @@ export const RiceCard: React.FC<CardProps> = ({ on, delay }) => (
       })
     )}
   </Frame>
-);
+  );
+};
 
 /* ---------- 2 Design: wireframe + user flow ---------- */
 
@@ -266,14 +304,16 @@ export const WireflowCard: React.FC<CardProps> = ({ on, delay }) => (
 
 /* ---------- 5 Launch: GTM plan ---------- */
 
-export const GTM_SIZE = { w: 170, h: 100 };
+export const GTM_SIZE = { w: 184, h: 100 };
 const GTM_ROWS = [
   { label: 'Audience', w: 44 },
   { label: 'Channels', w: 34 },
   { label: 'Message', w: 50 },
 ];
 
-export const GtmCard: React.FC<CardProps> = ({ on, delay }) => (
+export const GtmCard: React.FC<CardProps> = ({ on, delay }) => {
+  const labels = React.useContext(CardLabels);
+  return (
   <Frame {...GTM_SIZE} title="GTM plan" step="5 Launch">
     {/* A small rocket that lifts a little */}
     <motion.g
@@ -292,12 +332,16 @@ export const GtmCard: React.FC<CardProps> = ({ on, delay }) => (
       const y = 46 + i * 18;
       return (
         <g key={row.label}>
-          <text x="54" y={y} style={SANS} fontSize="8" fontWeight="600" fill={INK}>
-            {row.label}
-          </text>
+          {labels ? (
+            <text x="54" y={y} style={SANS} fontSize={LABEL} fontWeight="600" fill={INK}>
+              {row.label}
+            </text>
+          ) : (
+            <rect x="54" y={y - 6} width="40" height="5" rx="2.5" fill={INK} opacity="0.45" />
+          )}
           <motion.rect
             className="m-final"
-            x="104"
+            x="118"
             y={y - 6}
             width={row.w}
             height="6"
@@ -312,7 +356,8 @@ export const GtmCard: React.FC<CardProps> = ({ on, delay }) => (
       );
     })}
   </Frame>
-);
+  );
+};
 
 /* ---------- 6 Measure: HEART ---------- */
 
@@ -434,7 +479,7 @@ const AI_NODES: React.ReactNode[] = [
 export const AiCard: React.FC<CardProps> = ({ on, delay }) => {
   const step = 0.28;
   return (
-    <Frame {...AI_SIZE} title="AI workflow" titleSize={17} step="7 AI PM" stepSize={14.2}>
+    <Frame {...AI_SIZE} title="AI workflow" titleSize={17} step="7 AI PM" stepSize={14.2} keepStep>
       {/* "AI track" pill in the header */}
       <rect x="128" y="8" width="74" height="22" rx="11" fill="#E8B04A" stroke={INK} strokeWidth="1.25" />
       <text x="165" y="24" textAnchor="middle" style={SANS} fontSize="14.2" fontWeight="700" fill={INK}>
