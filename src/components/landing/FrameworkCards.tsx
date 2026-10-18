@@ -21,10 +21,11 @@ export interface CardProps {
 }
 
 // Whether the small inner labels (step names, tags, column headers) are drawn. The hero turns them off
-// below 1280px, where the scene renders too small for them to stay readable; titles and drawings remain.
+// whenever the scene renders too small for them to stay 11px or larger; titles and drawings remain.
 export const CardLabels = React.createContext(true);
-// Inner labels are 11.5 units: the hero renders at about 1:1 from 1280px, so they stay at least 11px
-const LABEL = 11.5;
+// Inner labels are 11.5 units, so they need the scene drawn at 11 / 11.5 (about 96%) of its size or more
+export const LABEL = 11.5;
+export const MIN_LABEL_PX = 11;
 
 const Frame: React.FC<{
   w: number;
