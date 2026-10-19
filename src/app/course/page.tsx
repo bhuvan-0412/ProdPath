@@ -6,7 +6,7 @@ import { useSearchParams } from 'next/navigation';
 import { useProgress } from '@/context/ProgressContext';
 import { ResourceCard } from '@/components/ResourceCard';
 import { ProgressBar } from '@/components/ProgressBar';
-import { AddResourceModal } from '@/components/AddResourceModal';
+import dynamic from 'next/dynamic';
 import { TaskHeader } from '@/components/ResourcePanels';
 import { GlowCard } from '@/components/GlowCard';
 import weeksData from '@/data/weeks.json';
@@ -19,6 +19,9 @@ import { PageBackdrop } from '@/components/PageBackdrop';
 import { PageSkeleton } from '@/components/Skeleton';
 import { PageIcons } from '@/components/decor/BackgroundIcons';
 import { COURSE_ICONS } from '@/components/decor/iconLayouts';
+
+// Loaded the first time someone adds a resource, not with the page
+const AddResourceModal = dynamic(() => import('@/components/AddResourceModal').then((m) => m.AddResourceModal), { ssr: false });
 
 const getTaskDomId = (weekId: string, dayNum: number, taskLabel: string) => {
   const n = weekId.replace('week-', '');
@@ -96,6 +99,10 @@ function CourseContent() {
   }, [activeWeekId]);
   const [modalOpen, setModalOpen] = useState(false);
   const [targetWeekForAdd, setTargetWeekForAdd] = useState('week-1');
+  // The modal mounts on first open and then stays mounted (so a half-filled form survives closing it, as before).
+  // It reads its default week only when it mounts, which used to be page load: keep passing that first value.
+  const [modalMounted, setModalMounted] = useState(false);
+  const [modalDefaultWeek] = useState(targetWeekForAdd);
 
   const weeks = weeksData.weeks as Week[];
 
@@ -149,6 +156,7 @@ function CourseContent() {
 
   const handleOpenAddModal = (weekId: string) => {
     setTargetWeekForAdd(weekId);
+    setModalMounted(true);
     setModalOpen(true);
   };
 
@@ -437,11 +445,13 @@ function CourseContent() {
       </div>
 
       {/* Modal */}
-      <AddResourceModal
-        isOpen={modalOpen}
-        onClose={() => setModalOpen(false)}
-        defaultWeekId={targetWeekForAdd}
-      />
+      {modalMounted && (
+        <AddResourceModal
+          isOpen={modalOpen}
+          onClose={() => setModalOpen(false)}
+          defaultWeekId={modalDefaultWeek}
+        />
+      )}
     </div>
   );
 }

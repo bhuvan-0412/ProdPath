@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import { createClient } from '@/lib/supabase/client';
 import { LogIn, ArrowLeft } from 'lucide-react';
 import { LogoMark } from '@/components/Logo';
 import Link from 'next/link';
@@ -17,6 +16,8 @@ export default function LoginPage() {
     try {
       setLoading(true);
       setErrorMsg(null);
+      // Loaded on demand, so the page's first download stays small
+      const { createClient } = await import('@/lib/supabase/client');
       const supabase = createClient();
       const origin = typeof window !== 'undefined' ? window.location.origin : '';
 

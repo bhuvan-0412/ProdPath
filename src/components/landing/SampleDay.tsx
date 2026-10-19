@@ -1,9 +1,8 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import { useInView, useReducedMotion } from 'motion/react';
-import './reducedMotion';
 import { Check } from 'lucide-react';
+import { useInView, prefersReducedMotion } from './inView';
 
 // The "A day on ProdPath" sample card. It server-renders with the first item done; in the browser it starts
 // empty and ticks each item in turn when it scrolls into view, with the progress bar filling to match.
@@ -25,13 +24,12 @@ const TICK_MS = 550;
 export const SampleDay: React.FC<SampleDayProps> = ({ dayNumber, brief, tasks }) => {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.45 });
-  const reduce = useReducedMotion();
   const order = tasks.flatMap((t) => t.resources.map((r) => r.id));
   const total = order.length;
   const [done, setDone] = useState(1);
 
   useEffect(() => {
-    if (reduce) {
+    if (prefersReducedMotion()) {
       setDone(total);
       return;
     }
@@ -46,7 +44,7 @@ export const SampleDay: React.FC<SampleDayProps> = ({ dayNumber, brief, tasks })
       if (count >= total) window.clearInterval(timer);
     }, TICK_MS);
     return () => window.clearInterval(timer);
-  }, [inView, reduce, total]);
+  }, [inView, total]);
 
   const isDone = (id: string) => order.indexOf(id) < done;
 

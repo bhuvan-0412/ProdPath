@@ -1,14 +1,11 @@
-'use client';
-
 import React from 'react';
 import Link from 'next/link';
-import { MessageSquare, Mail, ExternalLink } from 'lucide-react';
-import { useProgress } from '@/context/ProgressContext';
+import { Mail, ExternalLink } from 'lucide-react';
 import { Logo } from './Logo';
+import { FeedbackLink } from './FeedbackLink';
 
+// Server component: only the feedback button runs in the browser
 export const Footer: React.FC = () => {
-  const { openFeedbackModal } = useProgress();
-
   return (
     <footer className="w-full border-t border-line bg-surface py-10 transition-colors mt-auto">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
@@ -19,13 +16,7 @@ export const Footer: React.FC = () => {
             <p className="text-xs text-muted leading-relaxed max-w-xs">
               Free 5-week product management path.
             </p>
-            <button
-              onClick={openFeedbackModal}
-              className="hover:underline text-accent-dark text-xs font-semibold inline-flex items-center gap-1.5 transition-colors min-h-10 sm:min-h-0"
-            >
-              <MessageSquare className="w-3.5 h-3.5" />
-              <span>Send Feedback</span>
-            </button>
+            <FeedbackLink />
           </div>
 
           {/* Contact Section */}

@@ -1,7 +1,9 @@
 'use client';
 
 import React, { useEffect, useId, useMemo, useRef, useState } from 'react';
-import { motion, useInView, useMotionValue, useSpring, useTransform, useReducedMotion, type MotionValue } from 'motion/react';
+import { useMotionValue, useSpring, useTransform, type MotionValue } from 'motion/react';
+import * as m from 'motion/react-m';
+import { useInView, prefersReducedMotion } from './inView';
 import './reducedMotion';
 import {
   PersonaCard,
@@ -200,14 +202,15 @@ const CardSlot: React.FC<{
   const py = useTransform(pointer.y, (v) => -v * depth * 0.6);
 
   return (
-    <motion.g
+    <m.g
       data-card={placement.key}
       className="m-final"
       initial={{ opacity: 0, scale: 0.86, y: 12 }}
       animate={on ? { opacity: 1, scale: 1, y: 0 } : undefined}
       transition={{ delay: appearAt, duration: 0.45, ease: EASE }}
     >
-      <motion.g style={{ x: px, y: py }}>
+      {/* Cards with no pointer depth (the phone layout) don't follow the pointer at all */}
+      <m.g style={depth ? { x: px, y: py } : undefined}>
         <g
           className="illo-float"
           style={{ '--float': `${-float.px}px`, '--dur': `${float.dur}s`, '--delay': `${-float.delay}s` } as React.CSSProperties}
@@ -216,8 +219,8 @@ const CardSlot: React.FC<{
             <Card on={on} delay={appearAt + 0.3} />
           </g>
         </g>
-      </motion.g>
-    </motion.g>
+      </m.g>
+    </m.g>
   );
 };
 
@@ -252,7 +255,7 @@ const Scene: React.FC<{
         </clipPath>
         {/* The trail is revealed by a solid stroke that draws along the same path */}
         <mask id={`${id}-reveal`} maskUnits="userSpaceOnUse" x="0" y="0" width={w} height={h}>
-          <motion.path
+          <m.path
             className="m-final-path"
             d={d}
             fill="none"
@@ -278,7 +281,7 @@ const Scene: React.FC<{
         {/* Trailhead at the foot of the hill */}
         <circle cx={layout.start[0]} cy={layout.start[1]} r="3.5" fill="#1F2430" />
         {layout.stops.map(([cx, cy], i) => (
-          <motion.circle
+          <m.circle
             key={`${cx}-${cy}`}
             className="m-final"
             cx={cx}
@@ -295,7 +298,7 @@ const Scene: React.FC<{
 
         {/* Summit flag: waves once when the trail arrives */}
         <line x1={fx} y1={fy} x2={fx} y2={fy - 46} stroke="#1F2430" strokeWidth="2.5" strokeLinecap="round" />
-        <motion.path
+        <m.path
           className="m-final"
           d={`M${fx} ${fy - 46} L${fx + 28} ${fy - 36} L${fx} ${fy - 26} Z`}
           fill="#E8B04A"
@@ -332,26 +335,40 @@ const Scene: React.FC<{
 };
 
 export const HeroScene: React.FC<{ className?: string }> = ({ className = '' }) => {
-  const reduce = useReducedMotion();
   const rawX = useMotionValue(0);
   const rawY = useMotionValue(0);
   const x = useSpring(rawX, { stiffness: 60, damping: 18, mass: 0.6 });
   const y = useSpring(rawY, { stiffness: 60, damping: 18, mass: 0.6 });
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const onScreen = useInView(wrapRef);
+  const onScreenRef = useRef(false);
+  onScreenRef.current = onScreen;
 
-  // Pointer parallax: desktop mice only, never on touch screens or with reduced motion
+  // Pointer parallax: desktop mice only, never on touch screens or with reduced motion. At most one update
+  // per frame, and none while the hero is scrolled out of view.
   useEffect(() => {
-    if (reduce || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    if (prefersReducedMotion() || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    let frame = 0;
+    let last: PointerEvent | null = null;
     const onMove = (e: PointerEvent) => {
-      if (e.pointerType !== 'mouse') return;
-      rawX.set((e.clientX / window.innerWidth) * 2 - 1);
-      rawY.set((e.clientY / window.innerHeight) * 2 - 1);
+      if (e.pointerType !== 'mouse' || !onScreenRef.current) return;
+      last = e;
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        if (!last) return;
+        rawX.set((last.clientX / window.innerWidth) * 2 - 1);
+        rawY.set((last.clientY / window.innerHeight) * 2 - 1);
+      });
     };
     window.addEventListener('pointermove', onMove, { passive: true });
-    return () => window.removeEventListener('pointermove', onMove);
-  }, [reduce, rawX, rawY]);
+    return () => {
+      window.removeEventListener('pointermove', onMove);
+      cancelAnimationFrame(frame);
+    };
+  }, [rawX, rawY]);
 
   // Inner labels on only while the desktop scene is drawn large enough for them to stay 11px or larger
-  const wrapRef = useRef<HTMLDivElement>(null);
   const [labels, setLabels] = useState(false);
   useEffect(() => {
     const el = wrapRef.current;
@@ -364,6 +381,9 @@ export const HeroScene: React.FC<{ className?: string }> = ({ className = '' }) 
   }, []);
 
   const pointer = { x, y };
+  // Both layouts are in the server HTML, and CSS shows the one for this screen size (so there's no flash or
+  // layout shift). The hidden one never comes into view, so it never starts its entrance and its loops stay
+  // paused: only the visible scene animates.
   return (
     <div ref={wrapRef} className={className}>
       <Scene layout={DESKTOP} className="hidden sm:block" labels={labels} pointer={pointer} />

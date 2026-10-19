@@ -29,6 +29,7 @@ import {
   ActivityWave,
   FrameworkFigure,
   CtaSummit,
+  MotionFeatures,
 } from '@/components/landing/Motion';
 
 // Everything below is computed from the data files at build time, so the page updates when they change
@@ -93,8 +94,10 @@ const FEATURE_ICON = 'w-11 h-11 flex-shrink-0';
 
 export default function LandingPage() {
   return (
-    <>
-    <div className="animate-fade-in">
+    <MotionFeatures>
+    {/* No fade on the page as a whole: the headline and button paint at once (they are what loads last on
+        a slow phone), and each section below still eases in as it scrolls into view */}
+    <div>
       <SignedInRedirect />
 
       {/* Hero */}
@@ -315,9 +318,9 @@ export default function LandingPage() {
         </div>
       </section>
     </div>
-    {/* Section navigator: outside the fading wrapper (a transformed parent would stop "fixed" from pinning
-        it to the screen), and after the content so keyboard users reach the page's own buttons first */}
+    {/* Section navigator: outside the page wrapper (a transformed parent would stop "fixed" from pinning it to
+        the screen), and after the content so keyboard users reach the page's own buttons first */}
     <ScrollTrail />
-    </>
+    </MotionFeatures>
   );
 }

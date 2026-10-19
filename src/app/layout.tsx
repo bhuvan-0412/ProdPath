@@ -5,13 +5,15 @@ import { ProgressProvider } from '@/context/ProgressContext';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 // Self-hosted at build time: no render-blocking request to Google Fonts on page load
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap'});
 const fraunces = Fraunces({ subsets: ['latin'], weight: ['500', '600', '700'], variable: '--font-display', display: 'swap'});
 
 // Runs before the page paints so the saved theme is applied without a flash. Light is the default.
-const themeScript = `(function(){try{var t=localStorage.getItem('prodpath_theme')||localStorage.getItem('pm_hub_theme');if(t==='dark')document.documentElement.classList.add('dark');}catch(e){}})();`;
+// It also marks the page while its tab is hidden, so globals.css can pause the looping animations.
+const themeScript = `(function(){try{var t=localStorage.getItem('prodpath_theme')||localStorage.getItem('pm_hub_theme');if(t==='dark')document.documentElement.classList.add('dark');}catch(e){}var d=document,h=function(){d.documentElement.toggleAttribute('data-tab-hidden',d.hidden)};h();d.addEventListener('visibilitychange',h);})();`;
 
 const siteTitle = 'ProdPath | Learn Product Management in 5 Weeks';
 const siteDescription =
@@ -72,6 +74,8 @@ export default function RootLayout({
           <Footer />
         </ProgressProvider>
         <Analytics />
+        {/* Real visitors' page speed, shown in the Vercel dashboard */}
+        <SpeedInsights />
       </body>
     </html>
   );
