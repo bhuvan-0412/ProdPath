@@ -323,13 +323,18 @@ function CourseContent() {
             className="bg-surface rounded-xl p-4 sm:p-6 border border-line space-y-4 scroll-mt-24"
           >
             {/* Day Header */}
-            <div className="flex items-center gap-3 pb-3 border-b border-line">
-              <span className="px-2.5 py-1 rounded-lg bg-accent-dark text-paper font-bold text-xs">
-                Day {day.day}
-              </span>
-              <h3 className="font-display font-bold text-ink text-base">
-                {day.brief}
-              </h3>
+            <div className="pb-3 border-b border-line space-y-2">
+              <div className="flex items-center gap-3">
+                <span className="px-2.5 py-1 rounded-lg bg-accent-dark text-paper font-bold text-xs">
+                  Day {day.day}
+                </span>
+                <h3 className="font-display font-bold text-ink text-base">
+                  {day.brief}
+                </h3>
+              </div>
+              {day.overview && (
+                <p className="text-sm text-muted leading-relaxed">{day.overview}</p>
+              )}
             </div>
 
             {/* Tasks */}

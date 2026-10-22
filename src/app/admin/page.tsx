@@ -50,20 +50,22 @@ export default function AdminPage() {
   const [sendingEmail, setSendingEmail] = useState(false);
   const [emailSuccessMsg, setEmailSuccessMsg] = useState<string | null>(null);
 
-  // Calculate total total total resources count in standard curriculum
-  const totalCurriculumResources = useMemo(() => {
-    let count = 0;
+  // Ids of every built-in item (curriculum, live sessions, case studies). Completion figures only count
+  // stored ticks whose id is in this set, so ticks on resources since removed from the course are ignored.
+  const builtInIds = useMemo(() => {
+    const ids = new Set<string>();
     weeksData.weeks.forEach((w) => {
       w.days.forEach((d) => {
         d.tasks.forEach((t) => {
-          count += t.resources.length;
+          t.resources.forEach((r) => ids.add(r.id));
         });
       });
     });
-    count += liveSessionsData.liveSessions.length;
-    count += caseStudiesData.caseStudies.length;
-    return count || 1;
+    liveSessionsData.liveSessions.forEach((s) => ids.add(`live-session-${s.sessionNumber}`));
+    caseStudiesData.caseStudies.forEach((cs) => ids.add(cs.id));
+    return ids;
   }, []);
+  const totalCurriculumResources = builtInIds.size || 1;
 
   // Protect route
   useEffect(() => {
@@ -100,7 +102,7 @@ export default function AdminPage() {
         if (!progressMap.has(entry.user_id)) {
           progressMap.set(entry.user_id, new Set());
         }
-        progressMap.get(entry.user_id)?.add(entry.resource_id);
+        if (builtInIds.has(entry.resource_id)) progressMap.get(entry.user_id)?.add(entry.resource_id);
       });
 
       const formatted: AdminUserDetail[] = (profiles || []).map((p) => {
@@ -131,7 +133,7 @@ export default function AdminPage() {
     } finally {
       setLoadingStats(false);
     }
-  }, [supabase, totalCurriculumResources]);
+  }, [supabase, builtInIds, totalCurriculumResources]);
 
   useEffect(() => {
     if (user && isAdmin) {

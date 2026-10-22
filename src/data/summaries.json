@@ -35,6 +35,20 @@
       "Usability sessions to test newly shipped features and catch bugs, plus 1:1s with marketing, ML and data science counterparts.",
       "End of day: focused solo work such as writing PRDs, reviewing other teams' docs and sending leadership updates. Much of a PM's job is meetings that unblock others."
     ],
+    "w1d1r6": [
+      "A team can keep running without a PM because others quietly fill the gaps, so a PM has to earn their place through the results they create.",
+      "Raw intelligence comes first: a sharp, fast-learning candidate with little experience often beats an average one with many years in the role.",
+      "A technical background helps a PM win engineers' trust and explain detail to others, but former engineers must fully stop doing the engineering themselves.",
+      "Good PMs have strong product instincts: they spot problems early, notice great products others overlook and can teach you something about your own product.",
+      "PMs rarely have formal authority, so look for leadership earned through influence, the ability to speak for customers, engineering and sales at once, and a record of shipping a product end to end."
+    ],
+    "w1d1r7": [
+      "A good PM takes full ownership and acts like the CEO of the product, judged by whether it succeeds. A bad PM keeps a list of reasons why things went wrong.",
+      "Good PMs define the 'what' and leave the 'how' to engineering. Bad PMs drift into project management or try to design the technical solution themselves.",
+      "Good PMs put direction in writing and take clear positions. Bad PMs offer opinions in passing and later claim they saw the problems coming.",
+      "Good PMs keep the team focused on customers and revenue and split big problems into smaller ones. Bad PMs chase feature counts and try to fix everything at once.",
+      "Good PMs define their own job and how success is measured, explain even the obvious clearly and stay disciplined about routine work like weekly status updates. The essay is from an earlier era of tech, so take the habits rather than every detail."
+    ],
     "w1d2r1": [
       "Product sense is the ability to understand what makes a product great and what users need, even when those needs aren't obvious.",
       "It's a learnable skill, not an innate talent, and one of the core hard skills of a PM.",
@@ -116,6 +130,20 @@
       "Decline: oversupply, new technology and changing tastes push sales down, ending in clearance pricing and discontinuation.",
       "Extension strategies delay decline. Coca-Cola used line extensions (Diet Coke, Coke Zero, Cherry Coke, the short-lived Coca-Cola Life) and brand extensions. Apple keeps the iPhone growing with regular new models."
     ],
+    "w1d3r4": [
+      "Product teams have two jobs that pull against each other: learning quickly what customers actually need, and shipping reliable software that customers can depend on.",
+      "Discovery is about gathering evidence that an idea is worth building. Delivery is about building it to production quality: scalable, tested, instrumented and maintainable.",
+      "Production engineering is the most expensive part of making a product, so spending it on an idea nobody has validated is the most common form of waste.",
+      "Many discovery techniques, such as testing prototypes with real users, need little or no engineering time and can be run with opt-in customers instead of public releases.",
+      "Run discovery and delivery as separate tracks: learn fast first, then hand validated ideas to engineers to build properly."
+    ],
+    "w1d3r5": [
+      "Every product idea has to clear four risks: value (will people buy or use it), usability (can they figure it out), feasibility (can the team build it) and business viability (does it work for the business).",
+      "The PM owns value and viability risk, the product designer owns usability risk and the lead engineer owns feasibility risk.",
+      "Viability is about more than revenue: fit with sales and marketing, legal and partner constraints, the cost of acquiring customers and consistency with the brand all count.",
+      "Value risk is usually the hardest to retire, but a product customers love can still fail if it does not work for the business.",
+      "Strong teams tackle these risks early, before building, work on them together across product, design and engineering, and judge success by outcomes rather than features shipped."
+    ],
     "w1d4r1": [
       "A user persona is a semi-fictional profile of a target user built from real research. Without one, teams end up designing for 'everyone', which means no one.",
       "Step 1: research. Interview 10–20 users, run surveys and focus groups, and analyze reviews and forums. With no users yet, use market research.",
@@ -168,6 +196,13 @@
       "Start with a well-researched persona so you can predict expectations, goals and pain points.",
       "Break the journey into phases and touchpoints (each touchpoint may contain a user flow, e.g. booking tickets online), and note emotions at each one.",
       "Use storytelling: play out a realistic scenario in the user's shoes to find where frustration happens and what to optimize first."
+    ],
+    "w1d4r9": [
+      "A journey map shows the process a person goes through to reach a goal: a timeline of their actions, layered with what they think and feel along the way.",
+      "Most maps share five parts: an actor (usually a persona), a scenario with the user's goal and expectations, the phases of the journey, the user's actions, thoughts and emotions in each phase, and the opportunities these reveal.",
+      "Stick to one actor per map. Different kinds of users take different journeys and need maps of their own.",
+      "Journey maps work best for experiences that unfold over time or across several channels, such as shopping online or planning a trip.",
+      "The value is twofold: making the map gets the whole team to a shared view of the user, and the finished map is a memorable way to share insights and guide decisions."
     ],
     "w1d5r1": [
       "A wireframe is a 2D blueprint of a digital product's interface: grayscale, no-frills and clearly not the final design. Its main goal is team alignment before coding starts.",
