@@ -7,6 +7,13 @@ import weeksData from '@/data/weeks.json';
 import liveSessionsData from '@/data/liveSessions.json';
 import caseStudiesData from '@/data/caseStudies.json';
 
+/**
+ * Live Sessions (to return as "PM Talks") is hidden for now. While this is false, live sessions are left out of
+ * everything that counts or recommends progress: overall percentage, totals, "Up next" and Activity stats.
+ * Turn it back on by setting this to true (and removing the /live-sessions redirect in next.config.mjs).
+ */
+export const LIVE_SESSIONS_ENABLED = false;
+
 const curriculum: Resource[] = (weeksData.weeks as Week[]).flatMap((week) =>
   week.days.flatMap((dayObj) =>
     dayObj.tasks.flatMap((taskObj, index) =>
@@ -44,14 +51,14 @@ const caseStudies: Resource[] = (caseStudiesData.caseStudies as CaseStudy[]).map
 }));
 
 export interface Catalog {
-  /** Curriculum, then live sessions, then case studies (the order "next up" walks through) */
+  /** Curriculum, then live sessions (when enabled), then case studies (the order "next up" walks through) */
   builtIn: Resource[];
   liveSessionIds: string[];
   caseStudyIds: string[];
 }
 
 export const catalog: Catalog = {
-  builtIn: [...curriculum, ...liveSessions, ...caseStudies],
+  builtIn: [...curriculum, ...(LIVE_SESSIONS_ENABLED ? liveSessions : []), ...caseStudies],
   liveSessionIds: liveSessions.map((r) => r.id),
   caseStudyIds: caseStudies.map((r) => r.id),
 };

@@ -8,6 +8,7 @@ import { Send, CheckCircle2, AlertTriangle, RefreshCw, X } from 'lucide-react';
 import { Skeleton } from '@/components/Skeleton';
 import weeksData from '@/data/weeks.json';
 import liveSessionsData from '@/data/liveSessions.json';
+import { LIVE_SESSIONS_ENABLED } from '@/context/catalog';
 import caseStudiesData from '@/data/caseStudies.json';
 
 interface AdminUserDetail {
@@ -50,7 +51,7 @@ export default function AdminPage() {
   const [sendingEmail, setSendingEmail] = useState(false);
   const [emailSuccessMsg, setEmailSuccessMsg] = useState<string | null>(null);
 
-  // Ids of every built-in item (curriculum, live sessions, case studies). Completion figures only count
+  // Ids of every built-in item (curriculum, live sessions when enabled, case studies). Completion figures only count
   // stored ticks whose id is in this set, so ticks on resources since removed from the course are ignored.
   const builtInIds = useMemo(() => {
     const ids = new Set<string>();
@@ -61,7 +62,7 @@ export default function AdminPage() {
         });
       });
     });
-    liveSessionsData.liveSessions.forEach((s) => ids.add(`live-session-${s.sessionNumber}`));
+    if (LIVE_SESSIONS_ENABLED) liveSessionsData.liveSessions.forEach((s) => ids.add(`live-session-${s.sessionNumber}`));
     caseStudiesData.caseStudies.forEach((cs) => ids.add(cs.id));
     return ids;
   }, []);
