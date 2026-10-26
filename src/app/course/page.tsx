@@ -10,7 +10,6 @@ import dynamic from 'next/dynamic';
 import { TaskHeader } from '@/components/ResourcePanels';
 import { GlowCard } from '@/components/GlowCard';
 import weeksData from '@/data/weeks.json';
-import taskSummariesData from '@/data/taskSummaries.json';
 import continuedLearningData from '@/data/continuedLearning.json';
 import { Week } from '@/types/curriculum';
 import { WeekMark } from '@/components/landing/Illustrations';
@@ -23,16 +22,13 @@ import { COURSE_ICONS } from '@/components/decor/iconLayouts';
 // Loaded the first time someone adds a resource, not with the page
 const AddResourceModal = dynamic(() => import('@/components/AddResourceModal').then((m) => m.AddResourceModal), { ssr: false });
 
-const getTaskDomId = (weekId: string, dayNum: number, taskLabel: string) => {
+// Groups inside a day are always labelled by their order: Session 1, Session 2, ...
+const sessionLabel = (index: number) => `Session ${index + 1}`;
+
+const getSessionDomId = (weekId: string, dayNum: number, index: number) => {
   const n = weekId.replace('week-', '');
-  const cleanLabel = taskLabel.toLowerCase().replace(/^task[\s-_]*/i, '').replace(/[^a-z0-9]+/g, '-') || taskLabel.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-  return `week-${n}-day-${dayNum}-task-${cleanLabel}`;
+  return `week-${n}-day-${dayNum}-session-${index + 1}`;
 };
-
-const taskSummaries = taskSummariesData.taskSummaries as Record<string, string>;
-
-const getTaskSummaryKey = (weekId: string, dayNum: number, taskLabel: string) =>
-  `${weekId}-d${dayNum}-${taskLabel.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}`;
 
 const getDayDomId = (weekId: string, dayNum: number) => {
   const n = weekId.replace('week-', '');
@@ -40,16 +36,16 @@ const getDayDomId = (weekId: string, dayNum: number) => {
 };
 
 const getWeekScrollTargetId = (week: Week, completedIds: Set<string>): string => {
-  const allTasks: { dayNum: number; taskLabel: string; isCompleted: boolean }[] = [];
+  const allTasks: { dayNum: number; index: number; isCompleted: boolean }[] = [];
 
   week.days.forEach((dayObj) => {
-    dayObj.tasks.forEach((taskObj) => {
+    dayObj.tasks.forEach((taskObj, index) => {
       const isCompleted =
         taskObj.resources.length > 0 &&
         taskObj.resources.every((res) => completedIds.has(res.id));
       allTasks.push({
         dayNum: dayObj.day,
-        taskLabel: taskObj.label,
+        index,
         isCompleted,
       });
     });
@@ -65,10 +61,10 @@ const getWeekScrollTargetId = (week: Week, completedIds: Set<string>): string =>
     return getDayDomId(week.id, 1);
   } else if (completedTasks.length === allTasks.length) {
     const lastTask = allTasks[allTasks.length - 1];
-    return getTaskDomId(week.id, lastTask.dayNum, lastTask.taskLabel);
+    return getSessionDomId(week.id, lastTask.dayNum, lastTask.index);
   } else {
     const lastCompleted = completedTasks[completedTasks.length - 1];
-    return getTaskDomId(week.id, lastCompleted.dayNum, lastCompleted.taskLabel);
+    return getSessionDomId(week.id, lastCompleted.dayNum, lastCompleted.index);
   }
 };
 
@@ -173,7 +169,7 @@ function CourseContent() {
             Weekly Curriculum
           </h1>
           <p className="text-sm text-muted mt-1">
-            Select a week to navigate daily topics, task lists, and learning resources.
+            Select a week to navigate daily topics, sessions, and learning resources.
           </p>
         </div>
 
@@ -332,23 +328,17 @@ function CourseContent() {
                   {day.brief}
                 </h3>
               </div>
-              {day.overview && (
-                <p className="text-sm text-muted leading-relaxed">{day.overview}</p>
-              )}
             </div>
 
-            {/* Tasks */}
+            {/* Sessions */}
             <div className="space-y-4">
               {day.tasks.map((task, tIdx) => (
                 <div
                   key={tIdx}
-                  id={getTaskDomId(activeWeek.id, day.day, task.label)}
+                  id={getSessionDomId(activeWeek.id, day.day, tIdx)}
                   className="space-y-2 scroll-mt-24"
                 >
-                  <TaskHeader
-                    label={task.label}
-                    summary={taskSummaries[getTaskSummaryKey(activeWeek.id, day.day, task.label)]}
-                  />
+                  <TaskHeader label={sessionLabel(tIdx)} />
                   <div className="space-y-2">
                     {task.resources.map((res) => (
                       <ResourceCard
@@ -357,7 +347,7 @@ function CourseContent() {
                           ...res,
                           weekId: activeWeek.id,
                           day: day.day,
-                          taskLabel: task.label,
+                          taskLabel: sessionLabel(tIdx),
                         }}
                       />
                     ))}

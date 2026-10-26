@@ -9,12 +9,12 @@ import caseStudiesData from '@/data/caseStudies.json';
 
 const curriculum: Resource[] = (weeksData.weeks as Week[]).flatMap((week) =>
   week.days.flatMap((dayObj) =>
-    dayObj.tasks.flatMap((taskObj) =>
+    dayObj.tasks.flatMap((taskObj, index) =>
       taskObj.resources.map((res) => ({
         ...res,
         weekId: week.id,
         day: dayObj.day,
-        taskLabel: taskObj.label,
+        taskLabel: `Session ${index + 1}`,
         isCustom: false,
       }))
     )

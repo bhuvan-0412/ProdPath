@@ -219,8 +219,8 @@ export default function LandingPage() {
                 <SampleDay
                   dayNumber={sampleDay.day}
                   brief={sampleDay.brief}
-                  tasks={sampleDay.tasks.map((task) => ({
-                    label: task.label,
+                  tasks={sampleDay.tasks.map((task, i) => ({
+                    label: `Session ${i + 1}`,
                     resources: task.resources.map((res) => ({ id: res.id, title: res.title, typeLabel: typeLabel[res.type] })),
                   }))}
                 />

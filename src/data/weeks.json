@@ -7,24 +7,23 @@
         {
           "day": 1,
           "brief": "What a PM actually does",
-          "overview": "Today sets out what a product manager is accountable for, the skills the role draws on, and the habits that separate strong PMs from weak ones. With a clear picture of the job in place, every framework later in the course has somewhere to fit.",
           "tasks": [
             {
-              "label": "Start here",
+              "label": "Session 1",
               "resources": [
                 { "id": "w1d1r6", "title": "How to Hire a Product Manager (Ken Norton)", "url": "https://www.bringthedonuts.com/essays/productmanager.html", "type": "article" },
                 { "id": "w1d1r7", "title": "Good Product Manager/Bad Product Manager (Ben Horowitz)", "url": "https://a16z.com/good-product-manager-bad-product-manager/", "type": "article" }
               ]
             },
             {
-              "label": "See it in practice",
+              "label": "Session 2",
               "resources": [
                 { "id": "w1d1r2", "title": "Roles of a PM", "url": "https://www.youtube.com/watch?v=2dczveSrsv8", "type": "video" },
                 { "id": "w1d1r3", "title": "Skills of a PM", "url": "https://www.youtube.com/watch?v=n530l09t8zY", "type": "video" }
               ]
             },
             {
-              "label": "Go deeper",
+              "label": "Session 3",
               "resources": [
                 { "id": "w1d1r4", "title": "What companies want in a PM role", "url": "https://youtu.be/O4TReKaJx50", "type": "video" },
                 { "id": "w1d1r5", "title": "Day in the life of a PM", "url": "https://www.youtube.com/watch?v=U-lYLSlYU1o", "type": "video" }
@@ -35,10 +34,9 @@
         {
           "day": 2,
           "brief": "Product sense and structured thinking",
-          "overview": "Today covers product sense, the habit of judging products by how well they serve real users, along with two tools for clear thinking: first principles and MECE. Together they help a PM break a messy problem into parts and reason about it from the ground up, which is what teams and interviewers expect.",
           "tasks": [
             {
-              "label": "Start here",
+              "label": "Session 1",
               "resources": [
                 { "id": "w1d2r2", "title": "How to build Product Sense over time", "url": "https://www.lennysnewsletter.com/p/product-sense", "type": "article" },
                 { "id": "w1d2r3", "title": "How to do a Product Critique", "url": "https://medium.com/the-year-of-the-looking-glass/how-to-do-a-product-critique-98b657050638", "type": "article" },
@@ -46,14 +44,14 @@
               ]
             },
             {
-              "label": "See it in practice",
+              "label": "Session 2",
               "resources": [
                 { "id": "w1d2r5", "title": "First Principles Thinking", "url": "https://youtu.be/OwghcEhEdZg", "type": "video" },
                 { "id": "w1d2r6", "title": "Elon Musk on First Principles Thinking", "url": "https://youtu.be/NV3sBlRgzTI", "type": "video" }
               ]
             },
             {
-              "label": "Go deeper",
+              "label": "Session 3",
               "resources": [
                 { "id": "w1d2r8", "title": "MECE Framework by McKinsey", "url": "https://www.mbacrystalball.com/blog/strategy/mece-framework/", "type": "article" },
                 { "id": "w1d2r9", "title": "Example of MECE trees", "url": "https://youtu.be/_pCU0DOKZDw", "type": "video" }
@@ -64,23 +62,22 @@
         {
           "day": 3,
           "brief": "How products get built",
-          "overview": "Today follows a product from launch to decline, then looks at how teams decide what is worth building before committing engineering time. By the end, the product life cycle, the split between discovery and delivery, and the four risks every idea must clear should all make sense. These ideas explain why PMs test ideas early instead of building first.",
           "tasks": [
             {
-              "label": "Start here",
+              "label": "Session 1",
               "resources": [
                 { "id": "w1d3r1", "title": "What is Product Life Cycle", "url": "https://www.investopedia.com/terms/p/product-life-cycle.asp", "type": "article" },
                 { "id": "w1d3r4", "title": "Discovery vs. Delivery (Marty Cagan)", "url": "https://svpg.com/discovery-vs-delivery/", "type": "article" }
               ]
             },
             {
-              "label": "See it in practice",
+              "label": "Session 2",
               "resources": [
                 { "id": "w1d3r2", "title": "Example of Product Cycle", "url": "https://youtu.be/ob5KWs3I3aY", "type": "video" }
               ]
             },
             {
-              "label": "Go deeper",
+              "label": "Session 3",
               "resources": [
                 { "id": "w1d3r5", "title": "The Four Big Risks (Marty Cagan)", "url": "https://www.svpg.com/four-big-risks/", "type": "article" }
               ]
@@ -90,17 +87,16 @@
         {
           "day": 4,
           "brief": "Personas, flows and journeys",
-          "overview": "Today introduces three ways of describing users: personas for who they are, user flows for the steps of a single task, and journey maps for the whole experience over time. PMs use all three to keep the team building for real people and to find the moments where the experience breaks down.",
           "tasks": [
             {
-              "label": "Start here",
+              "label": "Session 1",
               "resources": [
                 { "id": "w1d4r1", "title": "What is a User Persona and how to create one", "url": "https://www.figma.com/resource-library/how-to-create-a-persona/", "type": "article" },
                 { "id": "w1d4r3", "title": "What is a User Flow and how to create one", "url": "https://medium.com/productpeople/become-a-user-flow-mapping-master-with-these-10-simple-tips-3ee303c053e7", "type": "article" }
               ]
             },
             {
-              "label": "See it in practice",
+              "label": "Session 2",
               "resources": [
                 { "id": "w1d4r4", "title": "UX user flows explained", "url": "https://youtu.be/Zt2GmDOEHM0", "type": "video" },
                 { "id": "w1d4r5", "title": "Example of a User Flow", "url": "https://youtu.be/74WDl_MhQj8", "type": "video" },
@@ -108,7 +104,7 @@
               ]
             },
             {
-              "label": "Go deeper",
+              "label": "Session 3",
               "resources": [
                 { "id": "w1d4r9", "title": "Journey Mapping 101 (Sarah Gibbons, Nielsen Norman Group)", "url": "https://www.nngroup.com/articles/journey-mapping-101/", "type": "article" },
                 { "id": "w1d4r7", "title": "Difference between User Flow and User Journey", "url": "https://youtu.be/IFnWMwEpes8", "type": "video" }
@@ -119,23 +115,22 @@
         {
           "day": 5,
           "brief": "UI/UX for PMs",
-          "overview": "Today covers wireframes, the simple layouts teams use to agree on structure before any visual design or code. By the end, the difference between a wireframe, a mockup and a prototype should be clear, along with how to sketch one in Figma. PMs rely on wireframes to share ideas quickly and cheaply.",
           "tasks": [
             {
-              "label": "Start here",
+              "label": "Session 1",
               "resources": [
                 { "id": "w1d5r1", "title": "Wireframes and different types", "url": "https://productschool.com/blog/user-experience/product-manager-beginner-guide-wireframes", "type": "article" }
               ]
             },
             {
-              "label": "See it in practice",
+              "label": "Session 2",
               "resources": [
                 { "id": "w1d5r2", "title": "Wireframing in detail for PMs", "url": "https://youtu.be/qJdDC5uRTd8", "type": "video" },
                 { "id": "w1d5r3", "title": "Wireframing using Figma", "url": "https://youtu.be/iyrEStiTZh0", "type": "video" }
               ]
             },
             {
-              "label": "Go deeper",
+              "label": "Session 3",
               "resources": [
                 { "id": "w1d5r4", "title": "Wireframe vs Mock-up vs Prototype", "url": "https://youtu.be/_SCcl06wZZs", "type": "video" }
               ]
@@ -153,19 +148,19 @@
           "brief": "Product success metrics",
           "tasks": [
             {
-              "label": "Task 1",
+              "label": "Session 1",
               "resources": [
                 { "id": "w2d1r1", "title": "How to measure Product Success", "url": "https://youtu.be/wtDFgx41Rho", "type": "video" }
               ]
             },
             {
-              "label": "Task 2",
+              "label": "Session 2",
               "resources": [
                 { "id": "w2d1r2", "title": "HEART and AARRR frameworks", "url": "https://simran-pm.medium.com/heart-aarrr-frameworks-in-product-management-7596b6c717de", "type": "article" }
               ]
             },
             {
-              "label": "Task 3",
+              "label": "Session 3",
               "resources": [
                 { "id": "w2d1r3", "title": "Difference between Metrics and KPIs", "url": "https://youtu.be/dPJbytlqlsI", "type": "video" },
                 { "id": "w2d1r4", "title": "North Star Metrics, L1 and L2 metrics", "url": "https://www.linkedin.com/pulse/product-metrics-your-guide-building-better-products-varun-khanna-hyj7e/", "type": "article" },
@@ -179,7 +174,7 @@
           "brief": "MVP and PMF",
           "tasks": [
             {
-              "label": "Task 1",
+              "label": "Session 1",
               "resources": [
                 { "id": "w2d2r1", "title": "MVP", "url": "https://productschool.com/resources/glossary/mvp-minimum-viable-product", "type": "article" },
                 { "id": "w2d2r2", "title": "How to build an MVP", "url": "https://amplitude.com/blog/what-is-a-minimum-viable-product-mvp", "type": "article" },
@@ -188,14 +183,14 @@
               ]
             },
             {
-              "label": "Task 2",
+              "label": "Session 2",
               "resources": [
                 { "id": "w2d2r5", "title": "Introduction to Product Market Fit", "url": "https://www.productplan.com/glossary/product-market-fit/", "type": "article" },
                 { "id": "w2d2r6", "title": "What is Product Market Fit", "url": "https://youtu.be/hEH6FseXT0U", "type": "video" }
               ]
             },
             {
-              "label": "Task 3",
+              "label": "Session 3",
               "resources": [
                 { "id": "w2d2r7", "title": "Products that couldn't find their fit", "url": "https://productschool.com/blog/product-fundamentals/understanding-product-market-fit", "type": "article" }
               ]
@@ -207,7 +202,7 @@
           "brief": "Strategizing frameworks",
           "tasks": [
             {
-              "label": "Task 1",
+              "label": "Session 1",
               "resources": [
                 { "id": "w2d3r1", "title": "REAN Framework", "url": "https://www.mobiprep.com/post/rean-framework", "type": "article" },
                 { "id": "w2d3r2", "title": "SWOT Analysis Framework", "url": "https://www.investopedia.com/terms/s/swot.asp", "type": "article" },
@@ -216,7 +211,7 @@
               ]
             },
             {
-              "label": "Task 2",
+              "label": "Session 2",
               "resources": [
                 { "id": "w2d3r5", "title": "Double Diamond", "url": "https://youtu.be/w0_-1RqBK_0", "type": "video" },
                 { "id": "w2d3r6", "title": "BCG Growth Share Matrix", "url": "https://www.bcg.com/about/overview/our-history/growth-share-matrix", "type": "article" },
@@ -230,7 +225,7 @@
           "brief": "Prioritization frameworks and Methodologies",
           "tasks": [
             {
-              "label": "Task 1",
+              "label": "Session 1",
               "resources": [
                 { "id": "w2d4r1", "title": "List of Prioritization Frameworks", "url": "https://roadmunk.com/guides/product-prioritization-techniques-product-managers/", "type": "article" },
                 { "id": "w2d4r2", "title": "WSJF using JIRA", "url": "https://youtu.be/-HCzJewpEkk", "type": "video" },
@@ -238,14 +233,14 @@
               ]
             },
             {
-              "label": "Task 2",
+              "label": "Session 2",
               "resources": [
                 { "id": "w2d4r4", "title": "Agile vs Waterfall Methodologies", "url": "https://youtu.be/aKf0Qkp14qQ", "type": "video" },
                 { "id": "w2d4r5", "title": "Difference between Agile and Waterfall", "url": "https://intellipaat.com/blog/agile-vs-waterfall/", "type": "article" }
               ]
             },
             {
-              "label": "Task 3",
+              "label": "Session 3",
               "resources": [
                 { "id": "w2d4r6", "title": "Scrum vs Kanban", "url": "https://youtu.be/rIaz-l1Kf8w", "type": "video" }
               ]
@@ -257,7 +252,7 @@
           "brief": "GTM (Go-To-Market)",
           "tasks": [
             {
-              "label": "Task 1",
+              "label": "Session 1",
               "resources": [
                 { "id": "w2d5r1", "title": "What is a GTM?", "url": "https://productschool.com/resources/glossary/go-to-market-gtm", "type": "article" },
                 { "id": "w2d5r2", "title": "GTM strategy", "url": "https://youtu.be/BMitoXT__wM", "type": "video" },
@@ -265,14 +260,14 @@
               ]
             },
             {
-              "label": "Task 2",
+              "label": "Session 2",
               "resources": [
                 { "id": "w2d5r4", "title": "How to do GTM", "url": "https://youtu.be/0JtiB8hJY4U", "type": "video" },
                 { "id": "w2d5r5", "title": "Pre-Launch, Launch, Post-Launch example", "url": "https://youtu.be/eDVtBleIxag", "type": "video" }
               ]
             },
             {
-              "label": "Task 3",
+              "label": "Session 3",
               "resources": [
                 { "id": "w2d5r6", "title": "Important Pricing Strategies", "url": "https://youtu.be/YhnvZPVv9jc", "type": "video" },
                 { "id": "w2d5r7", "title": "Common Pricing Psychologies", "url": "https://youtu.be/KYqvqScg_j8", "type": "video" }
@@ -291,20 +286,20 @@
           "brief": "Introduction to Tech for PM",
           "tasks": [
             {
-              "label": "Task 1",
+              "label": "Session 1",
               "resources": [
                 { "id": "w3d1r1", "title": "Why is Tech important for PM", "url": "https://www.youtube.com/watch?v=ysBpePyeHkU", "type": "video" }
               ]
             },
             {
-              "label": "Task 2",
+              "label": "Session 2",
               "resources": [
                 { "id": "w3d1r2", "title": "What is an API?", "url": "https://youtu.be/T5y0WKmKenQ", "type": "video" },
                 { "id": "w3d1r3", "title": "Introduction to Databases", "url": "https://youtu.be/EEBgMBE8R70", "type": "video" }
               ]
             },
             {
-              "label": "Task 3",
+              "label": "Session 3",
               "resources": [
                 { "id": "w3d1r5", "title": "SQL Full Course — Part 1: Setup, Databases, Tables, INSERT & SELECT (0:00–33:32)", "url": "https://www.youtube.com/watch?v=5OdVJbNCSso", "type": "video" },
                 { "id": "w3d1r6", "title": "Leetcode SQL-50 (Problems 1-10)", "url": "https://leetcode.com/studyplan/top-sql-50/", "type": "article" }
@@ -317,21 +312,21 @@
           "brief": "Understanding Tech Basics: Webhooks, SDLC & Servers",
           "tasks": [
             {
-              "label": "Task 1",
+              "label": "Session 1",
               "resources": [
                 { "id": "w3d2r1", "title": "How WebHooks work", "url": "https://youtu.be/oQaJn6RdA3g", "type": "video" },
                 { "id": "w3d2r2", "title": "What is SDLC?", "url": "https://youtu.be/Fi3_BjVzpqk", "type": "video" }
               ]
             },
             {
-              "label": "Task 2",
+              "label": "Session 2",
               "resources": [
                 { "id": "w3d2r3", "title": "What are Servers?", "url": "https://youtu.be/UjCDWCeHCzY", "type": "video" },
                 { "id": "w3d2r4", "title": "What is AWS?", "url": "https://youtu.be/3XFODda6YXo", "type": "video" }
               ]
             },
             {
-              "label": "Task 3",
+              "label": "Session 3",
               "resources": [
                 { "id": "w3d2r6", "title": "SQL Full Course — Part 2: UPDATE/DELETE, Transactions, Constraints & Primary Keys (33:32–1:11:36)", "url": "https://www.youtube.com/watch?v=5OdVJbNCSso&t=2012s", "type": "video" },
                 { "id": "w3d2r7", "title": "Leetcode SQL-50 (Problems 11-20)", "url": "https://leetcode.com/studyplan/top-sql-50/", "type": "article" }
@@ -344,14 +339,14 @@
           "brief": "AI Prototyping Tools",
           "tasks": [
             {
-              "label": "Task 1",
+              "label": "Session 1",
               "resources": [
                 { "id": "w3d3r1", "title": "What is a PRD", "url": "https://youtu.be/W7ShrFjd5B4", "type": "video" },
                 { "id": "w3d3r2", "title": "PRD + Lovable", "url": "https://youtu.be/vai2hiA0btc", "type": "video" }
               ]
             },
             {
-              "label": "Task 2",
+              "label": "Session 2",
               "resources": [
                 { "id": "w3d3r4", "title": "SQL Full Course — Part 3: Foreign Keys, Joins, Functions, Filtering, Sorting & Unions (1:11:36–1:48:37)", "url": "https://www.youtube.com/watch?v=5OdVJbNCSso&t=4296s", "type": "video" },
                 { "id": "w3d3r5", "title": "Leetcode SQL-50 (Problems 21-30)", "url": "https://leetcode.com/studyplan/top-sql-50/", "type": "article" }
@@ -364,20 +359,20 @@
           "brief": "AI Wireframing Tools & Prompt Engineering Basics",
           "tasks": [
             {
-              "label": "Task 1",
+              "label": "Session 1",
               "resources": [
                 { "id": "w3d4r1", "title": "Visily for Wireframing", "url": "https://youtu.be/9K97iPJTlSA", "type": "video" },
                 { "id": "w3d4r2", "title": "Text to Wireframe", "url": "https://youtu.be/ZtgFJHfeZOY", "type": "video" }
               ]
             },
             {
-              "label": "Task 2",
+              "label": "Session 2",
               "resources": [
                 { "id": "w3d4r3", "title": "Prompt Engineering Basics", "url": "https://youtu.be/p09yRj47kNM", "type": "video" }
               ]
             },
             {
-              "label": "Task 3",
+              "label": "Session 3",
               "resources": [
                 { "id": "w3d4r5", "title": "SQL Full Course — Part 4: Self Joins, Views, Indexes, Subqueries, GROUP BY & ROLLUP (1:48:37–2:26:50)", "url": "https://www.youtube.com/watch?v=5OdVJbNCSso&t=6517s", "type": "video" },
                 { "id": "w3d4r6", "title": "Leetcode SQL-50 (Problems 31-40)", "url": "https://leetcode.com/studyplan/top-sql-50/", "type": "article" }
@@ -390,20 +385,20 @@
           "brief": "AI Tools for Customer Insights & Data Analysis",
           "tasks": [
             {
-              "label": "Task 1",
+              "label": "Session 1",
               "resources": [
                 { "id": "w3d5r1", "title": "Amplitude AI Feedback (formerly Kraftful)", "url": "https://www.youtube.com/watch?v=nPQSqhdeZw4", "type": "video" }
               ]
             },
             {
-              "label": "Task 2",
+              "label": "Session 2",
               "resources": [
                 { "id": "w3d5r2", "title": "Mixpanel", "url": "https://www.youtube.com/watch?v=c7SfDNFhD0E", "type": "video" },
                 { "id": "w3d5r3", "title": "Mixpanel Spark", "url": "https://youtu.be/7UJUE3EfKQg", "type": "video" }
               ]
             },
             {
-              "label": "Task 3",
+              "label": "Session 3",
               "resources": [
                 { "id": "w3d5r5", "title": "SQL Full Course — Part 5: ON DELETE, Stored Procedures & Triggers (2:26:50–3:00:00)", "url": "https://www.youtube.com/watch?v=5OdVJbNCSso&t=8810s", "type": "video" },
                 { "id": "w3d5r6", "title": "Leetcode SQL-50 (Problems 41-50)", "url": "https://leetcode.com/studyplan/top-sql-50/", "type": "article" }
@@ -422,14 +417,14 @@
           "brief": "Product Strategy Questions",
           "tasks": [
             {
-              "label": "Task 1",
+              "label": "Session 1",
               "resources": [
                 { "id": "w4d1r1", "title": "Basics of PM interviews", "url": "https://youtu.be/dNtks5NfUwc", "type": "video" },
                 { "id": "w4d1r2", "title": "How to answer strategy questions", "url": "https://youtu.be/keROPy1QUEE", "type": "video" }
               ]
             },
             {
-              "label": "Task 2",
+              "label": "Session 2",
               "resources": [
                 { "id": "w4d1r3", "title": "The 5C Framework", "url": "https://youtu.be/TG657u78MOQ", "type": "video" },
                 { "id": "w4d1r4", "title": "Mock: Imagine you are CEO of Uber", "url": "https://youtu.be/nrM6AwYOrBc", "type": "video" }
@@ -442,14 +437,14 @@
           "brief": "Root Cause Analysis Questions",
           "tasks": [
             {
-              "label": "Task 1",
+              "label": "Session 1",
               "resources": [
                 { "id": "w4d2r1", "title": "RCA Framework", "url": "https://youtu.be/gHlrkUAwaEo", "type": "video" },
                 { "id": "w4d2r2", "title": "How to solve RCA questions", "url": "https://youtu.be/PA-Z__0G8Cs", "type": "video" }
               ]
             },
             {
-              "label": "Task 2",
+              "label": "Session 2",
               "resources": [
                 { "id": "w4d2r3", "title": "Flipkart RCA Mock", "url": "https://youtu.be/DSV-vuvmIro", "type": "video" },
                 { "id": "w4d2r4", "title": "RCA Mock on Urban Company", "url": "https://youtu.be/OiE5vvbnryI", "type": "video" },
@@ -464,7 +459,7 @@
           "brief": "Guesstimates",
           "tasks": [
             {
-              "label": "Task 1",
+              "label": "Session 1",
               "resources": [
                 { "id": "w4d3r1", "title": "How to solve guesstimates", "url": "https://youtu.be/NBWFHLcA1wQ", "type": "video" },
                 { "id": "w4d3r2", "title": "Using issue trees", "url": "https://youtu.be/AKps74WLpmk", "type": "video" },
@@ -474,7 +469,7 @@
               ]
             },
             {
-              "label": "Task 2",
+              "label": "Session 2",
               "resources": [
                 { "id": "w4d3r6", "title": "Supply-side guesstimate", "url": "https://youtu.be/ILUWBewGes0", "type": "video" },
                 { "id": "w4d3r7", "title": "Revenue Guesstimate Mock", "url": "https://youtu.be/C5e02cUNj5g", "type": "video" },
@@ -490,7 +485,7 @@
           "brief": "Favourite Product and Improvement Questions",
           "tasks": [
             {
-              "label": "Task 1",
+              "label": "Session 1",
               "resources": [
                 { "id": "w4d4r1", "title": "Favourite Product and Why?", "url": "https://youtu.be/2ecs8t5meBQ", "type": "video" },
                 { "id": "w4d4r2", "title": "Framework with an example", "url": "https://youtu.be/TsYpCng2Pfg", "type": "video" },
@@ -498,7 +493,7 @@
               ]
             },
             {
-              "label": "Task 2",
+              "label": "Session 2",
               "resources": [
                 { "id": "w4d4r4", "title": "Product Improvement Mock 1", "url": "https://youtu.be/CXdaPETE7iE", "type": "video" },
                 { "id": "w4d4r5", "title": "Product Improvement Mock 2", "url": "https://youtu.be/BNuRsv_42jc", "type": "video" },
@@ -513,7 +508,7 @@
           "brief": "Product Design and Behavioural Questions",
           "tasks": [
             {
-              "label": "Task 1",
+              "label": "Session 1",
               "resources": [
                 { "id": "w4d5r1", "title": "Circles method", "url": "https://youtu.be/tlpfb_VsogA", "type": "video" },
                 { "id": "w4d5r2", "title": "Product Design Mock 1", "url": "https://youtu.be/oGqz-TMQNR4", "type": "video" },
@@ -522,7 +517,7 @@
               ]
             },
             {
-              "label": "Task 2",
+              "label": "Session 2",
               "resources": [
                 { "id": "w4d5r5", "title": "STAR framework + examples", "url": "https://youtu.be/WdyiUe7_3cA", "type": "video" },
                 { "id": "w4d5r6", "title": "Behavioural interview mock", "url": "https://youtu.be/sjTxmq68RXU", "type": "video" },
@@ -542,25 +537,25 @@
           "brief": "AI PM vs Traditional PM — what actually changes",
           "tasks": [
             {
-              "label": "Task 1",
+              "label": "Session 1",
               "resources": [
                 { "id": "w5d1r1", "title": "AI Product Management: The 2026 Guide", "url": "https://www.wrike.com/product-management-guide/ai-product-management/", "type": "article" }
               ]
             },
             {
-              "label": "Task 2",
+              "label": "Session 2",
               "resources": [
                 { "id": "w5d1r2", "title": "The 6 Core Skills Every AI PM Needs", "url": "https://www.productmap.io/blog/ai-product-manager-skills", "type": "article" }
               ]
             },
             {
-              "label": "Task 3",
+              "label": "Session 3",
               "resources": [
                 { "id": "w5d1r3", "title": "AI PM vs Traditional PM Comparison", "url": "https://www.productledalliance.com/think-like-an-ai-pm-what-ai-first-products-change-for-pms/", "type": "article" }
               ]
             },
             {
-              "label": "Task 4",
+              "label": "Session 4",
               "resources": [
                 { "id": "w5d1r4", "title": "How to Become an AI Product Manager in 2026 (Ex-Google, Microsoft)", "url": "https://www.youtube.com/watch?v=JKaA6HcxyXU", "type": "video" },
                 { "id": "w5d1r5", "title": "10 AI Concepts Every Product Manager MUST Know", "url": "https://www.youtube.com/watch?v=clPM27cw2oE", "type": "video" },
@@ -577,25 +572,25 @@
           "brief": "ML/AI literacy without needing to code",
           "tasks": [
             {
-              "label": "Task 1",
+              "label": "Session 1",
               "resources": [
                 { "id": "w5d2r1", "title": "Machine Learning Demystified for Non-Technical Managers", "url": "https://www.linkedin.com/pulse/machine-intelligence-guide-learning-non-technical-managers-huang", "type": "article" }
               ]
             },
             {
-              "label": "Task 2",
+              "label": "Session 2",
               "resources": [
                 { "id": "w5d2r2", "title": "AI and ML Explained for Non-Technical Professionals", "url": "https://www.aiproductcraft.com/p/ai-and-ml-explained-for-non-technical-managers", "type": "article" }
               ]
             },
             {
-              "label": "Task 3",
+              "label": "Session 3",
               "resources": [
                 { "id": "w5d2r3", "title": "Machine Learning Foundations for Product Managers (Duke/Coursera)", "url": "https://www.coursera.org/programs/coursera-for-community-guides-neujh/learn/machine-learning-foundations-for-product-managers", "type": "article" }
               ]
             },
             {
-              "label": "Task 4",
+              "label": "Session 4",
               "resources": [
                 { "id": "w5d2r4", "title": "[1hr Talk] Intro to Large Language Models — Andrej Karpathy", "url": "https://www.youtube.com/watch?v=zjkBMFhNj_g", "type": "video", "badge": "Technical Deep Dive" },
                 { "id": "w5d2r5", "title": "Deep Dive into LLMs like ChatGPT — Andrej Karpathy", "url": "https://www.youtube.com/watch?v=7xTGNNLPyMI", "type": "video", "badge": "Technical Deep Dive" },
@@ -612,19 +607,19 @@
           "brief": "Evals — the defining new AI PM skill",
           "tasks": [
             {
-              "label": "Task 1",
+              "label": "Session 1",
               "resources": [
                 { "id": "w5d3r1", "title": "Beyond Vibe Checks: A PM's Complete Guide to Evals", "url": "https://www.lennysnewsletter.com/p/beyond-vibe-checks-a-pms-complete", "type": "article" }
               ]
             },
             {
-              "label": "Task 2",
+              "label": "Session 2",
               "resources": [
                 { "id": "w5d3r2", "title": "Evals for PMs: A Practical Guide", "url": "https://www.braintrust.dev/blog/evals-for-pms", "type": "article" }
               ]
             },
             {
-              "label": "Task 3",
+              "label": "Session 3",
               "resources": [
                 { "id": "w5d3r3", "title": "AI Evals for Product Managers: A Beginner's Guide", "url": "https://amplitude.com/blog/ai-evals-for-product-managers", "type": "article" }
               ]
@@ -636,19 +631,19 @@
           "brief": "Responsible AI — bias, hallucination, governance",
           "tasks": [
             {
-              "label": "Task 1",
+              "label": "Session 1",
               "resources": [
                 { "id": "w5d4r1", "title": "Responsible AI for Product Managers: A Practical Playbook", "url": "https://kevinarmstrong.io/blog/responsible-ai-for-product-managers-a-practical-playbook/", "type": "article" }
               ]
             },
             {
-              "label": "Task 2",
+              "label": "Session 2",
               "resources": [
                 { "id": "w5d4r2", "title": "Responsible AI: The Responsibility of Product Managers", "url": "https://medium.com/@rashmigupta1109/responsible-ai-fa83e0bd9dd9", "type": "article" }
               ]
             },
             {
-              "label": "Task 3",
+              "label": "Session 3",
               "resources": [
                 { "id": "w5d4r3", "title": "AI Hallucination: Why It Happens and How to Prevent It", "url": "https://www.genesys.com/article/ai-hallucination-why-it-happens-and-how-to-prevent-it-in-the-age-of-agentic-ai", "type": "article" }
               ]
@@ -660,19 +655,19 @@
           "brief": "AI PM interview prep",
           "tasks": [
             {
-              "label": "Task 1",
+              "label": "Session 1",
               "resources": [
                 { "id": "w5d5r1", "title": "Top 25 AI Product Manager Interview Questions", "url": "https://www.productleadership.com/blog/ai-product-manager-interview-questions/", "type": "article" }
               ]
             },
             {
-              "label": "Task 2",
+              "label": "Session 2",
               "resources": [
                 { "id": "w5d5r2", "title": "50+ AI Product Manager Interview Questions & Answers", "url": "https://www.institutepm.com/knowledge-hub/ai-product-manager-interview-questions", "type": "article" }
               ]
             },
             {
-              "label": "Task 3",
+              "label": "Session 3",
               "resources": [
                 { "id": "w5d5r3", "title": "Product Manager Case Study Interview: 25 Examples", "url": "https://www.startupeditor.com/product-manager-case-study-interview/", "type": "article" },
                 { "id": "w5d5r4", "title": "AI Product Manager Interview Questions — Signals & Grading", "url": "https://www.kore1.com/ai-product-manager-interview-questions-2026/", "type": "article" }
