@@ -13,7 +13,7 @@ import weeksData from '@/data/weeks.json';
 import continuedLearningData from '@/data/continuedLearning.json';
 import { Week } from '@/types/curriculum';
 import { WeekMark } from '@/components/landing/Illustrations';
-import { Plus, Calendar, CheckCircle, Sparkles, ArrowRight, Bookmark, ExternalLink, Video, BookMarked } from 'lucide-react';
+import { Plus, Calendar, CheckCircle, Sparkles, ArrowRight, Bookmark, ExternalLink, BookMarked } from 'lucide-react';
 import { PageBackdrop } from '@/components/PageBackdrop';
 import { PageSkeleton } from '@/components/Skeleton';
 import { PageIcons } from '@/components/decor/BackgroundIcons';
@@ -185,7 +185,7 @@ function CourseContent() {
       {/* Horizontal Week & Module Navigation Tabs */}
       <div
         ref={weekStripRef}
-        className="flex overflow-x-auto snap-x snap-mandatory no-scrollbar gap-3 -mx-4 px-4 pb-1 sm:mx-0 sm:px-0 sm:pb-0 sm:overflow-visible sm:grid sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7"
+        className="flex overflow-x-auto snap-x snap-mandatory no-scrollbar gap-3 -mx-4 px-4 pb-1 sm:mx-0 sm:px-0 sm:pb-0 sm:overflow-visible sm:grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6"
       >
         {weeks.map((w) => {
           const stats = getWeekStats(w.id);
@@ -239,30 +239,6 @@ function CourseContent() {
             </GlowCard>
           );
         })}
-
-        {/* Live Sessions Navigation Tab */}
-        <GlowCard
-          as={Link}
-          href="/live-sessions"
-          className="snap-start shrink-0 w-[44%] sm:w-auto p-4 rounded-xl text-left bg-accent-soft border border-accent/40 transition-colors duration-200 flex flex-col justify-between space-y-3 group"
-        >
-          <div className="flex items-center justify-between">
-            <span className="text-xs sm:text-[10px] font-semibold px-2 py-0.5 rounded-md uppercase tracking-wider bg-accent-dark text-paper flex items-center gap-1">
-              Live <Video className="w-2.5 h-2.5" />
-            </span>
-            <ExternalLink className="w-3.5 h-3.5 text-accent-dark group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-          </div>
-
-          <div>
-            <h3 className="font-display font-bold text-sm text-ink group-hover:text-accent-dark line-clamp-1">
-              Live Sessions
-            </h3>
-          </div>
-
-          <div className="pt-1 text-xs sm:text-[10px] text-muted">
-            <span>Speaker talks &rarr;</span>
-          </div>
-        </GlowCard>
 
         {/* Case Studies Navigation Tab */}
         <GlowCard

@@ -19,7 +19,6 @@ export const Navbar: React.FC = () => {
     { href: '/course', label: 'Curriculum' },
     { href: '/activity', label: 'Activity' },
     { href: '/resources', label: 'Case Studies' },
-    { href: '/live-sessions', label: 'Live Sessions' },
   ];
 
   if (isAdmin) {

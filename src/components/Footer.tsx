@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { Mail, ExternalLink } from 'lucide-react';
+import { Mail } from 'lucide-react';
 import { Logo } from './Logo';
 import { FeedbackLink } from './FeedbackLink';
 
@@ -9,7 +9,7 @@ export const Footer: React.FC = () => {
   return (
     <footer className="w-full border-t border-line bg-surface py-10 transition-colors mt-auto">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 items-start">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 items-start">
           {/* Brand & Feedback Column */}
           <div className="space-y-3">
             <Logo size={26} showWordmark />
@@ -20,7 +20,7 @@ export const Footer: React.FC = () => {
           </div>
 
           {/* Contact Section */}
-          <div className="space-y-2.5">
+          <div className="space-y-2.5 sm:justify-self-end sm:text-right">
             <h3 className="text-xs font-semibold uppercase tracking-wider text-ink">
               Contact
             </h3>
@@ -35,25 +35,6 @@ export const Footer: React.FC = () => {
                 </a>
               </li>
             </ul>
-          </div>
-
-          {/* Curriculum Credit & Attribution */}
-          <div className="space-y-2 text-xs text-muted md:text-right">
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-ink">
-              Reference
-            </h3>
-            <p className="leading-relaxed">
-              Curriculum resources curated with reference to{' '}
-              <a
-                href="https://product-matters.ecelliitg.in/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:underline text-accent-dark font-semibold inline-flex items-center gap-1 py-2 sm:py-0"
-              >
-                <span>Product Matters by E-Cell IIT Guwahati</span>
-                <ExternalLink className="w-3 h-3 inline" />
-              </a>
-            </p>
           </div>
         </div>
 

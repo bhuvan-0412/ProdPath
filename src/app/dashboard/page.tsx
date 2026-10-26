@@ -10,12 +10,10 @@ import { GlowCard } from '@/components/GlowCard';
 import { StickyCheck, MiniFlag } from '@/components/landing/Illustrations';
 import weeksData from '@/data/weeks.json';
 import caseStudiesData from '@/data/caseStudies.json';
-import liveSessionsData from '@/data/liveSessions.json';
 import {
   ArrowRight,
   BookOpen,
   CalendarDays,
-  Video,
   PlayCircle,
   RotateCcw,
   BookMarked
@@ -27,13 +25,11 @@ import { DASHBOARD_ICONS } from '@/components/decor/iconLayouts';
 // Live counts for the quick-navigation cards, straight from the data files
 const weekCount = weeksData.weeks.length;
 const caseStudyCount = caseStudiesData.caseStudies.length;
-const liveSessionCount = liveSessionsData.liveSessions.length;
 
 const QUICK_NAV = [
   { href: '/course', label: 'Curriculum', count: `${weekCount} weeks`, icon: BookOpen },
   { href: '/activity', label: 'Activity', count: null, icon: CalendarDays },
   { href: '/resources', label: 'Case Studies', count: String(caseStudyCount), icon: BookMarked },
-  { href: '/live-sessions', label: 'Live Sessions', count: String(liveSessionCount), icon: Video },
 ];
 
 export default function DashboardPage() {
@@ -150,7 +146,7 @@ export default function DashboardPage() {
 
 
       {/* Quick Navigation Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-2">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
         {QUICK_NAV.map(({ href, label, count, icon: Icon }) => (
           <GlowCard
             key={href}

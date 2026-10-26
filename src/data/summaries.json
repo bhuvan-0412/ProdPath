@@ -1014,48 +1014,6 @@
       "The job is shipping products built on a component that is probabilistic, sometimes wrong, expensive to run and changing every few months.",
       "The questions come with grading notes on which answers pass and which quietly fail, covering metrics, model lifecycle collaboration and responsible-AI guardrails."
     ],
-    "live-session-1": [
-      "Masterclass by Niranjal Suresh Kumar (IITG and IIM Bangalore alum, PM on Microsoft Copilot agents) on breaking into PM in the AI era.",
-      "A PM blends business, technology and UX: understand the user, then craft flows that move them seamlessly toward their goal while balancing user fatigue against business goals.",
-      "Role definition: the strategic owner of a product's vision and lifecycle, and the 'single-threaded' owner who aligns multiple teams. When something goes wrong, people come to you.",
-      "Breaking in: be a PM of your own career. Build original products, prototype quickly with AI tools, enter case competitions, share your work publicly, and build a strong community and referral network.",
-      "Communication is the biggest lever: storytelling, positioning and concise answers (practise answering in under 50 words)."
-    ],
-    "live-session-2": [
-      "Session by Anil Kumar Shahi (IIT Roorkee and IIM Ahmedabad alum, PM at Tata 1mg) on building product sense.",
-      "Product sense combines user psychology, critical reasoning, prioritization, UX sensibility, data fluency and tech awareness. Understanding user psychology is the most unique and important part, and it takes practice.",
-      "Example: why Instagram Stories works (borrowed from Snapchat). Ephemeral, low-pressure sharing visible for 24 hours.",
-      "Persona creation: there are endless ways to slice users. Better segmentation follows the user lifecycle, e.g. Instamart new vs repeat users, then by acquisition channel and behavior.",
-      "Knowing exactly who you're solving for leads you to the right problems, and good solutions follow from the right problem statements."
-    ],
-    "live-session-3": [
-      "Session by Akhil, founder of Product Space, on understanding users and UI/UX, which he calls the toughest part of PM.",
-      "User segmentation: group users into cohorts by shared characteristics, which is everywhere in daily life. Top-of-mind awareness decides which apps users go to first (e.g. Flipkart and Amazon for online shopping).",
-      "Market context matters: early Indian e-commerce (2012–15) was immature, with room for several players (Flipkart, Amazon, Jabong, Snapdeal) to become category creators by winning users fast.",
-      "UX goal: a frictionless interface that lets users complete the goal they came for (e.g. ordering food on Swiggy from a well-structured homepage with search and recommendations).",
-      "Shows how AI design tools can fast-track product design beyond traditional tools like Figma."
-    ],
-    "live-session-4": [
-      "Session on measuring success, from metrics to product-market fit.",
-      "Metric focus shifts across the product life cycle: acquisition in introduction, engagement and retention in growth, monetization in maturity, and sunset or spin-off decisions in decline.",
-      "Product-market fit sits within this: the alignment of a product's features with the target market's needs.",
-      "Measuring the wrong metric is disastrous. The US in Vietnam optimized for kill ratio, 'won' on it and still lost the war. Pick outcome-based metrics.",
-      "Metric trees: break a north star such as listening time into levers like more users (notifications, trending artists, recommendations) × time per session (playlists, personalization)."
-    ],
-    "live-session-5": [
-      "Session by a Dream11 PM on MVP and GTM: building and launching products.",
-      "India is now the world's third-largest startup hub (about 150K startups a year), and AI is making building even faster.",
-      "MVPs evolve with user feedback (e.g. Swiggy's journey from food delivery toward Instamart and more). The MVP phase never ends, because new features start as MVPs. Skip the MVP route only when strong evidence exists (Blinkit scaling after seeing Instamart's traction).",
-      "'If a picture is worth a thousand words, a prototype is worth a thousand meetings.' Tools like Lovable let PMs test many ideas cheaply, knowing most will fail.",
-      "GTM alignment: product, marketing and sales must share the same understanding of the problem, user, pricing and positioning. Promising one thing in an ad and showing another on landing breaks trust."
-    ],
-    "live-session-6": [
-      "Session by Product Space on AI tools for PMs and preparing for AI PM interviews.",
-      "AI won't replace PMs. Products are end-to-end workflows that need judgment and direction, and that judgment is what differentiates one company from another when everyone has access to the same LLMs.",
-      "Expectations are rising: PMs now need to understand classical ML (regression, decision trees, boosting), generative AI (LLMs, SLMs) and agentic AI, and the field moves fast, so keep upskilling.",
-      "Stay updated with real industry practice (e.g. how teams build AI recommendation engines) by learning the fundamentals first.",
-      "Interviews: classic product sense, execution and strategy questions remain, plus subject-matter AI questions. Avoid over-relying on ChatGPT for your thinking."
-    ],
     "live-session-7": [
       "A 90-minute Product Space masterclass on tech basics for PMs, with hands-on API practice.",
       "How the internet works: a web address (URL) is like a house address. HTTPS is the protocol (the way information travels), a domain name is the readable name, and DNS maps it to a numeric IP address, like a phone book.",
