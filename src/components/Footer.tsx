@@ -14,7 +14,7 @@ export const Footer: React.FC = () => {
           <div className="space-y-3">
             <Logo size={26} showWordmark />
             <p className="text-xs text-muted leading-relaxed max-w-xs">
-              Free 5-week product management path.
+              Free 6-week product management path.
             </p>
             <FeedbackLink />
           </div>

@@ -9,7 +9,7 @@
 ## 1. Executive Context & Core Philosophy
 
 ### What is ProdPath?
-ProdPath is an interactive, local-first 4-week Product Management learning hub built with **Next.js 15.1.12 (App Router)**, **React 19.0.0**, **TypeScript**, **Tailwind CSS**, and **Three.js WebGL GPGPU Shaders** ([LiquidEther.tsx](file:///d:/ProdPath/src/components/LiquidEther.tsx)).
+ProdPath is an interactive, local-first 6-week Product Management learning hub built with **Next.js 15.1.12 (App Router)**, **React 19.0.0**, **TypeScript**, **Tailwind CSS**, and **Three.js WebGL GPGPU Shaders** ([LiquidEther.tsx](file:///d:/ProdPath/src/components/LiquidEther.tsx)).
 
 ### Core Engineering Pillars
 1. **Local-First Architecture**: User progress (`completedIds`) and user-added items (`customResources`) MUST always persist in browser `localStorage`. No mandatory server authentication exists.

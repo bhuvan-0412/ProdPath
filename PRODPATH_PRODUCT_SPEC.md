@@ -21,7 +21,7 @@
 ## 1. Product Vision & Mission
 
 ### Startup Elevator Pitch
-For aspiring Product Managers overwhelmed by fragmented learning materials across Medium, YouTube, and podcasts, **ProdPath** is a modern, interactive learning platform that structures the PM journey into an actionable 4-week syllabus with real-time progress tracking, reflective case studies, masterclasses, and custom resource management. Unlike static reading lists or expensive course portals, ProdPath is free, instant, locally persistent, and beautifully designed for daily focus.
+For aspiring Product Managers overwhelmed by fragmented learning materials across Medium, YouTube, and podcasts, **ProdPath** is a modern, interactive learning platform that structures the PM journey into an actionable 6-week syllabus with real-time progress tracking, reflective case studies, masterclasses, and custom resource management. Unlike static reading lists or expensive course portals, ProdPath is free, instant, locally persistent, and beautifully designed for daily focus.
 
 ### Vision Statement
 To become the definitive, open-access learning platform for product managers to master product strategy, execution, technical fluency, data analytics, case studies, and interview excellence.
@@ -46,7 +46,7 @@ Self-studying Product Management is notoriously fragmented:
 - **High LMS Barrier**: Commercial PM bootcamps cost thousands of dollars, while free lists offer zero interactive progress tracking.
 
 ### The ProdPath Solution
-- **Structured 4-Week Roadmap**: Breaks down PM mastery into 28 daily modules spanning PM Foundations, Metrics & Strategy, Tech/AI Tools, and Interview Prep.
+- **Structured 6-Week Roadmap**: Breaks down PM mastery into 30 daily modules: Think like a PM, Discover, Define and build, Launch and measure, AI product management, and Land the internship.
 - **Horizontal Week Tab Navigation**: Easily switch between Week 1–4 modules with glassmorphic active tab indicators.
 - **Interactive Progress Dashboard**: Visual meters, completion badges, next-up recommendation banners, and confetti micro-animations upon task completion.
 - **Case Studies Repository**: Reflective case studies (`case-study` resource type) with bulleted takeaways and dedicated progress counters.

@@ -1,7 +1,7 @@
 import React from 'react';
 import weeksData from '@/data/weeks.json';
 import caseStudiesData from '@/data/caseStudies.json';
-import type { Week, ResourceType } from '@/types/curriculum';
+import { AI_TRACK_WEEK_ID, type Week, type ResourceType } from '@/types/curriculum';
 import { GoogleSignInButton, SignedInRedirect } from '@/components/landing/GoogleSignIn';
 import { HeroScene } from '@/components/landing/HeroScene';
 import {
@@ -36,10 +36,10 @@ const caseStudies = caseStudiesData.caseStudies;
 
 const allResources = weeks.flatMap((w) => w.days.flatMap((d) => d.tasks.flatMap((t) => t.resources)));
 const totalDays = weeks.reduce((sum, w) => sum + w.days.length, 0);
-// "Week 1: PM Foundations" -> "PM Foundations"
+// "Week 1: Think like a PM" -> "Think like a PM"
 const weekName = (w: Week) => w.title.replace(/^Week\s*\d+\s*[:\-–]\s*/i, '');
-// The AI PM track is the final week of the path
-const isAiTrack = (index: number) => index === weeks.length - 1;
+// The AI PM track is the AI product management week, picked by id (it is no longer the last week)
+const isAiTrack = (week: Week) => week.id === AI_TRACK_WEEK_ID;
 
 const sampleWeek = weeks[0];
 const sampleDay = sampleWeek?.days[0];
@@ -106,7 +106,7 @@ export default function LandingPage() {
               Learn product management <span className="text-accent-dark">the way it&rsquo;s actually practiced.</span>
             </h1>
             <p className="hero-lede mt-6 text-base sm:text-lg text-muted leading-relaxed text-balance">
-              Five weeks of structured PM learning, with an AI&nbsp;track.&nbsp;Free.
+              Six weeks of structured PM learning, with an AI&nbsp;track.&nbsp;Free.
             </p>
             <div className="hero-cta mt-8 space-y-4">
               <GoogleSignInButton className="w-full sm:w-auto" />
@@ -141,7 +141,7 @@ export default function LandingPage() {
               {/* The trail line */}
               <span aria-hidden="true" className="absolute left-[7px] top-3 bottom-3 w-px bg-line" />
               {weeks.map((week, i) => {
-                const ai = isAiTrack(i);
+                const ai = isAiTrack(week);
                 return (
                   <RevealItem key={week.id} index={i} className={`relative pl-10 ${i < weeks.length - 1 ? 'path-week pb-10' : ''}`}>
                     <span
@@ -176,10 +176,13 @@ export default function LandingPage() {
                           </span>
                         )}
                       </div>
-                      <h3 className={`path-week-title mt-1.5 font-display font-semibold text-ink ${ai ? 'text-2xl sm:text-3xl' : 'text-xl sm:text-2xl'}`}>
-                        {weekName(week)}
-                      </h3>
-                      <p className="mt-1 text-sm text-muted">{week.days.length} days</p>
+                      {/* Day count on the title's line, so six weeks still fit one laptop screen */}
+                      <div className="mt-1.5 flex flex-wrap items-baseline gap-x-3">
+                        <h3 className={`path-week-title font-display font-semibold text-ink ${ai ? 'text-2xl sm:text-3xl' : 'text-xl sm:text-2xl'}`}>
+                          {weekName(week)}
+                        </h3>
+                        <p className="text-sm text-muted">{week.days.length} days</p>
+                      </div>
                     </div>
                   </RevealItem>
                 );

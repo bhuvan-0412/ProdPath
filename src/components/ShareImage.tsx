@@ -41,7 +41,7 @@ export async function renderShareImage() {
           <div style={{ fontFamily: 'Fraunces', fontSize: 136, fontWeight: 600, letterSpacing: -3, lineHeight: 1 }}>
             ProdPath
           </div>
-          <div style={{ marginTop: 28, fontSize: 40, color: '#666A75' }}>Learn product management in 5 weeks</div>
+          <div style={{ marginTop: 28, fontSize: 40, color: '#666A75' }}>Learn product management in 6 weeks</div>
         </div>
       </div>
     ),

@@ -30,9 +30,9 @@ const fraunces = localFont({
 // It also marks the page while its tab is hidden, so globals.css can pause the looping animations.
 const themeScript = `(function(){try{var t=localStorage.getItem('prodpath_theme')||localStorage.getItem('pm_hub_theme');if(t==='dark')document.documentElement.classList.add('dark');}catch(e){}var d=document,h=function(){d.documentElement.toggleAttribute('data-tab-hidden',d.hidden)};h();d.addEventListener('visibilitychange',h);})();`;
 
-const siteTitle = 'ProdPath | Learn Product Management in 5 Weeks';
+const siteTitle = 'ProdPath | Learn Product Management in 6 Weeks';
 const siteDescription =
-  'A free, structured 5-week product management learning path with an AI PM track. Track your progress across devices.';
+  'A free, structured 6-week product management learning path with an AI PM track. Track your progress across devices.';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://prodpath.vercel.app'),

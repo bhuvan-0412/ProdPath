@@ -32,7 +32,7 @@ const Illo: React.FC<{ viewBox: string; className?: string; children: React.Reac
 
 const outline = { stroke: INK, strokeWidth: 2, strokeLinejoin: 'round' as const };
 
-/* ---------- Your 5-week path ---------- */
+/* ---------- Your 6-week path ---------- */
 
 export const Compass: React.FC<{ className?: string }> = ({ className }) => (
   <Illo viewBox="0 0 104 112" className={className}>
@@ -245,9 +245,9 @@ export const StickyCheck: React.FC<{ className?: string }> = ({ className }) => 
   </Illo>
 );
 
-// Small marks beside each week's title on the course page, keyed by the week's position (0-4)
+// Small marks beside each week's title on the course page, keyed by the week's position (0-5)
 const WEEK_MARKS: React.ReactNode[] = [
-  // Week 1: seedling in a pot
+  // Week 1 (Think like a PM): seedling in a pot
   <g key="seedling">
     <path d="M24 30 C 24 22, 24 18, 24 14" fill="none" stroke={INK} strokeWidth="2" strokeLinecap="round" />
     <path d="M24 20 C 16 20, 10 15, 10 8 C 18 8, 24 12, 24 20 Z" fill="#F3D9CC" {...iconOutline} />
@@ -256,16 +256,16 @@ const WEEK_MARKS: React.ReactNode[] = [
       <path d="M13 29 L35 29 L32 43 L16 43 Z" fill="#C2603A" {...iconOutline} />
     </Shadowed>
   </g>,
-  // Week 2: bar chart
-  <g key="chart">
+  // Week 2 (Discover): speech bubble, for talking to users
+  <g key="bubble">
     <Shadowed offset={3}>
-      <rect x="5" y="6" width="38" height="36" rx="4" fill="#FBF8F1" {...iconOutline} />
+      <path d="M6 8 L42 8 Q 44 8, 44 10 L44 32 Q 44 34, 42 34 L20 34 L11 42 L12 34 L8 34 Q 6 34, 6 32 L6 10 Q 6 8, 8 8 Z" fill="#F3D9CC" {...iconOutline} />
     </Shadowed>
-    <rect x="11" y="27" width="6" height="9" rx="1.5" fill="#EBC3AE" stroke={INK} strokeWidth="1.25" />
-    <rect x="21" y="20" width="6" height="16" rx="1.5" fill="#C2603A" stroke={INK} strokeWidth="1.25" />
-    <rect x="31" y="13" width="6" height="23" rx="1.5" fill="#9E4524" stroke={INK} strokeWidth="1.25" />
+    <circle cx="16" cy="21" r="2.5" fill="#9E4524" />
+    <circle cx="25" cy="21" r="2.5" fill="#9E4524" />
+    <circle cx="34" cy="21" r="2.5" fill="#9E4524" />
   </g>,
-  // Week 3: gear
+  // Week 3 (Define and build): gear
   <g key="gear">
     <Shadowed offset={3}>
       <path
@@ -276,21 +276,30 @@ const WEEK_MARKS: React.ReactNode[] = [
     </Shadowed>
     <circle cx="24" cy="25" r="7" fill="#FBF8F1" stroke={INK} strokeWidth="1.75" />
   </g>,
-  // Week 4: speech bubble
-  <g key="bubble">
+  // Week 4 (Launch and measure): bar chart
+  <g key="chart">
     <Shadowed offset={3}>
-      <path d="M6 8 L42 8 Q 44 8, 44 10 L44 32 Q 44 34, 42 34 L20 34 L11 42 L12 34 L8 34 Q 6 34, 6 32 L6 10 Q 6 8, 8 8 Z" fill="#F3D9CC" {...iconOutline} />
+      <rect x="5" y="6" width="38" height="36" rx="4" fill="#FBF8F1" {...iconOutline} />
     </Shadowed>
-    <circle cx="16" cy="21" r="2.5" fill="#9E4524" />
-    <circle cx="25" cy="21" r="2.5" fill="#9E4524" />
-    <circle cx="34" cy="21" r="2.5" fill="#9E4524" />
+    <rect x="11" y="27" width="6" height="9" rx="1.5" fill="#EBC3AE" stroke={INK} strokeWidth="1.25" />
+    <rect x="21" y="20" width="6" height="16" rx="1.5" fill="#C2603A" stroke={INK} strokeWidth="1.25" />
+    <rect x="31" y="13" width="6" height="23" rx="1.5" fill="#9E4524" stroke={INK} strokeWidth="1.25" />
   </g>,
-  // Week 5: sparkle
+  // Week 5 (AI product management): sparkle
   <g key="sparkle">
     <Shadowed offset={3}>
       <path d="M24 3 L29 19 L45 24 L29 29 L24 45 L19 29 L3 24 L19 19 Z" fill="#E8B04A" {...iconOutline} />
     </Shadowed>
     <path d="M40 4 L41.5 8.5 L46 10 L41.5 11.5 L40 16 L38.5 11.5 L34 10 L38.5 8.5 Z" fill="#FBF8F1" stroke={INK} strokeWidth="1.25" strokeLinejoin="round" />
+  </g>,
+  // Week 6 (Land the internship): briefcase
+  <g key="briefcase">
+    <path d="M18 14 V 10 Q 18 7, 21 7 H 27 Q 30 7, 30 10 V 14" fill="none" stroke={INK} strokeWidth="2" strokeLinejoin="round" />
+    <Shadowed offset={3}>
+      <rect x="5" y="14" width="38" height="28" rx="4" fill="#C2603A" {...iconOutline} />
+    </Shadowed>
+    <path d="M5 25 H 43" stroke={INK} strokeWidth="1.5" />
+    <rect x="20" y="21.5" width="8" height="7" rx="1.5" fill="#E8B04A" stroke={INK} strokeWidth="1.25" />
   </g>,
 ];
 
