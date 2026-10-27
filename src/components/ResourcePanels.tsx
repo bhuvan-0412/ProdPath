@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { useProgress } from '@/context/ProgressContext';
-import { Check, Lightbulb, AlignLeft } from 'lucide-react';
+import { Check, Lightbulb } from 'lucide-react';
 
 const MAX_NOTE_LENGTH = 5000;
 
@@ -93,44 +93,13 @@ export const NotesPanel: React.FC<NotesPanelProps> = ({ resourceId, onClose }) =
 
 interface TaskHeaderProps {
   label: string;
-  summary?: string;
 }
 
-export const TaskHeader: React.FC<TaskHeaderProps> = ({ label, summary }) => {
-  const [open, setOpen] = useState(false);
-
-  return (
-    <div className="space-y-2">
-      <div className="flex items-center justify-between gap-2">
-        <span className="text-xs sm:text-[10px] font-semibold uppercase tracking-wider text-muted block">
-          {label}
-        </span>
-        {summary && (
-          <button
-            type="button"
-            onClick={() => setOpen((current) => !current)}
-            className={`inline-flex items-center gap-1.5 min-h-10 px-3 sm:min-h-0 sm:gap-1 sm:px-2 sm:py-1 rounded-lg text-xs sm:text-[10px] font-semibold transition-colors ${
-              open
-                ? 'text-accent-dark bg-accent-soft'
-                : 'text-muted hover:text-accent-dark hover:bg-accent-soft'
-            }`}
-            title="Overview of this task"
-            aria-label={`Overview of ${label}`}
-            aria-expanded={open}
-          >
-            <AlignLeft className="w-3.5 h-3.5" />
-            <span>Overview</span>
-          </button>
-        )}
-      </div>
-      {open && summary && (
-        <p className="text-xs text-muted leading-relaxed border-l-2 border-accent/40 pl-3 py-1 animate-fade-in">
-          {summary}
-        </p>
-      )}
-    </div>
-  );
-};
+export const TaskHeader: React.FC<TaskHeaderProps> = ({ label }) => (
+  <span className="text-xs sm:text-[10px] font-semibold uppercase tracking-wider text-muted block">
+    {label}
+  </span>
+);
 
 interface SummaryPanelProps {
   points: string[];

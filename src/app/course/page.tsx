@@ -6,30 +6,29 @@ import { useSearchParams } from 'next/navigation';
 import { useProgress } from '@/context/ProgressContext';
 import { ResourceCard } from '@/components/ResourceCard';
 import { ProgressBar } from '@/components/ProgressBar';
-import { AddResourceModal } from '@/components/AddResourceModal';
+import dynamic from 'next/dynamic';
 import { TaskHeader } from '@/components/ResourcePanels';
 import { GlowCard } from '@/components/GlowCard';
 import weeksData from '@/data/weeks.json';
-import taskSummariesData from '@/data/taskSummaries.json';
 import continuedLearningData from '@/data/continuedLearning.json';
 import { Week } from '@/types/curriculum';
 import { WeekMark } from '@/components/landing/Illustrations';
-import { Plus, Calendar, CheckCircle, Sparkles, ArrowRight, Bookmark, ExternalLink, Video, BookMarked } from 'lucide-react';
+import { Plus, Calendar, CheckCircle, Sparkles, ArrowRight, Bookmark, ExternalLink, BookMarked } from 'lucide-react';
 import { PageBackdrop } from '@/components/PageBackdrop';
 import { PageSkeleton } from '@/components/Skeleton';
 import { PageIcons } from '@/components/decor/BackgroundIcons';
 import { COURSE_ICONS } from '@/components/decor/iconLayouts';
 
-const getTaskDomId = (weekId: string, dayNum: number, taskLabel: string) => {
+// Loaded the first time someone adds a resource, not with the page
+const AddResourceModal = dynamic(() => import('@/components/AddResourceModal').then((m) => m.AddResourceModal), { ssr: false });
+
+// Groups inside a day are always labelled by their order: Session 1, Session 2, ...
+const sessionLabel = (index: number) => `Session ${index + 1}`;
+
+const getSessionDomId = (weekId: string, dayNum: number, index: number) => {
   const n = weekId.replace('week-', '');
-  const cleanLabel = taskLabel.toLowerCase().replace(/^task[\s-_]*/i, '').replace(/[^a-z0-9]+/g, '-') || taskLabel.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-  return `week-${n}-day-${dayNum}-task-${cleanLabel}`;
+  return `week-${n}-day-${dayNum}-session-${index + 1}`;
 };
-
-const taskSummaries = taskSummariesData.taskSummaries as Record<string, string>;
-
-const getTaskSummaryKey = (weekId: string, dayNum: number, taskLabel: string) =>
-  `${weekId}-d${dayNum}-${taskLabel.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}`;
 
 const getDayDomId = (weekId: string, dayNum: number) => {
   const n = weekId.replace('week-', '');
@@ -37,16 +36,16 @@ const getDayDomId = (weekId: string, dayNum: number) => {
 };
 
 const getWeekScrollTargetId = (week: Week, completedIds: Set<string>): string => {
-  const allTasks: { dayNum: number; taskLabel: string; isCompleted: boolean }[] = [];
+  const allTasks: { dayNum: number; index: number; isCompleted: boolean }[] = [];
 
   week.days.forEach((dayObj) => {
-    dayObj.tasks.forEach((taskObj) => {
+    dayObj.tasks.forEach((taskObj, index) => {
       const isCompleted =
         taskObj.resources.length > 0 &&
         taskObj.resources.every((res) => completedIds.has(res.id));
       allTasks.push({
         dayNum: dayObj.day,
-        taskLabel: taskObj.label,
+        index,
         isCompleted,
       });
     });
@@ -62,10 +61,10 @@ const getWeekScrollTargetId = (week: Week, completedIds: Set<string>): string =>
     return getDayDomId(week.id, 1);
   } else if (completedTasks.length === allTasks.length) {
     const lastTask = allTasks[allTasks.length - 1];
-    return getTaskDomId(week.id, lastTask.dayNum, lastTask.taskLabel);
+    return getSessionDomId(week.id, lastTask.dayNum, lastTask.index);
   } else {
     const lastCompleted = completedTasks[completedTasks.length - 1];
-    return getTaskDomId(week.id, lastCompleted.dayNum, lastCompleted.taskLabel);
+    return getSessionDomId(week.id, lastCompleted.dayNum, lastCompleted.index);
   }
 };
 
@@ -96,6 +95,10 @@ function CourseContent() {
   }, [activeWeekId]);
   const [modalOpen, setModalOpen] = useState(false);
   const [targetWeekForAdd, setTargetWeekForAdd] = useState('week-1');
+  // The modal mounts on first open and then stays mounted (so a half-filled form survives closing it, as before).
+  // It reads its default week only when it mounts, which used to be page load: keep passing that first value.
+  const [modalMounted, setModalMounted] = useState(false);
+  const [modalDefaultWeek] = useState(targetWeekForAdd);
 
   const weeks = weeksData.weeks as Week[];
 
@@ -149,6 +152,7 @@ function CourseContent() {
 
   const handleOpenAddModal = (weekId: string) => {
     setTargetWeekForAdd(weekId);
+    setModalMounted(true);
     setModalOpen(true);
   };
 
@@ -165,7 +169,7 @@ function CourseContent() {
             Weekly Curriculum
           </h1>
           <p className="text-sm text-muted mt-1">
-            Select a week to navigate daily topics, task lists, and learning resources.
+            Select a week to navigate daily topics, sessions, and learning resources.
           </p>
         </div>
 
@@ -181,7 +185,7 @@ function CourseContent() {
       {/* Horizontal Week & Module Navigation Tabs */}
       <div
         ref={weekStripRef}
-        className="flex overflow-x-auto snap-x snap-mandatory no-scrollbar gap-3 -mx-4 px-4 pb-1 sm:mx-0 sm:px-0 sm:pb-0 sm:overflow-visible sm:grid sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7"
+        className="flex overflow-x-auto snap-x snap-mandatory no-scrollbar gap-3 -mx-4 px-4 pb-1 sm:mx-0 sm:px-0 sm:pb-0 sm:overflow-visible sm:grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6"
       >
         {weeks.map((w) => {
           const stats = getWeekStats(w.id);
@@ -235,30 +239,6 @@ function CourseContent() {
             </GlowCard>
           );
         })}
-
-        {/* Live Sessions Navigation Tab */}
-        <GlowCard
-          as={Link}
-          href="/live-sessions"
-          className="snap-start shrink-0 w-[44%] sm:w-auto p-4 rounded-xl text-left bg-accent-soft border border-accent/40 transition-colors duration-200 flex flex-col justify-between space-y-3 group"
-        >
-          <div className="flex items-center justify-between">
-            <span className="text-xs sm:text-[10px] font-semibold px-2 py-0.5 rounded-md uppercase tracking-wider bg-accent-dark text-paper flex items-center gap-1">
-              Live <Video className="w-2.5 h-2.5" />
-            </span>
-            <ExternalLink className="w-3.5 h-3.5 text-accent-dark group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-          </div>
-
-          <div>
-            <h3 className="font-display font-bold text-sm text-ink group-hover:text-accent-dark line-clamp-1">
-              Live Sessions
-            </h3>
-          </div>
-
-          <div className="pt-1 text-xs sm:text-[10px] text-muted">
-            <span>Speaker talks &rarr;</span>
-          </div>
-        </GlowCard>
 
         {/* Case Studies Navigation Tab */}
         <GlowCard
@@ -315,27 +295,26 @@ function CourseContent() {
             className="bg-surface rounded-xl p-4 sm:p-6 border border-line space-y-4 scroll-mt-24"
           >
             {/* Day Header */}
-            <div className="flex items-center gap-3 pb-3 border-b border-line">
-              <span className="px-2.5 py-1 rounded-lg bg-accent-dark text-paper font-bold text-xs">
-                Day {day.day}
-              </span>
-              <h3 className="font-display font-bold text-ink text-base">
-                {day.brief}
-              </h3>
+            <div className="pb-3 border-b border-line space-y-2">
+              <div className="flex items-center gap-3">
+                <span className="px-2.5 py-1 rounded-lg bg-accent-dark text-paper font-bold text-xs">
+                  Day {day.day}
+                </span>
+                <h3 className="font-display font-bold text-ink text-base">
+                  {day.brief}
+                </h3>
+              </div>
             </div>
 
-            {/* Tasks */}
+            {/* Sessions */}
             <div className="space-y-4">
               {day.tasks.map((task, tIdx) => (
                 <div
                   key={tIdx}
-                  id={getTaskDomId(activeWeek.id, day.day, task.label)}
+                  id={getSessionDomId(activeWeek.id, day.day, tIdx)}
                   className="space-y-2 scroll-mt-24"
                 >
-                  <TaskHeader
-                    label={task.label}
-                    summary={taskSummaries[getTaskSummaryKey(activeWeek.id, day.day, task.label)]}
-                  />
+                  <TaskHeader label={sessionLabel(tIdx)} />
                   <div className="space-y-2">
                     {task.resources.map((res) => (
                       <ResourceCard
@@ -344,7 +323,7 @@ function CourseContent() {
                           ...res,
                           weekId: activeWeek.id,
                           day: day.day,
-                          taskLabel: task.label,
+                          taskLabel: sessionLabel(tIdx),
                         }}
                       />
                     ))}
@@ -437,11 +416,13 @@ function CourseContent() {
       </div>
 
       {/* Modal */}
-      <AddResourceModal
-        isOpen={modalOpen}
-        onClose={() => setModalOpen(false)}
-        defaultWeekId={targetWeekForAdd}
-      />
+      {modalMounted && (
+        <AddResourceModal
+          isOpen={modalOpen}
+          onClose={() => setModalOpen(false)}
+          defaultWeekId={modalDefaultWeek}
+        />
+      )}
     </div>
   );
 }

@@ -2,8 +2,6 @@
 
 This document contains a structured list of all resources across all 5 weeks, organized by **Week**, **Day**, and **Task**, complete with resource titles, types, and links.
 
-https://product-matters.ecelliitg.in/
-
 ---
 
 ## 📅 Week 1: PM Foundations

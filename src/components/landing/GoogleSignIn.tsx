@@ -3,11 +3,12 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useProgress } from '@/context/ProgressContext';
-import { createClient } from '@/lib/supabase/client';
 
-// The one sign-in action on the landing page (same Google OAuth flow as before)
+// The one sign-in action on the landing page (same Google OAuth flow as before). The Supabase client is
+// loaded on demand so it isn't part of the page's first download (ProgressContext has usually loaded it already).
 export const signInWithGoogle = async () => {
   try {
+    const { createClient } = await import('@/lib/supabase/client');
     const supabase = createClient();
     const origin = typeof window !== 'undefined' ? window.location.origin : '';
     await supabase.auth.signInWithOAuth({

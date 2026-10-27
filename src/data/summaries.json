@@ -35,6 +35,20 @@
       "Usability sessions to test newly shipped features and catch bugs, plus 1:1s with marketing, ML and data science counterparts.",
       "End of day: focused solo work such as writing PRDs, reviewing other teams' docs and sending leadership updates. Much of a PM's job is meetings that unblock others."
     ],
+    "w1d1r6": [
+      "A team can keep running without a PM because others quietly fill the gaps, so a PM has to earn their place through the results they create.",
+      "Raw intelligence comes first: a sharp, fast-learning candidate with little experience often beats an average one with many years in the role.",
+      "A technical background helps a PM win engineers' trust and explain detail to others, but former engineers must fully stop doing the engineering themselves.",
+      "Good PMs have strong product instincts: they spot problems early, notice great products others overlook and can teach you something about your own product.",
+      "PMs rarely have formal authority, so look for leadership earned through influence, the ability to speak for customers, engineering and sales at once, and a record of shipping a product end to end."
+    ],
+    "w1d1r7": [
+      "A good PM takes full ownership and acts like the CEO of the product, judged by whether it succeeds. A bad PM keeps a list of reasons why things went wrong.",
+      "Good PMs define the 'what' and leave the 'how' to engineering. Bad PMs drift into project management or try to design the technical solution themselves.",
+      "Good PMs put direction in writing and take clear positions. Bad PMs offer opinions in passing and later claim they saw the problems coming.",
+      "Good PMs keep the team focused on customers and revenue and split big problems into smaller ones. Bad PMs chase feature counts and try to fix everything at once.",
+      "Good PMs define their own job and how success is measured, explain even the obvious clearly and stay disciplined about routine work like weekly status updates. The essay is from an earlier era of tech, so take the habits rather than every detail."
+    ],
     "w1d2r1": [
       "Product sense is the ability to understand what makes a product great and what users need, even when those needs aren't obvious.",
       "It's a learnable skill, not an innate talent, and one of the core hard skills of a PM.",
@@ -116,6 +130,20 @@
       "Decline: oversupply, new technology and changing tastes push sales down, ending in clearance pricing and discontinuation.",
       "Extension strategies delay decline. Coca-Cola used line extensions (Diet Coke, Coke Zero, Cherry Coke, the short-lived Coca-Cola Life) and brand extensions. Apple keeps the iPhone growing with regular new models."
     ],
+    "w1d3r4": [
+      "Product teams have two jobs that pull against each other: learning quickly what customers actually need, and shipping reliable software that customers can depend on.",
+      "Discovery is about gathering evidence that an idea is worth building. Delivery is about building it to production quality: scalable, tested, instrumented and maintainable.",
+      "Production engineering is the most expensive part of making a product, so spending it on an idea nobody has validated is the most common form of waste.",
+      "Many discovery techniques, such as testing prototypes with real users, need little or no engineering time and can be run with opt-in customers instead of public releases.",
+      "Run discovery and delivery as separate tracks: learn fast first, then hand validated ideas to engineers to build properly."
+    ],
+    "w1d3r5": [
+      "Every product idea has to clear four risks: value (will people buy or use it), usability (can they figure it out), feasibility (can the team build it) and business viability (does it work for the business).",
+      "The PM owns value and viability risk, the product designer owns usability risk and the lead engineer owns feasibility risk.",
+      "Viability is about more than revenue: fit with sales and marketing, legal and partner constraints, the cost of acquiring customers and consistency with the brand all count.",
+      "Value risk is usually the hardest to retire, but a product customers love can still fail if it does not work for the business.",
+      "Strong teams tackle these risks early, before building, work on them together across product, design and engineering, and judge success by outcomes rather than features shipped."
+    ],
     "w1d4r1": [
       "A user persona is a semi-fictional profile of a target user built from real research. Without one, teams end up designing for 'everyone', which means no one.",
       "Step 1: research. Interview 10–20 users, run surveys and focus groups, and analyze reviews and forums. With no users yet, use market research.",
@@ -168,6 +196,13 @@
       "Start with a well-researched persona so you can predict expectations, goals and pain points.",
       "Break the journey into phases and touchpoints (each touchpoint may contain a user flow, e.g. booking tickets online), and note emotions at each one.",
       "Use storytelling: play out a realistic scenario in the user's shoes to find where frustration happens and what to optimize first."
+    ],
+    "w1d4r9": [
+      "A journey map shows the process a person goes through to reach a goal: a timeline of their actions, layered with what they think and feel along the way.",
+      "Most maps share five parts: an actor (usually a persona), a scenario with the user's goal and expectations, the phases of the journey, the user's actions, thoughts and emotions in each phase, and the opportunities these reveal.",
+      "Stick to one actor per map. Different kinds of users take different journeys and need maps of their own.",
+      "Journey maps work best for experiences that unfold over time or across several channels, such as shopping online or planning a trip.",
+      "The value is twofold: making the map gets the whole team to a shared view of the user, and the finished map is a memorable way to share insights and guide decisions."
     ],
     "w1d5r1": [
       "A wireframe is a 2D blueprint of a digital product's interface: grayscale, no-frills and clearly not the final design. Its main goal is team alignment before coding starts.",
@@ -978,48 +1013,6 @@
       "Strong answer pattern: a hand-labeled golden dataset with domain experts, a hallucination-rate threshold you won't ship above, shadow deployment against the current system, and human review below a confidence cutoff.",
       "The job is shipping products built on a component that is probabilistic, sometimes wrong, expensive to run and changing every few months.",
       "The questions come with grading notes on which answers pass and which quietly fail, covering metrics, model lifecycle collaboration and responsible-AI guardrails."
-    ],
-    "live-session-1": [
-      "Masterclass by Niranjal Suresh Kumar (IITG and IIM Bangalore alum, PM on Microsoft Copilot agents) on breaking into PM in the AI era.",
-      "A PM blends business, technology and UX: understand the user, then craft flows that move them seamlessly toward their goal while balancing user fatigue against business goals.",
-      "Role definition: the strategic owner of a product's vision and lifecycle, and the 'single-threaded' owner who aligns multiple teams. When something goes wrong, people come to you.",
-      "Breaking in: be a PM of your own career. Build original products, prototype quickly with AI tools, enter case competitions, share your work publicly, and build a strong community and referral network.",
-      "Communication is the biggest lever: storytelling, positioning and concise answers (practise answering in under 50 words)."
-    ],
-    "live-session-2": [
-      "Session by Anil Kumar Shahi (IIT Roorkee and IIM Ahmedabad alum, PM at Tata 1mg) on building product sense.",
-      "Product sense combines user psychology, critical reasoning, prioritization, UX sensibility, data fluency and tech awareness. Understanding user psychology is the most unique and important part, and it takes practice.",
-      "Example: why Instagram Stories works (borrowed from Snapchat). Ephemeral, low-pressure sharing visible for 24 hours.",
-      "Persona creation: there are endless ways to slice users. Better segmentation follows the user lifecycle, e.g. Instamart new vs repeat users, then by acquisition channel and behavior.",
-      "Knowing exactly who you're solving for leads you to the right problems, and good solutions follow from the right problem statements."
-    ],
-    "live-session-3": [
-      "Session by Akhil, founder of Product Space, on understanding users and UI/UX, which he calls the toughest part of PM.",
-      "User segmentation: group users into cohorts by shared characteristics, which is everywhere in daily life. Top-of-mind awareness decides which apps users go to first (e.g. Flipkart and Amazon for online shopping).",
-      "Market context matters: early Indian e-commerce (2012–15) was immature, with room for several players (Flipkart, Amazon, Jabong, Snapdeal) to become category creators by winning users fast.",
-      "UX goal: a frictionless interface that lets users complete the goal they came for (e.g. ordering food on Swiggy from a well-structured homepage with search and recommendations).",
-      "Shows how AI design tools can fast-track product design beyond traditional tools like Figma."
-    ],
-    "live-session-4": [
-      "Session on measuring success, from metrics to product-market fit.",
-      "Metric focus shifts across the product life cycle: acquisition in introduction, engagement and retention in growth, monetization in maturity, and sunset or spin-off decisions in decline.",
-      "Product-market fit sits within this: the alignment of a product's features with the target market's needs.",
-      "Measuring the wrong metric is disastrous. The US in Vietnam optimized for kill ratio, 'won' on it and still lost the war. Pick outcome-based metrics.",
-      "Metric trees: break a north star such as listening time into levers like more users (notifications, trending artists, recommendations) × time per session (playlists, personalization)."
-    ],
-    "live-session-5": [
-      "Session by a Dream11 PM on MVP and GTM: building and launching products.",
-      "India is now the world's third-largest startup hub (about 150K startups a year), and AI is making building even faster.",
-      "MVPs evolve with user feedback (e.g. Swiggy's journey from food delivery toward Instamart and more). The MVP phase never ends, because new features start as MVPs. Skip the MVP route only when strong evidence exists (Blinkit scaling after seeing Instamart's traction).",
-      "'If a picture is worth a thousand words, a prototype is worth a thousand meetings.' Tools like Lovable let PMs test many ideas cheaply, knowing most will fail.",
-      "GTM alignment: product, marketing and sales must share the same understanding of the problem, user, pricing and positioning. Promising one thing in an ad and showing another on landing breaks trust."
-    ],
-    "live-session-6": [
-      "Session by Product Space on AI tools for PMs and preparing for AI PM interviews.",
-      "AI won't replace PMs. Products are end-to-end workflows that need judgment and direction, and that judgment is what differentiates one company from another when everyone has access to the same LLMs.",
-      "Expectations are rising: PMs now need to understand classical ML (regression, decision trees, boosting), generative AI (LLMs, SLMs) and agentic AI, and the field moves fast, so keep upskilling.",
-      "Stay updated with real industry practice (e.g. how teams build AI recommendation engines) by learning the fundamentals first.",
-      "Interviews: classic product sense, execution and strategy questions remain, plus subject-matter AI questions. Avoid over-relying on ChatGPT for your thinking."
     ],
     "live-session-7": [
       "A 90-minute Product Space masterclass on tech basics for PMs, with hands-on API practice.",

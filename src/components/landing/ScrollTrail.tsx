@@ -1,9 +1,7 @@
 'use client';
 
 import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { motion, useScroll, useTransform } from 'motion/react';
-import './reducedMotion';
-import { goToSection, landingSections, sectionAnchors } from './sectionNav';
+import { goToSection, landingSections, maxScroll, sectionAnchors } from './sectionNav';
 
 // Section navigator on the right edge of the landing page.
 // 1280px and up: one circle per section (data-milestone="Name" plus an id), spaced evenly down a rail.
@@ -15,6 +13,8 @@ import { goToSection, landingSections, sectionAnchors } from './sectionNav';
 // label fits between the content and the rail. The dot tracks the scroll with reduced motion too (it is a
 // position readout, not decoration); only the click-scroll becomes instant.
 // Under 1280px: a thin progress line along the right edge (decorative), no circles or labels.
+// Performance: positions are measured once (and again only when the page changes size); on scroll, a passive
+// listener batches into one frame that reads only window.scrollY and writes transforms.
 
 const TOP = 88; // first circle, below the navbar
 const BOTTOM = 28;
@@ -33,8 +33,10 @@ interface Section {
 // Right edge of the page content (inside its side padding)
 const contentRight = (screenW: number) => (screenW + Math.min(screenW, CONTENT_MAX)) / 2 - (screenW >= 1024 ? 32 : screenW >= 640 ? 24 : 16);
 
+const THIN_TOP = 65; // the thin line starts below the navbar
+const THIN_DOT = 10;
+
 export const ScrollTrail: React.FC = () => {
-  const { scrollYProgress } = useScroll();
   const [sections, setSections] = useState<Section[]>([]);
   const [railH, setRailH] = useState(0);
   const [labelRoom, setLabelRoom] = useState(0);
@@ -46,8 +48,11 @@ export const ScrollTrail: React.FC = () => {
 
   const anchors = useRef<number[]>([]);
   const railHRef = useRef(0);
+  const page = useRef({ maxScroll: 0, screenH: 0 });
   const dotRef = useRef<HTMLDivElement>(null);
   const fillRef = useRef<HTMLDivElement>(null);
+  const thinFillRef = useRef<HTMLDivElement>(null);
+  const thinDotRef = useRef<HTMLSpanElement>(null);
   const measureRef = useRef<HTMLDivElement>(null);
   const frame = useRef(0);
   const state = useRef({ reached: -1, nearest: -1, onCircle: null as number | null, started: false });
@@ -55,11 +60,18 @@ export const ScrollTrail: React.FC = () => {
 
   // Place the dot and the solid line for the current scroll position
   const update = useCallback(() => {
+    const y = window.scrollY;
+
+    // Thin line (under 1280px): fill and dot follow the share of the page scrolled
+    const { maxScroll: max, screenH } = page.current;
+    const progress = max > 0 ? Math.min(1, Math.max(0, y / max)) : 0;
+    if (thinFillRef.current) thinFillRef.current.style.transform = `scaleY(${progress})`;
+    if (thinDotRef.current) thinDotRef.current.style.transform = `translateY(${(progress * Math.max(0, screenH - THIN_TOP - THIN_DOT)).toFixed(1)}px)`;
+
     const a = anchors.current;
     const n = a.length;
     const h = railHRef.current;
     if (!n || !dotRef.current || !fillRef.current) return;
-    const y = window.scrollY;
     // Fractional circle index: k + share of the way to circle k + 1
     let f = 0;
     if (y >= a[n - 1]) f = n - 1;
@@ -75,7 +87,9 @@ export const ScrollTrail: React.FC = () => {
     const step = n > 1 ? h / (n - 1) : 0;
     const dotY = f * step;
     dotRef.current.style.transform = `translateY(${dotY}px)`;
-    fillRef.current.style.height = `${dotY}px`;
+    // The solid line is as tall as the rail and scaled down to the dot (a transform: no layout work).
+    // Its rounded ends sit under the first circle and under the dot, so the scaling never shows.
+    fillRef.current.style.transform = `scaleY(${h > 0 ? dotY / h : 0})`;
 
     const s = state.current;
     const near = Math.round(f);
@@ -109,6 +123,7 @@ export const ScrollTrail: React.FC = () => {
       return prev.length === next.length && prev.every((p, i) => p.id === next[i].id && p.label === next[i].label) ? prev : next;
     });
     const screenW = document.documentElement.clientWidth;
+    page.current = { maxScroll: maxScroll(), screenH: window.innerHeight };
     const h = Math.max(0, window.innerHeight - TOP - BOTTOM);
     railHRef.current = h;
     setRailH(h);
@@ -121,7 +136,7 @@ export const ScrollTrail: React.FC = () => {
     measure();
     const observer = new ResizeObserver(measure);
     observer.observe(document.body);
-    window.addEventListener('resize', measure);
+    window.addEventListener('resize', measure, { passive: true });
     window.addEventListener('load', measure);
     document.fonts?.ready.then(measure).catch(() => {});
     return () => {
@@ -167,9 +182,6 @@ export const ScrollTrail: React.FC = () => {
   const labelIndex = hovered ?? arrival?.index ?? null;
   const labelKey = hovered !== null ? `h${hovered}` : `a${arrival?.key}`;
 
-  // Thin line (under 1280px): the dot rides at the tip of the fill
-  const thinDotY = useTransform(scrollYProgress, (p) => p * Math.max(0, (typeof window === 'undefined' ? 0 : window.innerHeight) - 65 - 10));
-
   const pill = 'whitespace-nowrap rounded-full border border-line bg-paper px-2.5 py-1 font-sans text-xs font-medium leading-none text-ink';
 
   return (
@@ -182,7 +194,12 @@ export const ScrollTrail: React.FC = () => {
             <line x1="2" y1="0" x2="2" y2="100%" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeDasharray="0 9" className="text-ink/35" />
           </svg>
           {/* Behind: solid terracotta down to the dot (height set on scroll) */}
-          <div ref={fillRef} aria-hidden="true" className="pointer-events-none absolute left-[10.5px] top-0 h-0 w-[3px] rounded-full bg-accent" />
+          <div
+            ref={fillRef}
+            aria-hidden="true"
+            className="pointer-events-none absolute left-[10.5px] top-0 w-[3px] rounded-full bg-accent origin-top"
+            style={{ height: railH, transform: 'scaleY(0)' }}
+          />
 
           <ol className="m-0 list-none p-0">
             {sections.map((s, i) => (
@@ -238,13 +255,13 @@ export const ScrollTrail: React.FC = () => {
         </nav>
       )}
 
-      {/* Under 1280px: a thin progress line along the right edge */}
+      {/* Under 1280px: a thin progress line along the right edge (fill and dot positions set on scroll) */}
       <div aria-hidden="true" data-decor="" className="xl:hidden fixed right-0 top-[65px] bottom-0 z-30 w-[3px] pointer-events-none">
         <div className="absolute inset-0 bg-ink/10" />
-        <motion.div className="absolute inset-0 bg-accent origin-top" style={{ scaleY: scrollYProgress }} />
-        <motion.span
+        <div ref={thinFillRef} className="absolute inset-0 bg-accent origin-top" style={{ transform: 'scaleY(0)' }} />
+        <span
+          ref={thinDotRef}
           className="absolute -left-[3.5px] top-0 w-[10px] h-[10px] rounded-full bg-marigold border-[1.5px] border-[#1F2430]"
-          style={{ y: thinDotY }}
         />
       </div>
     </>

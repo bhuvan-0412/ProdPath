@@ -305,6 +305,33 @@
   animation-play-state: paused !important;
 }
 
+/* ...and while the browser tab is hidden (data-tab-hidden is set by the script in layout.tsx) */
+html[data-tab-hidden] :is(.illo-float, .illo-twinkle, .icon-drift, .flag-wave, .trail-pulse, .hero-cue-arrow, .animate-pulse-subtle) {
+  animation-play-state: paused !important;
+}
+
+/* Reveal on scroll (Reveal / RevealItem in landing/Motion.tsx): fades and rises into place once, the first
+   time it scrolls into view. A CSS transition, so the browser runs it off the main thread. */
+.reveal {
+  opacity: 0;
+  transform: translateY(var(--reveal-y, 18px));
+  transition:
+    opacity var(--reveal-dur, 0.6s) cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0s),
+    transform var(--reveal-dur, 0.6s) cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0s);
+}
+
+.reveal.revealed {
+  opacity: 1;
+  transform: none;
+}
+
+/* Background icons with scroll parallax: on their own layer only while their section is on screen */
+@media (prefers-reduced-motion: no-preference) {
+  [data-icon-field]:not([data-paused]) [data-parallax] {
+    will-change: transform;
+  }
+}
+
 /* Background icon field: a very slow wander */
 @keyframes icon-drift {
   0%,

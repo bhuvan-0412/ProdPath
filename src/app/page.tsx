@@ -1,7 +1,6 @@
 import React from 'react';
 import weeksData from '@/data/weeks.json';
 import caseStudiesData from '@/data/caseStudies.json';
-import liveSessionsData from '@/data/liveSessions.json';
 import type { Week, ResourceType } from '@/types/curriculum';
 import { GoogleSignInButton, SignedInRedirect } from '@/components/landing/GoogleSignIn';
 import { HeroScene } from '@/components/landing/HeroScene';
@@ -13,7 +12,6 @@ import {
   Rocket,
   BookIcon,
   SearchDocIcon,
-  PlayScreenIcon,
   HeatGridIcon,
 } from '@/components/landing/Illustrations';
 import { GlowCard } from '@/components/GlowCard';
@@ -29,12 +27,12 @@ import {
   ActivityWave,
   FrameworkFigure,
   CtaSummit,
+  MotionFeatures,
 } from '@/components/landing/Motion';
 
 // Everything below is computed from the data files at build time, so the page updates when they change
 const weeks = (weeksData as { weeks: Week[] }).weeks;
 const caseStudies = caseStudiesData.caseStudies;
-const liveSessions = liveSessionsData.liveSessions;
 
 const allResources = weeks.flatMap((w) => w.days.flatMap((d) => d.tasks.flatMap((t) => t.resources)));
 const totalDays = weeks.reduce((sum, w) => sum + w.days.length, 0);
@@ -93,8 +91,10 @@ const FEATURE_ICON = 'w-11 h-11 flex-shrink-0';
 
 export default function LandingPage() {
   return (
-    <>
-    <div className="animate-fade-in">
+    <MotionFeatures>
+    {/* No fade on the page as a whole: the headline and button paint at once (they are what loads last on
+        a slow phone), and each section below still eases in as it scrolls into view */}
+    <div>
       <SignedInRedirect />
 
       {/* Hero */}
@@ -216,8 +216,8 @@ export default function LandingPage() {
                 <SampleDay
                   dayNumber={sampleDay.day}
                   brief={sampleDay.brief}
-                  tasks={sampleDay.tasks.map((task) => ({
-                    label: task.label,
+                  tasks={sampleDay.tasks.map((task, i) => ({
+                    label: `Session ${i + 1}`,
                     resources: task.resources.map((res) => ({ id: res.id, title: res.title, typeLabel: typeLabel[res.type] })),
                   }))}
                 />
@@ -242,7 +242,7 @@ export default function LandingPage() {
             </h2>
           </Reveal>
 
-          {/* Two rows: curriculum + case studies, then masterclasses + progress */}
+          {/* Two rows: curriculum + case studies, then progress tracking across the full width */}
           <Reveal delay={0.1} className="features-grid mt-10 grid gap-4 md:grid-cols-3">
             <GlowCard className="md:col-span-2 rounded-card border border-line bg-surface p-6 sm:p-8">
               <FeatureHeading icon={<BookIcon className={FEATURE_ICON} />}>The curriculum</FeatureHeading>
@@ -263,15 +263,7 @@ export default function LandingPage() {
               <p className="mt-4 text-muted">Real product teardowns</p>
             </GlowCard>
 
-            <GlowCard className="rounded-card border border-line bg-paper p-6 sm:p-8">
-              <FeatureHeading icon={<PlayScreenIcon className={FEATURE_ICON} />}>Speaker Masterclasses</FeatureHeading>
-              <p className="mt-6 font-display text-6xl font-semibold text-ink leading-none tabular-nums">
-                <CountUp value={liveSessions.length} />
-              </p>
-              <p className="mt-4 text-muted">Talks from PM leaders</p>
-            </GlowCard>
-
-            <GlowCard className="md:col-span-2 rounded-card border border-line bg-surface p-6 sm:p-8 grid lg:grid-cols-[minmax(0,0.7fr)_minmax(0,1.3fr)] gap-6 lg:gap-8 items-center">
+            <GlowCard className="md:col-span-3 rounded-card border border-line bg-surface p-6 sm:p-8 grid lg:grid-cols-[minmax(0,0.7fr)_minmax(0,1.3fr)] gap-6 lg:gap-8 items-center">
               <div>
                 <FeatureHeading icon={<HeatGridIcon className={FEATURE_ICON} />}>Progress tracking</FeatureHeading>
                 <p className="mt-4 text-muted">Streaks and a heat map</p>
@@ -315,9 +307,9 @@ export default function LandingPage() {
         </div>
       </section>
     </div>
-    {/* Section navigator: outside the fading wrapper (a transformed parent would stop "fixed" from pinning
-        it to the screen), and after the content so keyboard users reach the page's own buttons first */}
+    {/* Section navigator: outside the page wrapper (a transformed parent would stop "fixed" from pinning it to
+        the screen), and after the content so keyboard users reach the page's own buttons first */}
     <ScrollTrail />
-    </>
+    </MotionFeatures>
   );
 }

@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { motion } from 'motion/react';
+import * as m from 'motion/react-m';
 import './reducedMotion';
 
 // PM framework cards for the landing page, drawn in the illustration style (flat fills, 2px ink outlines,
@@ -71,19 +71,19 @@ const Frame: React.FC<{
 
 // Pops an SVG group in from a smaller size
 const Pop: React.FC<CardProps & { children: React.ReactNode; from?: number }> = ({ on, delay, children, from = 0.4 }) => (
-  <motion.g
+  <m.g
     className="m-final"
     initial={{ opacity: 0, scale: from }}
     animate={on ? { opacity: 1, scale: 1 } : undefined}
     transition={{ delay, duration: 0.35, ease: EASE }}
   >
     {children}
-  </motion.g>
+  </m.g>
 );
 
 // Draws a line in
 const Draw: React.FC<CardProps & { duration?: number } & React.SVGProps<SVGPathElement>> = ({ on, delay, duration = 0.3, ...path }) => (
-  <motion.path
+  <m.path
     className="m-final-path"
     initial={{ pathLength: 0 }}
     animate={on ? { pathLength: 1 } : undefined}
@@ -161,7 +161,7 @@ export const NorthStarCard: React.FC<CardProps> = ({ on, delay }) => {
   return (
   <Frame {...NORTH_STAR_SIZE} title="North Star" step="3 Strategy">
     {/* A soft glow that blooms once behind the star (it ends invisible, so reduced motion simply skips it) */}
-    <motion.circle
+    <m.circle
       cx="83"
       cy="55"
       r="24"
@@ -171,9 +171,9 @@ export const NorthStarCard: React.FC<CardProps> = ({ on, delay }) => {
       animate={on ? { opacity: [0, 1, 0], scale: [0.6, 1.2, 1.35] } : undefined}
       transition={{ delay: delay + 0.75, duration: 0.9, ease: 'easeOut' }}
     />
-    <motion.g className="m-final" animate={on ? { scale: [1, 1.16, 1] } : undefined} transition={{ delay: delay + 0.75, duration: 0.6, ease: 'easeInOut' }}>
+    <m.g className="m-final" animate={on ? { scale: [1, 1.16, 1] } : undefined} transition={{ delay: delay + 0.75, duration: 0.6, ease: 'easeInOut' }}>
       <path d={starPath(83, 55, 19, 8)} fill="#E8B04A" stroke={INK} strokeWidth="2" strokeLinejoin="round" />
-    </motion.g>
+    </m.g>
     {NS_INPUTS.map((input, i) => (
       <g key={input.x}>
         <g fill="none" stroke={INK} strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round">
@@ -214,7 +214,7 @@ export const RiceCard: React.FC<CardProps> = ({ on, delay }) => {
   return (
   <Frame {...RICE_SIZE} title="RICE" step="4 Prioritize">
     {/* The winning row lights up marigold */}
-    <motion.rect
+    <m.rect
       className="m-final"
       x="8"
       y="49"
@@ -240,7 +240,7 @@ export const RiceCard: React.FC<CardProps> = ({ on, delay }) => {
         const cx = RICE_COLUMNS[c].x;
         const score = c === 4;
         return (
-          <motion.rect
+          <m.rect
             key={`${r}-${c}`}
             className="m-final"
             x={cx - w / 2}
@@ -317,7 +317,7 @@ export const GtmCard: React.FC<CardProps> = ({ on, delay }) => {
   return (
   <Frame {...GTM_SIZE} title="GTM plan" step="5 Launch">
     {/* A small rocket that lifts a little */}
-    <motion.g
+    <m.g
       className="m-final"
       initial={{ y: 8 }}
       animate={on ? { y: 0 } : undefined}
@@ -328,7 +328,7 @@ export const GtmCard: React.FC<CardProps> = ({ on, delay }) => {
       <path d="M35 66 L42 76 L41 81 L34 76 Z" fill="#C2603A" stroke={INK} strokeWidth="1.25" strokeLinejoin="round" />
       <path d="M27 34 C 36 42, 38 58, 35 80 L19 80 C 16 58, 18 42, 27 34 Z" fill="#FBF8F1" stroke={INK} strokeWidth="1.5" strokeLinejoin="round" />
       <circle cx="27" cy="54" r="5" fill="#F3D9CC" stroke={INK} strokeWidth="1.25" />
-    </motion.g>
+    </m.g>
     {GTM_ROWS.map((row, i) => {
       const y = 46 + i * 18;
       return (
@@ -340,7 +340,7 @@ export const GtmCard: React.FC<CardProps> = ({ on, delay }) => {
           ) : (
             <rect x="54" y={y - 6} width="40" height="5" rx="2.5" fill={INK} opacity="0.45" />
           )}
-          <motion.rect
+          <m.rect
             className="m-final"
             x="118"
             y={y - 6}
@@ -539,7 +539,7 @@ export const RoadmapCard: React.FC<CardProps> = ({ on, delay }) => (
           {column.cards.map((card, i) => {
             const y = 54 + i * 36;
             return (
-              <motion.g
+              <m.g
                 key={i}
                 className="m-final"
                 initial={{ opacity: 0, x: -14 }}
@@ -550,7 +550,7 @@ export const RoadmapCard: React.FC<CardProps> = ({ on, delay }) => (
                 {card.bars.map((w, b) => (
                   <rect key={b} x={x + 12} y={y + 7 + b * 9} width={w} height="4" rx="2" fill="#9E4524" opacity={b === 0 ? 0.85 : 0.45} />
                 ))}
-              </motion.g>
+              </m.g>
             );
           })}
         </g>
@@ -572,7 +572,7 @@ const JOURNEY_CURVE = 'M22 84 C 34 80, 38 78, 42 78 C 70 77, 90 62, 112 62 C 140
 export const JourneyCard: React.FC<CardProps> = ({ on, delay }) => (
   <Frame {...JOURNEY_SIZE} title="User journey">
     <line x1="18" y1="120" x2="280" y2="120" stroke={INK} strokeWidth="1" strokeDasharray="2 4" opacity="0.5" />
-    <motion.path
+    <m.path
       className="m-final-path"
       d={JOURNEY_CURVE}
       fill="none"

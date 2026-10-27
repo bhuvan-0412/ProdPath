@@ -14,10 +14,21 @@ export const ScrollCue: React.FC<{ targetId: string }> = ({ targetId }) => {
   const [hidden, setHidden] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setHidden(window.scrollY > HIDE_AFTER);
-    onScroll();
+    let frame = 0;
+    const check = () => {
+      frame = 0;
+      setHidden(window.scrollY > HIDE_AFTER);
+    };
+    // At most once per frame
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(check);
+    };
+    check();
     window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      cancelAnimationFrame(frame);
+    };
   }, []);
 
   return (
