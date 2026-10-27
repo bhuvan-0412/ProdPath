@@ -3,6 +3,8 @@
 import React, { useState } from 'react';
 import { useProgress } from '@/context/ProgressContext';
 import { ResourceType } from '@/types/curriculum';
+// Same module the course page already loads, so this adds nothing to what the browser downloads
+import weeksData from '@/data/weeks.json';
 import { X, Plus, Sparkles } from 'lucide-react';
 
 interface AddResourceModalProps {
@@ -147,10 +149,11 @@ export const AddResourceModal: React.FC<AddResourceModalProps> = ({
                 onChange={(e) => setWeekId(e.target.value)}
                 className="w-full px-3.5 py-2.5 rounded-lg border border-line bg-paper text-ink text-base sm:text-sm focus:outline-none focus:ring-2 focus:ring-accent text-xs"
               >
-                <option value="week-1">Week 1: PM Foundations</option>
-                <option value="week-2">Week 2: Metrics, MVP & Strategy</option>
-                <option value="week-3">Week 3: Tech for PM + AI Tools</option>
-                <option value="week-4">Week 4: PM Interview Prep</option>
+                {weeksData.weeks.map((w) => (
+                  <option key={w.id} value={w.id}>
+                    {w.title}
+                  </option>
+                ))}
               </select>
             </div>
           </div>

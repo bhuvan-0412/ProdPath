@@ -1,10 +1,10 @@
 # ProdPath — Personal Product Management Learning Tracker
 
-ProdPath is a modern, self-contained, trackable Product Management learning platform. It provides a structured 4-week curriculum, an on-demand live session watch list, a chronological timeline schedule, and a searchable resource library with custom link support.
+ProdPath is a modern, self-contained, trackable Product Management learning platform. It provides a structured 6-week curriculum, an on-demand live session watch list, a chronological timeline schedule, and a searchable resource library with custom link support.
 
 ## 🚀 Features
 
-- **Structured 4-Week Curriculum**: Day-by-day learning tasks, curated articles, videos, and playlists.
+- **Structured 6-Week Curriculum**: Day-by-day learning tasks, curated articles, videos, and playlists.
 - **Live Sessions**: On-demand watch list featuring recorded PM masterclasses and expert talks.
 - **Resource Library**: Search and filter all learning resources by week, type, or completion status, plus add your own custom resources.
 - **Timeline Schedule**: Chronological roadmap with milestone assessments and capstone project tracking.

@@ -163,7 +163,7 @@ function CourseContent() {
         <div>
           <div className="inline-flex items-center gap-2 text-xs font-semibold text-accent-dark mb-1">
             <Calendar className="w-3.5 h-3.5" />
-            <span>5-Week Structured Curriculum</span>
+            <span>{weeks.length}-Week Structured Curriculum</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-display font-extrabold text-ink">
             Weekly Curriculum
@@ -185,7 +185,7 @@ function CourseContent() {
       {/* Horizontal Week & Module Navigation Tabs */}
       <div
         ref={weekStripRef}
-        className="flex overflow-x-auto snap-x snap-mandatory no-scrollbar gap-3 -mx-4 px-4 pb-1 sm:mx-0 sm:px-0 sm:pb-0 sm:overflow-visible sm:grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6"
+        className="flex overflow-x-auto snap-x snap-mandatory no-scrollbar gap-3 -mx-4 px-4 pb-1 sm:mx-0 sm:px-0 sm:pb-0 sm:overflow-visible sm:grid sm:grid-cols-4 xl:grid-cols-7"
       >
         {weeks.map((w) => {
           const stats = getWeekStats(w.id);
@@ -221,7 +221,7 @@ function CourseContent() {
 
               <div>
                 <h3
-                  className={`font-display font-bold text-sm line-clamp-1 ${
+                  className={`font-display font-bold text-sm leading-snug line-clamp-2 ${
                     isActive ? 'text-accent-dark' : 'text-ink'
                   }`}
                 >
@@ -254,7 +254,7 @@ function CourseContent() {
           </div>
 
           <div>
-            <h3 className="font-display font-bold text-sm text-ink group-hover:text-accent-dark line-clamp-1">
+            <h3 className="font-display font-bold text-sm leading-snug text-ink group-hover:text-accent-dark line-clamp-2">
               Case Studies
             </h3>
           </div>

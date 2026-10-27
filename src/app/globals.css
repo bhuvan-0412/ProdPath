@@ -553,7 +553,7 @@ html[data-tab-hidden] :is(.illo-float, .illo-twinkle, .icon-drift, .flag-wave, .
     padding-top: 2rem;
     padding-bottom: 2rem;
   }
-  /* Your 5-week path: weeks closer together */
+  /* Your 6-week path: weeks closer together */
   div.screen-inner .path-list { margin-top: 2rem; }
   div.screen-inner .path-week { padding-bottom: 1.5rem; }
   /* Everything in one place */

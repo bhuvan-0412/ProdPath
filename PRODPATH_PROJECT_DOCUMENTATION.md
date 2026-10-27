@@ -37,7 +37,7 @@
 ## 1. Executive Summary
 
 ### What is ProdPath?
-**ProdPath** is a modern, responsive, local-first single-page Web application built using **Next.js 15.1.12 (App Router)**, **React 19.0.0**, **TypeScript**, and **Tailwind CSS**. It serves as an interactive learning platform designed to guide aspiring and practicing Product Managers through a structured 4-week curriculum, chronological timeline schedule, masterclass watch list, reflective case studies repository, and searchable knowledge library.
+**ProdPath** is a modern, responsive, local-first single-page Web application built using **Next.js 15.1.12 (App Router)**, **React 19.0.0**, **TypeScript**, and **Tailwind CSS**. It serves as an interactive learning platform designed to guide aspiring and practicing Product Managers through a structured 6-week curriculum, chronological timeline schedule, masterclass watch list, reflective case studies repository, and searchable knowledge library.
 
 ### Target Audience
 - **Aspiring Product Managers**: Professionals transitioning into Product Management.

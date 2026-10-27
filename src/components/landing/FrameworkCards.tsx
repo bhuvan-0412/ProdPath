@@ -414,14 +414,14 @@ export const HeartCard: React.FC<CardProps> = ({ on, delay }) => (
   </Frame>
 );
 
-/* ---------- 7 AI PM: an LLM workflow ---------- */
+/* ---------- 7 AI PM: an AI agent ---------- */
 
-// Course terms only: Week 5 covers LLMs, prompting and evals (not retrieval or agents), so the pipeline is
-// Docs -> Prompt -> LLM -> Answer, with an eval loop from the LLM back to the prompt.
+// Course terms only: Week 5 Day 3 teaches RAG and AI agents, so the pipeline is Docs -> RAG -> LLM -> Answer,
+// with an agent loop from the LLM back to retrieval (the agent decides to look things up again).
 export const AI_SIZE = { w: 308, h: 152 };
 const AI_LABELS = [
   { label: 'Docs', x: 44 },
-  { label: 'Prompt', x: 118 },
+  { label: 'RAG', x: 118 },
   { label: 'LLM', x: 192 },
   { label: 'Answer', x: 266 },
 ];
@@ -441,12 +441,14 @@ const AI_NODES: React.ReactNode[] = [
     <path d="M 47 84 V 90 H 53" fill="none" stroke={INK} strokeWidth="1.25" strokeLinejoin="round" />
     <path d="M 35 96 H 48 M 35 101 H 45 M 35 106 H 47" stroke={INK} strokeWidth="1.25" strokeLinecap="round" opacity="0.6" />
   </g>,
-  // Prompt: a text box with a caret
-  <g key="prompt">
-    <rect x="98" y="78" width="40" height="32" rx="5" fill="#F3D9CC" stroke={INK} strokeWidth="1.5" />
-    <path d="M 105 89 L 110 94 L 105 99" fill="none" stroke={INK} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    <path d="M 114 99 H 124" stroke={INK} strokeWidth="1.5" strokeLinecap="round" />
-    <rect x="127" y="92" width="3" height="8" rx="1" fill="#9E4524" />
+  // RAG: a small database with a magnifying glass (retrieval)
+  <g key="rag">
+    <path d="M 100 81 V 105 A 12 4 0 0 0 124 105 V 81" fill="#F3D9CC" stroke={INK} strokeWidth="1.5" strokeLinejoin="round" />
+    <ellipse cx="112" cy="81" rx="12" ry="4" fill="#F3D9CC" stroke={INK} strokeWidth="1.5" />
+    <path d="M 100 93 A 12 4 0 0 0 124 93" fill="none" stroke={INK} strokeWidth="1.25" opacity="0.6" />
+    <path d="M 132.5 104.5 L 138 110" stroke={INK} strokeWidth="2.5" strokeLinecap="round" />
+    <circle cx="128" cy="100" r="6.5" fill="#FBF8F1" stroke={INK} strokeWidth="1.5" />
+    <path d="M 125 98.5 A 3.5 3.5 0 0 1 128.5 96" fill="none" stroke="#9E4524" strokeWidth="1.25" strokeLinecap="round" />
   </g>,
   // LLM: a terracotta chip with a cream sparkle that twinkles slowly (paused off-screen)
   <g key="llm">
@@ -480,7 +482,7 @@ const AI_NODES: React.ReactNode[] = [
 export const AiCard: React.FC<CardProps> = ({ on, delay }) => {
   const step = 0.28;
   return (
-    <Frame {...AI_SIZE} title="AI workflow" titleSize={17} step="7 AI PM" stepSize={14.2} keepStep>
+    <Frame {...AI_SIZE} title="AI agent" titleSize={17} step="7 AI PM" stepSize={14.2} keepStep>
       {/* "AI track" pill in the header */}
       <rect x="128" y="8" width="74" height="22" rx="11" fill="#E8B04A" stroke={INK} strokeWidth="1.25" />
       <text x="165" y="24" textAnchor="middle" style={SANS} fontSize="14.2" fontWeight="700" fill={INK}>
@@ -503,14 +505,14 @@ export const AiCard: React.FC<CardProps> = ({ on, delay }) => {
         </g>
       ))}
 
-      {/* Eval loop: from the LLM back to the prompt, drawn last */}
+      {/* Agent loop: from the LLM back to retrieval, drawn last */}
       <g fill="none" stroke="#9E4524" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <Draw on={on} delay={delay + 4 * step + 0.1} duration={0.6} d="M190 68 C 184 48, 126 48, 120 74" />
         <Draw on={on} delay={delay + 4 * step + 0.65} d={arrowHead(121, 66, 120, 74, 5)} />
       </g>
       <Pop on={on} delay={delay + 4 * step + 0.4} from={0.8}>
         <text x="155" y="47" textAnchor="middle" style={SANS} fontSize="14.2" fontWeight="700" fill="#9E4524">
-          Eval loop
+          Agent loop
         </text>
       </Pop>
     </Frame>

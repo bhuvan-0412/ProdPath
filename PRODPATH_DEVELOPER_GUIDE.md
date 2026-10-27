@@ -68,7 +68,7 @@ Always run type checks and static production build verification before committin
 | :--- | :--- | :--- |
 | [src/app/layout.tsx](file:///d:/ProdPath/src/app/layout.tsx) | Root Layout Shell | Wraps app in `ProgressProvider`, mounts `Navbar` and `Footer`, sets `#0a0a0f` / `#faf9f6` background tokens. |
 | [src/context/ProgressContext.tsx](file:///d:/ProdPath/src/context/ProgressContext.tsx) | Core State Engine | Manages `completedIds` Set, `customResources` array, flattens datasets, and syncs `localStorage`. |
-| [src/data/weeks.json](file:///d:/ProdPath/src/data/weeks.json) | Static Curriculum | Stores 4-week structured curriculum data (weeks, days, tasks, resources). |
+| [src/data/weeks.json](file:///d:/ProdPath/src/data/weeks.json) | Static Curriculum | Stores 6-week structured curriculum data (weeks, days, tasks, resources). |
 | [src/data/liveSessions.json](file:///d:/ProdPath/src/data/liveSessions.json) | Masterclasses Data | Stores recorded live session talks and speaker info. |
 | [src/data/caseStudies.json](file:///d:/ProdPath/src/data/caseStudies.json) | Case Studies Data | Stores curated PM case studies (`cs-1`..`cs-4`) with summaries and bulleted takeaways. |
 | [src/data/schedule.json](file:///d:/ProdPath/src/data/schedule.json) | Timeline Roadmap | Stores 28-day chronological schedule items. |

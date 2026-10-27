@@ -1,5 +1,8 @@
 export type ResourceType = 'article' | 'video' | 'playlist' | 'case-study';
 
+/** The week shown with the "AI PM track" highlight (AI product management) */
+export const AI_TRACK_WEEK_ID = 'week-5';
+
 export interface CaseStudy {
   id: string;
   title: string;
