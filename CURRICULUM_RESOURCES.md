@@ -9,16 +9,16 @@ All resources across the 6 weeks, organized by **Week**, **Day** and **Session**
 ### Day 1: What a PM actually does
 
 #### Session 1
-* [How to Hire a Product Manager (Ken Norton)](https://www.bringthedonuts.com/essays/productmanager.html) *(Article)*
-* [Good Product Manager/Bad Product Manager (Ben Horowitz)](https://a16z.com/good-product-manager-bad-product-manager/) *(Article)*
-
-#### Session 2
 * [Roles of a PM](https://www.youtube.com/watch?v=2dczveSrsv8) *(Video)*
 * [Skills of a PM](https://www.youtube.com/watch?v=n530l09t8zY) *(Video)*
 
-#### Session 3
+#### Session 2
 * [What companies want in a PM role](https://youtu.be/O4TReKaJx50) *(Video)*
 * [Day in the life of a PM](https://www.youtube.com/watch?v=U-lYLSlYU1o) *(Video)*
+
+#### Session 3
+* [How to Hire a Product Manager (Ken Norton)](https://www.bringthedonuts.com/essays/productmanager.html) *(Article)*
+* [Good Product Manager/Bad Product Manager (Ben Horowitz)](https://a16z.com/good-product-manager-bad-product-manager/) *(Article)*
 
 ### Day 2: Product sense
 
