@@ -11,22 +11,22 @@
             {
               "label": "Session 1",
               "resources": [
-                { "id": "w1d1r6", "title": "How to Hire a Product Manager (Ken Norton)", "url": "https://www.bringthedonuts.com/essays/productmanager.html", "type": "article" },
-                { "id": "w1d1r7", "title": "Good Product Manager/Bad Product Manager (Ben Horowitz)", "url": "https://a16z.com/good-product-manager-bad-product-manager/", "type": "article" }
-              ]
-            },
-            {
-              "label": "Session 2",
-              "resources": [
                 { "id": "w1d1r2", "title": "Roles of a PM", "url": "https://www.youtube.com/watch?v=2dczveSrsv8", "type": "video" },
                 { "id": "w1d1r3", "title": "Skills of a PM", "url": "https://www.youtube.com/watch?v=n530l09t8zY", "type": "video" }
               ]
             },
             {
-              "label": "Session 3",
+              "label": "Session 2",
               "resources": [
                 { "id": "w1d1r4", "title": "What companies want in a PM role", "url": "https://youtu.be/O4TReKaJx50", "type": "video" },
                 { "id": "w1d1r5", "title": "Day in the life of a PM", "url": "https://www.youtube.com/watch?v=U-lYLSlYU1o", "type": "video" }
+              ]
+            },
+            {
+              "label": "Session 3",
+              "resources": [
+                { "id": "w1d1r6", "title": "How to Hire a Product Manager (Ken Norton)", "url": "https://www.bringthedonuts.com/essays/productmanager.html", "type": "article" },
+                { "id": "w1d1r7", "title": "Good Product Manager/Bad Product Manager (Ben Horowitz)", "url": "https://a16z.com/good-product-manager-bad-product-manager/", "type": "article" }
               ]
             }
           ]
