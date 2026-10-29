@@ -82,12 +82,6 @@
       "Three MECE tools: issue trees (break a problem into sub-issues), decision trees (map choices and outcomes) and hypothesis trees (test likely answers).",
       "Classic issue tree: 'Restaurant not profitable' → increase revenue (more orders, higher prices) vs reduce costs (salaries, rent, raw materials), with each branch broken down further."
     ],
-    "w1d2r9": [
-      "MECE means grouping ideas into buckets that are Mutually Exclusive (no overlap) and Collectively Exhaustive (nothing missing). It's expected in consulting case interviews.",
-      "Test: every item belongs to exactly one bucket, and the buckets cover all possibilities.",
-      "MECE frameworks include issue trees, decision trees and hypothesis trees, used to split big, messy problems into small, solvable ones.",
-      "Worked example: a profitability issue tree splits into revenue (number of orders × price) and costs (salary, rent, raw materials), then asks 'how?' at each level down to concrete actions."
-    ],
     "w1d3r4": [
       "Product teams have two jobs that pull against each other: learning quickly what customers actually need, and shipping reliable software that customers can depend on.",
       "Discovery is about gathering evidence that an idea is worth building. Delivery is about building it to production quality: scalable, tested, instrumented and maintainable.",
@@ -502,11 +496,12 @@
       "Pick metrics from your goals. The three fundamentals are acquiring users, retaining them, and growing revenue, each with its own metrics (traffic, sources and acquisition cost; engagement and retention; revenue).",
       "Products must eventually make money and keep costs low. Vine was culturally huge but shut down in 2017 for lack of monetization."
     ],
-    "w2d1r3": [
-      "A metric is any measurement of size or scale (e.g. your weight on a scale), tracked over time.",
-      "A KPI is a metric tied directly to a stated goal or objective with a target and timeframe (e.g. lose 35 lb in 7 months for a reunion = 5 lb per month).",
-      "Every KPI is a metric, but not every metric is a KPI. What makes the difference is intent and a strategy to control and improve the number.",
-      "KPIs drive action: if you're off target (lost only 4 lb in month two), you adjust the plan (6 lb next month) to get back on track."
+    "w4d2n3": [
+      "A KPI (key performance indicator) is a metric you track to measure progress toward a specific business objective. Any metric can become a KPI, but only the few tied to today's goals should be.",
+      "Good KPIs match the strategy, have work underway to improve them, measure something that actually changes, and matter to the business when they move. If you wouldn't act differently based on a number, it isn't a KPI.",
+      "Common examples: lower churn, lower customer acquisition cost (CAC), higher monthly recurring revenue (MRR) and a better NPS. Product teams also track engagement (daily or monthly active users, session length) and quality (bug reports, support tickets, uptime).",
+      "Set KPIs up in three steps: tie each one to a bigger objective, break it into short-term targets you can act on (e.g. grow paid traffic 10% a month toward a quarterly sign-up goal), and review progress with the team regularly so you can change course early.",
+      "For product managers: pick one metric that matters most, include the numbers your executives or investors care about, and keep feature-level KPIs few and focused on adding, keeping and delighting users."
     ],
     "w4d2n1": [
       "Kerry Rodden, Hilary Hutchinson and Xin Fu (Google, 2010) introduce HEART, a framework for user-centred metrics, as a complement to common business and technical metrics.",
@@ -610,12 +605,12 @@
       "Flights = runways × operational hours × departures per runway per hour × utilization, adjusted for peak vs off-peak hours.",
       "Sanity-check against known benchmarks (busy hub airports handle hundreds of departures a day)."
     ],
-    "w4d3r9": [
-      "Technomanagers playlist of about 28 guesstimate practice questions for PM and consulting interviews.",
-      "Market sizing: shampoo bottles, refrigerators or iPhones sold, Amazon Prime Video market size, driverless cars in 2030.",
-      "Revenue: Domino's, a petrol pump, a multiplex. Supply and capacity: DMart cash counters, flights from an airport, planes in the air, people at an airport.",
-      "Tech and AI: Google Maps storage, GPUs to serve 500M GPT users, Nest camera memory, WhatsApp messages, Gmail users in India.",
-      "Practise by pausing after each question and solving it first with a clear structure."
+    "w4d4n2": [
+      "A tech-style guesstimate: estimate how much storage Google Maps needs.",
+      "Start by defining the problem and agreeing on scope before doing any maths.",
+      "Write a high-level equation that splits total storage into parts you can estimate one at a time.",
+      "Estimate each part in turn: street names, then location (place) names, then logos and images.",
+      "The approach shown is one way to solve it. Other breakdowns are valid, as long as they are structured and the assumptions are stated."
     ],
     "w4d2r1": [
       "Root cause analysis (RCA) questions give you a metric change (e.g. Facebook Groups creation down 15%, Slack email open rate down 10%) and ask you to diagnose it.",
@@ -638,11 +633,18 @@
       "Segment by service category, city, platform and user type to localize the drop before forming hypotheses.",
       "Career tip: engineers moving into PM should take on product-thinking projects (why a feature exists, how it's marketed) to build a track record."
     ],
-    "w4d2r6": [
-      "Technomanagers playlist of RCA practice questions and mocks across companies: Uber, YouTube, Amazon, Google, Netflix and Google Pay.",
-      "Includes AI-era RCA cases such as 'ChatGPT downvotes have increased' and an AI-specific root cause analysis.",
-      "Contains 'Master Framework' and 'Ultimate Framework' videos for structuring RCA answers.",
-      "How to use it: pause after each question, attempt your own answer (clarify → rule out data issues → segment → internal vs external → fix), then compare."
+    "w4d5n1": [
+      "A root cause analysis (RCA) mock interview set on YouTube, from a series on product execution questions.",
+      "Begin by defining the problem clearly before looking for causes.",
+      "Check external factors first: things outside the product that could explain the change.",
+      "Then walk through the user journey and dig into funnel metrics to find where behaviour changed.",
+      "Narrow the evidence down to a root cause, and only then propose solutions that address it."
+    ],
+    "w4d5n2": [
+      "A Meta-style AI PM mock interview: downvotes on ChatGPT answers have been rising steadily, and the candidate has to work out why.",
+      "The candidate works through it in a structured, hypothesis-driven way, the same RCA approach used for any metric change.",
+      "Hypotheses include changes in user behaviour and changes in notification strategy.",
+      "Product bugs and policy changes are also checked as possible causes."
     ],
     "w5d1r1": [
       "AI product management means taking a product whose core value comes from AI/ML from concept to launch and ongoing operation, owning the vision, data strategy and model evaluation process.",
@@ -693,11 +695,12 @@
       "Advanced techniques: prompt chaining (feed outputs into the next prompt), chain-of-thought (ask for step-by-step reasoning), tree-of-thought (explore multiple paths), and designing AI agents with personas.",
       "Use AI responsibly: check outputs for accuracy, bias and hallucinations, and keep a human in the loop."
     ],
-    "w5d2r9": [
-      "Learn Prompting is a large, free, open prompt engineering resource (60+ modules, 9 languages) backed by published research.",
-      "Courses include Introduction to Prompt Engineering, LLMs, RAG, Generative AI Agents and practical GenAI for everyday efficiency and marketing.",
-      "Also covers AI security: a free 7-day LLM security course (prompt hacking types, common attacks and defenses) and an AI red-teaming masterclass with Sander Schulhoff.",
-      "Useful for AI PMs to build practical prompting skills and understand prompt injection and other risks in AI products."
+    "w5d2n1": [
+      "Prompt injection is when user input overrides a developer's instructions in a prompt. It works because a language model reads everything as one block of text and can't reliably tell trusted instructions from untrusted input.",
+      "Four types: direct (the user types something like 'ignore the above and…'), indirect (instructions hidden in a web page or document the AI reads), code injection (tricking an AI into writing or running harmful code) and recursive (one model's output carries instructions into a second model).",
+      "Example: an app that pastes user input into a 'write a story about…' template can be told to ignore the template, because models often follow the most recent or most specific instruction.",
+      "Real case: users hijacked remoteli.io's Twitter bot by putting instructions in their tweets. It went viral and the company shut the bot down.",
+      "Risks include leaked system prompts or private data, malware generation, misinformation and exposed API keys. There is no complete fix yet, so AI products need layered defences."
     ],
     "w3d3r2": [
       "One-line prompts to AI app builders like Bolt and Lovable give mediocre results. Generating a PRD first can improve output dramatically.",
@@ -758,8 +761,7 @@
       "By Aman Khan (Arize AI, ex-Spotify and Apple) on Lenny's Newsletter: evals, not prompts, are the hidden lever behind great AI products, and writing them is becoming the defining AI PM skill.",
       "Evals break an AI system into steps and measure the impact of each change, replacing 'vibe checks' with data. Running example: a trip-planning agent ('relaxing weekend near SF under $1,000') that uses flight, hotel and map tools.",
       "Human evals: thumbs up/down or expert labelers. Real signal, but sparse, ambiguous and costly.",
-      "Code-based evals: deterministic checks (is the API call or code valid? does it run?). LLM-as-judge evals: a judge model grades outputs against a rubric. Scalable, natural-language, and can explain its judgments.",
-      "Workflow: define what 'good' means for each step, build a labeled dataset, write eval prompts, check judges against human labels, and iterate continuously as the product changes."
+      "Code-based evals: deterministic checks (is the API call or code valid? does it run?). LLM-as-judge evals: a judge model grades outputs against a rubric. Scalable, natural-language, and can explain its judgments."
     ],
     "w5d3r2": [
       "AI systems are non-deterministic, so you can't manually test your way to confidence. Evals turn 'I think it's better' into 'we tested 200 cases and accuracy rose 5% without hurting tone'.",

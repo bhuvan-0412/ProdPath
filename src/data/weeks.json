@@ -64,14 +64,7 @@
             {
               "label": "Session 2",
               "resources": [
-                { "id": "w1d2r8", "title": "MECE Framework", "url": "https://www.mbacrystalball.com/blog/strategy/mece-framework/", "type": "article" },
-                { "id": "w1d2r9", "title": "Example of MECE trees", "url": "https://youtu.be/_pCU0DOKZDw", "type": "video" }
-              ]
-            },
-            {
-              "label": "Session 3",
-              "resources": [
-                { "id": "w4d3r2", "title": "Using issue trees", "url": "https://youtu.be/AKps74WLpmk", "type": "video" }
+                { "id": "w1d2r8", "title": "MECE Framework", "url": "https://www.mbacrystalball.com/blog/strategy/mece-framework/", "type": "article" }
               ]
             }
           ]
@@ -393,7 +386,7 @@
               "resources": [
                 { "id": "w2d5r1", "title": "What is a GTM?", "url": "https://productschool.com/resources/glossary/go-to-market-gtm", "type": "article" },
                 { "id": "w2d5r2", "title": "GTM strategy", "url": "https://youtu.be/BMitoXT__wM", "type": "video" },
-                { "id": "w2d5r3", "title": "Customer Segmentation for GTM", "url": "https://youtu.be/o0ygMSNZrHY", "type": "video" }
+                { "id": "w2d5r3", "title": "Choosing your first customer segment (Slidebean)", "url": "https://youtu.be/o0ygMSNZrHY", "type": "video" }
               ]
             },
             {
@@ -420,7 +413,7 @@
               "label": "Session 1",
               "resources": [
                 { "id": "w2d1r1", "title": "How to measure Product Success", "url": "https://youtu.be/wtDFgx41Rho", "type": "video" },
-                { "id": "w2d1r3", "title": "Difference between Metrics and KPIs", "url": "https://youtu.be/dPJbytlqlsI", "type": "video" }
+                { "id": "w4d2n3", "title": "Key Performance Indicator (KPI) (ProductPlan)", "url": "https://www.productplan.com/glossary/key-performance-indicator/", "type": "article" }
               ]
             },
             {
@@ -461,7 +454,7 @@
               "label": "Session 3",
               "resources": [
                 { "id": "w3d1r5", "title": "SQL basics: setup, tables, INSERT and SELECT (0:00 to 33:32)", "url": "https://www.youtube.com/watch?v=5OdVJbNCSso", "type": "video" },
-                { "id": "w3d1r6", "title": "LeetCode SQL 50 (problems 1 to 10)", "url": "https://leetcode.com/studyplan/top-sql-50/", "type": "article" }
+                { "id": "w3d1r6", "title": "LeetCode SQL 50 (problems 1 to 5)", "url": "https://leetcode.com/studyplan/top-sql-50/", "type": "article" }
               ]
             }
           ]
@@ -489,7 +482,8 @@
               "label": "Session 3",
               "resources": [
                 { "id": "w4d3r6", "title": "Supply-side guesstimate", "url": "https://youtu.be/ILUWBewGes0", "type": "video" },
-                { "id": "w4d3r9", "title": "Playlist for quick guesstimate practice", "url": "https://www.youtube.com/watch?v=g7nvHCYzXQE&list=PL-q2MNxDekiSFUNcwCI-Q4-QqHWe5K42p", "type": "playlist" }
+                { "id": "w4d4n1", "title": "Estimate the Gmail active users in India", "url": "https://www.youtube.com/watch?v=XLZzSSrNDLA", "type": "video" },
+                { "id": "w4d4n2", "title": "Estimate Google Maps storage", "url": "https://www.youtube.com/watch?v=g7nvHCYzXQE", "type": "video" }
               ]
             }
           ]
@@ -515,7 +509,8 @@
             {
               "label": "Session 3",
               "resources": [
-                { "id": "w4d2r6", "title": "Playlist for quick RCA practice", "url": "https://www.youtube.com/watch?v=5C8R8DnffSs&list=PL-q2MNxDekiQZNoAL_xGTT2h5jtu4-55c", "type": "playlist" }
+                { "id": "w4d5n1", "title": "YouTube PM interview: root cause analysis", "url": "https://www.youtube.com/watch?v=2WpnCYRTxEk", "type": "video" },
+                { "id": "w4d5n2", "title": "AI PM interview: ChatGPT downvotes have increased", "url": "https://www.youtube.com/watch?v=6TDbqBSKa-8", "type": "video" }
               ]
             }
           ]
@@ -548,7 +543,7 @@
               "label": "Session 3",
               "resources": [
                 { "id": "w5d2r4", "title": "Intro to Large Language Models (Andrej Karpathy)", "url": "https://www.youtube.com/watch?v=zjkBMFhNj_g", "type": "video" },
-                { "id": "w5d2r6", "title": "But What Is a GPT? (3Blue1Brown)", "url": "https://www.youtube.com/watch?v=wjZofJX0v4M", "type": "video" }
+                { "id": "w5d2r6", "title": "But What Is a GPT? (3Blue1Brown): watch 0:00–6:36, 12:27–18:25, 20:22–26:03 (~18 min)", "url": "https://www.youtube.com/watch?v=wjZofJX0v4M", "type": "video" }
               ]
             }
           ]
@@ -561,7 +556,7 @@
               "label": "Session 1",
               "resources": [
                 { "id": "w3d4r3", "title": "Prompt Engineering Basics", "url": "https://youtu.be/p09yRj47kNM", "type": "video" },
-                { "id": "w5d2r9", "title": "Learn Prompting", "url": "https://learnprompting.org/", "type": "article" }
+                { "id": "w5d2n1", "title": "Prompt Injection (Learn Prompting)", "url": "https://learnprompting.org/docs/prompt_hacking/injection", "type": "article" }
               ]
             },
             {
@@ -612,7 +607,7 @@
             {
               "label": "Session 1",
               "resources": [
-                { "id": "w5d3r1", "title": "Beyond Vibe Checks: A PM's Complete Guide to Evals (Lenny's Newsletter)", "url": "https://www.lennysnewsletter.com/p/beyond-vibe-checks-a-pms-complete", "type": "article" },
+                { "id": "w5d3r1", "title": "Beyond Vibe Checks: A PM's Guide to Evals (Lenny's Newsletter, free preview)", "url": "https://www.lennysnewsletter.com/p/beyond-vibe-checks-a-pms-complete", "type": "article" },
                 { "id": "w5d3r2", "title": "Evals for PMs: A Practical Guide (Braintrust)", "url": "https://www.braintrust.dev/blog/evals-for-pms", "type": "article" }
               ]
             },
