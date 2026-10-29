@@ -82,6 +82,12 @@
       "Three MECE tools: issue trees (break a problem into sub-issues), decision trees (map choices and outcomes) and hypothesis trees (test likely answers).",
       "Classic issue tree: 'Restaurant not profitable' → increase revenue (more orders, higher prices) vs reduce costs (salaries, rent, raw materials), with each branch broken down further."
     ],
+    "w1d2r9": [
+      "MECE means grouping ideas into buckets that are Mutually Exclusive (no overlap) and Collectively Exhaustive (nothing missing). It's expected in consulting case interviews.",
+      "Test: every item belongs to exactly one bucket, and the buckets cover all possibilities.",
+      "MECE frameworks include issue trees, decision trees and hypothesis trees, used to split big, messy problems into small, solvable ones.",
+      "Worked example: a profitability issue tree splits into revenue (number of orders × price) and costs (salary, rent, raw materials), then asks 'how?' at each level down to concrete actions."
+    ],
     "w1d3r4": [
       "Product teams have two jobs that pull against each other: learning quickly what customers actually need, and shipping reliable software that customers can depend on.",
       "Discovery is about gathering evidence that an idea is worth building. Delivery is about building it to production quality: scalable, tested, instrumented and maintainable.",
@@ -496,12 +502,11 @@
       "Pick metrics from your goals. The three fundamentals are acquiring users, retaining them, and growing revenue, each with its own metrics (traffic, sources and acquisition cost; engagement and retention; revenue).",
       "Products must eventually make money and keep costs low. Vine was culturally huge but shut down in 2017 for lack of monetization."
     ],
-    "w4d2n3": [
-      "A KPI (key performance indicator) is a metric you track to measure progress toward a specific business objective. Any metric can become a KPI, but only the few tied to today's goals should be.",
-      "Good KPIs match the strategy, have work underway to improve them, measure something that actually changes, and matter to the business when they move. If you wouldn't act differently based on a number, it isn't a KPI.",
-      "Common examples: lower churn, lower customer acquisition cost (CAC), higher monthly recurring revenue (MRR) and a better NPS. Product teams also track engagement (daily or monthly active users, session length) and quality (bug reports, support tickets, uptime).",
-      "Set KPIs up in three steps: tie each one to a bigger objective, break it into short-term targets you can act on (e.g. grow paid traffic 10% a month toward a quarterly sign-up goal), and review progress with the team regularly so you can change course early.",
-      "For product managers: pick one metric that matters most, include the numbers your executives or investors care about, and keep feature-level KPIs few and focused on adding, keeping and delighting users."
+    "w2d1r3": [
+      "A metric is any measurement of size or scale (e.g. your weight on a scale), tracked over time.",
+      "A KPI is a metric tied directly to a stated goal or objective with a target and timeframe (e.g. lose 35 lb in 7 months for a reunion = 5 lb per month).",
+      "Every KPI is a metric, but not every metric is a KPI. What makes the difference is intent and a strategy to control and improve the number.",
+      "KPIs drive action: if you're off target (lost only 4 lb in month two), you adjust the plan (6 lb next month) to get back on track."
     ],
     "w4d2n1": [
       "Kerry Rodden, Hilary Hutchinson and Xin Fu (Google, 2010) introduce HEART, a framework for user-centred metrics, as a complement to common business and technical metrics.",

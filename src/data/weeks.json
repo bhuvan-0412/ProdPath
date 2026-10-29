@@ -64,7 +64,14 @@
             {
               "label": "Session 2",
               "resources": [
-                { "id": "w1d2r8", "title": "MECE Framework", "url": "https://www.mbacrystalball.com/blog/strategy/mece-framework/", "type": "article" }
+                { "id": "w1d2r8", "title": "MECE Framework", "url": "https://www.mbacrystalball.com/blog/strategy/mece-framework/", "type": "article" },
+                { "id": "w1d2r9", "title": "Example of MECE trees", "url": "https://youtu.be/_pCU0DOKZDw", "type": "video" }
+              ]
+            },
+            {
+              "label": "Session 3",
+              "resources": [
+                { "id": "w4d3r2", "title": "How to answer guesstimate questions (Sugat Nayak)", "url": "https://youtu.be/AKps74WLpmk", "type": "video" }
               ]
             }
           ]
@@ -413,7 +420,7 @@
               "label": "Session 1",
               "resources": [
                 { "id": "w2d1r1", "title": "How to measure Product Success", "url": "https://youtu.be/wtDFgx41Rho", "type": "video" },
-                { "id": "w4d2n3", "title": "Key Performance Indicator (KPI) (ProductPlan)", "url": "https://www.productplan.com/glossary/key-performance-indicator/", "type": "article" }
+                { "id": "w2d1r3", "title": "Difference between Metrics and KPIs", "url": "https://youtu.be/dPJbytlqlsI", "type": "video" }
               ]
             },
             {
